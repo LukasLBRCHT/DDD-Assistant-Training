@@ -1,0 +1,11 @@
+{
+  "messages": [
+    {"role": "system", "content": "You are an assistant that creates DDD domain models."},
+    {"role": "user", "content": "You will be provided a list of User-Stories. Please, extract entities, value objects and relationships.: - 'A pilot requests permission to land from tower admin.'\n- 'A tower admin contacts a ground worker'"},
+    {"role": "assistant", "content": "Entities: Pilot, Tower Admin, Ground Worker\nValue Objects: Landing Permission\nAssociations: Pilot <- communicate -> Tower Admin, Tower Admin <- communicate -> Ground Worker, Pilot -> requests -> Landing Permission, Tower Admin -> gives out -> Landing Permission"},
+    {"role": "user", "content": "Now divide the domain into subdomains."},
+    {"role": "assistant", "content": "Communication-Subdomain: Pilot, Tower Admin, Ground Worker\nCoordination-Subdomain: Tower Admin, Permission\nAircraft-Subdomain: Pilot, Permission\nGround-Control-Subdomain: Ground Worker"},
+    {"role":  "user", "content": "Now identify the bounded contexts and possible integrations."},
+    {"role":  "assistant", "content":  "Communication-Context(Communication-Subdomain): Pilot, Tower Admin, Ground Worker\nCoordination-Context(Coordination-Subdomain): Tower Admin, Permission\nAircraft-Context(Aircraft-Subdomain): Pilot, Permission\nGround-Control-Subdomain: Ground Worker\nIntegrations/Conflicts: -Communication Context and Coordination Context share Tower Admin, -Communication Context and Aircraft-Context share Pilot, -Communication Context and Ground-Control-Context share Ground Worker, -Coordination Context and Aircraft Context share Permission"}
+  ]
+}

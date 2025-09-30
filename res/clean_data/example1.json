@@ -1,0 +1,11 @@
+{
+  "messages": [
+    {"role": "system", "content": "You are an assistant that creates DDD domain models."},
+    {"role": "user", "content": "You will be provided a list of User-Stories. Please, extract entities, value objects and relationships.: - 'A customer places an order.'\n- 'A delivery driver ships an order'"},
+    {"role": "assistant", "content": "Entities: Customer, Order, Delivery Driver\nRelationship: Customer -> places -> Order"},
+    {"role": "user", "content": "Now divide the domain into subdomains."},
+    {"role": "assistant", "content": "Customer-Subdomain: Customer, Order\nDelivery-Subdomain: Delivery Driver, Order"},
+    {"role":  "user", "content": "Now identify the bounded contexts and possible integrations."},
+    {"role":  "assistant", "content":  "Customer-Context(Customer-Subdomain): Customer, Order\nDelivery-Context(Delivery-Subdomain): Delivery Driver, Order\nIntegrations: -Customer-Context and Delivery-Context share Order"}
+  ]
+}

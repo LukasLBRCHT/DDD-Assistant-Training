@@ -1,66 +1,61 @@
-from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments, Trainer, DataCollatorForLanguageModeling
+from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments, Trainer, \
+    DataCollatorForLanguageModeling, BitsAndBytesConfig
 import torch
-import Config
-from peft import get_peft_config, get_peft_model, LoraConfig, TaskType
+from Config import Config as Config
+from peft import get_peft_config, get_peft_model, LoraConfig, TaskType, prepare_model_for_kbit_training
 import time
-from datasets import Dataset
+from data_preprocessor import DataPreprocessor
+from awq import AutoAWQForCausalLM
+
 
 def load_lora_model():
+
     model = AutoModelForCausalLM.from_pretrained(  # loading the model
         Config.MODEL_7B_DIR,
         device_map="auto",
         torch_dtype=torch.float16,
     )
-    model = model.to("cuda")
 
     peft_config = LoraConfig(task_type=TaskType.CAUSAL_LM, inference_mode=False, r=32, lora_alpha=16, lora_dropout=0.1,
                              target_modules=[
                                  "q_proj", "k_proj", "v_proj", "o_proj",
                                  "gate_proj", "up_proj", "down_proj"]
-                             )  # created LoRA-Config for Finetuning
+                             )
 
-    lora_model = get_peft_model(model, peft_config)  # applied LoRA config to the model
+    model.add_adapter(peft_config)
+    # applied LoRA config to the model
     tokenizer = AutoTokenizer.from_pretrained(  # loading the tokenizer of the model
         Config.MODEL_7B_DIR
     )
-    
-    return lora_model, tokenizer
 
-
-def load_custom_dataset():  # TODO: aus Datei laden
-
-    list_of_train_texts = ["aadf", "adadsf", "adasdf"]
-    list_of_eval_texts = ["aadf", "adadsf", "adasdf"]
-
-    train_dataset = Dataset.from_dict({"text": list_of_train_texts})
-    eval_dataset = Dataset.from_dict({"text": list_of_eval_texts})
-
-    return train_dataset, eval_dataset
+    return model, tokenizer
 
 
 def configure_training_arguments():
-    output_dir = f'./lora-ddd-agent-training-{str(int(time.time()))}'
+    output_dir = f'../../adapters/lora-ddd-agent-training-{str(int(time.time()))}'
 
     # TODO: hyperparameter bestimmen
     lora_training_args = TrainingArguments(
         output_dir=output_dir,
-        warmup_steps=2,
+        warmup_steps=0,  # 2
         per_device_train_batch_size=1,
-        gradient_accumulation_steps=4,
-        max_steps=1000,
+        gradient_accumulation_steps=50,  # 4
+        # max_steps=1000,
         learning_rate=2e-4,
         optim="paged_adamw_8bit",
-        logging_steps=25,
+        logging_steps=1,  # 25
         logging_dir="./logs",
         save_strategy="steps",
-        save_steps=25,
+        save_steps=1,  # 25
         eval_strategy="steps",
-        eval_steps=25,
+        eval_steps=1,  # 25
         do_eval=True,
         gradient_checkpointing=True,
         report_to="none",
         overwrite_output_dir=False,
         group_by_length=True,
+        label_names=["labels"],
+        fp16=True
     )
 
     return lora_training_args
@@ -74,7 +69,11 @@ def initialize_trainer(lora_model, tokenizer, train_args, train_data, eval_data)
         train_dataset=train_data,
         eval_dataset=eval_data,
         args=train_args,
-        data_collator=DataCollatorForLanguageModeling(tokenizer, mlm=False),
+        data_collator=DataCollatorForLanguageModeling(
+            tokenizer=tokenizer,
+            mlm=False,
+            pad_to_multiple_of=8
+        ),
     )
 
     return lora_trainer
@@ -83,12 +82,16 @@ def initialize_trainer(lora_model, tokenizer, train_args, train_data, eval_data)
 if __name__ == "__main__":
     # load model
     model, tokenizer = load_lora_model()
-    
-    train_data, eval_data = load_custom_dataset()
+
+    preprocessor = DataPreprocessor(tokenizer)
+    train_data, eval_data = preprocessor.load_data()
 
     train_args = configure_training_arguments()
-
     lora_trainer = initialize_trainer(model, tokenizer, train_args, train_data, eval_data)
 
-    # lora_trainer.train()
+    print("Starting training...")
+    lora_trainer.train()
+    print("Training done!")
+    test_results = lora_trainer.evaluate(train_data)  # provisorisch, Test-Daten sollten eigentlich separat sein
     # lora_trainer.save_model()
+    print(f"Results:\n{test_results}")
