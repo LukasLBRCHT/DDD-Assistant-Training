@@ -21,9 +21,9 @@ class Conversation_History:
 
         if role == "system":
             if not self.first_system_prompt:
-                self.first_system_prompt = prompt
+                self.first_system_prompt = prompt[0]
             else:
-                self.last_system_prompt = prompt
+                self.last_system_prompt = prompt[0]
         else:
             message = {"role": role, "content": prompt}
             self.conversation_messages.append(message)
@@ -41,11 +41,13 @@ class Conversation_History:
         history = []
         if self.first_system_prompt: history.append(self.first_system_prompt)
         if self.last_system_prompt: history.append(self.last_system_prompt)
-        if self.conversation_messages: history.append(self.conversation_messages)
+        if self.conversation_messages: history.extend(self.conversation_messages)
+        #print(f"history:{history}")
         text = history
         if tokenizer:
             text = tokenizer.apply_chat_template(
                 history,
                 tokenize=False,
+                add_generation_prompt=False,
             )
         return text

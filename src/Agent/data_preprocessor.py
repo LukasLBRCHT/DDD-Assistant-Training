@@ -24,7 +24,7 @@ class DataPreprocessor:
         })
 
         split = dataset.train_test_split(train_size=0.5)
-        return split["train"], split["test"]
+        return split["train"], split["sandbox"]
 
     def extract_from_json(self):
 
