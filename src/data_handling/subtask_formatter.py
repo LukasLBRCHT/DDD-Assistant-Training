@@ -1,0 +1,41 @@
+import os
+import json
+
+user_story_dir = "../../res/raw_data/stories"
+
+json_format = """{{\n  "domain-information": {},
+  "entities": [],
+  "value-objects": [],
+  "associations": [],
+  "subdomains": [],
+  "bounded-contexts": []
+}}"""
+
+
+def load_tasks_from_stories():
+    for file in os.scandir(user_story_dir):
+        with open(file, 'r') as f:
+            # go over lines, add every one into a list
+            # stories = f.read().split("\t\n")
+            stories = "["
+
+            for line in f.readlines():
+                line = line.replace('"', '\\"')
+                stories += f'\t"{line.strip()}",\n'
+            stories = stories.removesuffix(",\n")
+            stories += "\n]"
+
+            # stories.__delitem__(len(stories) - 1)
+
+            json_data = json_format.format(stories)
+
+            print(json_data)
+
+            # put json into new file
+            new_file_name = os.path.basename(f.name)
+            with open(f"../../res/task_data/{new_file_name}.json", "w") as json_file:
+                json_file.write(json_data)
+
+
+if __name__ == "__main__":
+    load_tasks_from_stories()

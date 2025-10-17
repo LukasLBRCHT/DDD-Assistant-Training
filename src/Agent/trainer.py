@@ -1,11 +1,10 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments, Trainer, \
-    DataCollatorForLanguageModeling, BitsAndBytesConfig
+    DataCollatorForLanguageModeling
 import torch
 from Config import Config as Config
-from peft import get_peft_config, get_peft_model, LoraConfig, TaskType, prepare_model_for_kbit_training
+from peft import LoraConfig, TaskType
 import time
-from data_preprocessor import DataPreprocessor
-from awq import AutoAWQForCausalLM
+from data_handling.data_preprocessor import DataPreprocessor
 
 
 def load_lora_model():

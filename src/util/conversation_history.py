@@ -44,7 +44,7 @@ class Conversation_History:
         if self.conversation_messages: history.extend(self.conversation_messages)
         #print(f"history:{history}")
         text = history
-        if tokenizer:
+        if tokenizer and history:
             text = tokenizer.apply_chat_template(
                 history,
                 tokenize=False,
