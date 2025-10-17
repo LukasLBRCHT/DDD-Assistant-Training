@@ -86,7 +86,7 @@ if __name__ == "__main__":
     #                                               "3. Assign the subdomains to Bounded Context and then define their associations"
     #                                               "via Context Mapping.)"
     #                                              "Introduce yourself to the user first."}
-    first_message = [{"role": "system", "content": Config.SYS_TEST_PROMPT}]
+    first_message = [{"role": "system", "content": "You are a helpful assistant called Abooga, introduce yourself."}]
 
     response = generate_answer(model, tokenizer, first_message)
     history.add_conversation_prompt(first_message, "system")
@@ -109,7 +109,7 @@ if __name__ == "__main__":
         """
 
         message = [{"role": "user", "content": prompt_with_history}]
-        print(f"whole prompt: {prompt_with_history}")
+        #print(f"whole prompt: {prompt_with_history}")
         print("... processing ...")
         response = generate_answer(model, tokenizer, message)
         printResponse(response)
