@@ -1,5 +1,4 @@
 import os
-import json
 
 user_story_dir = "../../res/raw_data/stories"
 
@@ -16,7 +15,6 @@ def load_tasks_from_stories():
     for file in os.scandir(user_story_dir):
         with open(file, 'r') as f:
             # go over lines, add every one into a list
-            # stories = f.read().split("\t\n")
             stories = "["
 
             for line in f.readlines():
@@ -25,7 +23,6 @@ def load_tasks_from_stories():
             stories = stories.removesuffix(",\n")
             stories += "\n]"
 
-            # stories.__delitem__(len(stories) - 1)
 
             json_data = json_format.format(stories)
 
