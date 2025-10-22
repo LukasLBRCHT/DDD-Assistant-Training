@@ -2,10 +2,8 @@ import os
 
 user_story_dir = "../../res/raw_data/stories"
 
-json_format = """{{\n  "domain-information": {},
-  "entities": [],
-  "value-objects": [],
-  "associations": [],
+json_format = """{{\n  "domain-information": \n{},
+  "domain-objects": [],
   "subdomains": [],
   "bounded-contexts": []
 }}"""
@@ -29,7 +27,7 @@ def load_tasks_from_stories():
             print(json_data)
 
             # put json into new file
-            new_file_name = os.path.basename(f.name)
+            new_file_name = os.path.basename(f.name).removesuffix(".txt")
             with open(f"../../res/task_data/{new_file_name}.json", "w") as json_file:
                 json_file.write(json_data)
 
