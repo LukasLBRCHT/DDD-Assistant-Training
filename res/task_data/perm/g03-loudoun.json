@@ -59,7 +59,6 @@
 	"#G03# As a Technical Staff member, I want to update the GIS Property Management, so that I can successfully update the transactional Parcel Pin to reference the GIS layer where the Split or Merged Parcel Pin exists.",
 	"#G03# As a Staff member, I want to Send or Post Citations and Fines, so that I can successfully send the Notice Of Violation document to the property owner and log information about the action."
 ],
-"general-description": "This domain involves a County Government's land management and permitting system. It enables residents and developers to apply for and manage permits and services, while providing county staff with the tools to review applications, enforce codes, conduct inspections, and ensure compliance with zoning and comprehensive plans. The core process revolves around managing the lifecycle of applications from submission through review, decision, and project completion.",
 "domain objects" : [
 	{"name": "County", "desc": "An area with a governance", "attributes": "General Information"},
 	{"name":  "General Information", "desc":  "General Information about the county accessible to the public"},
@@ -116,7 +115,6 @@
 		{"from": "County", "to":  "Parcel", "desc": "a county administrates the real estate units in its area"},
 		{"from": "County", "to":  "County Rules", "desc": "the county enforces certain rules relevant to zoning and construction"},
 		{"from": "GIS", "to":  "Geospatial Data", "desc": "in the GIS you can access the geospatial data"},
-		{"from": "County Rules", "to":  "Ordinance", "desc": "the Ordinance is part of the county rules"},
 		{"from": "County Staff Member", "to":  "County Rules", "desc": "the county staff member enforces county rules"},
 		{"from": "Comprehensive Plan", "to":  "Plan Report", "desc": "Comprehensive Plan is summarized in Plan Report"},
 		{"from": "Application", "to":  "County Issue", "desc": "Application becomes County Issue"},
@@ -146,11 +144,65 @@
 		{"from": "County Staff Member", "to":  "Completeness Review", "desc": "County Staff Member conducts Review"},
 		{"from": "Application", "to":  "Completeness Review", "desc": "Application requires Completeness Review"},
 		{"from": "County Staff Member", "to":  "Detailed Review", "desc": "County Staff Member conducts Detailed Review"},
-		{"from": "Application", "to":  " Review", "desc": "Application requires Detailed Review"},
 		{"from": "County Staff Member", "to":  "Plan Review", "desc": "County Staff Member conducts Plan Review"},
-		{"from": "Application", "to":  "Plan Review", "desc": "Application requires Plan Review"},
-		{"from": "County Staff Member", "to":  "Inspection", "desc": "County Staff Member conducts Inspection"}
+		{"from": "Plan Set", "to":  "Plan Review", "desc": "Plan Set requires Plan Review"},
+		{"from": "County Staff Member", "to":  "Inspection", "desc": "County Staff Member conducts Inspection"},
+		{"from": "County Staff Member", "to":  "Zoning Permit", "desc": "Staff Member provides Zoning Permit"},
+		{"from": "Application", "to":  "Zoning Permit", "desc": "Application requires Zoning Permit"},
+		{"from": "Staff Report", "to":  "Application", "desc": "Report summarizes Application"},
+		{"from": "County Staff Member", "to":  "Staff Report", "desc": "Staff Member writes Staff Report"},
+		{"from": "Internal Note", "to":  "Application", "desc": "Internal Note contains information to be shared about the application"},
+		{"from": "County Staff Member", "to":  "Internal Note ", "desc": "Staff member writes and reads from internal note"}
 	],
-    "subdomains": [],
-    "bounded-contexts": []
+    "subdomains": {
+		"application": ["Application","Parcel","County Resident", "Project", "Supporting Documentation", "Transaction Status", "Proffer", "Proffer State"],
+		"review": ["Application", "County Staff Member","Supervising Staff Member", "Inspection", "Completeness Review","Detailed Review","Zoning Permit","Staff Report","Internal Note", "Plan Review"],
+		"project": ["Project", "County Service", "Bond", "Plan Set", "Building Development Status"],
+		"communication": ["County Resident", "County Staff Member","Request","Formal Response","Citation-Post","Violation Notice","Zoning Information"],
+		"meetings": ["County Staff Member","County Resident","Hearing", "Stakeholder","County Issue", "Application","Plan Review Meeting", "Scheduled Meeting", "Meeting Time","Hearing Date", "Governing Body", "Hearing Decision", "Affidavit"],
+		"county": ["County","County Issue","Parcel", "ParcelPIN","Parcel History","General Information","GIS","Geospatial Data","County Rules","Comprehensive Plan", "Zoning Information", "Ordinance", "Staff Member"],
+		"connections between subdomains": ["application--review", "application--project", "application--meetings", "review--project", "application--county","review--meetings","meetings--county","county--communication", "review-county"]
+	},
+    "bounded-contexts": {
+		"application" : {
+			"derived from": "application subdomain",
+			"objects": ["Application","Affected Parcel","Applicant", "Project", "Supporting Documentation", "Transaction Status", "Proffer", "Proffer State"],
+			"changes" : ["Parcel -> Affected Parcel", "County Resident -> Applicant"]
+		},
+		"application-review": {
+			"derived from": "review subdomain",
+			"objects": ["Application Under Review", "General Staff Member","Planning Staff Member","Zoning Staff Member","Plan Review Supervising Staff Member", "Completeness Review","Detailed Review","Zoning Permit","Staff Report","Internal Note", "Plan Review"],
+			"changes": ["Application -> Application Under Review","County Staff Member -> General Staff Member, Planning Staff Member, Zoning Staff Member","Supervising Staff Member -> Plan Review Supervising Staff Member"]
+		},
+		"building inspection": {
+			"derived from": "review subdomain",
+			"objects": ["Application of Project", "Project Under Review", "Inspection Staff Member", "Inspection Supervising Staff Member"],
+			"changes": ["Application -> Application of Project", "Project -> Project Under Review", "County Staff Member -> Inspection Staff Member", "Supervising Staff Member -> Inspection Supervising Staff Member"]
+		},
+		"building project": {
+			"derived from": "project subdomain",
+			"objects": ["Project", "County Service", "Bond", "Plan Set", "Building Development Status"],
+			"changes": []
+		},
+		"communication": {
+			"derived from": "communication subdomain",
+			"objects": ["Inquiring Resident", "Assisting Staff Member","Request","Formal Response","Citation-Post","Violation Notice","Requested Zoning Information"],
+			"changes": ["County Resident -> Inquiring Resident", "County Staff Member -> Assisting Staff Member", "Zoning Information -> Requested Zoning Information"]
+		},
+		"general meetings": {
+			"derived from": "meetings subdomain",
+			"objects": ["Scheduling Staff Member","Hearing", "Stakeholder","Discussed County Issue", "Discussed Application", "General Scheduled Meeting", "Meeting Time","Hearing Date", "Governing Body", "Hearing Decision", "Affidavit"],
+			"changes": ["County Staff Member -> Scheduling Staff Member","County Issue -> Discussed County Issue","Application -> Discussed Application", "Scheduled Meeting -> General Scheduled Meeting"]
+		},
+		"plan review meetings": {
+			"derived from": "meetings subdomain",
+			"objects" : ["Plan Applicant", "Plan Review Staff Member", "Plan Review Meeting", "Meeting Time"],
+			"changes": ["Applicant -> Plan Applicant", "County Staff Member -> Plan Review Staff Member", "Scheduled Meeting -> Application Review Meeting"]
+		},
+		"governance": {
+			"derived from": "county subdomain",
+			"objects": ["County","County Issue","Parcel", "ParcelPIN","Parcel History","General Information","GIS","Geospatial Data","County Rules","Comprehensive Plan", "Zoning Information", "Ordinance", "Staff Member"],
+			"changes": []
+		}
+	}
 }
