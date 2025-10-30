@@ -1,53 +1,25 @@
-#G24# As a depositor, I want to deposit and maintain datasets through a simple web interface, so that I don't need to install and learn new software to deposit.
-#G24# As a depositor, I want to have a user interface that is familiar to me, so that I feel like all the University systems are joined up.
-#G24# As a depositor, I want to deposit and maintain datasets through Pure, so that I have a single onestop shop for managing my research outputs.
-#G24# As a depositor, I want to deposit and maintain datasets through Virtual Research Environments and other workflow tools, so that I can continue to work with tools with which I'm familiar.
-#G24# As a depositor, I want to deposit the files that I have, so that I don't have to spend a lot of time finding the right version and converting to the right format.
-#G24# As a depositor, I want to place data under an embargo, so that my right of first use is protected, and I can fulfil my confidentiality responsibilities.
-#G24# As a depositor, I want to apply licenses to datasets, so that my IP rights are protected appropriately.
-#G24# As a depositor, I want to allow my collaborators privileged access to datasets, so that we continue to have a productive relationship.
-#G24# As a depositor, I want to deposit arbitrarily large files, so that I am not limited in what files I can and cannot deposit.
-#G24# As a depositor, I want to link datasets to publications in Opus, so that both my data and publications are more easily discovered.
-#G24# As a depositor, I want to mint DOIs for my data, so that it can be discovered and cited more easily and citations can be tracked so that I can receive credit.
-#G24# As a depositor, I want to have metadata automatically filled from other University systems and remembered from previous deposits, so that I don't have to waste time reentering the same information.
-#G24# As a depositor, I want to link to data stored in external repositories, so that I can store my data in an appropriate repository but still register it with the University and I don't have to deposit my data in multiple places.
-#G24# As a depositor, I want to specify a disposal policy for my data, so that I do not accidentally breach laws or collaboration agreements.
-#G24# As a depositor, I want to track downloads of my data, so that I can demonstrate the impact of my work.
-#G24# As a depositor, I want to track citations of my data, so that I can demonstrate the impact of my work
-#G24# As a depositor, I want to have guarantees about data integrity, so that I can use my data in the future and I can fulfil funder requirements for archival.
-#G24# As a depositor, I want to attach subject specific discoverability metadata to records, so that researchers in my discipline can find my data more easily.
-#G24# As a depositor, I want to link datasets with the project DMP, so that compliance with DMP can be demonstrated and whole project workflow is linked together.
-#G24# As a depositor, I want to manage and share 'live' research data, so that whole project workflow is linked together.
-#G24# As a depositor, I want to manage multiple versions of the same dataset, so that changes to the dataset are transparent and do not compromise research integrity.
-#G24# As a depositor, I want to allow others to deposit on my behalf, so that I can delegate research data management tasks appropriately.
-#G24# As a data reuser, I want to search the archive through the web, so that I can easily find data relevant to my needs.
-#G24# As a data reuser, I want to access the system in my native language, so that I am not put off reusing University of Bath data by language barriers.
-#G24# As a data reuser, I want to examine and identify deposited files, so that I can make a preliminary assessment of usefulness without downloading the whole dataset.
-#G24# As a data reuser, I want to view an example citation for a dataset, so that I can reference it correctly.
-#G24# As a data reuser, I want to view a DOI for a dataset, so that I can get back to the data in future and I can import the dataset into my referencemanagement software automatically.
-#G24# As a data reuser, I want to get a persistent URL for a dataset, so that I can get back to the data in future.
-#G24# As a data reuser, I want to search the archive through Primo , so that I can search books, articles and data all in one place.
-#G24# As a data reuser, I want to see different versions of a dataset at a glance, so that I can be sure I'm using the right version of the dataset.
-#G24# As an externalcollaborator, I want to gain privileged access to data for projects in which I am involved, so that I can collaborate effectively.
-#G24# As an externalcoordinator, I want to have guarantees that my IP rights will not be breached, so that the risk of collaborating with Bath is acceptable to me.
-#G24# AS an externalcoordinator, I want to access data from Bath collaborators off campus, so that I can collaborate effectively.
-#G24# As a research facility manager, I want to deposit data from my facility directly into the archive on behalf of researchers, so that I am no longer required to maintain my own archive of facility data and researchers can access their own data as needed. 
-#G24# As a Bath Data Archive administrator, I want to make some checks on deposited datasets before they are made public, so that consistent quality of metadata is maintained, compliance with policies can be checked and details of licensing can be checked.
-#G24# As a Bath Data Archive administrator, I want to require a minimum set of metadata, so that consistent quality of metadata is maintained.
-#G24# As a Bath Data Archive administrator, I want to approve scheduled disposal of data, so that data which is still required is not destroyed.
-#G24# As a Bath Data Archive administrator, I want to query the entire archive , so that I can report on particular aspects of the archive holdings.
-#G24# As a Bath Data Archive administrator, I want to import Bath data from an external data centre wholesale, so that Bath data holdings in external archives are not lost if they close down.
-#G24# As a Bath Data Archive administrator, I want to encourage and promote the use of open standards for deposit, so that data is as reusable as possible.
-#G24# As a Research Information manager, I want to integrate the archive with CRIS, so that I can analyse impact of research data publication I can link funding to all of the outputs it produces.
-#G24# As a Research Information manager, I want to include records for externally held data complete, so that the university's record of data holdings is complete.
-#G24# As a Research Information manager, I want to track citation counts for published datasets, so that impact of datasets within academia can be demonstrated.
-#G24# As a Research Information manager, I want to segment the view and download statistics by country and sector so that impact of datasets outside academia can be demonstrated.
-#G24# As a Research Information manager, I want to have datasets linked to metadata about projects, so that I can report on projects depositing datasets in relation to funder requirements.
-#G24# As an UnivITservice, I want to store archived data on existing storage systems, so that university data storage is consistent and maintainable and future availability of data can be guaranteed.
-#G24# As an UnivITservice, I want to integrate the archive with existing university systems such as LDAP, so that the cost of administering the system can be kept low.
-#G24# As an UnivITservice, I want to store archived data directly on the HCP object store, so that  features can be made.
-#G24# As an UnivITservice, I want to be able to export all data to a different system, so that I am not tied into one system which may not be the most appropriate at some point in the future.
-#G24# As a developer, I want to deposit and maintain datasets via an API such as SWORD2, so that my service can interact with the archive. 
-#G24# As an academicpublisher, I want to make persistent web links between my articles and underlying datasets, so that my journals can be seen to be filled with robust, high quality research. 
-#G24# As a fundingbody, I want to be reassured that researchers I fund have robust archival plans for their data, so that I can be sure that funding them is a worthwhile investment.
-#G24# As a fundingbody, I want to harvest metadata on outputs from research I fund, so that I can analyse effectiveness of funding strategy and I can encourage cross fertilisation of research outputs.
+As a depositor, I want to deposit and maintain datasets through a simple web interface so that I can manage my data without learning new software.
+As a depositor, I want to deposit through familiar university systems and workflow tools so that my work is integrated and efficient.
+As a depositor, I want to deposit large files and multiple versions so that I am not limited and changes are tracked.
+As a depositor, I want to place datasets under embargo and apply licenses so that my rights and confidentiality are protected.
+As a depositor, I want to allow collaborators privileged access so that teamwork continues effectively.
+As a depositor, I want to link datasets to publications and DMPs so that data discovery and compliance are ensured.
+As a depositor, I want metadata automatically prefilled from other systems so that I save time and reduce errors.
+As a depositor, I want to track downloads, citations, and usage of my data so that I can demonstrate impact.
+As a depositor, I want guarantees about data integrity and disposal policies so that my data remains usable and compliant.
+As a data reuser, I want to search, examine, and access datasets with persistent identifiers and citations so that I can reuse them correctly.
+As a data reuser, I want to access the system in my native language and see different versions so that I can reuse data efficiently.
+As an external collaborator, I want privileged access and off-campus access so that I can work effectively with Bath researchers.
+As a research facility manager, I want to deposit data on behalf of researchers so that facility data is centralized and accessible.
+As a Bath Data Archive administrator, I want to check, approve, and enforce metadata quality and licensing so that data standards and compliance are maintained.
+As a Bath Data Archive administrator, I want to approve scheduled data disposal so that important data is not destroyed prematurely.
+As a Bath Data Archive administrator, I want to query and import data from external sources so that archive holdings are complete and resilient.
+As a Research Information manager, I want to integrate datasets with CRIS, project metadata, and funder information so that research outputs and impact can be analysed.
+As a Research Information manager, I want to track citation and download statistics by country and sector so that impact beyond academia can be demonstrated.
+As a UnivITservice, I want to store archived data on existing systems or object stores so that data is secure, consistent, and available.
+As a UnivITservice, I want integration with university systems and the ability to export data so that administration is efficient and future migration is possible.
+As a developer, I want to deposit and maintain datasets via APIs so that external services can interact with the archive.
+As an academic publisher, I want to link articles to datasets so that research quality and reproducibility are promoted.
+As a funding body, I want to verify robust archival plans and harvest metadata so that funding effectiveness and compliance can be assessed.
+As a depositor, I want to attach subject-specific metadata so that my data is discoverable by discipline.
+As a depositor, I want to manage and share live research data so that project workflows are linked and collaborative work is supported.
