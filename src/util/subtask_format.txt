@@ -2,8 +2,8 @@
   "domain-information":
   {},
   "domain objects": [
-      {{"name": "", "desc": "", "attributes": "a,b,c"}},
-      {{"name": "", "desc": "", "attributes": "a,b,c"}},
+      {{"name": "", "desc": "", "attributes": ["a","b","c"]}},
+      {{"name": "", "desc": "", "attributes": ["a","b","c"]}},
       {{"name": "", "desc": ""}}
     ],
   "associations": [
@@ -12,10 +12,16 @@
       {{"from": "", "to":  "", "desc": ""}}
     ],
   "subdomains": {{
-      "subdomain1": ["entity1","entity2","..."],
-      "subdomain2": ["entity1","entity2","..."],
-      "subdomain3": ["entity3","entity4","..."],
-      "connections between subdomains": ["subdomain1--subdomain2","..."]
+      "subdomain1": {{
+           "entities" : ["entity1","entity2","..."]
+      }},
+      "subdomain2": {{
+           "entities" : ["entity3","entity4","..."]
+      }},
+      "subdomain3": {{
+           "entities" : ["entity2","entity4","..."]
+      }},
+      "subdomain connections": ["subdomain1--subdomain2","..."]
     }},
   "bounded contexts": {{
         "bounded context 1" : {{

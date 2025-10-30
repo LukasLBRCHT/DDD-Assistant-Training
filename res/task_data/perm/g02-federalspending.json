@@ -1,0 +1,126 @@
+{
+  "domain-information":
+  [	"As an agency user, I want to submit my financial assistance data so that it can be reviewed and published.",
+	"As an agency user, I want to upload files without errors so that my submissions are accepted.",
+	"As a data user, I want to view published financial data so that I can analyze federal spending.",
+	"As a broker user, I want to validate my submission before publishing so that I can fix any issues.",
+	"As a developer, I want to improve validation speed so that users get quicker feedback.",
+	"As a UI designer, I want to make the website layout clear and consistent so that users can navigate easily.",
+	"As an agency user, I want to receive clear error messages so that I know what to correct.",
+	"As a developer, I want to prevent duplicate submissions so that the system data stays accurate.",
+	"As a FABS user, I want to track the status of my submissions so that I know when they are approved.",
+	"As a data user, I want to download published files so that I can work with the raw data.",
+	"As a broker user, I want to see helpful information on the dashboard so that I can manage submissions better.",
+	"As an agency user, I want to be notified about submission deadlines so that I submit data on time.",
+	"As a developer, I want to synchronize data updates with other systems so that files stay current.",
+	"As a UI designer, I want to test design changes with real users so that the site is user-friendly.",
+	"As an owner, I want to monitor user testing results so that I can plan future improvements.",
+	"As a broker user, I want consistent error codes so that I can understand system responses.",
+	"As a data user, I want accurate field derivations so that financial data is reliable.",
+	"As a developer, I want to manage historical data loads so that old records are included.",
+	"As a tester, I want to verify field derivations so that the data meets quality standards.",
+	"As an agency user, I want to map my data to the correct schema so that it matches system rules.",
+	"As a FABS user, I want to access both FABS and DABS pages from one place so that navigation is simple.",
+	"As an agency user, I want to see who last updated a submission so that I can track accountability.",
+	"As a developer, I want to monitor system performance so that errors can be fixed quickly.",
+	"As a data user, I want to filter data by agency or date so that I can find relevant records.",
+	"As a FABS user, I want to receive confirmation after publishing so that I know the process succeeded."
+],
+  "domain objects": [
+      {"name": "FABS", "desc": "Federal Assistance Broker System – manages financial assistance data submissions", "attributes": "Historical Data, System Rules"},
+	  {"name": "Historical Data", "desc": "old records of data"},
+	  {"name": "System Rules", "desc": "set of rules that determines the regulations for submission and data handling"},
+      {"name": "DABS", "desc": "Data Act Broker System – related system for managing different financial data sets", "attributes": "System Rules"},
+      {"name": "FDPS", "desc": "Federal Procurement Data System – database of government contract and procurement data", "attributes": "System Rules"},
+	  {"name": "Submission", "desc": "a file or dataset uploaded to report financial data", "attributes": "Status, Deadline, Submission Data, Notification"},
+	  {"name": "Submission Data", "desc": "Included in Submission by Agency"},
+	  {"name": "Status", "desc": "the state of the submission"},
+	  {"name": "Deadline", "desc": "time at which the submission is due"},
+	  {"name": "Notification", "desc": "a reminder to a submitting party that certain data should be submitted in time"},
+	  {"name": "Agency User", "desc": "a government employee submitting data for their agency"},
+	  {"name": "Published Data", "desc": "data available to users of the broker system"},
+	  {"name": "Broker", "desc": "Shared Frontend to FABS and DABS via which Users access the system", "attributes":  "System Performance, Design"},
+	  {"name": "System Performance", "desc": "Metrics that determine the performance and functionality of the system"},
+	  {"name": "Design", "desc": "the design of the Broker"},
+	  {"name": "Broker User", "desc": "someone accessing the services of the broker system"},
+	  {"name": "Developer", "desc": "a technical member who implements and maintains functions of the broker system"},
+	  {"name": "Data User", "desc": "Someone who accesses official financial data"},
+	  {"name": "Test", "desc": "a unit that determines the functionality of the Design", "attributes": "Result"},
+	  {"name": "Owner", "desc": "stakeholder in charge of product direction and improvement"},
+	  {"name": "UI Designer", "desc": "shapes the design of the broker"},
+	  {"name": "Field Derivation", "desc": "analytical data derived from the system"},
+	  {"name": "Tester", "desc": "examines functionality of Field Derivation"}
+    ],
+  "associations": [
+      {"from": "FABS", "to":  "Published Data", "desc": "FABS feeds data into Published Data"},
+      {"from": "DABS", "to":  "Published Data", "desc": "DABS feeds data into Published Data"},
+      {"from": "Agency User", "to":  "System Rules", "desc": "Agency User has to follow System Rules when forming submissions"},
+	  {"from": "Broker", "to":  "FABS", "desc": "Broker poses as frontend to FABS"},
+	  {"from": "Broker", "to":  "DABS", "desc": "Broker poses as frontend to DABS"},
+	  {"from": "Broker User", "to":  "Submission", "desc": "Broker User makes and tracks Submission"},
+	  {"from": "Developer", "to":  "System Performance", "desc": "Developer oversees System Performance"},
+	  {"from": "Agency User", "to":  "Submission", "desc": "Agency User makes and tracks Submission"},
+	  {"from": "Data User", "to":  "Published Data", "desc": "Data User accesses Published Data"},
+	  {"from": "UI Designer", "to":  "Design", "desc": "UI Designer creates Design"},
+	  {"from": "Test", "to":  "Design", "desc": "Test evaluates quality of Design"},
+	  {"from": "Owner", "to":  "Test", "desc": "Owner monitors the Result of a Test"},
+	  {"from": "UI Designer", "to":  "Test", "desc": "UI Designer performs a Test"},
+	  {"from": "Broker User", "to":  "Test", "desc": "Broker takes part in a Test"},
+	  {"from": "Submission", "to":  "Broker", "desc": "Submission is put into Broker"},
+	  {"from": "Broker", "to":  "FABS", "desc": "Broker forwards accesses to FABS"},
+	  {"from": "Broker", "to":  "DABS", "desc": "Broker forwards accesses to DABS"},
+	  {"from": "FDPS", "to":  "Field Derivation", "desc": "FDPS delivers Field Derivation"},
+	  {"from": "Tester", "to":  "Field Derivation", "desc": "Tester examines Field Derivation"},
+	  {"from": "Notification", "to":  "Agency User", "desc": "Notification is sent to Agency User"}
+    ],
+  "subdomains": {
+      "broker systems": {
+           "entities" : ["Broker","FABS","DABS","FDPS", "Design", "System Rules", "Developer"]
+      },
+	  "broker data" : {
+		  "entities" : ["Published Data","Historical Data","Field Derivation"]
+	  },
+      "broker access": {
+           "entities" : ["Data User", "Broker User", "Agency User", "Tester", "Broker"]
+      },
+	  "submission": {
+		  "entities" : ["Agency User","Broker User","Submission","Status","Submission Data","Deadline","Notification"]
+	  },
+	  "ui testing": {
+		  "entities" : ["Design", "UI Designer", "Test", "Result","Broker User","Owner"]
+	  },
+      "subdomain connections": ["broker access--broker systems","broker systems--submission","broker--ui testing","broker systems--broker data"]
+    },
+  "bounded contexts": {
+        "general submission" : {
+			"derived from": "submission subdomain",
+			"objects": ["General Submission","General Submission Data","General Broker User", "Deadline", "Status"],
+			"changes" : ["Submission -> General Submission","Submission Data -> General Submission Data", "Broker User -> General Broker User"]
+		},
+		"agency submission" : {
+			"derived from": "submission subdomain",
+			"objects": ["Agency Worker","Agency Submission","Financial Assistance Data","Deadline", "Status"],
+			"changes" : ["Agency User -> Agency Worker","Submission -> Agency Submission","Submission Data -> Financial Assistance Data"]
+		},
+	  	"broker access" : {
+			"derived from": "broker access subdomain",
+			"objects" : ["Accessing Data User", "Accessing Broker User", "Accessing Agency User", "Accessing Tester", "Broker Portal"],
+			"changes" : ["Data User -> Accessing Data User", "Broker User -> Accessing Broker User", "Agency User -> Accessing Agency User", "Tester -> Accessing Tester", "Broker -> Broker Portal"]
+		},
+	    "broker systems" : {
+			"derived from": "broker systems subdomain",
+			"objects" : ["Broker","FABS","DABS","FDPS", "Design", "System Rules", "Developer"],
+			"changes" : []
+		},
+	    "broker data" : {
+			"derived from": "broker data subdomain",
+			"objects" : ["Published Data","Historical Data","Field Derivation"],
+			"changes" : []
+		},
+	    "ui-testing" : {
+			"derived from": "ui-testing subdomain",
+			"objects" : ["Design Proposal", "UI Designer", "Design Test", "Test Result","Testing Broker User","Owner"],
+			"changes" : ["Design -> Design Proposal", "Test -> Design Test", "Result -> Test Result", "Broker User -> Testing Broker User"]
+		}
+	}
+}

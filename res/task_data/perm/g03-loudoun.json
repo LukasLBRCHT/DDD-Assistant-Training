@@ -155,12 +155,24 @@
 		{"from": "County Staff Member", "to":  "Internal Note ", "desc": "Staff member writes and reads from internal note"}
 	],
     "subdomains": {
-		"application": ["Application","Parcel","County Resident", "Project", "Supporting Documentation", "Transaction Status", "Proffer", "Proffer State"],
-		"review": ["Application", "County Staff Member","Supervising Staff Member", "Inspection", "Completeness Review","Detailed Review","Zoning Permit","Staff Report","Internal Note", "Plan Review"],
-		"project": ["Project", "County Service", "Bond", "Plan Set", "Building Development Status"],
-		"communication": ["County Resident", "County Staff Member","Request","Formal Response","Citation-Post","Violation Notice","Zoning Information"],
-		"meetings": ["County Staff Member","County Resident","Hearing", "Stakeholder","County Issue", "Application","Plan Review Meeting", "Scheduled Meeting", "Meeting Time","Hearing Date", "Governing Body", "Hearing Decision", "Affidavit"],
-		"county": ["County","County Issue","Parcel", "ParcelPIN","Parcel History","General Information","GIS","Geospatial Data","County Rules","Comprehensive Plan", "Zoning Information", "Ordinance", "Staff Member"],
+		"application":{
+			"entities": ["Application","Parcel","County Resident", "Project", "Supporting Documentation", "Transaction Status", "Proffer", "Proffer State"]
+		},
+		"review": {
+			"entities": ["Application", "County Staff Member","Supervising Staff Member", "Inspection", "Completeness Review","Detailed Review","Zoning Permit","Staff Report","Internal Note", "Plan Review"]
+		},
+		"project": {
+			"entities": ["Project", "County Service", "Bond", "Plan Set", "Building Development Status"]
+		},
+		"communication": {
+			"entities": ["County Resident", "County Staff Member","Request","Formal Response","Citation-Post","Violation Notice","Zoning Information"]
+		},
+		"meetings": {
+			"entities": ["County Staff Member","County Resident","Hearing", "Stakeholder","County Issue", "Application","Plan Review Meeting", "Scheduled Meeting", "Meeting Time","Hearing Date", "Governing Body", "Hearing Decision", "Affidavit"]
+		},
+		"county": {
+			"entities": ["County","County Issue","Parcel", "ParcelPIN","Parcel History","General Information","GIS","Geospatial Data","County Rules","Comprehensive Plan", "Zoning Information", "Ordinance", "Staff Member"]
+		},
 		"connections between subdomains": ["application--review", "application--project", "application--meetings", "review--project", "application--county","review--meetings","meetings--county","county--communication", "review-county"]
 	},
     "bounded-contexts": {
