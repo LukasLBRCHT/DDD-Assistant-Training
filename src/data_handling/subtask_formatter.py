@@ -1,12 +1,7 @@
 import os
 
 user_story_dir = "../../res/raw_data/stories"
-
-json_format = """{{\n  "domain-information": \n{},
-  "domain-objects": [],
-  "subdomains": [],
-  "bounded-contexts": []
-}}"""
+subtask_format_url = "../util/subtask_format.txt"
 
 
 def load_tasks_from_stories():
@@ -21,8 +16,10 @@ def load_tasks_from_stories():
             stories = stories.removesuffix(",\n")
             stories += "\n]"
 
+            with open(subtask_format_url,'r') as format_file:
+                subtask_format = format_file.read()
 
-            json_data = json_format.format(stories)
+            json_data = subtask_format.format(stories)
 
             print(json_data)
 
