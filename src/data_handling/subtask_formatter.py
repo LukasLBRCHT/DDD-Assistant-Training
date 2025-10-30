@@ -3,7 +3,8 @@ import os
 user_story_dir = "../../res/base_data/stories"
 subtask_format_url = "../util/subtask_format.txt"
 list_of_done_domains = [
-    ""
+    "g02-federalspending",
+    "g03-loudoun"
 ]
 
 
@@ -13,7 +14,8 @@ def load_tasks_from_stories():
 
             new_file_name = os.path.basename(f.name).removesuffix(".txt")
             if new_file_name in list_of_done_domains:
-                return
+                print(new_file_name)
+                continue
 
             # go over lines, add every one into a list
             stories = "["
