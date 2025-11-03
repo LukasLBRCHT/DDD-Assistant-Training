@@ -1,25 +1,25 @@
-As a user, I want to search recycling centers by zip code so that I can find nearby options for drop-off.
-As a user, I want to view recycling centers on a map so that I can plan my route efficiently.
-As a user, I want to see which centers accept specific materials so that I can sort and deliver waste properly.
-As a user, I want to check the opening hours of recycling centers so that I can schedule drop-offs conveniently.
-As a user, I want to view safe disposal events in my area so that I can participate in eco-friendly initiatives.
-As a user, I want to create an account so that I can save favorite centers and access personalized options.
-As a user, I want to receive notifications about recycling events so that I can stay informed.
-As a user, I want to securely store my personal data so that I can protect my privacy.
-As a user, I want to reset my password via email so that I can regain access if I forget it.
-As a user, I want to provide feedback or contact support so that I can report issues or request help.
-As a user, I want to upload my weekly schedule so that I can get recycling center recommendations that match my availability.
-As a user, I want to earn rewards for recycling so that I am encouraged to participate.
-As a recycling facility representative, I want to update my accepted materials so that users always see accurate information.
-As a recycling facility representative, I want to view user visit data so that I can adjust my operating hours.
-As a recycling facility representative, I want to communicate with admins so that I can report problems or changes.
-As an admin, I want to add or remove recycling facilities so that users always have up-to-date information.
-As an admin, I want to monitor site activity through a dashboard so that I can understand usage patterns.
-As an admin, I want to manage user access and block harmful activity so that the platform remains safe.
-As an admin, I want to view and respond to user feedback so that I can improve the service.
-As an admin, I want to ensure all stored data is encrypted so that the system remains secure.
-As a superuser, I want to update facility information directly so that data accuracy is maintained.
-As an executive, I want to view company performance data so that I can evaluate overall impact.
-As an employee, I want to use the routing system so that I can assist in collection or delivery tasks.
-As a developer, I want to use an API so that I can build integrations and new app features.
-As a company, I want the website to be easy to use so that staff and users can operate it efficiently.
+As a user, I want to enter my zip code and see nearby recycling centers so that I can easily find where to drop off my waste.
+As a user, I want to view what materials each center accepts so that I don’t bring items they can’t handle.
+As a user, I want to check each center’s opening hours so that I can plan my drop-offs conveniently.
+As a user, I want to view centers on a map so that I can visualize which are closest to my location.
+As a user, I want to save my preferred recycling centers so that I can access them quickly next time.
+As a user, I want to see if centers are currently open or closed so that I don’t waste time driving there.
+As a user, I want to see public recycling bins and special drop-off sites around me so that I know all disposal options.
+As a user, I want to view upcoming community recycling or safe disposal events so that I can take part in them.
+As a user, I want to subscribe for notifications about new events or collection days so that I stay informed.
+As a user, I want to filter centers by material type or environmental certification so that I can recycle responsibly.
+As a user, I want to get route suggestions based on my saved centers so that I can plan efficient recycling trips.
+As a user, I want to give feedback about a center or report incorrect information so that others benefit from accurate data.
+As an administrator, I want to add, update, or remove recycling center information so that users always see up-to-date details.
+As an administrator, I want to view user feedback and usage data so that I can identify issues and improve services.
+As an administrator, I want to communicate directly with facility representatives so that I can coordinate updates efficiently.
+As an administrator, I want to monitor recycling activity by area so that I can understand participation across regions.
+As an administrator, I want to review requests from new facilities to join the platform so that I can expand coverage.
+As a facility representative, I want to update what materials we accept so that users know what can be brought in.
+As a facility representative, I want to view upcoming user drop-offs so that I can plan staff and equipment needs.
+As a facility representative, I want to contact administrators directly so that I can resolve issues quickly.
+As a facility representative, I want to share data about collected materials so that environmental impact can be tracked.
+As a company partner, I want to see aggregate data about recycling volumes so that I can evaluate sustainability efforts.
+As a community member, I want to suggest new drop-off locations so that recycling becomes easier for everyone.
+As a researcher, I want to access anonymized recycling statistics so that I can study community recycling behavior.
+As a user, I want to see how much waste I’ve diverted over time so that I can track my personal environmental impact.

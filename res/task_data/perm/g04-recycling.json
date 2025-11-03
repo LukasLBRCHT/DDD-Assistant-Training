@@ -1,0 +1,98 @@
+{
+  "domain-information":
+  [	"As a user, I want to enter my zip code and see nearby recycling centers so that I can easily find where to drop off my waste.",
+	"As a user, I want to view what materials each center accepts so that I don’t bring items they can’t handle.",
+	"As a user, I want to check each center’s opening hours so that I can plan my drop-offs conveniently.",
+	"As a user, I want to view centers on a map so that I can visualize which are closest to my location.",
+	"As a user, I want to save my preferred recycling centers so that I can access them quickly next time.",
+	"As a user, I want to see if centers are currently open or closed so that I don’t waste time driving there.",
+	"As a user, I want to see public recycling bins and special drop-off sites around me so that I know all disposal options.",
+	"As a user, I want to view upcoming community recycling or safe disposal events so that I can take part in them.",
+	"As a user, I want to subscribe for notifications about new events or collection days so that I stay informed.",
+	"As a user, I want to filter centers by material type or environmental certification so that I can recycle responsibly.",
+	"As a user, I want to get route suggestions based on my saved centers so that I can plan efficient recycling trips.",
+	"As a user, I want to give feedback about a center or report incorrect information so that others benefit from accurate data.",
+	"As an administrator, I want to add, update, or remove recycling center information so that users always see up-to-date details.",
+	"As an administrator, I want to view user feedback and usage data so that I can identify issues and improve services.",
+	"As an administrator, I want to communicate directly with facility representatives so that I can coordinate updates efficiently.",
+	"As an administrator, I want to monitor recycling activity by area so that I can understand participation across regions.",
+	"As an administrator, I want to review requests from new facilities to join the platform so that I can expand coverage.",
+	"As a facility representative, I want to update what materials we accept so that users know what can be brought in.",
+	"As a facility representative, I want to view upcoming user drop-offs so that I can plan staff and equipment needs.",
+	"As a facility representative, I want to contact administrators directly so that I can resolve issues quickly.",
+	"As a facility representative, I want to share data about collected materials so that environmental impact can be tracked.",
+	"As a company partner, I want to see aggregate data about recycling volumes so that I can evaluate sustainability efforts.",
+	"As a community member, I want to suggest new drop-off locations so that recycling becomes easier for everyone.",
+	"As a researcher, I want to access anonymized recycling statistics so that I can study community recycling behavior.",
+	"As a user, I want to see how much waste I’ve diverted over time so that I can track my personal environmental impact."
+],
+  "domain objects": [
+  {"name": "Recycling Community Member", "desc": "individual participating in local recycling activities", "attributes": ["Personal Recycling Data"]},
+  {"name": "Personal Recycling Data", "desc": "records of a member’s recycling behavior"},
+  {"name": "Drop-Off", "desc": "act of depositing recyclable materials at a designated site"},
+  {"name": "Recycling Center", "desc": "facility where recyclable materials are collected and processed","attributes": ["Drop-Off Site","Zip Code","Accepted Material Type","Opening Hours","User Visit Data","Center Staff","Center Equipment"]},
+  {"name": "Drop-Off Site", "desc": "specific location within a recycling center where materials are dropped off"},
+  {"name": "Zip Code", "desc": "geographical identifier for locating recycling centers"},
+  {"name": "Accepted Material Type", "desc": "types of recyclable materials a center processes"},
+  {"name": "Opening Hours", "desc": "time frames when a recycling center accepts materials"},
+  {"name": "User Visit Data", "desc": "data about member visits and usage patterns at centers"},
+  {"name": "Center Staff", "desc": "employees working at a recycling center"},
+  {"name": "Center Equipment", "desc": "machinery or tools used to process recyclables"},
+  {"name": "Center Feedback", "desc": "user-provided evaluations or comments about a recycling center"},
+  {"name": "Community Recycling Events", "desc": "public recycling drives or awareness events organized in the community"},
+  {"name": "Recycling Facility Representative", "desc": "staff member managing information and operations for a specific recycling facility"},
+  {"name": "Administrator", "desc": "system or platform manager overseeing centers, users, and companies"},
+  {"name": "Join Request", "desc": "application from a facility to join the recycling platform"},
+  {"name": "Drop-Off Suggestion", "desc": "user-proposed addition or improvement to drop-off sites"},
+  {"name": "Company", "desc": "organization that owns or operates recycling centers","attributes": ["Recycling Data"]},
+  {"name": "Recycling Data", "desc": "aggregated data about recycling activity, performance, or materials processed"},
+  {"name": "Researcher", "desc": "individual analyzing recycling data for studies or optimization"},
+  {"name": "Company Partner", "desc": "external organization collaborating with a company on recycling initiatives"}
+],
+  "associations": [
+  {"from": "Recycling Community Member", "to": "Drop-Off", "desc": "community members perform drop-offs at recycling centers"},
+  {"from": "Drop-Off", "to": "Drop-Off Site", "desc": "each drop-off occurs at a specific drop-off site"},
+  {"from": "Recycling Community Member", "to": "Community Recycling Events", "desc": "community members participate in recycling events"},
+  {"from": "Recycling Community Member", "to": "Center Feedback", "desc": "members provide feedback about recycling centers"},
+  {"from": "Center Feedback", "to": "Recycling Center", "desc": "feedback refers to a specific recycling center"},
+  {"from": "Recycling Community Member", "to": "Drop-Off Suggestion", "desc": "members submit suggestions for new or improved drop-off sites"},
+  {"from": "Recycling Facility Representative", "to": "Recycling Center", "desc": "representatives manage data and operations for their assigned centers"},
+  {"from": "Recycling Facility Representative", "to": "Join Request", "desc": "representatives send join requests to register facilities on the platform"},
+  {"from": "Recycling Facility Representative", "to": "Administrator", "desc": "representatives and administrators communicate about facility updates or issues"},
+  {"from": "Administrator", "to": "Center Feedback", "desc": "administrators review and respond to center feedback submitted by members"},
+  {"from": "Administrator", "to": "Drop-Off Suggestion", "desc": "administrators evaluate and act on user drop-off suggestions"},
+  {"from": "Administrator", "to": "Company", "desc": "administrators manage or coordinate with registered recycling companies"},
+    {"from": "Administrator", "to": "Recycling Data", "desc": "Administrator collects Recycling Data for the company"},
+  {"from": "Researcher", "to": "Recycling Data", "desc": "researchers analyze company recycling data for insights"},
+  {"from": "Company Partner", "to": "Recycling Data", "desc": "company partners access or contribute to shared recycling data"}
+],
+  "subdomains": {
+      "Recycling": {
+           "objects" : ["Recycling Community Member","Personal Recycling Data","Drop-Off","Recycling Center","Drop-Off Site","Zip Code","Accepted Material Type","Opening Hours","User Visit Data","Center Staff","Center Equipment","Community Recycling Events"]
+      },
+      "Organization": {
+           "objects" : ["Recycling Facility Representative","Administrator","Join Request","Center Feedback","Drop-Off Suggestion"]
+      },
+      "Statistics": {
+           "objects" : ["Company","Recycling Data","Researcher","Company Partner"]
+      },
+      "subdomain connections": ["Recycling--Organization","Organization--Statistics"]
+    },
+  "bounded contexts": {
+        "Recycling" : {
+			"derived from": "Recycling Subdomain",
+			"objects": ["Recycling Community Member","Personal Recycling Data","Drop-Off","Recycling Center","Drop-Off Site","Zip Code","Accepted Material Type","Opening Hours","User Visit Data","Center Staff","Center Equipment","Community Recycling Events"],
+			"changes" : []
+		},
+		"Organization" : {
+			"derived from": "Organization Subdomain",
+			"objects": ["Administrator","Recycling Facility Representative","Center Join Request","User Center Feedback","User Drop-Off Suggestion"],
+			"changes" : ["Center Feedback -> User Center Feedback","Drop-Off -> User Drop-Off Suggestion","Join Request -> Center Join Request"]
+		},
+	  "Statistics": {
+		  "derived from": "Statistics Subdomain",
+		  "objects": ["Company","Company Recycling Data","Researcher","Company Partner"],
+          "changes": ["Recycling Data -> Company Recycling Data"]
+	  }
+	}
+}

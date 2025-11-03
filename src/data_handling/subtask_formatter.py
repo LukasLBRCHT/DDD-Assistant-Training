@@ -4,7 +4,9 @@ user_story_dir = "../../res/base_data/stories"
 subtask_format_url = "../util/subtask_format.txt"
 list_of_done_domains = [
     "g02-federalspending",
-    "g03-loudoun"
+    "g03-loudoun",
+    "g26-racdam",
+    "g04-recycling"
 ]
 
 

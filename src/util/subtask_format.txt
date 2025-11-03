@@ -7,32 +7,32 @@
       {{"name": "", "desc": ""}}
     ],
   "associations": [
-      {{"from": "", "to":  "", "desc": ""}},
-      {{"from": "", "to":  "", "desc": ""}},
-      {{"from": "", "to":  "", "desc": ""}}
+      {{"from": "", "to": "", "desc": ""}},
+      {{"from": "", "to": "", "desc": ""}},
+      {{"from": "", "to": "", "desc": ""}}
     ],
   "subdomains": {{
       "subdomain1": {{
-           "entities" : ["entity1","entity2","..."]
+           "objects" : ["entity1","entity2","..."]
       }},
       "subdomain2": {{
-           "entities" : ["entity3","entity4","..."]
+           "objects" : ["entity3","entity4","..."]
       }},
       "subdomain3": {{
-           "entities" : ["entity2","entity4","..."]
+           "objects" : ["entity2","entity4","..."]
       }},
       "subdomain connections": ["subdomain1--subdomain2","..."]
     }},
   "bounded contexts": {{
-        "bounded context 1" : {{
-			"derived from": "subdomain1",
-			"objects": ["object1","object2","..."],
-			"changes" : ["object3 -> alternation of object3", "... -> ..."]
-		}},
-		"bounded context 2" : {{
-			"derived from": "subdomain2",
-			"objects": ["object1","object2","..."],
-			"changes" : []
-		}}
+      "bounded context 1" : {{
+	  	"derived from": "subdomain1",
+	  	"objects": ["object1","object2","..."],
+	  	"changes" : ["object3 -> alternation of object3", "... -> ..."]
+	  }},
+	  "bounded context 2" : {{
+	  	"derived from": "subdomain2",
+	  	"objects": ["object1","object2","..."],
+	  	"changes" : []
+	  }}
 	}}
 }}
