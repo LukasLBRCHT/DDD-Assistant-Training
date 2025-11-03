@@ -1,0 +1,146 @@
+{
+  "domain-information":
+  [	"As an archivist, I want to apply licenses or rights statements to files so that I know how they can be used.",
+	"As an archivist, I want to restrict individual or groups of files from view or by user/IP so that sensitive material is protected.",
+	"As an archivist, I want to set restriction end dates on files so that files become accessible automatically when appropriate.",
+	"As an archivist, I want to redact portions of files temporarily so that non-sensitive information can be shared safely.",
+	"As an archivist, I want to upload single or groups of files and automatically generate access copies so that file management is efficient.",
+	"As an archivist, I want to automatically create unique identifiers and embed metadata in files so that management and tracking are accurate.",
+	"As an archivist, I want to generate technical metadata for files so that I know file size, format, and other properties for preservation purposes.",
+	"As an archivist, I want to distinguish between files digitized for preservation and those for access so that I apply the right preservation actions.",
+	"As an archivist, I want to link electronic publications to citations so that research outputs are connected and discoverable.",
+	"As an archivist, I want to manage scans for research requests, educational use, or staff-generated materials so that they can be reused efficiently.",
+	"As an archivist, I want to track file usage and downloads so that I know which materials have been accessed.",
+	"As an archivist, I want to provide access to digital copies of unprocessed or donor-contributed materials so that authorized users can use them.",
+	"As a researcher, I want to search files by keyword, tags, structured data, or OCRed text so that I can find relevant materials across collections.",
+	"As a researcher, I want to view thumbnails, stream media, and preview excerpts so that I can select files for download or licensing.",
+	"As a researcher, I want to download files, request analog copies, or order reproductions so that I can use materials in publications or research.",
+	"As a researcher, I want accurate cross-collection citation data so that I can reference materials correctly and find them again.",
+	"As a researcher, I want to share links, reports, or files on social media or with staff so that research outputs are disseminated appropriately.",
+	"As a researcher, I want to understand the copyright status of files so that I comply with usage restrictions.",
+	"As a donor representative, I want to supply incremental accruals and access descriptive information or scanned images from my institution so that collections are kept up to date and usable.",
+	"As a donor representative, I want to view thumbnails and select images for use in exhibits or reports so that I can manage my institution's material.",
+	"As an archivist, I want to browse files in collections and view inventories or non-public finding aids so that I can provide research services efficiently.",
+	"As an archivist, I want to search images by photographer, subject, location, rights, or by uploading an image so that I can locate items without full metadata.",
+	"As an administrator, I want to create user groups, roles, and assign permissions or rights so that access to files and metadata is controlled appropriately.",
+	"As an administrator, I want to enable login via Active Directory and allow researchers to reset passwords so that account management is simplified.",
+	"As an administrator, I want to limit visibility of certain metadata fields by user group so that sensitive or internal information is protected."
+],
+  "domain objects": [
+	  {"name": "Archivist", "desc": "Manages, preserves, and provides access to archival materials."},
+	  {"name": "File", "desc": "Digital item in the archive containing content and metadata.", "attributes": ["Publication","Share Data","Copyright Status", "Restriction End Date", "Metadata"]},
+	  {"name": "Publication", "desc": "Published work referencing archival materials."},
+	  {"name": "Share Data", "desc": "Information or links for external file access."},
+	  {"name": "Copyright Status", "desc": "Legal ownership and usage rights of a file."},
+	  {"name": "Restriction End Date", "desc": "Date when a restricted file becomes public."},
+	  {"name": "License", "desc": "Defines how a file may be used or shared."},
+	  {"name": "Access Copy", "desc": "Lower-resolution version of a file for public access."},
+	  {"name": "Metadata", "desc": "Information describing and managing a file.", "attributes": ["File Identifier","File Size","File Format", "Preservation Type"]},
+	  {"name": "File Identifier", "desc": "Unique ID assigned to a file."},
+	  {"name": "File Size", "desc": "Amount of digital storage a file occupies."},
+	  {"name": "File Format", "desc": "Technical format of the file, e.g. PDF, TIFF."},
+	  {"name": "Preservation Type", "desc": "Indicates if the file is for preservation or access."},
+	  {"name": "Citation", "desc": "Reference linking a publication to source materials."},
+	  {"name": "Researcher", "desc": "User accessing archival materials for study or publication."},
+	  {"name": "Research Request", "desc": "Request to locate or access materials.", "attributes": ["Search Keyword","Search Tag","Structured Data","OCRed Text"]},
+	  {"name": "File Preview", "desc": "Simplified view of a file for browsing or discovery.", "attributes": ["Thumbnail","Streaming Media","File Excerpt"]},
+	  {"name": "Thumbnail", "desc": "Small image preview of a file."},
+	  {"name": "Streaming Media", "desc": "Playable preview of audio or video content."},
+	  {"name": "File Excerpt", "desc": "Short extract or snippet of file content."},
+	  {"name": "Download", "desc": "Process of obtaining the data of a publication copy"},
+	  {"name": "Collection", "desc": "Group of related files organized by provenance or topic."},
+	  {"name": "Analog Copy", "desc": "Physical reproduction of a digital or original item."},
+	  {"name": "Reproduction", "desc": "Duplicate created for research or publication."},
+	  {"name": "Publication Request", "desc": "Request to use archival materials in a publication."},
+	  {"name": "Donor Institution", "desc": "Organization contributing materials to the archive."},
+	  {"name": "Donor Representative", "desc": "Person managing contributions for a donor institution."},
+	  {"name": "Incremental Accrual", "desc": "New materials added to an existing collection."},
+	  {"name": "Finding Aid", "desc": "Guide describing the contents of a collection."},
+	  {"name": "Image Search Request", "desc": "Search for images by specific criteria", "attributes": ["Photographer","Image Subject","Image Location","Image Rights","Reference Image"]},
+	  {"name": "Photographer", "desc": "The individual or organization who captured the image"},
+	  {"name": "Image Subject", "desc": "The main content, person, object, or scene depicted in the image"},
+	  {"name": "Image Location", "desc": "The geographical place or setting where the image was captured"},
+	  {"name": "Image Rights", "desc": "The legal permissions and restrictions governing how the image can be used"},
+	  {"name": "Reference Image", "desc": "An example image used to find visually similar images in the search"},
+	  {"name": "Administrator", "desc": "Manages users, permissions, and system settings."},
+	  {"name": "User Group", "desc": "Set of users sharing common access rights."},
+	  {"name": "User Role", "desc": "Defines user permissions and responsibilities."},
+	  {"name": "Access Permission", "desc": "Specifies what a user or group can do."}
+],
+  "associations": [
+	  {"from": "Archivist", "to": "File", "desc": "Archivist creates, updates, and manages Files within the archive"},
+	  {"from": "Archivist", "to": "Finding Aid", "desc": "Archivist maintains Finding Aids that describe Collections and Files"},
+	  {"from": "Archivist", "to": "Image Search", "desc": "Archivist uses Image Search to locate or verify visual materials"},
+	  {"from": "File", "to": "Access Copy", "desc": "File produces an Access Copy that provides limited public access"},
+	  {"from": "Publication", "to": "Citation", "desc": "Publication includes Citations that reference archival materials"},
+	  {"from": "Researcher", "to": "Publication Request", "desc": "Researcher submits a Publication Request to use Files in publications"},
+	  {"from": "Publication", "to": "Analog Copy", "desc": "Publication may reference an Analog Copy as a physical source"},
+	  {"from": "Publication", "to": "Reproduction", "desc": "Publication may use a Reproduction created from archival Files"},
+	  {"from": "Researcher", "to": "Research Request", "desc": "Researcher creates a Research Request to locate relevant Files"},
+	  {"from": "Research Request", "to": "File Preview", "desc": "Research Request retrieves File Previews to support discovery"},
+	  {"from": "Image Search Request", "to": "File Preview", "desc": "Image Search Request displays File Previews of matching images"},
+	  {"from": "File Preview", "to": "File", "desc": "File Preview represents a simplified view of a File"},
+	  {"from": "Researcher", "to": "Download", "desc": "Researcher performs a Download to obtain accessible Files"},
+	  {"from": "Download", "to": "Access Copy", "desc": "Download retrieves a Access Copy"},
+	  {"from": "Collection", "to": "File", "desc": "Collection contains multiple Files"},
+	  {"from": "Finding Aid", "to": "File", "desc": "Finding Aid describes the Files included in a Collection"},
+	  {"from": "Finding Aid", "to": "Collection", "desc": "Finding Aid provides detailed information about a Collection"},
+	  {"from": "Archivist", "to": "Collection", "desc": "Archivist organizes and maintains Collections"},
+	  {"from": "Donor Institution", "to": "Donor Representative", "desc": "Donor Institution appoints a Donor Representative to manage materials"},
+	  {"from": "Donor Representative", "to": "Incremental Accrual", "desc": "Donor Representative submits Incremental Accruals to update Collections"},
+	  {"from": "Donor Representative", "to": "Collection", "desc": "Donor Representative oversees Collections donated by their institution"},
+	  {"from": "Administrator", "to": "User Group", "desc": "Administrator creates and manages User Groups with shared permissions"},
+	  {"from": "Administrator", "to": "User Role", "desc": "Administrator assigns User Roles"},
+	  {"from": "User Group", "to": "Access Permission", "desc": "User Group holds Access Permissions shared by its members"},
+	  {"from": "User Role", "to": "Access Permission", "desc": "User Role determines Access Permissions granted to a user"},
+	  {"from": "Access Permission", "to": "Archivist", "desc": "Access Permissions define what an Archivist can view, access or edit"},
+	  {"from": "Access Permission", "to": "Researcher", "desc": "Access Permissions define what an Researcher can view, access or edit"},
+	  {"from": "Access Permission", "to": "Donor Representative", "desc": "Access Permissions define what an Donor Representative can view, access or edit"},
+	  {"from": "Access Permission", "to": "Administrator", "desc": "Access Permissions define what an Administrator can view, access or edit"}
+],
+  "subdomains": {
+      "Archiving": {
+           "entities" : ["Archivist","File","Collection","Finding Aid","Image Search Request","Photographer","Image Subject","Image Location","Image Rights","Reference Image","File Preview"]
+      },
+      "File Management": {
+           "entities" : ["File", "Publication", "Share Data","Copyright Status", "Restriction End Date", "Metadata", "File Identifier","File Size","File Format", "Preservation Type","Collection", "Access Copy", "License", "Citation", "Reproduction", "Analog Copy"]
+      },
+      "Researching": {
+           "entities" : ["Researcher", "Research Request","Search Keyword","Search Tag","Structured Data","OCRed Text", "Publication Request", "Download", "File Preview","Thumbnail","Streaming Media","File Excerpt"]
+      },
+	  "Donation": {
+		  "entities" : ["Donor", "Donor Representative", "Incremental Accrual", "Collection"]
+	  },
+	  "Administration": {
+		  "entities" : ["Administrator", "User Group", "User Role", "Access Permission"]
+	  },
+      "subdomain connections": ["Archiving--File Management","Researching--File Management","Donation--File Management","Administration--Archiving","Administration--Researching","Administration--Donation"]
+    },
+  "bounded contexts": {
+		"Archiving" : {
+			"derived from": "Archiving Subdomain",
+			"objects": ["Archivist","Archival File","Archival Collection","Finding Aid","Image Search Request","Photographer","Image Subject","Image Location","Image Rights","Reference Image","Archivist File Preview"],
+			"changes" : ["File -> Archival File", "Collection -> Archival Collection","File Preview -> Archivist File Preview"]
+		},
+		"File Management" : {
+			"derived from": "File Management Subdomain",
+			"objects": ["File", "Publication", "Share Data","Copyright Status", "Restriction End Date", "Metadata", "File Identifier","File Size","File Format", "Preservation Type","Collection", "Access Copy", "License", "Citation", "Reproduction", "Analog Copy"],
+			"changes" : []
+		},
+	  "Researching" : {
+			"derived from": "Researching Subdomain",
+			"objects": ["Researcher", "Research Request","Search Keyword","Search Tag","Structured Data","OCRed Text", "Publication Request", "Download", "Researcher File Preview","Thumbnail","Streaming Media","File Excerpt"],
+			"changes" : ["File Preview -> Researcher File Preview"]
+		},
+	  "Donation" : {
+			"derived from": "Donation Subdomain",
+			"objects": ["Donor", "Donor Representative", "Incremental Accrual", "Donor Collection"],
+			"changes" : ["Collection -> Donor Collection"]
+		},
+	  "bounded context 5" : {
+			"derived from": "Administration",
+			"objects": ["Administrator", "User Group", "User Role", "Access Permission"],
+			"changes" : []
+		}
+	}
+}
