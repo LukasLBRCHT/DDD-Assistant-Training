@@ -1,25 +1,25 @@
-As a data publisher, I want to upload and publish datasets so that others can access public financial information.
-As a data publisher, I want to edit or delete my datasets so that I can keep my data accurate and up to date.
-As a data publisher, I want to import data from Excel, JSON, or Google Sheets so that I can easily prepare my datasets.
-As a data publisher, I want to preview and validate my data before publishing so that I can correct any errors.
-As a data publisher, I want to hide a dataset before publishing it so that I can finish preparing it privately.
-As a data publisher, I want my datasets to update automatically when source files change so that published data stays current.
-As a data publisher, I want to visualize my data on maps so that users can better understand geographic patterns.
-As a data publisher, I want to add custom geographical sources so that I can improve map visualizations.
-As a data consumer, I want to search for public datasets by title or metadata so that I can find relevant data.
-As a data consumer, I want to filter, sort, and group data so that I can analyze it from different perspectives.
-As a data consumer, I want to download data or images from visualizations so that I can use them offline or in reports.
-As a data consumer, I want to share visualizations through links or social media so that others can see my findings.
-As a data consumer, I want to view consistent and clear color schemes on maps so that I can easily interpret data.
-As a data consumer, I want to read textual descriptions alongside visualizations so that I understand their context.
-As an API user, I want to query datasets and receive results in CSV or JSON so that I can integrate them into my applications.
-As an API user, I want to combine data from multiple datasets so that I can build comprehensive analyses.
-As an API user, I want to normalize data by population, GDP, or area so that I can compare values across contexts.
-As an API user, I want to customize colors and styles of embedded visualizations so that they fit my platform’s design.
-As a developer, I want to modify branding elements like logos and colors so that I can adapt the interface to my organization.
-As a platform administrator, I want to view, hide, or delete datasets so that I can manage the content available to users.
-As a platform administrator, I want to monitor all published datasets so that I can ensure proper data governance.
-As a platform administrator, I want to translate the interface for embedded visualizations so that it supports multiple languages.
-As a community member, I want to read blog posts about fiscal data projects so that I can stay connected with the open data community.
-As a community member, I want to explore examples of data visualizations so that I can learn how to create my own.
-As a user, I want to choose my username so that my datasets and contributions are easier to find.
+As a Data Publisher, I want to import and prepare fiscal data from multiple file formats, so that I can make government and organizational spending data available for public use.
+As a Data Publisher, I want to model and update the structure of my datasets, so that I can ensure data accuracy and compatibility with fiscal standards.
+As a Data Publisher, I want to review and correct my datasets after publication, so that I can keep published information accurate and trustworthy.
+As a Data Publisher, I want to manage the visibility of my datasets, so that I can control when they are ready for public access.
+As a Data Publisher, I want to automatically update published datasets when the source files change, so that data consumers always see current information.
+As a Data Publisher, I want to provide geographic and contextual information for datasets, so that users can visualize and interpret fiscal data spatially.
+As a Data Publisher, I want to validate uploaded files, so that I can identify and correct issues before publication.
+As a Platform Administrator, I want to oversee all published datasets, so that I can ensure compliance with platform policies and remove or hide inappropriate data.
+As a Platform Administrator, I want to handle requests for dataset removal or correction, so that the platform maintains data quality and legal compliance.
+As a Platform Administrator, I want to manage user roles and privileges, so that only authorized users can modify or publish datasets.
+As a Data Consumer, I want to search and filter public datasets by title or metadata, so that I can quickly find relevant fiscal data.
+As a Data Consumer, I want to visualize datasets as maps, treemaps, or charts, so that I can better understand spending patterns and trends.
+As a Data Consumer, I want to view clear textual explanations alongside visualizations, so that I can interpret the data correctly.
+As a Data Consumer, I want to compare data across years, currencies, or regions, so that I can analyze trends and relative values.
+As a Data Consumer, I want to download underlying data or charts, so that I can reuse them in my own research or reports.
+As a Data Consumer, I want to share dataset visualizations or filtered views with others, so that fiscal insights can reach a broader audience.
+As a Researcher, I want to access multiple related datasets through shared metadata, so that I can conduct cross-dataset analyses.
+As a Researcher, I want to normalize fiscal measures by population, area, or GDP, so that I can compare datasets fairly across contexts.
+As a Community Member, I want to learn from examples of fiscal data projects, so that I can apply similar approaches in my own transparency work.
+As a Community Member, I want to highlight and share open data initiatives, so that others can contribute to or learn from them.
+As a Developer, I want to access an API that exposes datasets and metadata, so that I can integrate fiscal data into external applications.
+As a Developer, I want to retrieve geographic and socioeconomic context through the API, so that I can enrich data-driven visualizations.
+As a Developer, I want to customize visualization styles and layouts, so that I can adapt the presentation to my organization’s branding.
+As an API User, I want to obtain normalized and aggregated fiscal measures, so that I can build comparative analyses and dashboards.
+As a Platform Stakeholder, I want to monitor the publication and usage of datasets, so that I can evaluate the platform’s impact on fiscal transparency.
