@@ -6,7 +6,9 @@ list_of_done_domains = [
     "g02-federalspending",
     "g03-loudoun",
     "g26-racdam",
-    "g04-recycling"
+    "g04-recycling",
+    "g05-openspending",
+    "g12-camperplus"
 ]
 
 

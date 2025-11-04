@@ -82,7 +82,7 @@
         "Recycling" : {
 			"derived from": "Recycling Subdomain",
 			"objects": ["Recycling Community Member","Personal Recycling Data","Drop-Off","Recycling Center","Drop-Off Site","Zip Code","Accepted Material Type","Opening Hours","User Visit Data","Center Staff","Center Equipment","Community Recycling Events"],
-			"changes" : []
+			"changes" : ["Drop-Off -> Drop-Off"]
 		},
 		"Organization" : {
 			"derived from": "Organization Subdomain",

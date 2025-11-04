@@ -13,13 +13,13 @@
     ],
   "subdomains": {{
       "subdomain1": {{
-           "objects" : ["entity1","entity2","..."]
+          "objects" : ["entity1","entity2","..."]
       }},
       "subdomain2": {{
-           "objects" : ["entity3","entity4","..."]
+          "objects" : ["entity3","entity4","..."]
       }},
       "subdomain3": {{
-           "objects" : ["entity2","entity4","..."]
+          "objects" : ["entity2","entity4","..."]
       }},
       "subdomain connections": ["subdomain1--subdomain2","..."]
     }},
