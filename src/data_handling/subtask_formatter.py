@@ -8,7 +8,8 @@ list_of_done_domains = [
     "g26-racdam",
     "g04-recycling",
     "g05-openspending",
-    "g12-camperplus"
+    "g12-camperplus",
+    "g19-alfred"
 ]
 
 

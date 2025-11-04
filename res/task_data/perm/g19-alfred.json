@@ -1,0 +1,111 @@
+{
+  "domain-information":
+  [	"As an OlderPerson, I want to control what personal data others can access about me so that my privacy is protected",
+	"As an OlderPerson, I want to hear and understand information clearly so that I can act on it appropriately",
+	"As an OlderPerson, I want everything prepared and ready to use so that I can start activities immediately",
+	"As an OlderPerson, I want to access assistance wherever I am so that I can maintain independence",
+	"As an OlderPerson, I want adjustments for my vision or hearing needs so that I can interact with tools and information effectively",
+	"As an OlderPerson, I want reminders for medication, appointments, and items to take with me so that I stay organized",
+	"As an OlderPerson, I want to know if I have taken my medication so that I avoid mistakes",
+	"As an OlderPerson, I want help to detect and respond to falls so that I stay safe at home and outside",
+	"As an OlderPerson, I want to quickly reach a trusted contact in an emergency so that I can get help fast",
+	"As an OlderPerson, I want guidance for moving around or navigating to destinations so that I can travel independently",
+	"As an OlderPerson, I want control over my home environment such as lights, heating, and security so that I can live comfortably",
+	"As an OlderPerson, I want to communicate with family and friends so that I maintain social connections",
+	"As an OlderPerson, I want to know about social or cultural activities nearby so that I can stay active and engaged",
+	"As an OlderPerson, I want opportunities for mental and physical exercises so that I stay healthy",
+	"As an OlderPerson, I want to track my progress in exercises and activities so that I can stay motivated",
+	"As an OlderPerson, I want help managing daily tasks like shopping or small payments so that I can live independently",
+	"As an OlderPerson, I want to receive guidance for healthy habits, diet, and body maintenance so that I can stay in good health",
+	"As a MedicalCaregiver, I want to see if my patient follows prescribed routines so that I can ensure proper care",
+	"As a MedicalCaregiver, I want to access vital health information like heart rate, blood pressure, and activity level so that I can monitor the person remotely",
+	"As a MedicalCaregiver, I want to receive alerts when urgent situations occur so that I can act quickly",
+	"As a MedicalCaregiver, I want to guide exercises and monitor performance so that the person stays safe and improves",
+	"As a SocialCaregiver, I want to detect stress or discomfort so that I can provide support",
+	"As an InformalCaregiver, I want to engage in activities with the person I care for so that we can connect and monitor wellbeing",
+	"As an OlderPerson or Caregiver, I want new activities and challenges suggested regularly so that I stay motivated and engaged",
+	"As an OlderPerson, I want to organize meetings or group activities with friends or peers so that I can maintain social interaction"
+],
+  "domain objects": [
+      {"name": "Older Person", "desc": "primary user receiving assistance and guidance", "attributes": ["Personal Data"]},
+      {"name": "Personal Data", "desc": "data describing identity and personal details of Older Person", "attributes": ["Health Data","Emergency Contact"]},
+      {"name": "Health Data", "desc": "medical and physiological information relevant for care and monitoring", "attributes": ["Heart Rate", "Blood Pressure","Activity Level"]},
+      {"name": "Heart Rate", "desc": "the rate at which the heart of the person beats"},
+	  {"name": "Blood Pressure", "desc": "statistic of the persons blood pressure"},
+	  {"name": "Activity Level", "desc": "determines how many activities the person is taking on"},
+	  {"name": "Emergency Contact", "desc": "trusted person contacted in case of emergency"},
+      {"name": "Schedule", "desc": "timeline of planned activities for Older Person"},
+      {"name": "Activity", "desc": "activity supporting health and wellbeing", "attributes": ["Exercise","Appointment","Medication Intake","Errand","Social Event","Community Event"]},
+      {"name": "Exercise", "desc": "physical activity to maintain or improve health"},
+      {"name": "Appointment", "desc": "scheduled meeting with healthcare or service provider"},
+      {"name": "Medication Intake", "desc": "event of taking a prescribed medication"},
+      {"name": "Medication", "desc": "drug prescribed to Older Person"},
+      {"name": "Errand", "desc": "task performed outside home such as shopping or transport"},
+      {"name": "Social Event", "desc": "interaction with friends or family"},
+      {"name": "Community Event", "desc": "organized social or cultural gathering in neighborhood"},
+      {"name": "Social Contact", "desc": "person close to Older Person for communication or support"},
+      {"name": "Medical Caregiver", "desc": "professional providing medical support or supervision"},
+      {"name": "Prescribed Routine", "desc": "structured set of activities recommended by Medical Caregiver"},
+      {"name": "Health Incident", "desc": "critical situation requiring immediate attention"},
+      {"name": "Alert", "desc": "notification triggered by emergency or abnormal condition"},
+      {"name": "Guidance", "desc": "assistance provided to Older Person", "attributes": ["Health Guidance","Home Environment","Travel Routing"]},
+      {"name": "Health Guidance", "desc": "information or recommendation for healthy behavior"},
+      {"name": "Home Environment", "desc": "physical space of Older Person relevant for safety and comfort"},
+      {"name": "Travel Routing", "desc": "directions and support for navigation or mobility"}
+    ],
+  "associations": [
+      {"from": "Older Person", "to": "Schedule", "desc": "Older Person manages Schedule"},
+      {"from": "Schedule", "to": "Activity", "desc": "Schedule contains Activities"},
+      {"from": "Medical Caregiver", "to": "Exercise", "desc": "Medical Caregiver supervises Exercise"},
+      {"from": "Medical Caregiver", "to": "Prescribed Routine", "desc": "Medical Caregiver defines Prescribed Routine"},
+      {"from": "Prescribed Routine", "to": "Schedule", "desc": "Prescribed Routine shapes Schedule"},
+      {"from": "Older Person", "to": "Health Incident", "desc": "Older Person can experience Health Incident"},
+      {"from": "Health Incident", "to": "Medical Caregiver", "desc": "Health Incident reported to Medical Caregiver"},
+      {"from": "Older Person", "to": "Social Contact", "desc": "Older Person has Social Contact relationships"},
+      {"from": "Older Person", "to": "Guidance", "desc": "Older Person receives Guidance"},
+      {"from": "Medical Caregiver", "to": "Health Data", "desc": "Medical Caregiver reviews Health Data"},
+      {"from": "Activity", "to": "Health Data", "desc": "Health Activity influences Health Data"},
+      {"from": "Medication Intake", "to": "Medication", "desc": "Medication Intake refers to Medication"},
+      {"from": "Travel Routing", "to": "Activity", "desc": "Travel Routing supports Activities outside home"}
+    ],
+  "subdomains": {
+      "Older Person": {
+          "objects" : ["Older Person","Personal Data","Health Data","Heart Rate", "Blood Pressure","Activity Level","Emergency Contact", "Medication","Social Contact"]
+      },
+      "Scheduling": {
+          "objects" : ["Schedule","Activity","Exercise","Appointment","Medication Intake","Errand","Social Event","Community Event"]
+      },
+      "Care taking": {
+          "objects" : ["Medical Caregiver","Prescribed Routine","Health Incident","Alert"]
+      },
+	  "Guidance": {
+		  "objects" : ["Guidance","Health Guidance","Home Environment","Travel Routing"]
+	  },
+      "subdomain connections": ["Older Person--Scheduling","Older Person--Care taking","Older Person--Guidance","Care taking--Scheduling","Guidance--Scheduling"]
+    },
+  "bounded contexts": {
+      "Older Person" : {
+	  	"derived from": "Older Person Subdomain",
+	  	"objects": ["Older Person","Personal Data","Health Data","Heart Rate", "Blood Pressure","Activity Level","Emergency Contact", "Medication","Social Contact"],
+	  	"changes" : []
+	  },
+	  "Health Scheduling" : {
+	  	"derived from": "Scheduling Subdomain",
+	  	"objects": ["Schedule","Health Activity","Exercise","Appointment","Medication Intake"],
+	  	"changes" : ["Activity -> Health Activity"]
+	  },
+	  "Personal Scheduling" : {
+	  	"derived from": "Scheduling Subdomain",
+	  	"objects": ["Schedule","Personal Activity","Errand","Social Event","Community Event"],
+	  	"changes" : ["Activity -> Personal Activity"]
+	  },
+	  "Care taking": {
+		  "objects": ["Medical Caregiver","Prescribed Routine","Health Incident","Alert"],
+		  "changes": []
+	  },
+	  "Guidance": {
+		  "objects": ["Guidance","Health Guidance","Home Environment","Travel Routing"],
+		  "changes": []
+	  }
+	}
+}
