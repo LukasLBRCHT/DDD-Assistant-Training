@@ -33,7 +33,7 @@
     {"name": "Camper Records", "desc": "All administrative and personal data about a camper", "attributes": ["Emergency Information", "Medical Information"]},
     {"name": "Emergency Information", "desc": "Details for quick response in case of emergencies"},
     {"name": "Medical Information", "desc": "Health-related data and medical needs of a camper"},
-	  {"name": "Camp Schedule", "desc": "Overview of organized events taking place at the camp"},
+    {"name": "Camp Schedule", "desc": "Overview of organized events taking place at the camp"},
     {"name": "Parent", "desc": "Registers and manages their child’s participation and communication with the camp"},
     {"name": "Camp", "desc": "The main entity representing the summer camp and its internal structure", "attributes": ["Activity", "Staff", "Camp Rules", "Camp Facility", "Camp Schedule"]},
     {"name": "Activity", "desc": "Planned events, lessons, or games scheduled for campers"},
