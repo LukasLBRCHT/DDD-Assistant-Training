@@ -12,7 +12,8 @@ list_of_done_domains = [
     "g19-alfred",
     "g13-planningpoker",
     "g21-badcamp",
-    "30-communityaggriculture"
+    "30-communityaggriculture",
+    "31-bikesharing"
 ]
 
 
