@@ -9,7 +9,9 @@ list_of_done_domains = [
     "g04-recycling",
     "g05-openspending",
     "g12-camperplus",
-    "g19-alfred"
+    "g19-alfred",
+    "g13-planningpoker",
+    "g21-badcamp"
 ]
 
 

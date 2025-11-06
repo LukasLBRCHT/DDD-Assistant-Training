@@ -1,0 +1,121 @@
+{
+  "domain-information":
+  [	"As a farmer, I want to plan my crop varieties in my harvest calendar before the season starts, so that I can meet member expectations.",
+	"As a member, I want to sign up for a weekly produce box, so that I can receive fresh, local vegetables regularly.",
+	"As a farmer, I want to share my expected harvest calendar, so that members know what to expect each month.",
+	"As a delivery coordinator, I want to assign pick-up points to members, so that distribution runs efficiently.",
+    "As a delivery coordinator, I want to assign a delivery driver to a delivery.",
+    "As a delivery driver, I want to deliver the produce boxes to the correct pick-up points.",
+	"As a farmer, I want to track how many boxes are needed each week, so that I can harvest the right amount of produce.",
+	"As a member, I want to see which farms contributed to my box, so that I can learn more about the growers.",
+	"As a farm cooperative manager, I want to calculate fair payouts to farmers based on box contributions, so that all partners are compensated fairly.",
+	"As a member, I want to provide feedback about box contents, so that the cooperative can adjust future harvests.",
+	"As a farmer, I want to notify members when weather affects crops, so that expectations remain realistic.",
+	"As a new member, I want to read about seasonal produce varieties, so that I can plan my meals accordingly.",
+	"As a coordinator, I want to maintain a list of local partners like bakeries or dairies, so that boxes can include add-on products.",
+	"As a member, I want to choose optional add-ons like eggs or bread for my box, so that I can customize my weekly share.",
+	"As a farmer, I want to share stories from the farm, so that members feel connected to the growing process.",
+	"As a coordinator, I want to organize volunteer harvest days, so that members can experience farm life firsthand.",
+	"As a farmer, I want to record soil and crop health data, so that I can improve yields each season.",
+	"As a member, I want to renew my subscription automatically at the end of the season, so that I don’t lose my spot.",
+	"As a farm cooperative, I want to manage seasonal membership limits, so that supply matches capacity.",
+	"As a coordinator, I want to summarize weekly distribution reports, so that farmers and members have transparency about the CSA’s operations."
+],
+  "domain objects": [
+      {"name": "Farmer", "description": "Person who grows crops for the CSA","attributes": ["Farm","Crop"]},
+	  {"name": "Farm", "description": "The land and facilities used by a farmer","attributes": ["Farm Data"]},
+	  {"name": "Farm Data", "description": "Information about soil, crop rotation, and farm operations"},
+	  {"name": "Crop", "description": "A type of plant grown for members"},
+	  {"name": "Harvest Calendar", "description": "Schedule of planned harvests","attributes": ["Harvest"]},
+	  {"name": "Harvest", "description": "Actual collected crops","attributes": ["Crop Data"]},
+	  {"name": "Crop Data", "description": "Details about harvested crops, like quantity and quality"},
+	  {"name": "Produce Box", "description": "A box containing selected produce for members","attributes": ["Produce"]},
+	  {"name": "Produce", "description": "Individual fruits, vegetables, or other farm products"},
+	  {"name": "Farm Cooperative Manager", "description": "Person coordinating CSA operations across multiple farms"},
+	  {"name": "Payout", "description": "Payment from the cooperative to farmers"},
+	  {"name": "Member", "description": "Person who subscribes to receive weekly produce","attributes": ["Pick Up Point"]},
+	  {"name": "Pick Up Point", "description": "Location where members collect their produce boxes"},
+	  {"name": "Box Sign Up", "description": "Member registration for receiving a produce box"},
+	  {"name": "Delivery", "description": "Process of transporting produce boxes to members"},
+	  {"name": "Delivery Driver", "description": "Person responsible for physically delivering boxes"},
+	  {"name": "Delivery Coordinator", "description": "Person planning delivery routes and schedules"},
+	  {"name": "Coordinator", "description": "Oversees CSA operations and works with local partners"},
+	  {"name": "Weekly Distribution Report", "description": "Summary of delivered boxes and attendance"},
+	  {"name": "Local Partner", "description": "Local businesses providing add-ons or support"},
+	  {"name": "Volunteer Harvest Day", "description": "Event where members help with harvesting on the farm"},
+      {"name": "Farm Content", "description": "Information shared by farmers about the farm","attributes": ["Farm Story","Notification"]},
+      {"name": "Farm Story", "description": "Narrative or update from the farm for members"},
+	  {"name": "Notification", "description": "Message alerting members or staff about events or updates"},
+	  {"name": "Box Feedback", "description": "Member comments on the contents of their produce box"}
+    ],
+  "associations": [
+      {"from": "Farmer", "to": "Harvest", "description": "Farmer produces Harvest from their crops"},
+      {"from": "Farmer", "to": "Harvest Calendar", "description": "Farmer schedules when crops will be harvested"},
+      {"from": "Farmer", "to": "Produce Box", "description": "Farmer contributes produce to Produce Boxes"},
+	  {"from": "Farm Cooperative Manager", "to": "Produce Box", "description": "Manager oversees box creation and distribution"},
+	  {"from": "Farm Cooperative Manager", "to": "Payout", "description": "Manager approves payments to farmers"},
+	  {"from": "Payout", "to": "Farmer", "description": "Farmers receive Payouts for their contributions"},
+	  {"from": "Member", "to": "Box Sign Up", "description": "Member signs up to receive a Produce Box"},
+	  {"from": "Box Sign Up", "to": "Produce Box", "description": "Sign up links a Member to a specific Produce Box"},
+	  {"from": "Produce Box", "to": "Delivery", "description": "Produce Box is included in a Delivery"},
+	  {"from": "Delivery", "to": "Member", "description": "Delivery delivers the box to the Member"},
+	  {"from": "Delivery Driver", "to": "Delivery", "description": "Driver carries out the Delivery"},
+	  {"from": "Delivery Coordinator", "to": "Delivery", "description": "Coordinator plans the Delivery routes"},
+	  {"from": "Delivery", "to": "Weekly Distribution Report", "description": "Delivery information is recorded in the report"},
+	  {"from": "Coordinator", "to": "Weekly Distribution Report", "description": "Coordinator reviews weekly distribution"},
+	  {"from": "Coordinator", "to": "Local Partner", "description": "Coordinator manages relationships with Local Partners"},
+	  {"from": "Delivery", "to": "Local Partner", "description": "Deliveries may include products from Local Partners"},
+	  {"from": "Coordinator", "to": "Volunteer Harvest Day", "description": "Coordinator organizes Volunteer Harvest Days"},
+	  {"from": "Member", "to": "Volunteer Harvest Day", "description": "Members participate in Volunteer Harvest Days"},
+	  {"from": "Volunteer Harvest Das", "to": "Harvest", "description": "Volunteers help collect the Harvest"},
+	  {"from": "Member", "to": "Box Feedback", "description": "Members provide feedback about the Produce Box"},
+	  {"from": "Box Feedback", "to": "Farmer", "description": "Farmer receives feedback to improve future boxes"},
+	  {"from": "Farmer", "to": "Farm Content", "description": "Farmer creates content about the farm for members"},
+	  {"from": "Farm Content", "to": "Member", "description": "Members receive farm stories and notifications"}
+    ],
+  "subdomains": {
+      "Farming": {
+          "objects" : ["Farmer","Farm","Farm Data","Crop","Harvest","Harvest Calendar","Harvest","Crop Data","Produce Box","Produce"]
+      },
+	  "Delivery": {
+          "objects" : ["Member","Pick Up Point","Box Sign Up","Delivery","Delivery Coordinator","Delivery Driver","Produce Box","Produce"]
+      },
+      "Farm Cooperation": {
+          "objects" : ["Farm Cooperative Manager","Payout"]
+      },
+      "Local Coordination": {
+          "objects" : ["Coordinator","Weekly Distribution Report","Local Partner","Volunteer Harvest Days","Member"]
+      },
+	  "Communication": {
+          "objects" : ["Farm Content","Farm Story","Notification","Box Feedback"]
+      },
+      "subdomain connections": ["Farming--Farm Cooperation","Farming--Delivery","Delivery--Local Coordination","Local Coordination--Farming","Delivery--Communication","Farming--Communication"]
+    },
+  "bounded contexts": {
+      "Farming" : {
+	  	  "derived from": "Farming Subdomain",
+	  	  "objects": ["Farmer","Farm","Farm Data","Crop","Harvest Calendar","Harvest","Crop Data","Produce Box","Produce"],
+	  	  "name changes" : ["Produce Box -> Produce Box", "Produce -> Produce Box"]
+	  },
+	  "Delivery" : {
+	  	  "derived from": "Delivery Subdomain",
+	  	  "objects": ["Subscriber","Pick Up Point","Box Sign Up","Delivery","Delivery Coordinator","Delivery Driver","Produce Box","Produce"],
+	  	  "name changes" : ["Member -> Subscriber","Produce Box -> Ordered Box", "Produce -> Ordered Produce"]
+	  },
+	  "Farm Cooperation" : {
+	  	  "derived from": "Farm Cooperation Subdomain",
+	  	  "objects": ["Farm Cooperative Manager","Payout"],
+	  	  "name changes" : []
+	  },
+	  "Local Coordination" : {
+	  	  "derived from": "Local Coordination Subdomain",
+	  	  "objects": ["Local Coordinator","Weekly Distribution Report","Local Partner","Volunteer Harvest Days","Volunteer"],
+	  	  "name changes" : ["Coordinator -> Local Coordinator","Member -> Volunteer"]
+	  },
+	  "Communication" : {
+	  	  "derived from": "Communication Subdomain",
+	  	  "objects": ["Farm Content","Farm Story","Notification","Box Feedback"],
+	  	  "name changes" : []
+	  }
+	}
+}
