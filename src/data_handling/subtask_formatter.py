@@ -11,7 +11,8 @@ list_of_done_domains = [
     "g12-camperplus",
     "g19-alfred",
     "g13-planningpoker",
-    "g21-badcamp"
+    "g21-badcamp",
+    "30-communityaggriculture"
 ]
 
 

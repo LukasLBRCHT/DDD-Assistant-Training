@@ -1,0 +1,136 @@
+{
+  "domain-information":
+  [	"As a city resident, I want to find the nearest bike station, so that I can start my bike ride quickly.",
+	"As a city resident, I want to rent a bike for a short ride, so that I can travel across town conveniently.",
+	"As a city resident, I want to see available bikes at my home and work stations, so that I can plan my route.",
+	"As a maintenance worker, I want to check bike conditions regularly, so that all bikes are safe to ride.",
+	"As a city planner, I want to see bike usage patterns, so that I can improve station placement.",
+	"As a city planner, I want to make a suggestion for station placement, so they align with the demand.",
+	"As a city resident, I want to return the bike to any station, so that I have flexibility in my route.",
+	"As a docking station manager, I want to track available docks, so that I can redistribute bikes when needed.",
+	"As a city resident, I want to reserve a bike at a station, so that I am guaranteed transportation during peak hours.",
+	"As a maintenance worker, I want to log repairs, so that the system knows which bikes are out of service.",
+	"As a city resident, I want to report a damaged bike, so that it can be fixed promptly.",
+	"As a city resident, I want to track my ride history, so that I can manage my transportation budget.",
+	"As a system administrator, I want to analyze bike usage, so that I can redistribute them to high-demand areas.",
+	"As a city resident, I want to know the pricing for trips, so that I can decide when to ride.",
+	"As a maintenance worker, I want to schedule regular bike inspections, so that the fleet remains operational.",
+	"As a city resident, I want to report stolen bikes, so that the system administrator can take action.",
+	"As a system administrator, I want to manage stations, so that bike coverage is optimal.",
+	"As a system Administrator, I want to issue a bike delivery, so that bikes are distributed from one station to another.",
+	"As a bike delivery worker, I want to deliver bikes to another station, so that the station has supplies.",
+	"As a system administrator, I want to review suggestions for station placements, so that I can approve or deny them.",
+	"As a city resident, I want to participate in community events promoting biking, so that I contribute to sustainable transportation.",
+	"As a community event manager, I want to plan a community event, so that city residents can participate.",
+	"As a community event manager, I want to assign a station and a date for a community event."
+],
+  "domain objects": [
+      {"name": "City Resident", "description": "Person using bikes and stations for city transport."},
+      {"name": "Bike Station", "description": "Place where bikes are docked, rented, or returned.","attributes": ["Location","Availability Status"]},
+      {"name": "Availability Status", "description": "Shows if bikes or docks are available at a station."},
+      {"name": "Location", "description": "Represents a specific area or address of a station or event."},
+      {"name": "Bike Ride", "description": "Represents a single trip taken by a user.","attributes": ["Price"]},
+      {"name": "Bike", "description": "Physical bicycle that can be rented for rides.","attributes": ["Condition"]},
+      {"name": "Maintenance Worker", "description": "Checks and repairs bikes to keep them in good shape."},
+      {"name": "Bike Usage Data", "description": "Aggregated information about bike rides and usage patterns."},
+      {"name": "City Planner", "description": "Analyzes data to improve bike network placement and policies."},
+      {"name": "Docking Station Manager", "description": "Oversees station operations and ensures bike availability."},
+      {"name": "Dock", "description": "Single locking spot at a station for one bike."},
+      {"name": "Reservation", "description": "Holds a bike temporarily for a rider before a trip."},
+      {"name": "Payment", "description": "Transaction made for rides or subscriptions."},
+      {"name": "Repair Log", "description": "Record of repairs made to a bike."},
+      {"name": "Damage Report", "description": "Report from a user about a broken or malfunctioning bike."},
+      {"name": "Ride History", "description": "List of past rides taken by a city resident."},
+      {"name": "System Administrator", "description": "Manages overall operations and technical aspects of the bike system."},
+      {"name": "Bike Inspection", "description": "Regular check to ensure a bike meets safety and maintenance standards."},
+      {"name": "Theft Report", "description": "Notice filed when a bike goes missing or is stolen."},
+      {"name": "Community Event", "description": "Public activity promoting bike use and sustainability.","attributes": ["Bike Station","Date"]},
+      {"name": "Community Event Manager", "description": "Organizes and oversees community biking events."},
+      {"name": "Bike Delivery", "description": "Process of moving bikes between stations to balance availability.","attributes": ["Bike"]},
+      {"name": "Bike Delivery Worker", "description": "Performs bike redistribution tasks between stations."}
+    ],
+  "associations": [
+      {"from": "City Resident", "to": "Bike Ride", "description": "City Resident starts and completes a Bike Ride."},
+      {"from": "City Resident", "to": "Reservation", "description": "City Resident makes a Reservation to secure a Bike Ride."},
+      {"from": "City Resident", "to": "Payment", "description": "City Resident provides Payment for rides or membership."},
+      {"from": "Reservation", "to": "Bike Ride", "description": "Reservation ensures a Bike Ride is available to the user."},
+      {"from": "Bike Ride", "to": "Bike", "description": "Bike Ride uses a specific Bike for travel."},
+      {"from": "Bike Ride", "to": "Bike Usage Data", "description": "Each Bike Ride contributes to the collected Bike Usage Data."},
+      {"from": "Bike Ride", "to": "Ride History", "description": "Bike Ride is recorded in a user’s Ride History."},
+      {"from": "City Resident", "to": "Ride History", "description": "City Resident has a Ride History of past trips."},
+      {"from": "Bike", "to": "Bike Station", "description": "Bike is stored or returned at a Bike Station."},
+      {"from": "Bike", "to": "Dock", "description": "Bike is placed in a specific Dock when not in use."},
+      {"from": "Bike Inspection", "to": "Bike", "description": "Bike Inspection checks the condition of a Bike."},
+      {"from": "Bike Delivery", "to": "Bike", "description": "Bike Delivery moves Bikes between stations."},
+      {"from": "Bike Station", "to": "Dock", "description": "Bike Station contains multiple Docks for Bikes."},
+      {"from": "Docking Station Manager", "to": "Dock", "description": "Docking Station Manager oversees the status of each Dock."},
+      {"from": "Docking Station Manager", "to": "Availability Status", "description": "Docking Station Manager monitors Availability Status at stations."},
+      {"from": "Maintenance Worker", "to": "Bike Inspection", "description": "Maintenance Worker performs regular Bike Inspections."},
+      {"from": "Maintenance Worker", "to": "Repair Log", "description": "Maintenance Worker creates entries in the Repair Log."},
+      {"from": "Repair Log", "to": "Bike", "description": "Repair Log details issues and fixes related to a specific Bike."},
+      {"from": "City Resident", "to": "Damage Report", "description": "City Resident submits a Damage Report for a broken Bike."},
+      {"from": "Damage Report", "to": "Maintenance Worker", "description": "Damage Report is assigned to a Maintenance Worker for fixing."},
+      {"from": "City Resident", "to": "Theft Report", "description": "City Resident files a Theft Report for a missing Bike."},
+      {"from": "Theft Report", "to": "System Administrator", "description": "System Administrator handles Theft Reports and investigations."},
+      {"from": "System Administrator", "to": "Bike Usage Data", "description": "System Administrator reviews and maintains the Bike Usage Data."},
+      {"from": "System Administrator", "to": "Bike Delivery", "description": "System Administrator coordinates Bike Delivery tasks."},
+      {"from": "Bike Delivery", "to": "Bike Station", "description": "Bike Delivery moves Bikes between Bike Stations."},
+      {"from": "Bike Delivery Worker", "to": "Bike Delivery", "description": "Bike Delivery Worker executes the Bike Delivery process."},
+      {"from": "City Planner", "to": "Bike Usage Data", "description": "City Planner analyzes Bike Usage Data for planning improvements."},
+      {"from": "City Planner", "to": "Station Suggestion", "description": "City Planner proposes new stations based on data insights."},
+      {"from": "Community Event Manager", "to": "Community Event", "description": "Community Event Manager organizes Community Events at stations."}
+    ],
+  "subdomains": {
+      "Bike Renting": {
+          "objects" : ["City Resident","Bike Ride","Price","Reservation","Payment","Ride History","Theft Report","Damage Report"]
+      },
+	  "Station Management": {
+		  "objects" : ["Bike Station","Location","Availability Status","Bike","Dock","Docking Station Manager"]
+	  },
+      "Bike Maintenance": {
+          "objects" : ["Maintenance Worker","Bike Inspection","Repair Log"]
+      },
+      "System Administration": {
+          "objects" : ["System Administrator","Bike Usage Data","Bike Delivery","Bike","Bike Delivery Worker"]
+      },
+	  "City Planning": {
+          "objects" : ["City Planner","Station Suggestion"]
+      },
+	  "Community Events": {
+          "objects" : ["Community Event Manager","Community Event","Bike Station","Date"]
+      },
+      "subdomain connections": ["Bike Renting--Station Management","Maintenance--Station Management","Bike Renting--Bike Maintenance","System Administration--Bike Renting","City Planning--System Administration","Community Events--Station Management"]
+    },
+  "bounded contexts": {
+      "Bike Renting" : {
+	  	  "derived from": "Bike Renting Subdomain",
+	  	  "objects": ["City Resident","Reservation","Bike Ride","Price","Reservation","Payment","Ride History","Theft Report","Damage Report"],
+	  	  "name changes" : []
+	  },
+	  "Station Management" : {
+	  	  "derived from": "Station Management Subdomain",
+	  	  "objects": ["Bike Station","Location","Availability Status","Bike","Dock","Docking Station Manager"],
+	  	  "name changes" : ["Bike Station stays Bike Station","Bike stays Bike"]
+	  },
+	  "Bike Maintenance" : {
+	  	  "derived from": "Bike Maintenance Subdomain",
+	  	  "objects": ["Maintenance Worker","Bike Inspection","Repair Log"],
+	  	  "name changes" : []
+	  },
+	  "System Administration" : {
+	  	  "derived from": "System Administration Subdomain",
+	  	  "objects": ["System Administrator","Bike Usage Data","Bike Delivery","Delivered Bike","Bike Delivery Worker"],
+	  	  "name changes" : ["Bike -> Delivered Bike"]
+	  },
+	  "City Planning" : {
+	  	  "derived from": "City Planning Subdomain",
+	  	  "objects": ["City Planner","Station Suggestion"],
+	  	  "name changes" : []
+	  },
+	  "Community Events" : {
+	  	  "derived from": "Community Events",
+	  	  "objects": ["Community Event Manager","Community Event","Event Station","Date"],
+	  	  "name changes" : ["Bike Station -> Event Station"]
+	  }
+	}
+}
