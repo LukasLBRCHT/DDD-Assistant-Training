@@ -1,25 +1,25 @@
-As an anonymoususer, I want to view training, summit, and session listings so that I can choose what to attend.
-As an anonymoususer, I want to see details like location, map, time, trainers, and remaining seats so that I can plan my schedule.
-As an attendee, I want to register for trainings and summits so that I can reserve my spot.
-As a trainee, I want to manage my schedule and see my signed-up trainings so that I avoid double-booking.
-As a trainee, I want to be added to waitlists and accept cancellation terms so that I can manage attendance responsibly.
-As a trainer, I want to edit my training node and view attendee info so that I can manage my class efficiently.
-As a trainingcoordinator, I want to track registration, attendance, and cancellations so that I can manage classes effectively.
-As a summit coordinator, I want to list summit info, agenda, and sponsors so that attendees and sponsors are well informed.
-As a summit coordinator, I want to see and email attendees so that I can communicate before the event.
-As a sponsor, I want to link attendees and customize my sponsorship page so that I promote my brand effectively.
-As a sponsor, I want to post jobs and associate with events so that I attract talent and show engagement.
-As an authenticateduser, I want to manage my user profile so that I can connect with other participants.
-As an anonymoususer, I want to sign up for newsletters so that I stay updated about BADCamp.
-As an administrator, I want to create venues, assign rooms, approve sessions, and maintain schedules so that the event runs smoothly.
-As an administrator, I want to assign sponsors to sessions and events so that sponsor contributions are acknowledged.
-As an anonymoususer, I want to receive notifications about session submission and evaluation so that I know the status of my proposals.
-As an authenticateduser, I want to submit, edit, and track sessions so that I can participate as a speaker.
-As an anonymoususer, I want to find coding lounges, events, and session info so that I can engage with activities and peers.
-As an authenticateduser, I want to use WYSIWYG editors and manage my content so that I can update pages without technical knowledge.
-As an authenticateduser, I want to complete payments for sponsorships easily so that I can support the conference.
-As an anonymoususer, I want to view sponsors, their events, and attendee lists so that I can understand sponsor engagement.
-As an authenticateduser, I want to email trainers and manage registrations so that communication is efficient.
-As an anonymoususer, I want clear maps, directions, and venue details so that I can navigate the event effectively.
-As a sponsor, I want to select sponsorship levels and personalize pages so that my brand is visible and attractive.
-As an authenticateduser, I want to see and register for summits and trainings in one place so that I can plan my event participation.
+As an anonymous visitor, I want to browse all available trainings and summits, so that I can decide which sessions best match my interests.
+As an attendee, I want to register for trainings and summits with limited seating, so that I can secure my spot.
+As a trainee, I want to view my personalized schedule and registered sessions, so that I can plan my days at the event.
+As a training coordinator, I want to monitor attendance and manage cancellations, so that seats are used efficiently and refunds are handled correctly.
+As a trainer, I want to view and manage my class details, including attendees and shared materials, so that I can prepare effectively.
+As an attendee, I want to be placed on a waitlist for full trainings, so that I still have a chance to participate if space opens up.
+As an administrator, I want to define venues, rooms, and schedules, so that all events have a clear time and location.
+As an attendee, I want to see maps and directions to venues, so that I can navigate the event easily.
+As a summit coordinator, I want to describe my summit and list sponsors, agenda, and speakers, so that potential attendees understand its value.
+As a summit coordinator, I want to communicate with registered attendees before the event, so that I can provide updates and logistics.
+As a sponsor, I want to select sponsorship levels that align with my budget and goals, so that I gain visibility among attendees.
+As a sponsor, I want to associate my brand with certain events or summits, so that my company is recognized as a contributor.
+As a sponsor, I want to display my company’s attendees and sessions, so that others can see our community involvement.
+As a sponsor, I want to post job listings and link them to my sponsorship profile, so that I can recruit qualified talent.
+As a prospective sponsor, I want to learn about sponsorship opportunities and payment options, so that I can support the event.
+As an authenticated user, I want to update my profile and indicate my company affiliation, so that others can connect with me.
+As an anonymous visitor, I want to see who is attending and which companies are involved, so that I can plan networking opportunities.
+As a content administrator, I want to publish blog posts and announcements, so that the community stays informed.
+As a visitor, I want to read blogs and subscribe to newsletters, so that I can stay updated on event news.
+As an administrator, I want to manage payments and refunds for sponsorships, so that finances are accurate and transparent.
+As an attendee, I want to acknowledge cancellation terms during registration, so that I am accountable for my booking.
+As a trainer or coordinator, I want to easily communicate with all trainers and attendees, so that information flows smoothly before the event.
+As an anonymous visitor, I want to see all sponsors and their contribution levels, so that I can appreciate the organizations that make the event possible.
+As a session submitter, I want to propose talks or trainings and receive feedback on acceptance, so that I can participate as a speaker.
+As an event administrator, I want to approve and publish sessions into the official schedule, so that the program reflects finalized decisions.
