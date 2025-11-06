@@ -1,0 +1,135 @@
+{
+  "domain-information":
+  [	"A rural health worker travels to nearby villages to check on chronic patients.",
+	"A patient requests a home visit through a local coordinator when transportation is unavailable.",
+	"A local coordinator assembles an outreach team to go to a remote location.",
+	"A mobile clinic records the number of patients treated during each visit.",
+	"An outreach team sends medical case reports to the hospital.",
+	"A regional hospital provides diagnostic results that are shared with the outreach team.",
+	"A rural health worker in the mobile clinic administers vaccines to children in remote areas.",
+	"A local coordinator organizes the schedule of visits for all health workers.",
+	"A medicine supplier ensures that mobile clinics are stocked before departure.",
+	"A community health meeting is held at a local institution to teach about nutrition and hygiene.",
+	"A doctor from the main hospital reviews reports of complex cases referred by the outreach team.",
+	"A vehicle technician maintains the mobile clinic vans to keep them operational.",
+	"A vehicle technician creates a report on a mobile clinic.",
+	"A health outreach manager monitors the number of patients reached per month.",
+	"A local volunteer assists the medical team with translation during patient visits.",
+	"A patient provides feedback about the care received from outreach workers to the health outreach manager.",
+	"A community elder helps identify vulnerable individuals who need medical attention.",
+	"A local institution hosts vaccination drives led by the outreach team.",
+	"A patient’s family reports an emergency to the local coordinator for immediate assistance.",
+	"A government health officer reviews reports to evaluate the success of the outreach program.",
+	"A government health officer holds an Evaluation Meeting with the health outreach manager."
+],
+  "domain objects": [
+      {"name": "Rural Health Worker", "description": "Travels to rural areas to provide basic medical care and collect patient data.", "attributes": ["Schedule"]},
+      {"name": "Outreach Team", "description": "Group of health workers and coordinators conducting field visits together."},
+      {"name": "Area Visit", "description": "Represents outreach trips and activities conducted in rural areas.","attributes": ["Medical Case", "Remote Location", "Community Health Meeting", "Vaccination Drives"]},
+      {"name": "Medical Case", "description": "Details of a patient’s condition, treatment, and follow-up needs.","attributes": ["Patient"]},
+      {"name": "Patient", "description": "A community member receiving treatment, checkups, or health guidance."},
+      {"name": "Remote Location", "description": "Represents rural communities and the local contacts supporting health activities.", "attributes": ["Patient","Local Volunteer", "Local Elder", "Local Institution"]},
+      {"name": "Local Volunteer", "description": "A resident assisting outreach teams with translation and logistics."},
+      {"name": "Local Elder", "description": "Respected community figure helping identify vulnerable residents."},
+      {"name": "Vaccination Drives", "description": "Events organized to immunize children or adults at local institutions."},
+      {"name": "Local Institution", "description": "Schools, community centers, or facilities that host outreach events."},
+      {"name": "Community Health Meeting", "description": "Sessions educating residents about hygiene, nutrition, or disease prevention."},
+      {"name": "Patient Feedback", "description": "Input from patients about the quality and usefulness of care received."},
+      {"name": "Home Visit Request", "description": "A request made by a patient for a home consultation when travel is difficult."},
+      {"name": "Emergency Call", "description": "An urgent contact made by or for a patient requiring immediate medical help."},
+      {"name": "Local Coordinator", "description": "Organizes field schedules, connects patients, and coordinates between clinics and staff."},
+      {"name": "Data Report", "description": "Aggregated information from field visits used for monitoring and planning.","attributes": ["Number Of Patients", "Medicine Usage"]},
+      {"name": "Number Of Patients", "description": "Count of individuals treated or consulted during a visit."},
+      {"name": "Medicine Usage", "description": "Tracks which medicines were distributed or consumed during outreach."},
+      {"name": "Regional Hospital", "description": "Central medical facility providing diagnosis, support, and coordination with rural teams.","attributes": ["Local coordinator", "Rural Health Worker", "Doctor", "Health Outreach Manager"]},
+      {"name": "Medical Case Report", "description": "Formal record summarizing a patient’s condition for hospital review."},
+      {"name": "Diagnostic Results", "description": "Findings from hospital labs shared with outreach teams."},
+      {"name": "Mobile Clinic", "description": "Vehicle equipped for medical outreach, carrying supplies and staff.","attributes": ["Medicine", "Vaccine", "Vehicle Report"]},
+      {"name": "Medicine", "description": "Drugs and supplies used during treatment or distributed to patients."},
+      {"name": "Vaccine", "description": "Immunization material administered during outreach activities."},
+      {"name": "Schedule", "description": "Timetable for field visits, staff assignments, and follow-ups."},
+      {"name": "Doctor", "description": "Represents the relationship between a doctor and the cases they review."},
+      {"name": "Medicine Supplier", "description": "Organization responsible for providing medicine and medical stock."},
+      {"name": "Vehicle Technician", "description": "Maintains and repairs the mobile clinics’ vehicles."},
+      {"name": "Vehicle Report", "description": "Status or maintenance record of a mobile clinic vehicle."},
+      {"name": "Health Outreach Manager", "description": "Supervises the outreach program and compiles field data for evaluation."},
+      {"name": "Government Health Officer", "description": "Oversees outreach performance and aligns it with national health goals."},
+      {"name": "Evaluation Meeting", "description": "Review session where outcomes and data are discussed with officials."}
+    ],
+  "associations": [
+      {"from": "Outreach Team", "to": "Area Visit", "description": "Outreach Team conducts each Area Visit to deliver care."},
+      {"from": "Patient", "to": "Home Visit Request", "description": "Patient submits a Home Visit Request when personal travel is not possible."},
+      {"from": "Patient", "to": "Emergency Call", "description": "Patient initiates an Emergency Call for urgent medical help."},
+      {"from": "Emergency Call", "to": "Local Coordinator", "description": "Local Coordinator receives and assigns Emergency Calls to the nearest team."},
+      {"from": "Home Visit Request", "to": "Local Coordinator", "description": "Local Coordinator processes and schedules Home Visit Requests."},
+      {"from": "Local Coordinator", "to": "Area Visit", "description": "Local Coordinator plans each Area Visit for the Outreach Team."},
+      {"from": "Medicine Supplier", "to": "Mobile Clinic", "description": "Medicine Supplier provides stock for the Mobile Clinic."},
+      {"from": "Rural Health Worker", "to": "Outreach Team", "description": "Rural Health Worker is part of the Outreach Team."},
+      {"from": "Local Coordinator", "to": "Outreach Team", "description": "Local Coordinator organizes and supports the Outreach Team."},
+      {"from": "Local Coordinator", "to": "Area Visit", "description": "Local Coordinator connects logistics and personnel for Area Visits."},
+      {"from": "Local Coordinator", "to": "Schedule", "description": "Local Coordinator organizes the schedule of visits for all health workers"},
+      {"from": "Outreach Team", "to": "Medical Case Report", "description": "Outreach Team prepares Medical Case Reports after treating patients."},
+      {"from": "Outreach Team", "to": "Diagnostic Results", "description": "Outreach Team receives Diagnostic Results from the hospital."},
+      {"from": "Medical Case Report", "to": "Regional Hospital", "description": "Reports are sent to the Regional Hospital for review."},
+      {"from": "Medical Case Report", "to": "Doctor", "description": "Doctor examines each Medical Case Report for follow-up."},
+      {"from": "Diagnostic Results", "to": "Regional Hospital", "description": "Diagnostic Results originate from the Regional Hospital."},
+      {"from": "Outreach Team", "to": "Mobile Clinic", "description": "Outreach Team operates the Mobile Clinic during visits."},
+      {"from": "Mobile Clinic", "to": "Area Visit", "description": "Mobile Clinic is used for each Area Visit to remote communities."},
+      {"from": "Vehicle Technician", "to": "Mobile Clinic", "description": "Vehicle Technician maintains and repairs the Mobile Clinic."},
+      {"from": "Vehicle Technician", "to": "Vehicle Report", "description": "Vehicle Technician writes a Vehicle Report after maintenance."},
+      {"from": "Medicine Supplier", "to": "Mobile Clinic", "description": "Medicine Supplier replenishes stock for the Mobile Clinic."},
+      {"from": "Outreach Team", "to": "Medical Case", "description": "Outreach Team manages Medical Cases during visits."},
+      {"from": "Remote Location", "to": "Local Volunteer", "description": "Each Remote Location includes at least one Local Volunteer helping the team."},
+      {"from": "Local Volunteer", "to": "Medical Case", "description": "Local Volunteer assists in handling Medical Cases during visits."},
+      {"from": "Local Elder", "to": "Medical Case", "description": "Local Elder helps identify patients needing attention."},
+      {"from": "Patient", "to": "Patient Feedback", "description": "Patient gives Feedback after receiving care."},
+      {"from": "Health Outreach Manager", "to": "Patient Feedback", "description": "Manager reviews Patient Feedback to improve service."},
+      {"from": "Area Visit", "to": "Data Report", "description": "Area Visit produces a Data Report summarizing outcomes."},
+      {"from": "Health Outreach Manager", "to": "Data Report", "description": "Manager compiles and analyzes the Data Report."},
+      {"from": "Government Health Officer", "to": "Data Report", "description": "Government Health Officer reviews Data Reports for oversight."},
+      {"from": "Health Outreach Manager", "to": "Evaluation Meeting", "description": "Manager presents outreach results in Evaluation Meetings."},
+      {"from": "Government Health Officer", "to": "Evaluation Meeting", "description": "Government Health Officer participates in Evaluation Meetings to assess outcomes."}
+    ],
+  "subdomains": {
+      "Medical Coordination": {
+          "objects" : ["Outreach Team","Rural Health Worker","Local Coordinator","Regional Hospital","Medical Case Report","Doctor","Diagnostic Result"]
+      },
+      "Mobile Clinic Management": {
+          "objects" : ["Mobile Clinic","Vaccine","Medicine","Medicine Supplier","Vehicle Technician","Vehicle Report"]
+      },
+      "Area Visit": {
+          "objects" : ["Area Visit","Remote Location","Patient","Home Visit Request","Emergency Call","Community Health Meeting", "Vaccination Drives","Local Volunteer", "Local Elder", "Local Institution", "Medical Case", "Patient Feedback"]
+      },
+      "Data Evaluation": {
+          "objects" : ["Data Report","Medicine Usage","Number Of Patients","Health Outreach Manager","Government Health Officer","Evaluation Meeting"]
+      },
+      "subdomain connections": ["Medical Coordination--Area Visit","Medical Coordination--Mobile Clinic Management","Medical Coordination--Mobile Clinic Management","Area Visit--Mobile Clinic Management","Area Visit--Data Evaluation","Data Evaluation--Medical Coordination"]
+    },
+  "bounded contexts": {
+      "Medical Coordination" : {
+	  	  "derived from": "Medical Coordination Context Subdomain",
+	  	  "objects": ["Outreach Team","Rural Health Worker","Local Coordinator","Regional Hospital","Medical Case Report","Doctor","Diagnostic Result"],
+	  	  "name changes" : []
+	  },
+	  "Mobile Clinic Management" : {
+	  	  "derived from": "Mobile Clinic Management Subdomain",
+	  	  "objects": ["Mobile Clinic","Vaccine","Medicine","Medicine Supplier","Vehicle Technician","Vehicle Report"],
+	  	  "name changes" : []
+	  },
+      "Patient Visit" : {
+            "derived from": "Area Visit Subdomain",
+            "objects": ["Area Visit","Patient Remote Location","Patient","Home Visit Request","Emergency Call","Local Volunteer", "Local Elder", "Medical Case", "Patient Feedback"],
+            "name changes" : ["Area Visit -> Patient Visit","Remote Location -> Patient Remote Location","Patient stays Patient"]
+        },
+      "Event Visit" : {
+            "derived from": "Area Visit Subdomain",
+            "objects": ["Event Visit","Event Remote Location","Event Visitor","Community Health Meeting", "Vaccination Drives", "Local Institution"],
+            "name changes" : ["Area Visit -> Event Visit", "Remote Location -> Event Remote Location","Patient -> Event Visitor"]
+        },
+      "Data Evaluation" : {
+            "derived from": "Data Evaluation Subdomain",
+            "objects": ["Data Report","Medicine Usage","Number Of Patients","Health Outreach Manager","Government Health Officer","Evaluation Meeting"],
+            "name changes" : []
+        }
+	}
+}

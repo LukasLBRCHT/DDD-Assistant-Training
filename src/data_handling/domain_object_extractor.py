@@ -29,18 +29,20 @@ def parse_domain_objects():
             new_file_name = os.path.basename(f.name).removesuffix(".txt")
 
             text = f.read()
-            split = text.split("associations:\n")
+            split = text.split("\nassociations:\n")
             objects = split[0]
             associations = split[1]
 
             result_data = ""
 
             for line in objects.splitlines():
+                if not line:
+                    continue
                 name = line
-                object_json = f"{{\"name\": \"{name}\", \"description\": \"\"}},\n"
+                object_json = f"      {{\"name\": \"{name}\", \"description\": \"\"}},\n"
                 result_data += object_json
 
-            result_data.removesuffix(",")
+            result_data.removesuffix(",\n")
 
             result_data += "\nassociations:\n"
 
@@ -51,11 +53,11 @@ def parse_domain_objects():
                 match1 = match.group(1)
                 match2 = match.group(2)
 
-                object_json = f"{{\"from\": \"{match1}\", \"to\": \"{match2}\", \"description\": \"\"}},"
+                object_json = f"      {{\"from\": \"{match1}\", \"to\": \"{match2}\", \"description\": \"\"}},\n"
 
                 result_data += object_json
 
-            result_data.removesuffix(",")
+            result_data.removesuffix(",\n")
 
             print(result_data)
 
