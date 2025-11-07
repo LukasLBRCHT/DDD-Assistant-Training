@@ -1,0 +1,97 @@
+{
+  "domain-information":
+  [	"A garden coordinator reviews new applications for available garden plots.",
+	"A garden coordinator schedules a maintenance day for volunteers to clean the plots.",
+	"A garden coordinator updates the plot assignment list after a member leaves.",
+	"A garden coordinator compiles an end-of-season report for the city’s urban agriculture program.",
+	"A city resident signs up for a garden plot to grow vegetables.",
+	"A city resident participates in a seed exchange with other members.",
+	"A city resident the types of crops planted in their plot for seasonal planning.",
+	"A city resident makes a harvest donation to the community’s harvest share program.",
+	"A city resident reports a pest issue to the coordinator for assistance.",
+	"A city resident maintains a compost.",
+	"A city resident participates in a garden fair.",
+	"A volunteer participates in maintenance day to clean a registered plot.",
+	"A volunteer helps collect compostable materials.",
+	"A volunteer promotes an upcoming garden fair.",
+	"A garden coordinator carries out a garden inspection to ensure safety and environmental compliance.",
+	"A garden coordinator provides funding for new garden tools to a city resident."
+],
+  "domain objects": [
+      {"name": "Garden Coordinator", "description": "Manages garden plots and activities"},
+      {"name": "Plot Application", "description": "Request submitted by a resident to get a garden plot"},
+      {"name": "End Of Season Report", "description": "Summary of garden activity and outcomes for the season"},
+      {"name": "City Resident", "description": "Person who participates in the community garden"},
+      {"name": "Garden Plot", "description": "Designated area for planting, tracking crops and assigned residents","attributes": ["Crop","Plot Assignment List"]},
+      {"name": "Crop", "description": "Type of plant grown in a garden plot"},
+      {"name": "Plot Assignment List", "description": "Tracks which residents are assigned to which plots","attributes": ["City Resident"]},
+      {"name": "Pest Issue Report", "description": "Record of pest problems submitted by a resident or volunteer"},
+      {"name": "Seed Exchange", "description": "Event where residents share seeds with each other"},
+      {"name": "Compost", "description": "Organic material collected for enriching garden soil"},
+      {"name": "Harvest Donation", "description": "Produce donated by residents to a community program"},
+      {"name": "Harvest Share Program", "description": "Program that redistributes donated produce to the community"},
+      {"name": "Agriculture Program", "description": "City-level initiative supporting urban gardening"},
+      {"name": "Garden Fair", "description": "Community event to showcase garden activities"},
+      {"name": "Volunteer", "description": "Person helping with garden maintenance and events"},
+      {"name": "Maintenance Day", "description": "Scheduled day when volunteers clean and maintain garden plots"},
+      {"name": "Garden Inspection", "description": "Check to ensure plots are safe and meet environmental standards","attributes": ["Garden Plot"]},
+      {"name": "Funding", "description": "Financial support provided for tools or materials"}
+    ],
+  "associations": [
+      {"from": "Garden Coordinator", "to": "Plot Application", "description": "Coordinator manages and reviews plot applications"},
+      {"from": "City Resident", "to": "Plot Application", "description": "Resident submits a request for a garden plot"},
+      {"from": "Garden Coordinator", "to": "End Of Season Report", "description": "Coordinator creates end-of-season report"},
+      {"from": "End Of Season Report", "to": "Agriculture Program", "description": "Report is submitted to the city agriculture program"},
+      {"from": "City Resident", "to": "Seed Exchange", "description": "Resident participates in sharing seeds"},
+      {"from": "City Resident", "to": "Compost", "description": "Resident contributes organic waste to compost"},
+      {"from": "Volunteer", "to": "Compost", "description": "Volunteer helps manage compost"},
+      {"from": "Volunteer", "to": "Maintenance Day", "description": "Volunteer participates in garden maintenance"},
+      {"from": "Maintenance Day", "to": "Garden Plot", "description": "Maintenance activities are performed on garden plots"},
+      {"from": "Volunteer", "to": "Garden Fair", "description": "Volunteer helps organize or run the garden fair"},
+      {"from": "City Resident", "to": "Garden Fair", "description": "Resident attends the garden fair"},
+      {"from": "City Resident", "to": "Harvest Donation", "description": "Resident donates produce to the community program"},
+      {"from": "Harvest Donation", "to": "Harvest Share Program", "description": "Donated produce is added to the share program"},
+      {"from": "City Resident", "to": "Pest Issue Report", "description": "Resident reports pest issues to the coordinator"},
+      {"from": "Garden Coordinator", "to": "Pest Issue Report", "description": "Coordinator reviews and addresses pest reports"},
+      {"from": "Garden Coordinator", "to": "Garden Inspection", "description": "Coordinator inspects plots for safety and compliance"},
+      {"from": "Garden Coordinator", "to": "Funding", "description": "Coordinator provides financial support for tools or materials"},
+      {"from": "Funding", "to": "City Resident", "description": "Residents receive funding for garden supplies or tools"}
+    ],
+  "subdomains": {
+      "Garden Coordination": {
+          "objects" : ["Garden Coordinator","End Of Season Report","Garden Inspection","Funding"]
+      },
+      "Gardening": {
+          "objects" : ["City Resident","Plot Application","Pest Issue Report","Garden Plot","Crop","Plot Assignment List","Compost"]
+      },
+      "Volunteering": {
+          "objects" : ["Volunteer","Maintenance Day","Compost"]
+      },
+      "Community": {
+          "objects" : ["Seed Exchange","City Resident","Garden Fair","Harvest Share Program","Harvest Donation","Agriculture Program"]
+      },
+      "subdomain connections": ["Garden Coordination--Gardening","Garden Coordination--Community","Gardening--Community","Volunteering--Gardening","Volunteering--Community"]
+    },
+  "bounded contexts": {
+      "Garden Coordination" : {
+	  	  "derived from": "Garden Coordination Subdomain",
+	  	  "objects": ["Garden Coordinator","End Of Season Report","Garden Inspection","Funding"],
+	  	  "name changes" : []
+	  },
+	  "Gardening" : {
+	  	  "derived from": "Gardening Subdomain",
+	  	  "objects": ["Gardener","Plot Application","Pest Issue Report","Garden Plot","Crop","Plot Assignment List","Compost"],
+	  	  "name changes" : ["City Resident -> Gardener","Compost -> Personal Compost"]
+	  },
+      "Volunteering" : {
+	  	  "derived from": "Volunteering Subdomain",
+	  	  "objects": ["Volunteer","Maintenance Day","Community Compost"],
+	  	  "name changes" : ["Compost -> Community Compost"]
+	  },
+      "Community Events" : {
+	  	  "derived from": "Community Subdomain",
+	  	  "objects": ["Seed Exchange","Harvest Donor","Event Attendee","Garden Fair","Harvest Share Program","Harvest Donation","Agriculture Program"],
+	  	  "name changes" : ["City Resident -> Harvest Donor and Event Attendee"]
+	  }
+	}
+}
