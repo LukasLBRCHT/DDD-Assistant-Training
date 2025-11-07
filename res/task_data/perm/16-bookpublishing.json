@@ -1,0 +1,74 @@
+{
+  "domain-information":
+  [	"An author makes a manuscript submission to the editor for review.",
+	"An author revises the manuscript after receiving editorial feedback from the editor.",
+	"An author sends the Publishing Request to the publisher for printing.",
+	"An editor reviews new manuscript submissions for potential publication.",
+	"An editor provides feedback to help the author strengthen their writing.",
+	"An editor checks the proof to ensure all edits were correctly applied.",
+	"An editor sends a publishing approval after approving the final manuscript.",
+	"A publisher reviews a publishing submission.",
+	"A publisher issues a print job for a book.",
+	"A publisher approves budgets for authors.",
+	"A publisher negotiates contracts with authors for upcoming titles."
+],
+  "domain objects": [
+      {"name": "Author", "description": "A writer who creates and submits manuscripts for publication."},
+      {"name": "Book", "description": "A completed and published work based on an author’s manuscript.","attributes": ["Final Proof","Author","Publisher"]},
+      {"name": "Final Proof", "description": "The finalized version of a book prepared for printing."},
+      {"name": "Publisher", "description": "An organization that approves, funds, and manages book production."},
+      {"name": "Manuscript", "description": "The original written work produced by the author."},
+      {"name": "Manuscript Submission", "description": "A document package containing the author’s manuscript sent for editorial review.","attributes": ["Manuscript"]},
+      {"name": "Editorial Approval", "description": "An editor’s confirmation that a manuscript is ready for publishing."},
+      {"name": "Editor", "description": "A professional who reviews manuscripts and provides editorial feedback."},
+      {"name": "Editorial Feedback", "description": "Comments and suggestions from the editor to improve the manuscript."},
+      {"name": "Publishing Submission", "description": "The author’s request to publish the final proof through the publisher.","attributes": ["Final Proof"]},
+      {"name": "Budget", "description": "Funds allocated by the publisher to support the publication process."},
+      {"name": "Print Job", "description": "An order created by the publisher to print copies of a finished book.","attributes": ["Book"]},
+      {"name": "Contract", "description": "A formal agreement defining rights and responsibilities between the author and publisher."}
+    ],
+  "associations": [
+      {"from": "Author", "to": "Manuscript Submission", "description": "An Author sends a Manuscript Submission for editorial review."},
+      {"from": "Author", "to": "Publishing Request", "description": "An Author submits a Publishing Request to the Publisher for production."},
+      {"from": "Editor", "to": "Manuscript Submission", "description": "An Editor reviews a Manuscript Submission for quality and completeness."},
+      {"from": "Editor", "to": "Editorial Feedback", "description": "An Editor provides Editorial Feedback to the Author for manuscript improvement."},
+      {"from": "Editor", "to": "Publishing Approval", "description": "An Editor grants Publishing Approval after final review."},
+      {"from": "Editorial Feedback", "to": "Author", "description": "Editorial Feedback helps the Author refine the manuscript."},
+      {"from": "Publishing Approval", "to": "Author", "description": "Publishing Approval notifies the Author that the manuscript is accepted."},
+      {"from": "Publisher", "to": "Publishing Request", "description": "A Publisher receives and evaluates a Publishing Request from an Author."},
+      {"from": "Publisher", "to": "Contract", "description": "A Publisher prepares a Contract for collaboration with an Author."},
+      {"from": "Contract", "to": "Author", "description": "A Contract defines the relationship between the Author and Publisher."},
+      {"from": "Publisher", "to": "Budget", "description": "A Publisher allocates a Budget for book production."},
+      {"from": "Budget", "to": "Author", "description": "A Budget supports the Author’s publishing process."},
+      {"from": "Publisher", "to": "Print Job", "description": "A Publisher issues a Print Job to produce printed copies of the Book."}
+    ],
+  "subdomains": {
+      "Editing": {
+          "objects" : ["Author","Manuscript Submission","Manuscript","Editor","Editorial Approval","Editorial Feedback"]
+      },
+      "Submission": {
+          "objects" : ["Final Proof","Publishing Request","Publisher","Contract","Author"]
+      },
+      "Publishing": {
+          "objects" : ["Publisher","Budget","Print Job","Book","Author","Final Proof"]
+      },
+      "subdomain connections": ["Editing--Submission","Submission--Publishing","Editing--Publishing"]
+    },
+  "bounded contexts": {
+      "Editing" : {
+	  	  "derived from": "Editing Subdomain",
+	  	  "objects": ["Author","Manuscript Submission","Manuscript","Editor","Editorial Approval","Editorial Feedback"],
+	  	  "name changes" : []
+	  },
+	  "Submission" : {
+	  	  "derived from": "Submission Subdomain",
+	  	  "objects": ["Final Proof","Publishing Request","Publisher","Contract","Applicant Author"],
+	  	  "name changes" : ["Author -> Applicant Author"]
+	  },
+      "Publishing" : {
+            "derived from": "Publishing Subdomain",
+            "objects": ["Production Publisher","Budget","Print Job","Book","Book Author","Book Manuscript"],
+            "name changes" : ["Publisher -> Production Publisher","Author -> Book Author", "Final Proof -> Book Manuscript"]
+        }
+	}
+}

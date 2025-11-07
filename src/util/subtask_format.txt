@@ -25,12 +25,12 @@
     }},
   "bounded contexts": {{
       "bounded context 1" : {{
-	  	  "derived from": "subdomain1",
+	  	  "derived from": "Subdomain",
 	  	  "objects": ["object1","object2","..."],
-	  	  "name changes" : ["object3 -> alternation of object3", "... -> ..."]
+	  	  "name changes" : ["object3 -> alternationOfObject3", "... -> ..."]
 	  }},
 	  "bounded context 2" : {{
-	  	  "derived from": "subdomain2",
+	  	  "derived from": "Subdomain",
 	  	  "objects": ["object1","object2","..."],
 	  	  "name changes" : []
 	  }}
