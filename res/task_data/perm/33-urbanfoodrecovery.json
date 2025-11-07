@@ -1,0 +1,143 @@
+{
+  "domain-information":
+  [	"A Food Coordinator reviews daily donation offers and assigns them to available drivers.",
+	"A Food Coordinator matches donors with nearby distribution partners in the recovery network.",
+	"A Food Coordinator monitors active deliveries and resolves issues when routes are delayed.",
+	"A Food Coordinator collects food recovery data.",
+	"A Food Coordinator compiles weekly reports on collected and distributed food for tracking impact.",
+	"A Recovery Driver checks their list of assigned pickups before starting their route.",
+	"A Recovery Driver collects surplus food from donors like restaurants and grocery stores.",
+	"A Recovery Driver delivers donations to distribution partners like shelters and food pantries.",
+	"A Recovery Driver records delivery confirmations to maintain accurate tracking of food recovery data.",
+	"A Recovery Driver reports any vehicle or timing issues to the coordinator during their route.",
+	"A Donor registers their business in the recovery network to contribute surplus food.",
+	"A Donor lists available food items and preferred pickup times.",
+	"A Donor prepares a donation with food items so it is ready for pick up.",
+	"A Donor receives confirmation when the donation has been collected.",
+	"A Donor views a monthly report to measure their contribution to food recovery.",
+	"A Distribution Partner registers their institution in the recovery network to receive food donations.",
+	"A Distribution Partner makes a donation offer.",
+	"A Distribution Partner sets their daily capacity for receiving and storing food.",
+	"A Distribution Partner confirms each delivery and logs the received quantities to enable tracking food recovery data.",
+	"A Distribution Partner reports unmet needs or recurring shortages to the coordinator.",
+	"A Community Volunteer signs up to help with sorting and packing donations.",
+	"A Community Volunteer attends local events of the recovery network to promote food recovery initiatives.",
+	"A Community Volunteer logs completed hours for community service recognition.",
+	"A Government Health Inspector reviews data on recovered food to assess community impact.",
+	"A Government Health Inspector sends en evaluation notice to the food coordinator."
+  ],
+  "domain objects": [
+	  {"name": "Food Coordinator", "description": "Organizes donations, deliveries, and communication between all participants."},
+	  {"name": "Donation Offer", "description": "Represents a donor’s available food items ready for collection."},
+	  {"name": "Delivery", "description": "Represents a completed or scheduled transport of donated food.", "attributes": ["Route", "Food Donation"]},
+	  {"name": "Route", "description": "Defines the planned path for a delivery or pickup."},
+	  {"name": "Food Donation", "description": "Represents a collection of food items contributed by a donor.", "attributes": ["Food Item"]},
+	  {"name": "Food Item", "description": "An individual edible product available for donation."},
+	  {"name": "Weekly Report", "description": "Summarizes weekly collection and delivery activity across the network."},
+	  {"name": "Food Recovery Data", "description": "Aggregated information about donated, collected, and distributed food."},
+	  {"name": "Recovery Driver", "description": "Collects donations and delivers them to partner organizations."},
+	  {"name": "Pickup Assignment", "description": "A task assigned to a driver specifying where and when to collect food."},
+	  {"name": "Delivery Confirmation", "description": "Proof that a delivery has been successfully completed."},
+	  {"name": "Issue Report", "description": "Describes any delivery or pickup problems reported by drivers."},
+	  {"name": "Recovery Network", "description": "The collaborative system connecting donors, partners, and volunteers.", "attributes": ["Donor","Distribution Partner"]},
+	  {"name": "Donor", "description": "A restaurant, store, or business contributing surplus food.", "attributes": ["Available Food Items", "Pickup Times"]},
+	  {"name": "Available Food Items", "description": "List of food items ready for donation."},
+	  {"name": "Pickup Times", "description": "Time windows when a donor’s food is available for collection."},
+	  {"name": "Distribution Partner", "description": "An organization receiving and distributing donated food to communities.", "attributes": ["Daily Capacity"]},
+	  {"name": "Daily Capacity", "description": "The maximum amount of food a partner can store or distribute each day."},
+	  {"name": "Monthly Report", "description": "A donor’s summary of total contributions and impact per month."},
+	  {"name": "Delivery Log", "description": "A record of completed deliveries including quantities and recipients."},
+	  {"name": "Shortage Report", "description": "A partner’s report of unmet food needs or low supply."},
+	  {"name": "Community Volunteer", "description": "Supports operations, events, and community outreach for the recovery network.", "attributes": ["Completed Hours"]},
+	  {"name": "Completed Hours", "description": "Tracks the total hours a volunteer has contributed."},
+	  {"name": "Local Event", "description": "Community activity promoting food recovery awareness."},
+	  {"name": "Government Food Inspector", "description": "Reviews data and compliance related to food safety and distribution."},
+	  {"name": "Evaluation Notice", "description": "A formal request or feedback document sent to assess network performance."}
+    ],
+  "associations": [
+      {"from": "Food Donation", "to": "Distribution Partner", "description": "Food Donation is delivered to Distribution Partner."},
+	  {"from": "Donor", "to": "Donation Offer", "description": "Donor creates Donation Offer for available food."},
+	  {"from": "Donor", "to": "Food Donation", "description": "Donor provides Food Donation to the network."},
+	  {"from": "Food Coordinator", "to": "Donation Offer", "description": "Food Coordinator reviews and assigns Donation Offer for pickup."},
+	  {"from": "Donor", "to": "Recovery Network", "description": "Donor participates in the Recovery Network."},
+	  {"from": "Distribution Partner", "to": "Recovery Network", "description": "Distribution Partner operates within the Recovery Network."},
+	  {"from": "Community Volunteer", "to": "Food Donation", "description": "Community Volunteer helps process and handle Food Donation."},
+	  {"from": "Food Coordinator", "to": "Recovery Network", "description": "Food Coordinator manages the operations of the Recovery Network."},
+	  {"from": "Food Coordinator", "to": "Pickup Assignment", "description": "Food Coordinator assigns Pickup Assignment to Recovery Driver."},
+	  {"from": "Food Coordinator", "to": "Delivery", "description": "Food Coordinator oversees each Delivery process."},
+	  {"from": "Pickup Assignment", "to": "Recovery Driver", "description": "Pickup Assignment is carried out by Recovery Driver."},
+	  {"from": "Recovery Driver", "to": "Delivery", "description": "Recovery Driver performs the Delivery."},
+	  {"from": "Recovery Driver", "to": "Issue Report", "description": "Recovery Driver submits Issue Report when problems occur."},
+	  {"from": "Issue Report", "to": "Food Coordinator", "description": "Issue Report is sent to Food Coordinator for resolution."},
+	  {"from": "Distribution Partner", "to": "Delivery", "description": "Distribution Partner receives Delivery from Recovery Driver."},
+	  {"from": "Recovery Driver", "to": "Delivery Confirmation", "description": "Recovery Driver submits Delivery Confirmation after drop-off."},
+	  {"from": "Distribution Partner", "to": "Delivery Confirmation", "description": "Distribution Partner validates the Delivery Confirmation."},
+	  {"from": "Distribution Partner", "to": "Delivery Log", "description": "Distribution Partner records completed deliveries in Delivery Log."},
+	  {"from": "Delivery Confirmation", "to": "Food Recovery Data", "description": "Delivery Confirmation contributes to Food Recovery Data."},
+	  {"from": "Delivery Log", "to": "Food Recovery Data", "description": "Delivery Log adds information to Food Recovery Data."},
+	  {"from": "Distribution Partner", "to": "Shortage Report", "description": "Distribution Partner submits Shortage Report when supplies are insufficient."},
+	  {"from": "Shortage Report", "to": "Food Coordinator", "description": "Shortage Report informs Food Coordinator about demand gaps."},
+	  {"from": "Donor", "to": "Monthly Report", "description": "Donor receives Monthly Report summarizing contributions."},
+	  {"from": "Food Recovery Data", "to": "Monthly Report", "description": "Food Recovery Data is used to generate Monthly Report."},
+	  {"from": "Food Recovery Data", "to": "Weekly Report", "description": "Food Recovery Data is summarized into Weekly Report."},
+	  {"from": "Food Coordinator", "to": "Weekly Report", "description": "Food Coordinator reviews Weekly Report for planning."},
+	  {"from": "Recovery Network", "to": "Local Event", "description": "Recovery Network hosts Local Event for awareness and community engagement."},
+	  {"from": "Community Volunteer", "to": "Local Event", "description": "Community Volunteer participates in Local Event activities."},
+	  {"from": "Government Food Inspector", "to": "Food Recovery Data", "description": "Government Food Inspector reviews Food Recovery Data for compliance."},
+	  {"from": "Government Food Inspector", "to": "Evaluation Notice", "description": "Government Food Inspector issues Evaluation Notice to Food Coordinator."},
+	  {"from": "Evaluation Notice", "to": "Food Coordinator", "description": "Evaluation Notice requests Food Coordinator to provide responses or improvements."}
+    ],
+  "subdomains": {
+      "Donation": {
+          "objects" : ["Donor","Available Food Items", "Pickup Times","Donation Offer","Food Donation","Food Item","Volunteer"]
+      },
+      "Delivery": {
+          "objects" : ["Pickup Assignment","Recovery Driver","Issue Report","Delivery","Route","Food Donation","Delivery Confirmation","Distribution Partner","Daily Capacity","Shortage Report"]
+      },
+      "Network Coordination": {
+          "objects" : ["Food Coordinator","Recovery Network","Donor","Distribution Partner"]
+      },
+	  "Data Recording": {
+          "objects" : ["Delivery Log","Food Recovery Data","Monthly Report","Weekly Report"]
+      },
+	  "Governance": {
+          "objects" : ["Government Food Inspector","Evaluation Notice"]
+      },
+	  "Event": {
+          "objects" : ["Local Event","Community Volunteer"]
+      },
+      "subdomain connections": ["Network Coordination--Donation","Network Coordination--Delivery","Donation--Delivery","Delivery--Data Recording","Data Recording--Donation","Governance--Data Recording","Network Coordination--Events"]
+    },
+  "bounded contexts": {
+      "Donation" : {
+	  	  "derived from": "Donation Subdomain",
+	  	  "objects": ["Food Donor","Available Food Items", "Pickup Times","Donation Offer","Food Donation","Food Item","Donation Volunteer"],
+	  	  "name changes" : ["Donor -> Food Donor", "Food Donation stays Food Donation","Community Volunteer -> Donation Volunteer"]
+	  },
+	  "Delivery" : {
+	  	  "derived from": "Delivery Subdomain",
+	  	  "objects": ["Pickup Assignment","Recovery Driver","Issue Report","Delivery","Route","Food Package","Delivery Confirmation","Donation Recipient","Daily Capacity","Shortage Report"],
+	  	  "name changes" : ["Distribution Partner -> Donation Recipient","Food Donation -> Food Package"]
+	  },
+	  "Network Coordination" : {
+	  	  "derived from": "Network Coordination Subdomain",
+	  	  "objects": ["Food Coordinator","Recovery Network","Donor Record","Distribution Partner Record"],
+	  	  "name changes" : ["Donor -> Donor Record", "Distribution Partner -> Distribution Partner Record"]
+	  },
+	  "Data Recording" : {
+	  	  "derived from": "Data Recording Subdomain",
+	  	  "objects": ["Delivery Log","Food Recovery Data","Monthly Report","Weekly Report"],
+	  	  "name changes" : []
+	  },
+	  "Governance" : {
+	  	  "derived from": "Governance Subdomain",
+	  	  "objects": ["Government Food Inspector","Evaluation Notice"],
+	  	  "name changes" : []
+	  },
+	  "Event" : {
+	  	  "derived from": "Event Subdomain",
+	  	  "objects": ["Local Event","Community Volunteer"],
+	  	  "name changes" : ["Community Volunteer -> Event Volunteer"]
+	  }
+	}
+}
