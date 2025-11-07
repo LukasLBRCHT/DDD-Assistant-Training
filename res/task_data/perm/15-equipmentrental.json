@@ -1,0 +1,116 @@
+{
+  "domain-information":
+  [	"A rental manager reviews equipment reservations to check equipment availability.",
+	"A rental manager updates the rental agreement when a customer extends their rental period.",
+	"A rental manager reviews customer feedback.",
+	"A rental manager reviews the monthly inventory record to assess equipment usage.",
+	"A rental manager reviews the monthly revenue report to plan future equipment purchases.",
+	"A rental manager places an new equipment from an equipment distributor.",
+	"A customer makes a reservation for a piece of equipment.",
+	"A customer cancels a reservation when their construction project is delayed.",
+	"A customer signs a rental agreement before picking up the rented equipment.",
+	"A customer returns a piece of equipment and reports a small malfunction.",
+	"A maintenance technician performs a maintenance inspection of returned equipment for damage or wear.",
+	"A maintenance technician updates the maintenance log of the equipment after completing repairs.",
+	"A maintenance technician forms a report about missing components to send it to the rental manager.",
+	"A maintenance technician assesses the equipment before marking the equipment status as available again.",
+	"A delivery driver collects an equipment delivery the customer site location.",
+	"A delivery driver confirms the return of equipment after completing a pickup.",
+	"An accountant records payments received from customers after rental completion.",
+	"An accountant reviews overdue invoices from rental agreements and sends invoice reminders to customers.",
+	"An accountant compiles a monthly revenue report for the rental manager."
+],
+  "domain objects": [
+      {"name": "Rental Manager", "description": "Oversees rental operations, inventory, and customer relationships"},
+      {"name": "Monthly Inventory Record", "description": "Summary of equipment usage and availability trends"},
+      {"name": "Monthly Revenue Report", "description": "Financial summary of rental income and payments","attributes": ["Payment"]},
+      {"name": "Payment", "description": "Customer payment for equipment rental services"},
+      {"name": "Equipment", "description": "Physical items available for rental","attributes": ["Equipment Status","Maintenance Log"]},
+      {"name": "Equipment Status", "description": "Current condition and availability of equipment"},
+	  {"name": "Maintenance Log", "description": "History of all maintenance and repairs performed"},
+      {"name": "Equipment Order", "description": "Purchase order for new equipment from distributor","attributes": ["Equipment"]},
+      {"name": "Equipment Distributor", "description": "Supplier of new equipment for the rental business"},
+      {"name": "Equipment Reservation", "description": "Booking for specific equipment during a time period","attributes": ["Rental Period","Equipment"]},
+      {"name": "Rental Period", "description": "Start and end dates for equipment usage"},
+      {"name": "Rental Agreement", "description": "Legal contract outlining rental terms and conditions","attributes": ["Equipment Reservation"]},
+      {"name": "Customer", "description": "Person or company renting equipment","attributes": ["Customer Site Location"]},
+      {"name": "Customer Site Location", "description": "Where equipment will be delivered and used"},
+      {"name": "Customer Feedback", "description": "Comments and ratings about rental experience"},
+      {"name": "Accountant", "description": "Handles financial transactions and reporting"},
+      {"name": "Invoice Reminder", "description": "Notification sent for overdue payments","attributes": ["Invoice"]},
+      {"name": "Invoice", "description": "Bill sent to customer for rental charges"},
+      {"name": "Malfunction Report", "description": "Documentation of equipment issues or damage"},
+      {"name": "Maintenance Technician", "description": "Services and repairs rental equipment"},
+      {"name": "Maintenance Inspection", "description": "Assessment of equipment condition after return","attributes": ["Equipment"]},
+      {"name": "Equipment Delivery", "description": "Scheduled transport of equipment to customer site","attributes": ["Equipment","Customer Site Location"]},
+      {"name": "Delivery Driver", "description": "Transports equipment to and from customer locations"}
+    ],
+  "associations": [
+      {"from": "Customer", "to": "Equipment Reservation", "description": "Customer creates and manages equipment reservations"},
+      {"from": "Rental Manager", "to": "Equipment Reservation", "description": "Rental Manager reviews and approves equipment reservations"},
+      {"from": "Equipment Reservation", "to": "Monthly Inventory Record", "description": "Equipment reservations contribute data to monthly inventory records"},
+      {"from": "Rental Manager", "to": "Rental Agreement", "description": "Rental Manager creates and updates rental agreements"},
+      {"from": "Rental Agreement", "to": "Customer", "description": "Rental agreement binds customer to rental terms"},
+      {"from": "Customer", "to": "Payment", "description": "Customer makes payments for rental services"},
+      {"from": "Customer", "to": "Customer Feedback", "description": "Customer provides feedback about rental experience"},
+      {"from": "Rental Manager", "to": "Customer Feedback", "description": "Rental Manager reviews and acts on customer feedback"},
+      {"from": "Rental Manager", "to": "Monthly Revenue Report", "description": "Rental Manager analyzes monthly revenue reports"},
+      {"from": "Rental Manager", "to": "Equipment Order", "description": "Rental Manager places new equipment orders"},
+      {"from": "Equipment Distributor", "to": "Equipment Order", "description": "Equipment distributor fulfills equipment orders"},
+      {"from": "Maintenance Technician", "to": "Maintenance Inspection", "description": "Maintenance technician performs equipment inspections"},
+      {"from": "Maintenance Technician", "to": "Malfunction Report", "description": "Maintenance technician creates malfunction reports"},
+      {"from": "Malfunction Report", "to": "Rental Manager", "description": "Malfunction report alerts rental manager to equipment issues"},
+      {"from": "Maintenance Technician", "to": "Maintenance Log", "description": "Maintenance technician updates maintenance logs"},
+      {"from": "Delivery Driver", "to": "Equipment Delivery", "description": "Delivery driver handles equipment deliveries"},
+      {"from": "Accountant", "to": "Invoice", "description": "Accountant generates and manages invoices"},
+      {"from": "Accountant", "to": "Invoice Reminder", "description": "Accountant sends invoice reminders for overdue payments"},
+      {"from": "Invoice Reminder", "to": "Customer", "description": "Invoice reminder notifies customer of overdue payment"},
+      {"from": "Accountant", "to": "Payment", "description": "Accountant records and processes customer payments"},
+      {"from": "Payment", "to": "Invoice", "description": "Payment settles outstanding invoice amounts"}
+    ],
+  "subdomains": {
+      "Renting": {
+          "objects" : ["Customer","Customer Site Location","Equipment Reservation","Rental Period","Equipment","Equipment Status","Rental Agreement","Invoice", "Customer Feedback"]
+      },
+      "Organisation": {
+          "objects" : ["Rental Manager","Monthly Revenue Report","Payment","Monthly Inventory Record","Equipment Order","Equipment","Equipment Status","Equipment Distributor"]
+      },
+      "Maintenance": {
+          "objects" : ["Maintenance Technician","Maintenance Inspection","Equipment","Equipment Status","Maintenance Log","Malfunction Report"]
+      },
+	  "Delivery": {
+          "objects" : ["Delivery Driver","Equipment Delivery","Equipment Load","Customer Site Location"]
+      },
+	  "Accounting": {
+          "objects" : ["Accountant","Payment","Invoice Reminder","Invoice"]
+      },
+      "subdomain connections": ["Renting--Organisation","Renting--Delivery","Renting--Accounting","Organisation--Accounting","Maintenance--Renting","Maintenance--Organization"]
+    },
+  "bounded contexts": {
+      "Renting" : {
+	  	  "derived from": "Renting Subdomain",
+	  	  "objects": ["Customer","Customer Site Location","Equipment Reservation","Rental Period","Rented Equipment","Equipment Status","Rental Agreement","Invoice", "Customer Feedback"],
+	  	  "name changes" : ["Equipment -> Rented Equipment"]
+	  },
+	  "Organisation" : {
+	  	  "derived from": "Organisation Subdomain",
+	  	  "objects": ["Rental Manager","Monthly Revenue Report","Payment","Monthly Inventory Record","Equipment Order","Ordered Equipment","Equipment Status","Equipment Distributor"],
+	  	  "name changes" : ["Equipment -> Ordered Equipment"]
+	  },
+	  "Maintenance" : {
+	  	  "derived from": " Maintenance Subdomain",
+	  	  "objects": ["Maintenance Technician","Maintenance Inspection","Asset","Asset Status","Maintenance Log","Malfunction Report"],
+	  	  "name changes" : ["Equipment -> Asset", "Equipment Status -> Asset Status"]
+	  },
+	  "Delivery" : {
+	  	  "derived from": "Delivery Subdomain",
+	  	  "objects": ["Delivery Driver","Equipment Delivery","Equipment Load","Delivery Destination"],
+	  	  "name changes" : ["Customer Site Location -> Delivery Destination","Equipment -> Equipment Load"]
+	  },
+	  "Accounting" : {
+	  	  "derived from": "Accounting Subdomain",
+	  	  "objects": ["Accountant","Payment Record","Invoice Reminder","Open Invoice"],
+	  	  "name changes" : ["Payment -> Payment Record","Invoice -> Open Invoice"]
+	  }
+	}
+}
