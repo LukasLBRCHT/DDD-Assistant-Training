@@ -1,0 +1,81 @@
+{
+  "domain-information":
+  [	"An owner sends a design request to an architect.",
+	"An owner reviews the proposed blueprint before approving the final design.",
+	"An owner submits a permit application containing the blueprint to a city officer for construction approval.",
+	"An owner hires a construction overseer.",
+	"An architect creates a detailed blueprint for the house based on the owner’s reqeust.",
+	"An architect updates the blueprint after the city requests design adjustments.",
+	"A city officer reviews the permit application.",
+	"A city officer sends a construction permit to an construction overseer after approving the application.",
+	"A city officer makes an inspection of the construction project.",
+	"A construction overseer opens a construction project after receiving the construction permit.",
+	"A construction overseer assigns the blueprint to the project.",
+	"Construction workers are assigned to the construction project.",
+	"A construction overseer updates the project schedule.",
+	"A construction overseer gives instructions to the construction workers.",
+	"A construction worker follows overseer’s instructions.",
+	"A construction worker reports a safety concern to the overseer for resolution."
+],
+  "domain objects": [
+      {"name": "Owner", "description": "Person who commissions and finances the construction project."},
+      {"name": "Design Request", "description": "A request from the owner to the architect describing design needs and requirements."},
+      {"name": "Architect", "description": "Professional responsible for creating and updating blueprints based on design requests and regulations."},
+      {"name": "Blueprint", "description": "Detailed architectural plan that defines the structure and layout of the building."},
+      {"name": "Permit Application", "description": "Formal application submitted to the city for approval to begin construction, containing the blueprint.", "attributes": ["Blueprint"]},
+      {"name": "Construction Permit", "description": "Official approval document from the city that authorizes the start of construction."},
+      {"name": "City Officer", "description": "Official responsible for reviewing permits and conducting inspections to ensure compliance."},
+      {"name": "Construction Project", "description": "Active building project managed by the overseer and executed by workers.", "attributes": ["Construction Worker","Project Schedule","Blueprint"]},
+      {"name": "Construction Worker", "description": "Laborer who carries out construction tasks according to overseer instructions."},
+      {"name": "Project Schedule", "description": "Timeline and sequence of construction activities for the project."},
+      {"name": "Inspection", "description": "City officer’s evaluation of the construction site for compliance with safety and building standards."},
+      {"name": "Construction Overseer", "description": "Manager responsible for executing the project, coordinating workers, and maintaining safety and progress."},
+      {"name": "Safety Concern Report", "description": "Notice raised by a worker to report potential hazards or unsafe conditions to the overseer."},
+      {"name": "Instruction", "description": "Task or directive given by the overseer to guide worker activities on site."}
+    ],
+  "associations": [
+      {"from": "Owner", "to": "Design Request", "description": "Owner sends a design request to Architect."},
+      {"from": "Owner", "to": "Blueprint", "description": "Owner reviews and approves the blueprint."},
+      {"from": "Owner", "to": "Permit Application", "description": "Owner submits a permit application containing the blueprint."},
+      {"from": "Owner", "to": "Construction Overseer", "description": "Owner hires the construction overseer for the project."},
+      {"from": "City Officer", "to": "Permit Application", "description": "City officer reviews the permit application for approval."},
+      {"from": "City Officer", "to": "Inspection", "description": "City officer conducts an inspection of the project."},
+      {"from": "Inspection", "to": "Construction Project", "description": "Inspection checks the progress of the construction project."},
+      {"from": "City Officer", "to": "Construction Permit", "description": "City officer issues a construction permit after approval."},
+      {"from": "Construction Permit", "to": "Construction Overseer", "description": "Construction permit authorizes the overseer to start the project."},
+      {"from": "Construction Overseer", "to": "Construction Project", "description": "Construction overseer manages the construction project."},
+      {"from": "Construction Overseer", "to": "Instruction", "description": "Construction overseer gives instructions for the project work."},
+      {"from": "Instruction", "to": "Construction Worker", "description": "Instruction guides the construction worker’s tasks."},
+      {"from": "Construction Worker", "to": "Safety Concern Report", "description": "Construction worker files a safety concern report."},
+      {"from": "Safety Concern Report", "to": "Construction Overseer", "description": "Safety concern report is sent to the construction overseer for action."}
+    ],
+  "subdomains": {
+      "Commission": {
+          "objects" : ["Owner","Design Request","Architect","Blueprint","Permit Application"]
+      },
+      "Governance": {
+          "objects" : ["City Officer","Inspection","Construction Permit"]
+      },
+      "Construction": {
+          "objects" : ["Construction Overseer","Construction Project","Construction Worker","Project Schedule","Blueprint", "Instruction","Safety Concern Report"]
+      },
+      "subdomain connections": ["Commission--Governance","Commission--Construction","Governance--Construction"]
+    },
+  "bounded contexts": {
+      "Commission" : {
+	  	  "derived from": "Commission Subdomain",
+	  	  "objects": ["Owner","Design Request","Architect","Blueprint","Permit Application"],
+	  	  "name changes" : ["Blueprint -> Draft Blueprint"]
+	  },
+	  "Governance" : {
+	  	  "derived from": "Governance Subdomain",
+	  	  "objects": ["City Officer","Inspection","Construction Permit"],
+	  	  "name changes" : []
+	  },
+      "Construction" : {
+	  	  "derived from": "Construction Subdomain",
+	  	  "objects": ["Construction Overseer","Construction Project","Construction Worker","Project Schedule","Blueprint", "Instruction","Safety Concern Report"],
+	  	  "name changes" : ["Blueprint -> Construction Blueprint"]
+	  }
+	}
+}

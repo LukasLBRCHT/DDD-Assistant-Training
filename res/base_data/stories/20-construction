@@ -1,19 +1,20 @@
-An owner requests an architect to design a new family house.
+An owner sends a design request to an architect.
 An owner reviews the proposed blueprint before approving the final design.
-An owner submits a permit application to the city for construction approval.
+An owner submits a permit application to a city officer for construction approval.
+An owner hires a construction overseer.
 
-An architect creates a detailed blueprint for the house based on the owner’s requirements.
-An architect reviews the city’s construction guidelines before finalizing the design.
+An architect creates a detailed blueprint for the house based on the owner’s reqeust.
 An architect updates the blueprint after the city requests design adjustments.
 
-A city officer reviews the permit application to ensure the project meets zoning laws.
-A city officer issues a construction permit after approving the architect’s plans.
-A city officer visits the construction site to prepare an inspection report.
+A city officer reviews the permit application.
+A city officer sends a construction permit to an instruction overseer after approving the application.
+A city officer makes an inspection of the construction project.
 
-A construction overseer from an instruction company hires construction workers after receiving the permit.
-A construction overseer orders materials according to the architect’s blueprint.
-A construction overseer updates the project schedule after delays on the site.
+A construction overseer opens a construction project after receiving the construction permit.
+A construction overseer assigns the blueprint to the project.
+Construction workers are assigned to the construction project.
+A construction overseer updates the project schedule.
+A construction overseer gives instructions to the construction workers.
 
-A construction worker lays the foundation following the overseer’s instructions.
-A construction worker assembles walls and installs beams based on the blueprint.
+A construction worker follows overseer’s instructions.
 A construction worker reports a safety concern to the overseer for resolution.
