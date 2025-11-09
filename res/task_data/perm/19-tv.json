@@ -1,0 +1,87 @@
+{
+  "domain-information":
+  [	"A show producer develops a new show proposal and submits it to the channel manager.",
+	"A show producer hires a regisseur to lead the production of the approved show.",
+	"A show producer reviews the budget plan of a show with the channel manager before production starts.",
+	"A regisseur plans the shooting schedule for the show.",
+	"A regisseur directs the filming of a show which produces raw footage.",
+	"A regisseur collaborates with the film editor to finalize the show cut.",
+	"A film editor takes raw footage and turns it to a complete show cut based on the regisseur’s vision.",
+	"A film editor presents the show cut to the producer in a post production meeting.",
+	"A channel manager reviews new show proposals to decide which ones to approve.",
+	"A channel manager puts a show into a broadcast slot.",
+	"A channel manager analyses audience feedback of a show."
+],
+  "domain objects": [
+      {"name": "Show Producer", "description": "A person responsible for developing and overseeing a television show's production."},
+      {"name": "Show Proposal", "description": "A document outlining a new show's concept and details for approval.", "attributes": ["Show"]},
+      {"name": "Show", "description": "A television program produced for broadcast.", "attributes": ["Budget Plan","Shooting Schedule","Show Cut"]},
+      {"name": "Budget Plan", "description": "An estimated cost outline for producing a show."},
+      {"name": "Shooting Schedule", "description": "A planned timeline for filming sessions."},
+      {"name": "Show Cut", "description": "The completed version of a show after editing."},
+      {"name": "Regisseur", "description": "A director responsible for creative direction during filming."},
+      {"name": "Filming", "description": "The process of recording footage for a show."},
+      {"name": "Raw Footage", "description": "Unedited video material recorded during filming."},
+      {"name": "Film Editor", "description": "A specialist who assembles and refines footage into the final show cut."},
+      {"name": "Post Production Meeting", "description": "A session where the final show cut is reviewed and discussed."},
+      {"name": "Channel Manager", "description": "An executive responsible for approving, scheduling, and evaluating shows on the channel."},
+      {"name": "Broadcast Slot", "description": "A scheduled time segment for airing a specific show.", "attributes": ["Show"]},
+      {"name": "Audience Feedback", "description": "Responses and opinions collected from viewers after broadcast."}
+    ],
+  "associations": [
+      {"from": "Show Producer", "to": "Show Proposal", "description": "The Show Producer creates and submits the Show Proposal."},
+      {"from": "Show Producer", "to": "Budget Plan", "description": "The Show Producer reviews and manages the Budget Plan with the Channel Manager."},
+      {"from": "Show Producer", "to": "Regisseur", "description": "The Show Producer hires and works with the Regisseur for show production."},
+      {"from": "Regisseur", "to": "Filming", "description": "The Regisseur directs and oversees Filming."},
+      {"from": "Filming", "to": "Show", "description": "Filming contributes recorded material to the Show."},
+      {"from": "Regisseur", "to": "Shooting Schedule", "description": "The Regisseur creates and follows the Shooting Schedule."},
+      {"from": "Filming", "to": "Raw Footage", "description": "Filming produces Raw Footage for post-production."},
+      {"from": "Film Editor", "to": "Raw Footage", "description": "The Film Editor uses Raw Footage to assemble the Show Cut."},
+      {"from": "Film Editor", "to": "Show Cut", "description": "The Film Editor creates the final Show Cut from edited footage."},
+      {"from": "Regisseur", "to": "Show Cut", "description": "The Regisseur reviews and refines the Show Cut to match creative goals."},
+      {"from": "Film Editor", "to": "Post Production Meeting", "description": "The Film Editor presents the Show Cut during the Post Production Meeting."},
+      {"from": "Show Producer", "to": "Post Production Meeting", "description": "The Show Producer reviews the final Show Cut in the Post Production Meeting."},
+      {"from": "Channel Manager", "to": "Show Proposal", "description": "The Channel Manager reviews and approves Show Proposals."},
+      {"from": "Channel Manager", "to": "Budget Plan", "description": "The Channel Manager approves or adjusts the Budget Plan for production."},
+      {"from": "Channel Manager", "to": "Broadcast Slot", "description": "The Channel Manager schedules the Show in a Broadcast Slot."},
+      {"from": "Channel Manager", "to": "Audience Feedback", "description": "The Channel Manager evaluates Audience Feedback for channel performance."},
+      {"from": "Audience Feedback", "to": "Show", "description": "Audience Feedback reflects the reception of the Show."}
+    ],
+  "subdomains": {
+      "Proposal": {
+          "objects" : ["Show Producer","Show Proposal","Show","Budget Plan"]
+      },
+      "Production": {
+          "objects" : ["Regisseur","Filming","Show","Shooting Schedule","Raw Footage"]
+      },
+      "Editing": {
+          "objects" : ["Film Editor","Show Cut","Post Production Meeting"]
+      },
+      "Broadcasting": {
+          "objects" : ["Channel Manager","Broadcast Slot","Show","Audience Feedback"]
+      },
+      "subdomain connections": ["Proposal--Broadcasting","Proposal--Production","Production--Editing","Editing--Proposal"]
+    },
+  "bounded contexts": {
+      "Proposal" : {
+	  	  "derived from": "Proposal Subdomain",
+	  	  "objects": ["Show Producer","Show Proposal","Show","Budget Plan"],
+	  	  "name changes" : ["Show -> Show Concept"]
+	  },
+	  "Production" : {
+	  	  "derived from": "Production Subdomain",
+	  	  "objects": ["Regisseur","Filming","Show","Shooting Schedule","Raw Footage"],
+	  	  "name changes" : ["Show -> Production"]
+	  },
+      "Editing" : {
+	  	  "derived from": "Editing Subdomain",
+	  	  "objects": ["Film Editor","Show Cut","Post Production Meeting"],
+	  	  "name changes" : []
+	  },
+      "Broadcasting" : {
+	  	  "derived from": "Broadcasting Subdomain",
+	  	  "objects": ["Channel Manager","Broadcast Slot","Show","Audience Feedback"],
+	  	  "name changes" : []
+	  }
+	}
+}
