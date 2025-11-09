@@ -1,0 +1,72 @@
+{
+  "domain-information":
+  [	"A scout travels on a scouting trip to find new players for the club.",
+	"A scout records observations in a performance report of a player after a match.",
+	"A scout submits scouting reports of players containing performance reports to the scouting coordinator for review.",
+	"A scouting coordinator of the club reviews scouting reports from multiple scouts to identify promising players.",
+	"A scouting coordinator organizes a scouting trip for the club’s scouts.",
+	"A scouting coordinator updates the club’s watchlist with newly evaluated scouting reports.",
+	"A sports director of the club reviews the watchlist to decide on which players to approach.",
+	"A sports director discusses a contract proposal containing a contract with the player’s agent.",
+	"A sports director approves player contracts with the players once terms are finalized.",
+	"A player agent works for a player.",
+	"A player agent reviews the contract proposal.",
+	"A player signs the contract."
+],
+  "domain objects": [
+      {"name": "Scout", "description": "An individual employed by the club to identify and evaluate potential players."},
+      {"name": "Scouting Trip", "description": "A trip organized for scouts to observe players during matches or training sessions."},
+      {"name": "Player", "description": "An athlete who may be evaluated, recruited, or contracted by the club."},
+      {"name": "Performance Report", "description": "A detailed record of a player's performance in a match or event, created by a scout.","attributes": ["Player"]},
+      {"name": "Scouting Report", "description": "A compiled document summarizing scouting findings, including performance reports and evaluations.","attributes": ["Player","Performance Report"]},
+      {"name": "Scouting Coordinator", "description": "A club staff member who manages scouting operations and reviews scouting reports."},
+      {"name": "Club", "description": "The organization employing scouts, coordinators, and directors to manage recruitment and player relations.","attributes": ["Scout","Scouting Coordinator","Sports Director","Watchlist"]},
+      {"name": "Sports Director", "description": "A senior official responsible for player recruitment decisions and contract negotiations."},
+      {"name": "Watchlist", "description": "An internal list of priority players being monitored by the club.","attributes": ["Scouting Report"]},
+      {"name": "Player Agent", "description": "A representative who manages a player's career, including contracts and negotiations."},
+      {"name": "Contract Proposal", "description": "A preliminary document outlining proposed terms of a player contract.","attributes": ["Contract"]}
+    ],
+  "associations": [
+      {"from": "Scout", "to": "Scouting Trip", "description": "A scout travels on a scouting trip to observe players."},
+      {"from": "Scout", "to": "Performance Report", "description": "A scout writes a performance report for a player after a match."},
+      {"from": "Scout", "to": "Scouting Report", "description": "A scout compiles performance reports into a scouting report for review."},
+      {"from": "Scouting Coordinator", "to": "Scouting Trip", "description": "A scouting coordinator organizes scouting trips for scouts."},
+      {"from": "Scouting Coordinator", "to": "Scouting Report", "description": "A scouting coordinator reviews scouting reports submitted by scouts."},
+      {"from": "Scouting Coordinator", "to": "Watchlist", "description": "A scouting coordinator updates the watchlist with scouting reports of priority players."},
+      {"from": "Sports Director", "to": "Watchlist", "description": "A sports director reviews the watchlist to select players for potential recruitment."},
+      {"from": "Sports Director", "to": "Contract Proposal", "description": "A sports director creates a contract proposal for a player’s agent to review."},
+      {"from": "Player Agent", "to": "Contract Proposal", "description": "A player agent reviews the contract proposal received from the sports director."},
+      {"from": "Sports Director", "to": "Contract", "description": "A sports director approves the final player contract once terms are agreed."},
+      {"from": "Player", "to": "Contract", "description": "A player signs the finalized contract with the club."},
+      {"from": "Player Agent", "to": "Player", "description": "A player agent represents and advises the player in negotiations."}
+    ],
+  "subdomains": {
+      "Scouting": {
+          "objects" : ["Scout","Scouting Trip","Performance Report","Player","Scouting Report"]
+      },
+      "Evaluation": {
+          "objects" : ["Scouting Coordinator","Sports Director","Club","Watchlist","Scouting Report"]
+      },
+      "Negotiation": {
+          "objects" : ["Contract Proposal","Player Agent","Contract","Player"]
+      },
+      "subdomain connections": ["Scouting--Evaluation","Evaluation--Negotiation"]
+    },
+  "bounded contexts": {
+      "Scouting" : {
+	  	  "derived from": "Scouting Subdomain",
+	  	  "objects": ["Scout","Scouting Trip","Performance Report","Prospect","Scouting Report"],
+	  	  "name changes" : ["Player -> Prospect"]
+	  },
+	  "Evaluation" : {
+	  	  "derived from": "Evaluation Subdomain",
+	  	  "objects": ["Scouting Coordinator","Sports Director","Club","Watchlist","Priority Report"],
+	  	  "name changes" : ["Scouting Report -> Priority Report"]
+	  },
+      "Negotiation" : {
+            "derived from": "Negotiation Subdomain",
+            "objects": ["Contract Proposal","Player Agent","Contract","Player"],
+            "name changes" : []
+      }
+	}
+}
