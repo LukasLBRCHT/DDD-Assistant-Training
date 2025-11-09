@@ -14,6 +14,9 @@ list_of_done_domains = [
     "g21-badcamp",
     "30-communityaggriculture",
     "31-bikesharing"
+    "32-ruralhealth",
+    "33-urbanfoodrecovery",
+    "33-urbangardening"
 ]
 
 
@@ -30,6 +33,10 @@ def load_tasks_from_stories():
             stories = "["
 
             for line in f.readlines():
+
+                if not line:
+                    continue
+
                 line = line.replace('"', '\\"')
                 stories += f'\t"{line.strip()}",\n'
             stories = stories.removesuffix(",\n")
