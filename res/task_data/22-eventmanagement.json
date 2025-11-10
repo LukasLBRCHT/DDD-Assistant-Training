@@ -1,0 +1,119 @@
+{
+  "domain-information":
+  [	"A client sends a client request to an event planner.",
+	"A client reviews the proposed event plan and requests adjustments to the budget.",
+	"A client holds a preparation meeting with the event overseer.",
+	"An event planner creates a detailed event plan based on the client’s request.",
+	"An event planner proposes the plan to the client.",
+	"An event planner contacts a venue manager to check availability and request a venue booking.",
+	"An event planner coordinates with supplier to arrange catering.",
+	"An event planner sends a finalized event schedule to the event overseer.",
+	"An event overseer starts the event and ensures it follows it's event plan.",
+	"A venue manager confirms the booking and allocates a venue for the event date.",
+	"A venue manager ensures the venue is properly prepared according to the event requirements.",
+	"A supplier provides the requested catering for the event.",
+	"A supplier confirms delivery details with the event planner prior to the event day.",
+	"A finance officer issues an invoice to the client after the event is completed.",
+	"A finance officer processes payments to supplier and venue manager after receiving service confirmations.",
+	"A finance officer updates the company’s financial records with all event-related transactions."
+],
+  "domain objects": [
+      {"name": "Client", "description": "Person or organization requesting an event."},
+      {"name": "Event Planner", "description": "Professional who designs and coordinates event logistics."},
+      {"name": "Event Plan", "description": "Document describing event details, budget, and schedule.", "attributes": ["Budget"]},
+      {"name": "Budget", "description": "Estimated cost breakdown for the event."},
+      {"name": "Client Request", "description": "Initial request containing client’s event requirements."},
+      {"name": "Venue Booking", "description": "Reservation of a venue for a specific event date.", "attributes": ["Venue","Event Date"]},
+      {"name": "Venue", "description": "Location where the event takes place."},
+      {"name": "Event Date", "description": "Scheduled date of the event."},
+      {"name": "Venue Manager", "description": "Person responsible for managing and preparing the venue."},
+      {"name": "Supplier", "description": "Company providing event services such as catering."},
+      {"name": "Event", "description": "Actual occurrence of the organized event.", "attributes": ["Event Plan","Venue","Event Date","Event Schedule"]},
+      {"name": "Event Schedule", "description": "Timeline outlining event activities and tasks."},
+      {"name": "Event Overseer", "description": "Person ensuring event execution follows the plan."},
+      {"name": "Catering", "description": "Food and beverage service provided for the event.", "attributes": ["Delivery Details"]},
+      {"name": "Delivery Details", "description": "Information about time and place for supplier delivery."},
+      {"name": "Finance Officer", "description": "Person handling invoices, payments, and financial tracking."},
+      {"name": "Invoice", "description": "Bill issued to the client after event completion."},
+      {"name": "Payment", "description": "Monetary transaction to settle event-related expenses."},
+      {"name": "Preparation Meeting", "description": "Meeting between client and overseer to finalize event details."},
+      {"name": "Financial Records", "description": "Company records documenting financial transactions."}
+    ],
+  "associations": [
+      {"from": "Client", "to": "Client Request", "description": "Client sends Client Request."},
+      {"from": "Client", "to": "Preparation Meeting", "description": "Client holds Preparation Meeting to clear event details."},
+      {"from": "Client Request", "to": "Event Planner", "description": "Client Request is received by Event Planner."},
+      {"from": "Event Planner", "to": "Event Plan", "description": "Event Planner creates Event Plan."},
+      {"from": "Client", "to": "Event Plan", "description": "Client reviews and approves Event Plan."},
+      {"from": "Event Planner", "to": "Event Schedule", "description": "Event Planner creates Event Schedule."},
+      {"from": "Event Schedule", "to": "Event Overseer", "description": "Event Schedule is sent to Event Overseer."},
+      {"from": "Event Overseer", "to": "Event", "description": "Event Overseer manages Event execution."},
+      {"from": "Event Overseer", "to": "Preparation Meeting", "description": "Event Overseer attends Preparation Meeting with Client."},
+      {"from": "Event Planner", "to": "Supplier", "description": "Event Planner coordinates service details with Supplier."},
+      {"from": "Supplier", "to": "Delivery Details", "description": "Supplier provides Delivery Details for catering."},
+      {"from": "Event Planner", "to": "Delivery Details", "description": "Event Planner confirms Delivery Details with Supplier."},
+      {"from": "Supplier", "to": "Catering", "description": "Supplier provides Catering for Event."},
+      {"from": "Catering", "to": "Event", "description": "Catering is served during Event."},
+      {"from": "Event Planner", "to": "Venue Booking", "description": "Event Planner requests Venue Booking."},
+      {"from": "Venue Manager", "to": "Venue Booking", "description": "Venue Manager confirms Venue Booking."},
+      {"from": "Finance Officer", "to": "Invoice", "description": "Finance Officer issues Invoice to Client."},
+      {"from": "Invoice", "to": "Client", "description": "Client receives Invoice for payment."},
+      {"from": "Finance Officer", "to": "Payment", "description": "Finance Officer processes Payment transactions."},
+      {"from": "Payment", "to": "Supplier", "description": "Payment is sent to Supplier for services."},
+      {"from": "Payment", "to": "Venue Manager", "description": "Payment is sent to Venue Manager for venue use."},
+      {"from": "Finance Officer", "to": "Financial Records", "description": "Finance Officer updates Financial Records."}
+],
+  "subdomains": {
+      "Planning": {
+          "objects" : ["Event Planner","Event Plan","Budget","Event Schedule"]
+      },
+      "Assignment": {
+          "objects" : ["Client","Client Request","Preparation Meeting","Event Plan"]
+      },
+      "Venue Organisation": {
+          "objects" : ["Venue Manager","Venue Booking","Venue","Event Date"]
+      },
+      "Catering": {
+          "objects" : ["Supplier","Delivery Details","Catering"]
+      },
+      "Execution": {
+          "objects" : ["Event Overseer","Event","Venue","Event Date"]
+      },
+      "Finances": {
+          "objects" : ["Finance Officer","Invoice","Payment","Financial Records"]
+      },
+      "subdomain connections": ["Assignment--Planning","Planning--Venue Organisation","Planning--Catering","Venue Organisation--Execution","Catering--Execution","Finances--Assignment","Finances--Venue Organisation","Finances--Catering"]
+    },
+  "bounded contexts": {
+      "Planning" : {
+	  	  "derived from": "Planning Subdomain",
+	  	  "objects": ["Event Planner","Plan Proposal","Budget","Event Schedule"],
+	  	  "name changes" : []
+	  },
+	  "Assignment" : {
+	  	  "derived from": "Assignment Subdomain",
+	  	  "objects": ["Client","Client Request","Preparation Meeting","Event Plan"],
+	  	  "name changes" : ["Event Plan -> Plan Proposal"]
+	  },
+      "Venue Organisation" : {
+	  	  "derived from": "Venue Organisation Subdomain",
+	  	  "objects": ["Venue Manager","Venue Booking","Booked Venue","Booked Date"],
+	  	  "name changes" : ["Venue -> Booked Venue","Event Date -> Booked Date"]
+	  },
+      "Catering" : {
+	  	  "derived from": "Catering Subdomain",
+	  	  "objects": ["Supplier","Delivery Details","Catering"],
+	  	  "name changes" : []
+	  },
+      "Execution" : {
+	  	  "derived from": "Execution Subdomain",
+	  	  "objects": ["Event Overseer","Event","Venue","Event Date"],
+	  	  "name changes" : []
+	  },
+      "Finances" : {
+	  	  "derived from": "Finances Subdomain",
+	  	  "objects": ["Finance Officer","Invoice","Payment","Financial Records"],
+	  	  "name changes" : []
+	  }
+	}
+}
