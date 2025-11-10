@@ -16,7 +16,13 @@ list_of_done_domains = [
     "31-bikesharing"
     "32-ruralhealth",
     "33-urbanfoodrecovery",
-    "33-urbangardening"
+    "33-urbangardening",
+    "15-equipmentrental",
+    "16-bookpublishing",
+    "17-employment",
+    "18-scouting",
+    "19-tv"
+    "20-construction"
 ]
 
 
@@ -34,7 +40,7 @@ def load_tasks_from_stories():
 
             for line in f.readlines():
 
-                if not line:
+                if line.strip() == "":
                     continue
 
                 line = line.replace('"', '\\"')
