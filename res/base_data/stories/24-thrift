@@ -1,0 +1,20 @@
+A seller creates a new item listing in the marketplace catalogue.
+A seller uploads photos and writes a short description for the listed item.
+A seller sets the price of an item .
+A seller confirms the sale once a buyer places an order.
+A seller puts the sold item in a package and hands it over to the shipping carrier.
+A seller sends a message to a buyer to answer questions.
+
+A buyer browses the online catalogue to find second-hand items of interest.
+A buyer sends a message to the seller asking for more details about an item.
+A buyer places an order of a certain listing.
+A buyer tracks the shipment after the seller confirms dispatch.
+A buyer leaves feedback the item is received.
+
+A shipping carrier collects packages from sellers according to scheduled pick-ups.
+A shipping carrier updates the takes on the shipment and adjusts its status.
+A shipping carrier performs shipment of the package to the buyer’s address.
+
+A marketplace administrator reviews new listings.
+A marketplace administrator handles refund requests when a buyer reports an issue with the received item.
+A marketplace administrator removes inactive or fraudulent listings from the catalogue.
