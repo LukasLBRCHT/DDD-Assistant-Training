@@ -12,11 +12,11 @@ list_of_done_domains = [
     "g19-alfred",
     "g13-planningpoker",
     "g21-badcamp",
-    "30-communityaggriculture",
-    "31-bikesharing"
-    "32-ruralhealth",
-    "33-urbanfoodrecovery",
-    "33-urbangardening",
+    "10-communityaggriculture",
+    "11-bikesharing"
+    "12-ruralhealth",
+    "13-urbanfoodrecovery",
+    "14-urbangardening",
     "15-equipmentrental",
     "16-bookpublishing",
     "17-employment",
