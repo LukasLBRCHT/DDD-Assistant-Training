@@ -24,13 +24,13 @@
       "subdomain connections": ["subdomain1--subdomain2","..."]
     }},
   "bounded contexts": {{
-      "bounded context 1" : {{
-	  	  "derived from": "Subdomain",
+      "boundedContext1" : {{
+	  	  "derived from": "aaa Subdomain",
 	  	  "objects": ["object1","object2","..."],
 	  	  "name changes" : ["object3 -> alternationOfObject3", "... -> ..."]
 	  }},
-	  "bounded context 2" : {{
-	  	  "derived from": "Subdomain",
+	  "boundedContext2" : {{
+	  	  "derived from": "aaa Subdomain",
 	  	  "objects": ["object1","object2","..."],
 	  	  "name changes" : []
 	  }}
