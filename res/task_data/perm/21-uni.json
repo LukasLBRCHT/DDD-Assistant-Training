@@ -1,0 +1,93 @@
+{
+  "domain-information":
+  [	"An applicant fills out an application form to apply for admission to a degree program.",
+	"An applicant submits required documents in the application form for review by the registrars.",
+	"An applicant pays the application fee to complete their admission process.",
+	"A registrar reviews submitted applications and forwards qualified ones to the admissions committee.",
+	"A registrar creates an enrollment record after an applicant is accepted.",
+	"A registrar prepares the semester’s course schedule for the department.",
+	"A lecturer has a course which is divided into classes.",
+	"A lecturer monitors class attendance",
+	"A lecturer designs a new course syllabus for the upcoming semester.",
+	"A lecturer supervises and grades an exam.",
+	"A student selects courses to register for the semester.",
+	"A student attends classes and submits assignments throughout the term.",
+	"A student pays the tuition fee before the start of the semester.",
+	"A student takes final exams.",
+	"An accountant processes tuition payments and updates financial records.",
+	"An accountant issues payment reminders to students with outstanding fees."
+],
+  "domain objects": [
+      {"name": "Student", "description": "An enrolled learner participating in courses and exams.","attributes": ["Enrollment Record","Financial Record"]},
+      {"name": "Enrollment Record", "description": "Official record of a student’s registration and academic details."},
+      {"name": "Financial Record", "description": "Record of all tuition payments and outstanding balances for a student."},
+      {"name": "Application Form", "description": "Form submitted by an applicant to apply for admission.","attributes": ["Required Documents"]},
+      {"name": "Required Documents", "description": "Supporting documents such as transcripts or certificates for admission."},
+      {"name": "Registrar", "description": "University staff member managing applications, enrollments, and course schedules."},
+      {"name": "Admission Committee", "description": "Group responsible for deciding which applicants are accepted."},
+      {"name": "Lecturer", "description": "Faculty member responsible for teaching courses and evaluating students.","attributes": ["Course"]},
+      {"name": "Course", "description": "A subject offered by the university.","attributes": ["Syllabus","Class"]},
+      {"name": "Syllabus", "description": "Outline of topics, objectives, and requirements for a course."},
+      {"name": "Class", "description": "Scheduled teaching session within a course.","attributes": ["Attendance"]},
+      {"name": "Attendance", "description": "Record of student participation in class sessions."},
+      {"name": "Assignment", "description": "Task given to students for assessment purposes."},
+      {"name": "Exam", "description": "Formal test evaluating student performance."},
+      {"name": "Tuition Fee", "description": "Payment required from students to attend courses."},
+      {"name": "Accountant", "description": "Staff member managing tuition payments and financial records."},
+  {"name": "Payment Reminder", "description": "Notice sent to students about unpaid fees."}
+    ],
+  "associations": [
+      {"from": "Student", "to": "Application Form", "description": "Student submits filled out Application Form"},
+      {"from": "Registrar", "to": "Admission Committee", "description": "Registrar forwards reviewed applications to Admission Committee"},
+      {"from": "Registrar", "to": "Enrollment Record", "description": "Registrar creates Enrollment Record"},
+      {"from": "Student", "to": "Course", "description": "Student registers for Course"},
+      {"from": "Lecturer", "to": "Class", "description": "Lecturer teaches Class"},
+      {"from": "Student", "to": "Class", "description": "Student attends Class"},
+      {"from": "Student", "to": "Assignment", "description": "Student submits Assignment"},
+      {"from": "Student", "to": "Exam", "description": "Student takes Exam"},
+      {"from": "Lecturer", "to": "Assignment", "description": "Lecturer grades Assignment"},
+      {"from": "Lecturer", "to": "Exam", "description": "Lecturer supervises and grades Exam"},
+      {"from": "Student", "to": "Tuition Fee", "description": "Student pays Tuition Fee"},
+      {"from": "Accountant", "to": "Tuition Fee", "description": "Accountant processes Tuition Fee"},
+      {"from": "Accountant", "to": "Financial Record", "description": "Accountant updates Financial Record"},
+      {"from": "Accountant", "to": "Payment Reminder", "description": "Accountant sends Payment Reminder"},
+      {"from": "Payment Reminder", "to": "Student", "description": "Payment Reminder is sent to Student"}
+    ],
+  "subdomains": {
+      "Studies": {
+          "objects" : ["Student","Lecturer","Course","Syllabus","Class","Attendance"]
+      },
+      "Admission": {
+          "objects" : ["Student","Application Form","Required Documents","Registrar","Admission Committee","Enrollment Record"]
+      },
+      "Grading": {
+          "objects" : ["Lecturer","Assignment","Exam"]
+      },
+      "Accounting": {
+          "objects" : ["Accountant","Financial Record","Tuition Fee","Payment Reminder"]
+      },
+      "subdomain connections": ["Admission--Studies","Admission--Accounting","Studies--Grading"]
+    },
+  "bounded contexts": {
+      "Studies" : {
+	  	  "derived from": "Studies Subdomain",
+	  	  "objects": ["Student","Lecturer","Course","Syllabus","Class","Attendance"],
+	  	  "name changes" : []
+	  },
+	  "Admission" : {
+	  	  "derived from": "Admission Subdomain",
+	  	  "objects": ["Applicant","Application Form","Required Documents","Registrar","Admission Committee","Enrollment Record"],
+	  	  "name changes" : ["Student -> Applicant"]
+	  },
+      "Grading" : {
+	  	  "derived from": "Grading Subdomain",
+	  	  "objects": ["Grader","Assignment","Exam"],
+	  	  "name changes" : ["Lecturer -> Grader"]
+	  },
+      "Accounting" : {
+	  	  "derived from": "Accounting Subdomain",
+	  	  "objects": ["Accountant","Financial Record","Tuition Fee","Payment Reminder"],
+	  	  "name changes" : []
+	  }
+	}
+}

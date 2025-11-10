@@ -1,15 +1,20 @@
 An applicant fills out an application form to apply for admission to a degree program.
-An applicant submits required documents for review by the admissions office.
+An applicant submits required documents in the application form for review by the registrars.
 An applicant pays the application fee to complete their admission process.
+
 A registrar reviews submitted applications and forwards qualified ones to the admissions committee.
 A registrar creates an enrollment record after an applicant is accepted.
-A registrar prepares the semester’s course schedule for all departments.
-A professor designs a new course syllabus for the upcoming semester.
-A professor enters grades into the exam record after evaluating student work.
-A professor holds office hours to support students preparing for exams.
-A student selects courses from the course schedule to register for the semester.
+A registrar prepares the semester’s course schedule for the department.
+
+A lecturer has a course which is divided into classes.
+A lecturer monitors class attendance
+A lecturer designs a new course syllabus for the upcoming semester.
+A lecturer supervises and grades an exam.
+
+A student selects courses to register for the semester.
 A student attends classes and submits assignments throughout the term.
 A student pays the tuition fee before the start of the semester.
-A student takes final exams according to the published schedule.
+A student takes final exams.
+
 An accountant processes tuition payments and updates financial records.
 An accountant issues payment reminders to students with outstanding fees.
