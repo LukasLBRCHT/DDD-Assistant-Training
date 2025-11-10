@@ -1,0 +1,88 @@
+{
+  "domain-information":
+  [	"A customer requests a new mobile connection from a customer service agent.",
+	"A customer selects a service plan that fits their communication needs.",
+	"A customer reports a network outage to the customer service.",
+	"A customer is informed about a technician visit",
+	"A customer receives a invoice containing the network bill for their subscribed services.",
+	"A customer service agent records a new connection request and forwards it to the network technician team.",
+	"A customer service agent updates a customer’s plan upon request.",
+	"A customer service agent logs a service issue reported by a customer and schedules a technician visit.",
+	"A network technician installs network equipment at a new customer location.",
+	"A network technician performs a signal strength test with the installation.",
+	"A network technician repairs damaged mobile connection on a maintenance visit after receiving a maintenance ticket.",
+	"A billing officer generates monthly invoices containing the network bill for all active customers.",
+	"A billing officer processes received payments and updates financial records."
+],
+  "domain objects": [
+      {"name": "Customer", "description": "Person or company using telecommunication services.", "attributes": ["Mobile Connection","Financial Records"]},
+      {"name": "Financial Records", "description": "Contains billing and payment history for a customer."},
+      {"name": "Mobile Connection", "description": "Represents the active mobile service of a customer."},
+      {"name": "Connection Request", "description": "Request made by a customer to start a new mobile connection.", "attributes": ["Service Plan"]},
+      {"name": "Service Plan", "description": "Defines pricing, data, and call limits for a connection."},
+      {"name": "Customer Service Agent", "description": "Handles customer requests, updates, and issue reports."},
+      {"name": "Network Outage Report", "description": "Report created when a customer experiences network problems."},
+      {"name": "Network Bill", "description": "Record of charges for services used by a customer.", "attributes": ["Service Plan"]},
+      {"name": "Network Technician", "description": "Installs, tests, and repairs network connections."},
+      {"name": "Network Installation", "description": "Setup process that activates a customer’s mobile connection.", "attributes": ["Signal Test"]},
+      {"name": "Signal Test", "description": "A test to determine whether the signal is strong enough."},
+      {"name": "Maintenance Ticket", "description": "Record of a service issue that needs technical repair."},
+      {"name": "Maintenance Visit", "description": "On-site visit by a technician to repair or maintain a connection."},
+      {"name": "Billing Officer", "description": "Prepares invoices and manages customer payments."},
+      {"name": "Invoice", "description": "Document listing service charges and payment details."}
+    ],
+  "associations": [
+      {"from": "Customer", "to": "Connection Request", "description": "Customer sends Connection Request to start a mobile service."},
+      {"from": "Customer Service Agent", "to": "Connection Request", "description": "Customer Service Agent receives and records Connection Request."},
+      {"from": "Customer", "to": "Network Outage Report", "description": "Customer submits Network Outage Report when facing service issues."},
+      {"from": "Network Outage Report", "to": "Customer Service Agent", "description": "Network Outage Report is reviewed by Customer Service Agent."},
+      {"from": "Customer Service Agent", "to": "Network Technician", "description": "Customer Service Agent forwards service requests to Network Technician."},
+      {"from": "Network Technician", "to": "Connection Request", "description": "Network Technician handles Connection Request for installation."},
+      {"from": "Network Technician", "to": "Network Installation", "description": "Network Technician performs Network Installation at customer site."},
+      {"from": "Network Installation", "to": "Mobile Connection", "description": "Network Installation establishes the Mobile Connection."},
+      {"from": "Customer Service Agent", "to": "Maintenance Ticket", "description": "Customer Service Agent creates Maintenance Ticket for reported issues."},
+      {"from": "Maintenance Ticket", "to": "Network Technician", "description": "Maintenance Ticket is assigned to Network Technician for repair."},
+      {"from": "Network Technician", "to": "Maintenance Visit", "description": "Network Technician performs Maintenance Visit to fix the issue."},
+      {"from": "Maintenance Visit", "to": "Mobile Connection", "description": "Maintenance Visit restores or improves the Mobile Connection."},
+      {"from": "Billing Officer", "to": "Invoice", "description": "Billing Officer issues Invoice for customer services."},
+      {"from": "Customer", "to": "Invoice", "description": "Customer receives Invoice for subscribed mobile services."},
+      {"from": "Billing Officer", "to": "Financial Records", "description": "Billing Officer updates Financial Records with payment information."}
+    ],
+  "subdomains": {
+      "Customer Service": {
+          "objects" : ["Customer","Connection Request","Service Plan","Network Outage Report","Customer Service Agent"]
+      },
+      "Network Setup": {
+          "objects" : ["Network Technician","Connection Request","Service Plan","Network Installation","Signal Test","Mobile Connection"]
+      },
+      "Maintenance": {
+          "objects" : ["Network Technician","Maintenance Ticket","Maintenance Visit"]
+      },
+      "Billing": {
+          "objects" : ["Billing Officer","Invoice","Network Bill","Service Plan","Financial Records"]
+      },
+      "subdomain connections": ["Customer Service--Network Setup","Customer Service--Maintenance","Billing--Customer Service"]
+    },
+  "bounded contexts": {
+      "Customer Service": {
+          "derived from": "Customer Service Subdomain",
+          "objects" : ["Customer","Connection Request","Service Plan","Network Outage Report","Customer Service Agent"],
+          "name changes" : []
+      },
+      "Network Setup": {
+          "derived from": "Network Setup Subdomain",
+          "objects" : ["Installer","Setup Order","Service Order","Network Installation","Signal Test","Mobile Connection"],
+          "name changes" : ["Network Technician -> Installer","Connection Request -> Setup Order","Service Plan -> Service Order"]
+      },
+      "Maintenance": {
+          "derived from": "Maintenance Subdomain",
+          "objects" : ["Network Technician","Maintenance Ticket","Maintenance Visit"],
+          "name changes" : []
+      },
+      "Billing": {
+          "derived from": "Billing Subdomain",
+          "objects" : ["Billing Officer","Invoice","Network Bill","Provided Services","Financial Records"],
+          "name changes" : ["Service Plan -> Provided Services"]
+      }
+	}
+}
