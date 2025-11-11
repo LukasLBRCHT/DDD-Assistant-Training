@@ -1,0 +1,80 @@
+{
+  "domain-information":
+  [	"A manager meets with a client to understand the organization’s current challenges.",
+	"A manager assigns a consultant team to a new consulting project.",
+	"A manager reviews the project progress reports submitted by consultants.",
+	"A consultant prepares a proposal outlining improvement strategies and expected outcomes.",
+	"A consultant presents the proposal containing an engagement plan to the client.",
+	"A consultant updates the manager on the state of the project in a progress report.",
+	"A consultant collaborates with an employee in an analysis session to collect data and perform analysis.",
+	"A reporter gathers data from the client's organization.",
+	"A reporter creates data reports that summarize project findings for client presentations.",
+	"A reporter presents his findings in an analysis session.",
+	"A client reviews the consulting proposal and approves the recommended engagement plan.",
+	"A client provides feedback on the consultant’s recommendations after implementation.",
+	"A client requests a follow-up meeting with the manager to discuss further collaboration opportunities."
+],
+  "domain objects": [
+      {"name": "Manager", "description": "Oversees consulting projects and manages relationships with clients."},
+      {"name": "Client", "description": "Organization representative seeking consulting services.", "attributes": ["Organization"]},
+      {"name": "Organization", "description": "The client’s company or institution being analyzed."},
+      {"name": "Consulting Project", "description": "Engagement between consultants and client to deliver improvements.", "attributes": ["Consultant","Client"]},
+      {"name": "Consultant", "description": "Provides professional advice and creates project proposals."},
+      {"name": "Progress Report", "description": "Summary of project status and progress submitted to the manager."},
+      {"name": "Proposal", "description": "Document outlining improvement strategies and an engagement plan.", "attributes": ["Engagement Plan"]},
+      {"name": "Engagement Plan", "description": "Detailed plan describing project scope, deliverables, and timeline."},
+      {"name": "Analysis Session", "description": "Collaborative meeting where data is reviewed and discussed."},
+      {"name": "Reporter", "description": "Collects and analyzes data to support consulting recommendations."},
+      {"name": "Data Report", "description": "Report summarizing data analysis and findings for client presentations."},
+      {"name": "Feedback", "description": "Client’s evaluation of consulting outcomes and recommendations."},
+      {"name": "Follow Up Meeting", "description": "Meeting between manager and client to discuss future collaboration."}
+    ],
+  "associations": [
+      {"from": "Manager", "to": "Client", "description": "Manager meets Client to understand organizational challenges."},
+      {"from": "Manager", "to": "Consulting Project", "description": "Manager assigns Consulting Project to consultant team."},
+      {"from": "Client", "to": "Follow Up Meeting", "description": "Client requests Follow Up Meeting to explore new opportunities."},
+      {"from": "Manager", "to": "Follow Up Meeting", "description": "Manager attends Follow Up Meeting with Client to plan next steps."},
+      {"from": "Consultant", "to": "Proposal", "description": "Consultant prepares Proposal with improvement strategies."},
+      {"from": "Client", "to": "Proposal", "description": "Client reviews and approves the Consultant’s Proposal."},
+      {"from": "Client", "to": "Feedback", "description": "Client provides Feedback on implemented recommendations."},
+      {"from": "Feedback", "to": "Consultant", "description": "Feedback is shared with Consultant for evaluation."},
+      {"from": "Consultant", "to": "Progress Report", "description": "Consultant submits Progress Report to Manager."},
+      {"from": "Manager", "to": "Progress Report", "description": "Manager reviews the received Progress Report."},
+      {"from": "Consultant", "to": "Analysis Session", "description": "Consultant leads Analysis Session to discuss findings."},
+      {"from": "Reporter", "to": "Organization", "description": "Reporter collects data from Client’s Organization."},
+      {"from": "Reporter", "to": "Data Report", "description": "Reporter compiles findings into a Data Report."},
+      {"from": "Reporter", "to": "Analysis Session", "description": "Reporter presents data in an Analysis Session."}
+    ],
+  "subdomains": {
+      "Client Business": {
+          "objects" : ["Client","Organization","Follow Up Meeting"]
+      },
+      "Consulting": {
+          "objects" : ["Consultant","Proposal","Engagement Plan","Feedback","Progress Report"]
+      },
+      "Supervision": {
+          "objects" : ["Manager","Consulting Project"]
+      },
+      "Analysis": {
+          "objects" : ["Reporter","Data Report","Analysis Session","Consultant"]
+      },
+      "subdomain connections": ["Client Business--Supervision","Supervision--Consulting","Consulting--Client Business","Analysis--Client Business","Consulting--Analysis"]
+    },
+  "bounded contexts": {
+      "Supervision": {
+          "derived from": ["Supervision Subdomain", "Client Business Subdomain"],
+          "objects" : ["Manager","Consulting Project","Client","Organization","Follow Up Meeting"],
+          "name changes" : []
+      },
+      "Consulting": {
+          "derived from": "Consulting Subdomain",
+          "objects" : ["Consultant","Proposal","Engagement Plan","Feedback","Progress Report"],
+          "name changes" : []
+      },
+      "Analysis": {
+          "derived from": "Analysis Subdomain",
+          "objects" : ["Reporter","Data Report","Analysis Session","Analyst"],
+          "name changes" : ["Consultant -> Analyst"]
+      }
+	}
+}
