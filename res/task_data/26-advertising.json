@@ -1,0 +1,98 @@
+{
+  "domain-information":
+  [	"A client requests a new proposal for advertising campaign that promotes a new product.",
+	"A client reviews the initial campaign proposal shared by the marketing manager.",
+	"A client provides feedback on the campaign visuals before final approval.",
+	"A client receives a layout draft from a graphic designer.",
+	"A marketing manager outlines the campaign objectives and defines the target audience.",
+	"A marketing manager assigns specific campaign tasks to the content creator and graphic designer.",
+	"A marketing manager reviews promotional copies created by content creators.",
+	"A marketing manager reviews performance reports to measure campaign results.",
+	"A marketing manager reviews trend reports to adjust the campaign accordingly.",
+	"A content creator writes promotional copy tailored to the campaign’s audience.",
+	"A content creator collaborates with the graphic designer to align visuals with the campaign message.",
+	"A content creator revises the copy based on feedback from the marketing manager.",
+	"A graphic designer creates layout drafts following the promotional copy.",
+	"A graphic designer adjusts draft after receiving client feedback.",
+	"A graphic designer delivers final design files to the marketing manager for submission.",
+	"A market analyst researches customer behavior.",
+	"A market analyst accesses market databases to prepare a trend report that informs the campaign strategy.",
+	"A market analyst evaluates engagement metrics after the campaign launch to report on its success.",
+	"A market analyst sends performance reports to the marketing manager."
+],
+  "domain objects": [
+      {"name": "Client", "description": "An organization or individual who commissions an advertising campaign."},
+	  {"name": "Advertising Campaign", "description": "A coordinated marketing effort promoting a specific product or service.", "attributes": ["Product","Campaign Objectives","Target Audience","Engagement Metrics","Final Design"]},
+	  {"name": "Product", "description": "The item or service being promoted in the campaign."},
+	  {"name": "Campaign Objectives", "description": "The specific goals and outcomes the campaign aims to achieve."},
+	  {"name": "Target Audience", "description": "The group of people the campaign is intended to reach."},
+	  {"name": "Engagement Metrics", "description": "Quantitative measures of campaign performance such as clicks or impressions."},
+	  {"name": "Final Design", "description": "The approved visual materials ready for campaign publication."},
+	  {"name": "Campaign Proposal", "description": "A preliminary plan that outlines the campaign’s strategy and creative direction.", "attributes": ["Advertising Campaign"]},
+	  {"name": "Client Feedback", "description": "Responses and comments from the client regarding creative materials or proposals."},
+	  {"name": "Marketing Manager", "description": "The person overseeing campaign planning, coordination, and delivery."},
+	  {"name": "Content Creator", "description": "A specialist who writes promotional copy and aligns it with the campaign message."},
+	  {"name": "Graphic Designer", "description": "A creative professional responsible for visual elements and layout design."},
+	  {"name": "Performance Report", "description": "A summary of engagement results and effectiveness after campaign launch."},
+	  {"name": "Promotional Copy", "description": "Text or written content created to convey the campaign’s message."},
+	  {"name": "Feedback", "description": "Internal feedback from managers to creative staff for revision and improvement."},
+	  {"name": "Layout Draft", "description": "A preliminary design version shared for client review and approval."},
+	  {"name": "Market Analyst", "description": "A researcher who studies market trends, customer behavior, and campaign results."},
+	  {"name": "Trend Report", "description": "An analysis of market patterns that informs campaign strategy."},
+	  {"name": "Market Database", "description": "A collection of market and consumer data used for research and analysis."}
+    ],
+  "associations": [
+      {"from": "Client", "to": "Campaign Proposal", "description": "Client requests and reviews the Campaign Proposal."},
+	  {"from": "Marketing Manager", "to": "Campaign Proposal", "description": "Marketing Manager prepares and shares the Campaign Proposal."},
+	  {"from": "Marketing Manager", "to": "Advertising Campaign", "description": "Marketing Manager oversees execution of the Advertising Campaign."},
+	  {"from": "Marketing Manager", "to": "Feedback", "description": "Marketing Manager provides internal feedback to team members."},
+	  {"from": "Feedback", "to": "Content Creator", "description": "Content Creator receives feedback for copy revisions."},
+	  {"from": "Graphic Designer", "to": "Final Design", "description": "Graphic Designer produces the Final Design deliverables."},
+	  {"from": "Final Design", "to": "Marketing Manager", "description": "Marketing Manager receives and approves the Final Design."},
+	  {"from": "Content Creator", "to": "Promotional Copy", "description": "Content Creator produces Promotional Copy for the campaign."},
+	  {"from": "Marketing Manager", "to": "Promotional Copy", "description": "Marketing Manager reviews Promotional Copy for approval."},
+	  {"from": "Content Creator", "to": "Graphic Designer", "description": "Content Creator collaborates with Graphic Designer to align visuals and message."},
+	  {"from": "Graphic Designer", "to": "Layout Draft", "description": "Graphic Designer creates the Layout Draft for client review."},
+	  {"from": "Layout Draft", "to": "Client", "description": "Client reviews and comments on the Layout Draft."},
+	  {"from": "Content Creator", "to": "Advertising Campaign", "description": "Content Creator contributes written materials to the Advertising Campaign."},
+	  {"from": "Graphic Designer", "to": "Advertising Campaign", "description": "Graphic Designer contributes visuals to the Advertising Campaign."},
+	  {"from": "Client", "to": "Client Feedback", "description": "Client provides Client Feedback on creative materials."},
+	  {"from": "Client Feedback", "to": "Graphic Designer", "description": "Graphic Designer receives Client Feedback for revisions."},
+	  {"from": "Market Analyst", "to": "Client", "description": "Market Analyst studies the Client’s market and audience."},
+	  {"from": "Market Analyst", "to": "Engagement Metrics", "description": "Market Analyst tracks and evaluates Engagement Metrics."},
+	  {"from": "Market Analyst", "to": "Market Database", "description": "Market Analyst uses Market Database for research."},
+	  {"from": "Market Analyst", "to": "Performance Report", "description": "Market Analyst compiles Performance Reports from campaign data."},
+	  {"from": "Market Analyst", "to": "Trend Report", "description": "Market Analyst prepares Trend Reports based on research findings."},
+	  {"from": "Performance Report", "to": "Marketing Manager", "description": "Marketing Manager reviews the Performance Report to assess results."},
+	  {"from": "Trend Report", "to": "Marketing Manager", "description": "Marketing Manager uses the Trend Report to refine campaign strategy."}
+    ],
+  "subdomains": {
+      "Supervision": {
+          "objects" : ["Advertising Campaign","Marketing Manager","Client","Campaign Proposal","Client Feedback"]
+      },
+      "Campaign Design": {
+          "objects" : ["Content Creator","Graphic Designer","Feedback","Promotional Copy","Layout Draft","Final Design"]
+      },
+      "Market Analysis": {
+          "objects" : ["Market Analyst","Client","Engagement Metrics","Market Database","Performance Report","Trend Report"]
+      },
+      "subdomain connections": ["Supervision--Campaign Design","Market Analysis--Supervision"]
+    },
+  "bounded contexts": {
+      "Supervision": {
+          "derived from": "Supervision Subdomain",
+          "objects" : ["Advertising Campaign","Marketing Manager","Client","Campaign Proposal","Client Feedback"],
+          "name changes" : []
+      },
+      "Campaign Design": {
+          "derived from": "Campaign Design Subdomain",
+          "objects" : ["Content Creator","Graphic Designer","Content Feedback","Promotional Copy","Layout Draft","Final Design"],
+          "name changes" : ["Feedback -> Content Feedback"]
+      },
+      "Market Analysis": {
+          "derived from": "Market Analysis Subdomain",
+          "objects" : ["Market Analyst","Client Records","Engagement Metrics","Market Database","Performance Report","Trend Report"],
+          "name changes" : ["Client -> Client Records"]
+      }
+	}
+}
