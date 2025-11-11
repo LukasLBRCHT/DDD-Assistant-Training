@@ -1,0 +1,110 @@
+{
+  "domain-information":
+  [	"A transportation manager reviews the transport schedule and assigns delivery routes to dispatchers.",
+	"A transportation manager evaluates performance reports from dispatchers to ensure operational efficiency.",
+	"A dispatcher reviews client transport requests and assigns vehicles based on capacity.",
+	"A dispatcher coordinates with security officers to plan secure cargo escorts for high-value deliveries.",
+	"A dispatcher tracks ongoing deliveries.",
+	"A driver checks assigned delivery routes before departure.",
+	"A driver conducts a vehicle inspection and reports any maintenance needs before leaving.",
+	"A driver completes the delivery log and submits it to the dispatcher after returning from the route.",
+	"A security officer inspects cargo before loading to confirm proper sealing and documentation.",
+	"A security officer escorts a vehicle during transport to ensure the safety of valuable goods.",
+	"A security officer reports security incidents during transit to the dispatcher.",
+	"A maintenance technician performs regular maintenance on vehicles to prevent breakdowns.",
+	"A maintenance technician updates maintenance records of the vehicle."
+],
+  "domain objects": [
+      {"name": "Transportation Manager", "description": "Oversees transport operations, assigns routes, and evaluates performance."},
+      {"name": "Transport Schedule", "description": "Plan outlining all delivery routes and assigned resources.", "attributes": ["Delivery Route"]},
+      {"name": "Delivery Route", "description": "Specific path assigned to a vehicle and driver for a delivery.", "attributes": ["Delivery Log","Vehicle"]},
+      {"name": "Delivery Log", "description": "Record of trip details including times, stops, and cargo status."},
+      {"name": "Vehicle", "description": "Transport unit used for deliveries.", "attributes": ["Capacity","Maintenance Records"]},
+      {"name": "Capacity", "description": "Maximum load a vehicle can carry."},
+      {"name": "Maintenance Records", "description": "Historical record of maintenance performed on a vehicle."},
+      {"name": "Dispatcher", "description": "Coordinates routes, assigns vehicles, and monitors ongoing deliveries."},
+      {"name": "Performance Report", "description": "Report summarizing delivery efficiency and performance metrics."},
+      {"name": "Client", "description": "Company or entity requesting transportation services."},
+      {"name": "Transport Request", "description": "Request from a client specifying cargo and destination details."},
+      {"name": "Security Officer", "description": "Ensures cargo safety through inspection and escort operations."},
+      {"name": "Cargo Escort", "description": "Security operation accompanying valuable cargo during transport.", "attributes": ["Vehicle"]},
+      {"name": "Cargo Inspection", "description": "Security check verifying cargo integrity before loading."},
+      {"name": "Security Incident", "description": "Event or report describing a breach or safety issue during transport."},
+      {"name": "Driver", "description": "Operates the vehicle to complete assigned delivery routes."},
+      {"name": "Vehicle Inspection", "description": "Driver-conducted check of vehicle condition before departure."},
+      {"name": "Maintenance Issue", "description": "Problem identified during inspection or operation requiring repair."},
+      {"name": "Maintenance Technician", "description": "Performs vehicle maintenance and repairs."},
+      {"name": "Maintenance Task", "description": "Scheduled or corrective maintenance action performed on a vehicle."}
+    ],
+  "associations": [
+      {"from": "Transportation Manager", "to": "Transport Schedule", "description": ""},
+      {"from": "Transportation Manager", "to": "Delivery Route", "description": ""},
+      {"from": "Transportation Manager", "to": "Dispatcher", "description": ""},
+      {"from": "Dispatcher", "to": "Delivery Route", "description": ""},
+      {"from": "Dispatcher", "to": "Performance Report", "description": ""},
+      {"from": "Transportation Manager", "to": "Performance Report", "description": ""},
+      {"from": "Dispatcher", "to": "Driver", "description": ""},
+      {"from": "Dispatcher", "to": "Transport Request", "description": ""},
+      {"from": "Client", "to": "Transport Request", "description": ""},
+      {"from": "Driver", "to": "Delivery Route", "description": ""},
+      {"from": "Client", "to": "Delivery Route", "description": ""},
+      {"from": "Transport Request", "to": "Security Officer", "description": ""},
+      {"from": "Dispatcher", "to": "Cargo Escort", "description": ""},
+      {"from": "Security Officer", "to": "Security Incident", "description": ""},
+      {"from": "Security Incident", "to": "Dispatcher", "description": ""},
+      {"from": "Security Officer", "to": "Cargo Escort", "description": ""},
+      {"from": "Security Officer", "to": "Cargo Inspection", "description": ""},
+      {"from": "Cargo Inspection", "to": "Cargo Escort", "description": ""},
+      {"from": "Maintenance Technician", "to": "Maintenance Task", "description": ""},
+      {"from": "Maintenance Task", "to": "Vehicle", "description": ""},
+      {"from": "Driver", "to": "Vehicle Inspection", "description": ""},
+      {"from": "Vehicle Inspection", "to": "Vehicle", "description": ""},
+      {"from": "Driver", "to": "Maintenance Issue", "description": ""},
+      {"from": "Maintenance Issue", "to": "Maintenance Technician", "description": ""}
+    ],
+  "subdomains": {
+      "Dispatch": {
+          "objects" : ["Dispatcher","Driver","Delivery Route","Vehicle","Capacity","Delivery Log"]
+      },
+      "Operations Management": {
+          "objects" : ["Transportation Manager","Transport Schedule","Delivery Route","Performance Report","Vehicle"]
+      },
+      "Client Request": {
+          "objects" : ["Transport Request","Client"]
+      },
+      "Security": {
+          "objects" : ["Security Officer","Cargo Escort","Vehicle","Cargo Inspection","Security Incident"]
+      },
+      "Maintenance": {
+          "objects" : ["Maintenance Technician","Maintenance","Driver","Maintenance Issue","Vehicle","Maintenance Records"]
+      },
+      "subdomain connections": ["Client Request--Dispatch","Organisation--Dispatch","Dispatch--Security","Dispatch--Maintenance","Organisation--Maintenance"]
+    },
+  "bounded contexts": {
+      "Dispatch": {
+          "derived from": "Dispatch Subdomain",
+          "objects" : ["Dispatcher","Driver","Route Plan","Vehicle","Capacity","Delivery Log"],
+          "name changes" : ["Delivery Route -> Route Plan"]
+      },
+      "Operations Management": {
+          "derived from": "Operations Management Subdomain",
+          "objects" : ["Transportation Manager","Transport Schedule","Delivery Route","Performance Report","Vehicle Assignment"],
+          "name changes" : ["Vehicle -> Vehicle Assignment"]
+      },
+      "Client Request": {
+          "derived from": "Client Request Subdomain",
+          "objects" : ["Transport Request","Client"],
+          "name changes" : []
+      },
+      "Security": {
+          "derived from": "Security Subdomain",
+          "objects" : ["Security Officer","Cargo Escort","Convoy","Cargo Inspection","Security Incident"],
+          "name changes" : ["Vehicle -> Convoy"]
+      },
+      "Maintenance": {
+          "derived from": "Maintenance Subdomain",
+          "objects" : ["Maintenance Technician","Maintenance","Inspector","Maintenance Issue","Asset","Maintenance Records"],
+          "name changes" : ["Driver -> Inspector","Vehicle -> Asset"]
+      }
+	}
+}
