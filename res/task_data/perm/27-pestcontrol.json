@@ -1,0 +1,93 @@
+{
+  "domain-information":
+  [	"A customer contacts the pest control company to report a suspected infestation.",
+	"A customer schedules a home inspection with the company.",
+	"A customer receives a treatment plan after the inspection.",
+	"A customer reviews the technician’s report to understand the findings.",
+	"A technician performs an inspection for a customer, applying different treatments.",
+	"A technician writes an inspection report during the inspection.",
+	"A technician applies pesticides based on the type of infestation.",
+	"A technician provides the customer a treatment plan.",
+    "A technician selects the equipment for an inspection.",
+	"A manager receives a report from a customer about an infestation.",
+	"A manager assigns technicians to home inspections.",
+	"A manager reviews inspection reports submitted by technicians.",
+	"A manager updates service records to track completed inspections.",
+	"A manager tracks the inventory of pest control equipment.",
+	"A manager orders pest control supplies for upcoming jobs."
+],
+  "domain objects": [
+      {"name": "Customer", "description": "Person or household requesting pest control services.","attributes": ["Property"]},
+      {"name": "Property", "description": "The location where inspection or treatment takes place."},
+      {"name": "Infestation Report", "description": "A report filed by a customer describing signs of pests or infestation."},
+      {"name": "Home Inspection", "description": "A scheduled visit where a technician inspects the property and applies treatments.","attributes": ["Customer","Inspection Report","Treatment","Equipment"]},
+      {"name": "Inspection Report", "description": "Detailed findings recorded by the technician during an inspection."},
+      {"name": "Treatment", "description": "Pesticide or control method used to address a specific infestation."},
+      {"name": "Equipment", "description": "Tools or devices used by technicians during inspections or treatments."},
+      {"name": "Treatment Plan", "description": "Document outlining recommended pest control steps provided to the customer."},
+      {"name": "Technician", "description": "Field worker performing inspections and applying pest control treatments."},
+      {"name": "Manager", "description": "Person overseeing operations, scheduling, and supply management."},
+      {"name": "Service Records", "description": "Collection of records tracking completed inspections and reports.","attributes": ["Inspection Report"]},
+      {"name": "Inventory", "description": "Current stock of pest control equipment and materials.","attributes": ["Equipment"]},
+      {"name": "Supply Order", "description": "Request placed by the manager to restock pest control supplies.","attributes": ["Equipment"]},
+      {"name": "Supplier", "description": "External provider delivering pest control equipment and materials."},
+      {"name": "Supply Delivery", "description": "Confirmed shipment of ordered supplies from supplier to the company.","attributes": ["Equipment"]}
+  ],
+  "associations": [
+      {"from": "Customer", "to": "Infestation Report", "description": "Customer reports an infestation to initiate service."},
+      {"from": "Manager", "to": "Infestation Report", "description": "Manager receives and reviews reported infestations."},
+      {"from": "Manager", "to": "Home Inspection", "description": "Manager schedules and assigns technicians to inspections."},
+      {"from": "Manager", "to": "Technician", "description": "Manager manages technician assignments and workload."},
+      {"from": "Technician", "to": "Treatment Plan", "description": "Technician creates and provides treatment plans after inspections."},
+      {"from": "Treatment Plan", "to": "Customer", "description": "Customer receives the technician’s recommended treatment plan."},
+      {"from": "Technician", "to": "Inventory", "description": "Technician uses and tracks equipment from inventory."},
+      {"from": "Manager", "to": "Service Records", "description": "Manager updates service records after each inspection."},
+      {"from": "Manager", "to": "Inventory", "description": "Manager monitors available inventory for operations."},
+      {"from": "Manager", "to": "Supply Order", "description": "Manager places supply orders to restock inventory."},
+      {"from": "Supply Order", "to": "Supplier", "description": "Supply order is sent to the supplier for fulfillment."},
+      {"from": "Supplier", "to": "Supply Delivery", "description": "Supplier sends ordered equipment and materials."},
+      {"from": "Supply Delivery", "to": "Manager", "description": "Manager receives and confirms delivery of supplies."}
+    ],
+  "subdomains": {
+      "Reporting": {
+          "objects" : ["Customer","Property","Infestation Report"]
+      },
+      "Inspection": {
+          "objects" : ["Technician","Manager","Home Inspection","Treatment","Equipment","Inspection Report","Treatment Plan"]
+      },
+      "Supplies": {
+          "objects" : ["Manager","Inventory","Equipment","Supply Order","Supplier","Supply Delivery","Equipment"]
+      },
+      "Record Keeping": {
+          "objects" : ["Manager","Service Records"]
+      },
+      "subdomain connections": ["Reporting--Inspection","Inspection--Record Keeping","Inspection--Inventory"]
+    },
+  "bounded contexts": {
+      "Reporting": {
+          "derived from": "Reporting Subdomain",
+          "objects" : ["Customer","Property","Infestation Report"],
+          "name changes" : []
+      },
+      "Inspection": {
+          "derived from": "Inspection Subdomain",
+          "objects" : ["Technician","Manager","Home Inspection","Treatment","Equipment","Inspection Report","Treatment Plan"],
+          "name changes" : ["Manager -> Inspection Coordinator"]
+      },
+      "Supplies": {
+          "derived from": "Supplies Subdomain",
+          "objects" : ["Supply Administrator","Supply Order","Supplier","Supply Delivery","Ordered Equipment"],
+          "name changes" : ["Manager -> Supply Administrator","Equipment -> Ordered Equipment"]
+      },
+      "Inventory": {
+          "derived from": "Supplies Subdomain",
+          "objects": ["Inventory Administrator","Inventory","Equipment Stock","Supply Order","Supplier","Supply Delivery","Equipment"],
+          "name changes": ["Manager -> Inventory Administrator","Equipment -> Equipment Stock"]
+      },
+      "Record Keeping": {
+          "derived from": "Record Keeping Subdomain",
+          "objects" : ["Manager","Service Records"],
+          "name changes" : ["Manager -> Record Manager"]
+      }
+	}
+}
