@@ -99,6 +99,72 @@ def parse_domain_objects(txt):
 
 
 if __name__ == "__main__":
-    plain = """"""
+    plain = """Collection Manager
+Route Schedule
+-Collection Route
+--Waste Truck
+--Route Log
+--Pickup Location
+
+Maintenance Supervisor
+
+Client
+Pickup Request
+-Pickup Location
+
+Route Planner
+
+Waste Truck
+-Collection Zone
+-Vehicle Capacity
+-Driver
+-Maintenance Records
+
+
+Traffic Data
+
+Issue Report
+
+Recycling Coordinator
+Sorting Facility
+Contamination Issue
+Material Transfer
+Partner Recycling Plants
+
+Preventive Maintenance
+Maintenance Records
+
+next:
+Collection Manager-Route Schedule
+Collection Manager-Maintenance Supervisor
+
+Client-Pickup Request
+
+Route Planner-Pickup Request
+Route Planner-Traffic Data
+Route Planner-Collection Route
+Route Planner-Waste Truck
+
+Driver-Collection Route
+Driver-Issue Report
+Driver-Sorting Facility
+
+Maintenance Supervisor-Preventive Maintenance
+Preventive Maintenance-Waste Truck
+Maintenance Supervisor-Maintenance Records
+
+Recycling Coordinator-Sorting Facility
+Recycling Coordinator-Contamination Issue
+Contamination Issue-Collection Manager
+Recycling Coordinator-Material Transfer
+Material Transfer-Partner Recycling Plant
+
+next:
+Route Planning: Route Planner, Traffic Data, Collection Route, Pickup Location, Waste Truck Collection Zone, Vehicle Capacity
+Waste Collection:
+Supervision:Collection Manager, Route Schedule
+Client Request: Client, Pickup Request, Pickup Location
+Maintenance: Maintenance Supervisor, Preventive Maintenance, Waste Truck, Maintenance Records
+Recycling: Recycling Coordinator, Sorting Facility, Contamination Issue, Material Transfer, Partner Recycling Plant"""
 
     parse_domain_objects(plain)

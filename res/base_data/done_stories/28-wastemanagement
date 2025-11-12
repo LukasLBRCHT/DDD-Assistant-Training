@@ -1,0 +1,21 @@
+A collection manager reviews upcoming collection route schedules containing collection routes.
+A collection manager monitors route logs to identify delays or missed pickups.
+A collection manager coordinates with the maintenance supervisor to ensure vehicles assigned to routes are operational.
+
+A client makes a request for a pickup at a specific location.
+A route planner assigns waste trucks to optimized routes based on collection zones and vehicle capacity.
+A route planner updates the route when clients change pickup locations.
+A route planner reviews traffic data to adjust routes for efficiency.
+
+A driver checks the assigned truck and verifies the route plan before leaving the depot.
+A driver records the volume and type of waste collected at each stop in the route log.
+A driver reports any access issues or hazardous materials found during collection to the route planner.
+A driver checks in at the sorting facility to load off the collected waste.
+
+A recycling coordinator inspects incoming waste loads at the sorting facility to ensure proper separation.
+A recycling coordinator reports contamination issues in recyclable materials to the collection manager.
+A recycling coordinator organizes the transfer of sorted materials to partner recycling plants.
+
+A maintenance supervisor conducts preventive maintenance for trucks.
+A maintenance supervisor updates maintenance records after completing repairs or servicing vehicles.
+A maintenance supervisor informs the collection manager when a truck is unavailable due to repair needs.
