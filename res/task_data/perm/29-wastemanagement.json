@@ -1,0 +1,119 @@
+{
+  "domain-information":
+  [	"A collection manager reviews upcoming collection route schedules containing collection routes.",
+	"A collection manager monitors route logs to identify delays or missed pickups.",
+	"A collection manager coordinates with the maintenance supervisor to ensure vehicles assigned to routes are operational.",
+	"A client makes a request for a pickup at a specific location.",
+	"A route planner assigns waste trucks to optimized routes based on collection zones and vehicle capacity.",
+	"A route planner updates the route when clients change pickup locations.",
+	"A route planner reviews traffic data to adjust routes for efficiency.",
+	"A driver checks the assigned truck and verifies the route plan before leaving the depot.",
+	"A driver records the volume and type of waste collected at each stop in the route log.",
+	"A driver reports any access issues or hazardous materials found during collection to the route planner.",
+	"A driver checks in at the sorting facility to load off the collected waste.",
+	"A recycling coordinator inspects incoming waste loads at the sorting facility to ensure proper separation.",
+	"A recycling coordinator reports contamination issues in recyclable materials to the collection manager.",
+	"A recycling coordinator organizes the transfer of sorted materials to partner recycling plants.",
+	"A maintenance supervisor conducts preventive maintenance for trucks.",
+	"A maintenance supervisor updates maintenance records after completing repairs or servicing vehicles.",
+	"A maintenance supervisor informs the collection manager when a truck is unavailable due to repair needs."
+],
+  "domain objects": [
+      {"name": "Collection Manager", "description": "Oversees waste collection operations and monitors performance."},
+      {"name": "Route Schedule", "description": "Plan outlining upcoming collection routes and their timing.", "attributes": ["Collection Route"]},
+      {"name": "Collection Route", "description": "Defined path for waste collection including stops and assigned truck.", "attributes": ["Waste Truck","Route Log","Pickup Location"]},
+      {"name": "Waste Truck", "description": "Vehicle used for waste collection, linked to capacity, zone, and driver.", "attributes": ["Collection Zone","Vehicle Capacity","Driver","Maintenance Records"]},
+      {"name": "Collection Zone", "description": "Geographical area covered by one or more collection routes."},
+      {"name": "Vehicle Capacity", "description": "Maximum volume of waste a truck can carry on a route."},
+      {"name": "Driver", "description": "Operates waste trucks and logs collection data during routes."},
+      {"name": "Maintenance Records", "description": "Logs and documentation of maintenance performed on vehicles."},
+      {"name": "Traffic Data", "description": "Information about current road and traffic conditions used for planning."},
+      {"name": "Route Log", "description": "Record of collected waste volumes, stops, and incidents during a route."},
+      {"name": "Pickup Location", "description": "Client site where waste is collected during a route."},
+      {"name": "Maintenance Supervisor", "description": "Responsible for scheduling and overseeing vehicle maintenance."},
+      {"name": "Client", "description": "Requests pickup services from the waste management company."},
+      {"name": "Pickup Request", "description": "Client request for waste collection at a specific location.", "attributes": ["Pickup Location"]},
+      {"name": "Route Planner", "description": "Designs and adjusts collection routes for efficiency and coverage."},
+      {"name": "Issue Report", "description": "Report created by drivers describing route issues or incidents."},
+      {"name": "Recycling Coordinator", "description": "Manages sorting operations and the transfer of recyclable materials."},
+      {"name": "Sorting Facility", "description": "Facility where collected waste is separated for recycling or disposal."},
+      {"name": "Contamination Issue", "description": "Problem caused by mixing recyclable and non-recyclable materials."},
+      {"name": "Material Transfer", "description": "Process of sending sorted materials to recycling partners."},
+      {"name": "Partner Recycling Plant", "description": "External plant that receives and processes sorted recyclable materials."},
+      {"name": "Preventive Maintenance", "description": "Scheduled servicing of vehicles to prevent breakdowns."}
+    ],
+  "associations": [
+      {"from": "Collection Manager", "to": "Route Schedule", "description": "Collection Manager reviews Route Schedule to plan operations."},
+      {"from": "Collection Manager", "to": "Maintenance Supervisor", "description": "Collection Manager coordinates with Maintenance Supervisor to ensure vehicle readiness."},
+      {"from": "Client", "to": "Pickup Request", "description": "Client submits Pickup Request to schedule a waste collection."},
+      {"from": "Route Planner", "to": "Pickup Request", "description": "Route Planner processes Pickup Request to assign it to a route."},
+      {"from": "Route Planner", "to": "Traffic Data", "description": "Route Planner analyzes Traffic Data to optimize route efficiency."},
+      {"from": "Route Planner", "to": "Collection Route", "description": "Route Planner defines and updates Collection Route details."},
+      {"from": "Route Planner", "to": "Waste Truck", "description": "Route Planner assigns Waste Truck to a Collection Route."},
+      {"from": "Driver", "to": "Collection Route", "description": "Driver executes assigned Collection Route and records data."},
+      {"from": "Driver", "to": "Issue Report", "description": "Driver submits Issue Report to document problems during collection."},
+      {"from": "Issue Report", "to": "Route Planner", "description": "Issue Report is reviewed by Route Planner to address operational issues."},
+      {"from": "Driver", "to": "Sorting Facility", "description": "Driver delivers collected waste to the Sorting Facility for processing."},
+      {"from": "Maintenance Supervisor", "to": "Preventive Maintenance", "description": "Maintenance Supervisor schedules Preventive Maintenance tasks."},
+      {"from": "Preventive Maintenance", "to": "Waste Truck", "description": "Preventive Maintenance keeps Waste Truck operational and reliable."},
+      {"from": "Maintenance Supervisor", "to": "Maintenance Records", "description": "Maintenance Supervisor updates Maintenance Records after servicing."},
+      {"from": "Recycling Coordinator", "to": "Sorting Facility", "description": "Recycling Coordinator manages sorting processes at the Sorting Facility."},
+      {"from": "Recycling Coordinator", "to": "Contamination Issue", "description": "Recycling Coordinator identifies and reports Contamination Issues in waste loads."},
+      {"from": "Contamination Issue", "to": "Collection Manager", "description": "Contamination Issue is reported to Collection Manager for review and action."},
+      {"from": "Recycling Coordinator", "to": "Material Transfer", "description": "Recycling Coordinator oversees Material Transfer of sorted materials."},
+      {"from": "Material Transfer", "to": "Partner Recycling Plant", "description": "Material Transfer delivers recyclable materials to Partner Recycling Plant."}
+    ],
+  "subdomains": {
+      "Route Planning": {
+          "objects" : ["Route Planner","Traffic Data","Collection Route","Pickup Location","Waste Truck","Collection Zone","Vehicle Capacity"]
+      },
+      "Waste Collection": {
+          "objects" : ["Driver","Collection Route","Waste Truck","Pickup Location","Route Log","Issue Report"]
+      },
+      "Supervision": {
+          "objects" : ["Collection Manager","Route Schedule"]
+      },
+      "Client Request": {
+          "objects" : ["Client","Pickup Request","Pickup Location"]
+      },
+      "Maintenance": {
+          "objects" : ["Maintenance Supervisor","Preventive Maintenance","Waste Truck","Maintenance Records"]
+      },
+      "Recycling": {
+          "objects" : ["Recycling Coordinator","Sorting Facility","Contamination Issue","Material Transfer","Partner Recycling Plant"]
+      },
+      "subdomain connections": ["Supervision--Maintenance","Supervision--Planning","Client Request--Planning","Supervision--Waste Collection","Planning--Waste Collection","Waste Collection--Recycling","Recycling--Supervision"]
+    },
+  "bounded contexts": {
+      "Route Planning": {
+          "derived from": "Route Planning Subdomain",
+          "objects" : ["Route Planner","Traffic Data","Route Plan","Location Assignment","Truck Assignment","Collection Zone","Vehicle Capacity"],
+          "name changes" : ["Collection Route -> Route Plan","Pickup Location -> Location Assignment","Waste Truck -> Truck Assignment"]
+      },
+      "Waste Collection": {
+          "derived from": "Waste Collection Subdomain",
+          "objects" : ["Driver","Collection Route","Waste Truck","Pickup Location","Route Log","Issue Report"],
+          "name changes" : []
+      },
+      "Supervision": {
+          "derived from": "Supervision Subdomain",
+          "objects" : ["Collection Manager","Route Schedule"],
+          "name changes" : []
+      },
+      "Client Request": {
+          "derived from": "Client Request Subdomain",
+          "objects" : ["Client","Pickup Request","Requested Location"],
+          "name changes" : ["Pickup Location -> Requested Location"]
+      },
+      "Maintenance": {
+          "derived from": "Maintenance Subdomain",
+          "objects" : ["Maintenance Supervisor","Preventive Maintenance","Asset Vehicle","Maintenance Records"],
+          "name changes" : ["Waste Truck -> Asset Vehicle"]
+      },
+      "Recycling": {
+          "derived from": "Recycling Subdomain",
+          "objects" : ["Recycling Coordinator","Sorting Facility","Contamination Issue","Material Transfer","Partner Recycling Plant"],
+          "name changes" : []
+      }
+	}
+}
