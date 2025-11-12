@@ -1,0 +1,80 @@
+{
+  "domain-information":
+  [	"A receptionist records a new booking made by a guest for a certain room and duration.",
+	"A receptionist assigns an available room to a guest based on their booking details.",
+	"A receptionist informs housekeeping when a guest checks out so the room can be cleaned.",
+	"A receptionist registers a check in when a guest arrives and a check out when a guest departs.",
+	"A receptionist receives service requests form a guest.",
+	"A guest requests an additional service such as a city tour or spa appointment.",
+	"A guest checks in at the front desk and receives room access information.",
+	"A guest provides feedback about their stay to the receptionist.",
+	"A housekeeping supervisor reviews the daily cleaning schedule to assign rooms to cleaners.",
+	"A housekeeping supervisor checks the completion status of cleaned rooms.",
+	"A housekeeping supervisor reports any issues found during cleaning to the receptionist.",
+	"A room cleaner cleans assigned guest rooms according to the cleaning schedule.",
+	"A room cleaner marks the room status as ready once finished."
+],
+  "domain objects": [
+      {"name": "Receptionist", "description": "Handles guest bookings, check-ins, check-outs, and communication with housekeeping."},
+      {"name": "Guest", "description": "A hotel customer who books, stays, and requests services."},
+      {"name": "Booking", "description": "A reservation made by a guest for a specific room and duration.", "attributes": ["Room", "Duration"]},
+      {"name": "Room", "description": "A hotel accommodation unit assigned to a booking or cleaning task.", "attributes": ["Completion Status"]},
+      {"name": "Duration", "description": "The time span of a guest’s stay as defined in the booking."},
+      {"name": "Service Request", "description": "A request from a guest for an additional service or assistance."},
+      {"name": "Check In", "description": "The process of registering a guest’s arrival and granting room access.", "attributes": ["Room Access Information"]},
+      {"name": "Room Access Information", "description": "Details that allow a guest to access their assigned room, such as key code or card."},
+      {"name": "Check Out", "description": "The process of a guest’s departure and closing of their stay record."},
+      {"name": "Feedback", "description": "Guest comments or evaluations about their stay experience."},
+      {"name": "Housekeeping Supervisor", "description": "Oversees room cleaning, schedules tasks, and reports issues to reception."},
+      {"name": "Cleaning Schedule", "description": "A daily plan that assigns cleaners to specific rooms.", "attributes": ["Cleaner"]},
+      {"name": "Cleaner", "description": "A staff member responsible for cleaning and preparing guest rooms.", "attributes": ["Room"]},
+      {"name": "Completion Status", "description": "Indicates whether a room is ready, occupied, or needs cleaning."},
+      {"name": "Issue Report", "description": "A note raised by housekeeping about room-related problems or maintenance needs."}
+    ],
+  "associations": [
+      {"from": "Guest", "to": "Booking", "description": "Guest makes a Booking for a stay."},
+      {"from": "Guest", "to": "Service Request", "description": "Guest submits a Service Request during their stay."},
+      {"from": "Receptionist", "to": "Booking", "description": "Receptionist records and manages the Booking."},
+      {"from": "Service Request", "to": "Receptionist", "description": "Service Request is received and processed by the Receptionist."},
+      {"from": "Guest", "to": "Feedback", "description": "Guest provides Feedback after their stay."},
+      {"from": "Feedback", "to": "Receptionist", "description": "Receptionist receives and logs Feedback from the Guest."},
+      {"from": "Receptionist", "to": "Check In", "description": "Receptionist performs the Check In process for a Guest."},
+      {"from": "Check In", "to": "Guest", "description": "Check In links the arriving Guest to their stay record."},
+      {"from": "Receptionist", "to": "Check Out", "description": "Receptionist completes the Check Out procedure when the Guest departs."},
+      {"from": "Check Out", "to": "Guest", "description": "Check Out finalizes the Guest’s stay and room release."},
+      {"from": "Receptionist", "to": "Housekeeping Supervisor", "description": "Receptionist informs Housekeeping Supervisor about room status changes."},
+      {"from": "Housekeeping Supervisor", "to": "Room", "description": "Housekeeping Supervisor oversees cleaning and readiness of each Room."},
+      {"from": "Housekeeping Supervisor", "to": "Cleaning Schedule", "description": "Housekeeping Supervisor creates and manages the Cleaning Schedule."},
+      {"from": "Housekeeping Supervisor", "to": "Issue Report", "description": "Housekeeping Supervisor submits an Issue Report when problems are found."},
+      {"from": "Issue Report", "to": "Receptionist", "description": "Issue Report is sent to the Receptionist for further action or coordination."}
+    ],
+  "subdomains": {
+      "Booking": {
+          "objects" : ["Guest","Booking","Room","Duration","Service Request","Feedback"]
+      },
+      "Reception": {
+          "objects" : ["Receptionist","Booking","Room","Check In","Check Out"]
+      },
+      "Housekeeping": {
+          "objects" : ["Housekeeping Supervisor","Cleaning Schedule","Cleaner","Room","Completion Status","Issue Report"]
+      },
+      "subdomain connections": ["Booking--Reception","Reception--Housekeeping"]
+    },
+  "bounded contexts": {
+      "Booking": {
+          "derived from": "Booking Subdomain",
+          "objects" : ["Guest","Booking","Room","Duration","Service Request","Feedback"],
+          "name changes" : []
+      },
+      "Reception": {
+          "derived from": "Reception Subdomain",
+          "objects" : ["Receptionist","Booking Record","Room Assignment","Check In","Check Out"],
+          "name changes" : ["Booking -> Booking Record", "Room -> Room Assignment"]
+      },
+      "Housekeeping": {
+          "derived from": "Housekeeping Subdomain",
+          "objects" : ["Housekeeping Supervisor","Cleaning Schedule","Cleaner","Cleaning Unit","Completion Status","Issue Report"],
+          "name changes" : ["Room -> Cleaning Unit"]
+      }
+	}
+}
