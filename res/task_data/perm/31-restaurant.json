@@ -1,0 +1,111 @@
+{
+  "domain-information":
+  [	"A restaurant manager reviews reservations to plan tables for the evening.",
+	"A restaurant manager checks inventory levels to ensure ingredients are available for the menu.",
+	"A restaurant manager reviews supplier delivery reports to confirm restocking of essential items.",
+	"A restaurant manager designs the menu and its meals.",
+	"A host greets arriving customers and checks their reservation.",
+	"A host assigns guests to available tables and updates the reservations.",
+	"A host informs servers when a new table has been seated.",
+	"A guest looks through the menu to chose a meal.",
+	"A server registers meal orders from guests into the order queue.",
+	"A server delivers prepared meals to guests.",
+	"A server forwards customer feedback about meals to the restaurant manager.",
+	"A chef reviews incoming orders in the order queue from the servers to plan meal preparation.",
+	"A chef assigns cooking tasks to kitchen staff.",
+	"A chef notifies servers when meals are ready to be served.",
+	"A kitchen staff member prepares ingredients according to the day’s menu.",
+	"A kitchen staff member updates the inventory record when ingredients are used.",
+	"A supplier delivers ordered ingredients and confirms the delivery with the restaurant manager."
+],
+  "domain objects": [
+      {"name": "Restaurant Manager", "description": "Oversees restaurant operations, menu design, and supply management."},
+      {"name": "Reservation", "description": "A booking that secures a table for a guest.", "attributes": ["Table"]},
+      {"name": "Table", "description": "A physical seating area assigned to guests."},
+      {"name": "Inventory", "description": "Tracks ingredient quantities and availability.", "attributes": ["Ingredient"]},
+      {"name": "Ingredient", "description": "A food item or material used in meal preparation.", "attributes": ["Inventory Record"]},
+      {"name": "Inventory Record", "description": "A log entry documenting ingredient usage or stock updates."},
+      {"name": "Menu", "description": "A collection of meals available to guests.", "attributes": ["Meal"]},
+      {"name": "Meal", "description": "A dish offered on the menu, composed of ingredients."},
+      {"name": "Host", "description": "Greets guests and manages reservations and seating."},
+      {"name": "Server", "description": "Takes orders, delivers meals, and communicates with guests."},
+      {"name": "Meal Order", "description": "A request placed by a guest for specific meals.", "attributes": ["Meal"]},
+      {"name": "Guest", "description": "A customer dining at the restaurant."},
+      {"name": "Customer Feedback", "description": "Guest comments on meals or service quality."},
+      {"name": "Order Queue", "description": "A list of pending meal orders awaiting kitchen processing.", "attributes": ["Meal Order"]},
+      {"name": "Chef", "description": "Supervises meal preparation and coordinates kitchen staff."},
+      {"name": "Cooking Task", "description": "An assigned kitchen duty for preparing specific dishes.", "attributes": ["Kitchen Staff Member"]},
+      {"name": "Kitchen Staff Member", "description": "Prepares ingredients and assists in cooking."},
+      {"name": "Meal Notification", "description": "Alert to servers that a meal is ready to be served."},
+      {"name": "Supplier", "description": "Delivers ingredients and goods to the restaurant."},
+      {"name": "Ingredient Order", "description": "A purchase request sent to a supplier for ingredients."}
+    ],
+  "associations": [
+      {"from": "Restaurant Manager", "to": "Reservation", "description": "Reviews reservations to plan seating."},
+      {"from": "Restaurant Manager", "to": "Menu", "description": "Designs and updates the restaurant menu."},
+      {"from": "Restaurant Manager", "to": "Inventory", "description": "Monitors ingredient availability."},
+      {"from": "Restaurant Manager", "to": "Ingredient Order", "description": "Places orders for ingredients."},
+      {"from": "Restaurant Manager", "to": "Supplier", "description": "Coordinates with suppliers for deliveries."},
+      {"from": "Supplier", "to": "Ingredient Order", "description": "Fulfills ingredient orders from the restaurant."},
+      {"from": "Guest", "to": "Reservation", "description": "Makes a reservation for dining."},
+      {"from": "Host", "to": "Guest", "description": "Greets and assigns guests to tables."},
+      {"from": "Host", "to": "Reservation", "description": "Updates reservations based on table assignments."},
+      {"from": "Guest", "to": "Menu", "description": "Views available meals before ordering."},
+      {"from": "Guest", "to": "Meal Order", "description": "Places an order for selected meals."},
+      {"from": "Guest", "to": "Customer Feedback", "description": "Provides feedback on meals or service."},
+      {"from": "Customer Feedback", "to": "Server", "description": "Feedback is received by the server."},
+      {"from": "Server", "to": "Restaurant Manager", "description": "Reports feedback to the manager."},
+      {"from": "Server", "to": "Meal Order", "description": "Registers guest meal orders."},
+      {"from": "Server", "to": "Order Queue", "description": "Forwards meal orders to the kitchen queue."},
+      {"from": "Chef", "to": "Order Queue", "description": "Reviews incoming meal orders."},
+      {"from": "Chef", "to": "Cooking Task", "description": "Assigns preparation work to kitchen staff."},
+      {"from": "Chef", "to": "Meal Notification", "description": "Notifies servers when meals are ready."},
+      {"from": "Meal Notification", "to": "Server", "description": "Informs servers to deliver meals."},
+      {"from": "Kitchen Staff Member", "to": "Inventory Record", "description": "Updates stock after using ingredients."}
+    ],
+  "subdomains": {
+      "Restaurant Supervision": {
+          "objects" : ["Manager","Reservation","Menu","Meal"]
+      },
+      "Reservation": {
+          "objects" : ["Guest","Host","Reservation","Table"]
+      },
+      "Order": {
+          "objects" : ["Menu","Meal","Meal Order","Server","Order Queue"]
+      },
+      "Kitchen": {
+          "objects" : ["Chef","Cooking Task","Kitchen Staff Member","Meal Notification"]
+      },
+      "Supply": {
+          "objects" : ["Inventory","Ingredient","Inventory Record","Ingredient Order","Supplier"]
+      },
+      "subdomain connections": ["Restaurant Supervision--Reservation","Restaurant Supervision--Order","Restaurant Supervision--Supplies","Reservation--Order","Order--Kitchen","Kitchen--Supplies"]
+    },
+  "bounded contexts": {
+      "Restaurant Supervision": {
+          "derived from": "Restaurant Supervision Subdomain",
+          "objects" : ["Manager","Reservation","Menu Records","Meal Entry"],
+          "name changes" : ["Menu -> Menu Records","Meal -> Meal Entry"]
+      },
+      "Reservation": {
+          "derived from": "Reservation Subdomain",
+          "objects" : ["Guest","Host","Assignment","Table"],
+          "name changes" : ["Reservation -> Assignment"]
+      },
+      "Order": {
+          "derived from": "Order Subdomain",
+          "objects" : ["Menu","Meal","Meal Order","Server","Order Queue","Customer Feedback"],
+          "name changes" : []
+      },
+      "Kitchen": {
+          "derived from": "Kitchen Subdomain",
+          "objects" : ["Chef","Cooking Task","Kitchen Staff Member","Meal Notification"],
+          "name changes" : []
+      },
+      "Supply": {
+          "derived from": "Supply Subdomain",
+          "objects" : ["Inventory","Ingredient","Inventory Record","Ingredient Order","Supplier"],
+          "name changes" : []
+      }
+	}
+}
