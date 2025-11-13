@@ -1,0 +1,21 @@
+A receptionist registers a new patient and collects their medical details for admission.
+A receptionist schedules an appointment for a patient.
+A receptionist updates patient records when appointments are confirmed or rescheduled.
+
+A patient provides medical history and symptoms during registration.
+A patient checks in at the reception before seeing the assigned doctor.
+A patient requests an appointment after treatment.
+
+A doctor reviews the patient’s medical record before consultation.
+A doctor diagnoses the patient and prescribes medication.
+A doctor requests lab tests and reviews test results to confirm the diagnosis.
+
+A lab worker receives a lab test request.
+A lab worker sends the test results to a doctor.
+
+A nurse assists a doctor during an appointment.
+A nurse monitors patient vital signs and updates the patient record.
+A nurse administers prescribed medication to patients according to the prescription.
+
+A pharmacist receives prescriptions from doctors and prepares the required medication.
+A pharmacist updates the medication inventory after dispensing drugs to patients.

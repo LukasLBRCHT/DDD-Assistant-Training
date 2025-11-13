@@ -1,0 +1,96 @@
+{
+  "domain-information":
+  [	"A receptionist registers a new patient and collects their medical details for admission.",
+	"A receptionist schedules an appointment for a patient.",
+	"A receptionist updates patient records when appointments are confirmed or rescheduled.",
+	"A patient provides medical history and symptoms during registration.",
+	"A patient checks in at the reception before seeing the assigned doctor.",
+	"A patient requests an appointment after treatment.",
+	"A doctor reviews the patient’s medical record before consultation.",
+	"A doctor diagnoses the patient and prescribes medication.",
+	"A doctor requests lab tests and reviews test results to confirm the diagnosis.",
+	"A lab worker receives a lab test request.",
+	"A lab worker sends the test results to a doctor.",
+	"A nurse assists a doctor during an appointment.",
+	"A nurse monitors patient vital signs and updates the patient record.",
+	"A nurse administers prescribed medication to patients according to the prescription.",
+	"A pharmacist receives prescriptions from doctors and prepares the required medication.",
+	"A pharmacist updates the medication inventory after dispensing drugs to patients."
+],
+  "domain objects": [
+      {"name": "Receptionist", "description": "Handles patient registration, appointments, and record updates."},
+      {"name": "Registration", "description": "Process of recording patient details for admission or visit."},
+      {"name": "Patient", "description": "Person receiving medical care or treatment.", "associations": ["Patient Record"]},
+      {"name": "Patient Record", "description": "Collection of a patient’s medical history and current health data.", "associations": ["Medical History", "Symptoms"]},
+      {"name": "Medical History", "description": "Information about past illnesses and treatments."},
+      {"name": "Symptoms", "description": "Patient-reported signs of illness or discomfort."},
+      {"name": "Appointment", "description": "Scheduled meeting between a patient and a doctor.", "associations": ["Doctor"]},
+      {"name": "Doctor", "description": "Diagnoses patients, prescribes treatment, and requests tests."},
+      {"name": "Diagnosis", "description": "Result of medical evaluation identifying patient’s condition."},
+      {"name": "Prescription", "description": "Doctor’s order for medication or therapy.", "associations": ["Medication"]},
+      {"name": "Medication", "description": "Drug prescribed to treat a patient’s condition."},
+      {"name": "Lab Worker", "description": "Performs tests and prepares lab results for doctors."},
+      {"name": "Lab Test Request", "description": "Request from a doctor for lab analysis or testing."},
+      {"name": "Test Result", "description": "Outcome of lab test used for diagnosis confirmation."},
+      {"name": "Nurse", "description": "Assists doctors, monitors patients, and gives medication."},
+      {"name": "Pharmacist", "description": "Prepares and dispenses prescribed medication."},
+      {"name": "Medication Inventory", "description": "Stock record of available drugs in pharmacy."}
+    ],
+  "associations": [
+      {"from": "Receptionist", "to": "Registration", "description": "Receptionist starts registration for new patient"},
+      {"from": "Registration", "to": "Patient", "description": "Registration creates patient entry"},
+      {"from": "Receptionist", "to": "Appointment", "description": "Receptionist schedules or updates appointment"},
+      {"from": "Appointment", "to": "Patient", "description": "Appointment links to specific patient"},
+      {"from": "Receptionist", "to": "Patient Record", "description": "Receptionist updates patient record information"},
+      {"from": "Doctor", "to": "Patient Record", "description": "Doctor reviews and updates patient record"},
+      {"from": "Doctor", "to": "Diagnosis", "description": "Doctor creates diagnosis for patient condition"},
+      {"from": "Diagnosis", "to": "Patient", "description": "Diagnosis assigned to patient"},
+      {"from": "Doctor", "to": "Prescription", "description": "Doctor issues prescription after diagnosis"},
+      {"from": "Prescription", "to": "Patient", "description": "Prescription linked to patient treatment"},
+      {"from": "Nurse", "to": "Prescription", "description": "Nurse administers medication from prescription"},
+      {"from": "Nurse", "to": "Patient Record", "description": "Nurse updates patient record with observations"},
+      {"from": "Doctor", "to": "Lab Test Request", "description": "Doctor submits lab test request"},
+      {"from": "Lab Test Request", "to": "Lab Worker", "description": "Lab worker receives lab test request"},
+      {"from": "Lab Worker", "to": "Test Result", "description": "Lab worker produces test result"},
+      {"from": "Test Result", "to": "Doctor", "description": "Test result sent to doctor"},
+      {"from": "Prescription", "to": "Pharmacist", "description": "Pharmacist receives prescription for preparation"},
+      {"from": "Pharmacist", "to": "Medication Inventory", "description": "Pharmacist updates inventory after dispensing"}
+    ],
+  "subdomains": {
+      "Reception": {
+          "objects" : ["Receptionist","Registration","Patient","Patient Record","Medical History","Symptoms"]
+      },
+      "Appointment": {
+          "objects" : ["Doctor","Patient","Diagnosis","Prescription","Medication","Nurse"]
+      },
+      "Lab": {
+          "objects" : ["Lab Test Request","Lab Worker","Test Result"]
+      },
+      "Pharmacy": {
+          "objects" : ["Pharmacist","Medication Inventory","Medication"]
+      },
+      "subdomain connections": ["Reception--Appointment","Appointment--Lab","Appointment--Pharmacy"]
+    },
+  "bounded contexts": {
+      "Reception": {
+          "derived from": "Reception Subdomain",
+          "objects" : ["Receptionist","Registration","Visitor","Patient Record","Medical History","Symptoms"],
+          "name changes" : ["Patient -> Visitor"]
+      },
+      "Appointment": {
+          "derived from": "Appointment Subdomain",
+          "objects" : ["Doctor","Patient","Diagnosis","Prescription","Medication","Nurse"],
+          "name changes" : []
+      },
+      "Lab": {
+          "derived from": "Lab Subdomain",
+          "objects" : ["Lab Test Request","Lab Worker","Test Result"],
+          "name changes" : []
+      },
+      "Pharmacy": {
+          "derived from": "Pharmacy Subdomain",
+          "objects" : ["Pharmacist","Medication Inventory","Medication"],
+          "name changes" : ["Medication -> Medication Stock"]
+      }
+	}
+}
