@@ -21,6 +21,8 @@ import os
 import regex
 
 domain_objects_dir = "../../res/base_data/domain_objects"
+stories_dir = "../../res/base_data/stories"
+subtask_format_url = "../util/subtask_format_2"
 
 ws = " "
 
@@ -43,19 +45,20 @@ def parse_domain_objects(txt):
     associations = split[1]
     subdomains = split[2]
 
-    result_data = ""
+    extracted_objects = ""
 
     for line in objects.splitlines():
         if not line:
             continue
-        name = line
+        name = line.strip()
         object_json = f"      {{\"name\": \"{name}\", \"description\": \"\"}},\n"
-        result_data += object_json
+        extracted_objects += object_json
 
-    result_data = result_data.removesuffix(",\n")
+    extracted_objects = extracted_objects.removesuffix(",\n")
 
-    result_data += "\nassociations:\n"
+    #result_data += "\nassociations:\n"
 
+    extracted_associations = ""
     association_pattern = r"(.*?)-(.*)"
     for line in associations.splitlines():
 
@@ -69,13 +72,15 @@ def parse_domain_objects(txt):
 
         object_json = f"      {{\"from\": \"{match1}\", \"to\": \"{match2}\", \"description\": \"\"}},\n"
 
-        result_data += object_json
+        extracted_associations += object_json
 
-    result_data = result_data.removesuffix(",\n")
-    result_data += "\n\nsubdomains:\n"
+    extracted_associations = extracted_associations.removesuffix(",\n")
+    #result_data += "\n\nsubdomains:\n"
+
+    extracted_subdomains = ""
+    extracted_bounded_contexts = ""
 
     subdomain_pattern = r"(.*?):(.*)"
-    bounded_contexts = "\n\nbounded contexts:\n"
     for line in subdomains.splitlines():
 
         if not line:
@@ -91,80 +96,62 @@ def parse_domain_objects(txt):
         object_json_subdomain = f"{ws*6}\"{subdomain_name}\": {{\n{ws*10}\"objects\" : [{subdomain_objects}]\n{ws*6}}},\n"
         object_json_bounded_context = f"{ws*6}\"{subdomain_name}\": {{\n{ws*10}\"derived from\": \"{subdomain_name} Subdomain\",\n{ws*10}\"objects\" : [{subdomain_objects}],\n{ws*10}\"name changes\" : []\n{ws*6}}},\n"
 
-        result_data += object_json_subdomain
-        bounded_contexts += object_json_bounded_context
+        extracted_subdomains += object_json_subdomain
+        extracted_bounded_contexts += object_json_bounded_context
 
-    print(result_data.removesuffix(","))
-    print(bounded_contexts.removesuffix(","))
+    extracted_subdomains = extracted_subdomains.removesuffix(",\n")
+    extracted_bounded_contexts = extracted_bounded_contexts.removesuffix(",\n")
 
+    return extracted_objects,extracted_associations,extracted_subdomains,extracted_bounded_contexts
+
+def create_json(stories, obj, asso, sub, bc):
+    with open(subtask_format_url, 'r') as format_file:
+        subtask_format = format_file.read()
+
+    json_data = subtask_format.format(stories, obj, asso, sub, bc)
+
+    print(json_data)
+
+def load_stories(text):
+    # go over lines, add every one into a list
+    stories = "["
+
+    for line in text.splitlines():
+
+        if line.strip() == "":
+            continue
+
+        line = line.replace('"', '\\"')
+        stories += f'\t"{line.strip()}",\n'
+    stories = stories.removesuffix(",\n")
+    stories += "\n]"
+
+    return stories
 
 if __name__ == "__main__":
-    plain = """Collection Manager
-Route Schedule
--Collection Route
---Waste Truck
---Route Log
---Pickup Location
 
-Maintenance Supervisor
+    current_number = "32"
 
-Client
-Pickup Request
--Pickup Location
+    story_file = ""
+    stories = """"""
+    for file in os.scandir(stories_dir):
+        if file.name.startswith(current_number):
+            story_file = file.name
 
-Route Planner
+    with open(story_file) as f:
+        stories = f.read()
 
-Waste Truck
--Collection Zone
--Vehicle Capacity
--Driver
--Maintenance Records
+    stories = load_stories(stories)
 
+    plain = """"""
+    objects_file = ""
+    for file in os.scandir(domain_objects_dir):
+        if file.name.startswith(current_number):
+            objects_file = file.name
 
-Traffic Data
+    with open(objects_file) as f:
+        plain = f.read()
 
-Issue Report
+    objects, associations, subdomains, bounded_contexts = parse_domain_objects(plain)
 
-Recycling Coordinator
-Sorting Facility
-Contamination Issue
-Material Transfer
-Partner Recycling Plants
-
-Preventive Maintenance
-Maintenance Records
-
-next:
-Collection Manager-Route Schedule
-Collection Manager-Maintenance Supervisor
-
-Client-Pickup Request
-
-Route Planner-Pickup Request
-Route Planner-Traffic Data
-Route Planner-Collection Route
-Route Planner-Waste Truck
-
-Driver-Collection Route
-Driver-Issue Report
-Driver-Sorting Facility
-
-Maintenance Supervisor-Preventive Maintenance
-Preventive Maintenance-Waste Truck
-Maintenance Supervisor-Maintenance Records
-
-Recycling Coordinator-Sorting Facility
-Recycling Coordinator-Contamination Issue
-Contamination Issue-Collection Manager
-Recycling Coordinator-Material Transfer
-Material Transfer-Partner Recycling Plant
-
-next:
-Route Planning: Route Planner, Traffic Data, Collection Route, Pickup Location, Waste Truck Collection Zone, Vehicle Capacity
-Waste Collection:
-Supervision:Collection Manager, Route Schedule
-Client Request: Client, Pickup Request, Pickup Location
-Maintenance: Maintenance Supervisor, Preventive Maintenance, Waste Truck, Maintenance Records
-Recycling: Recycling Coordinator, Sorting Facility, Contamination Issue, Material Transfer, Partner Recycling Plant"""
-
-    parse_domain_objects(plain)
+    create_json(stories, objects, associations, subdomains, bounded_contexts)
