@@ -1,0 +1,18 @@
+A procurement officer evaluates supplier offers to purchase raw logs for the sawmill.
+A procurement officer arranges transportation for incoming log shipments containing raw logs from forest suppliers.
+
+A sawmill operator inspects incoming logs and sorts them by type and quality.
+A sawmill operator cuts logs into lumber according to production orders.
+A sawmill operator records production output of lumber and forwards it to the warehouse supervisor.
+
+A warehouse supervisor receives processed lumber and updates stock records.
+A warehouse supervisor records storage locations based on lumber type and quality.
+A warehouse supervisor prepares lumber batches for shipment when orders are confirmed.
+
+A sales representative receives customer orders and confirms product availability with the warehouse.
+A sales representative creates sales orders and forwards them to the logistics coordinator for delivery planning.
+A sales representative updates customers on order status and expected delivery times.
+
+A logistics coordinator plans lumber deliveries based on destination and load size.
+A logistics coordinator checks with drivers to ensure all delivery documents are ready before departure.
+A logistics coordinator reports completed deliveries to the sales representative for billing confirmation.

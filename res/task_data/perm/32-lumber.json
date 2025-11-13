@@ -1,0 +1,114 @@
+{
+  "domain-information":
+  [	"A procurement officer evaluates supplier offers to purchase raw logs for the sawmill.",
+	"A procurement officer arranges transportation for incoming log shipments containing raw logs from forest suppliers.",
+	"A sawmill operator inspects incoming logs and sorts them by type and quality.",
+	"A sawmill operator cuts logs into lumber according to production orders.",
+	"A sawmill operator records production output of lumber and forwards it to the warehouse supervisor.",
+	"A warehouse supervisor receives processed lumber and updates stock records.",
+	"A warehouse supervisor records storage locations based on lumber type and quality.",
+	"A warehouse supervisor prepares lumber batches for shipment when orders are confirmed.",
+	"A sales representative receives customer orders and confirms product availability with the warehouse.",
+	"A sales representative creates sales orders and forwards them to the logistics coordinator for delivery planning.",
+	"A sales representative updates customers on order status and expected delivery times.",
+	"A logistics coordinator plans lumber deliveries based on destination and load size.",
+	"A logistics coordinator checks with drivers to ensure all delivery documents are ready before departure.",
+	"A logistics coordinator reports completed deliveries to the sales representative for billing confirmation."
+],
+  "domain objects": [
+      {"name": "Procurement Officer", "description": "Employee responsible for sourcing and purchasing raw logs from suppliers."},
+      {"name": "Supplier Offer", "description": "Proposal from a forest supplier detailing price, volume, and type of logs available."},
+      {"name": "Forest Supplier", "description": "External partner providing raw logs to the company."},
+      {"name": "Log Shipment", "description": "Delivery of raw logs from a supplier to the sawmill.", "associations": ["Raw Log"]},
+      {"name": "Raw Log", "description": "Unprocessed wood received from suppliers.", "associations": ["Type","Quality"]},
+      {"name": "Type", "description": "Specifies the tree species or wood category of the log."},
+      {"name": "Quality", "description": "Indicates the grade or condition of the wood material."},
+      {"name": "Sawmill Operator", "description": "Worker who processes raw logs into lumber according to production orders."},
+      {"name": "Production Order", "description": "Instruction defining what type and amount of lumber should be produced."},
+      {"name": "Production Output", "description": "Resulting batch of processed lumber from a production run.", "associations": ["Lumber"]},
+      {"name": "Lumber", "description": "Processed wood product ready for storage or sale."},
+      {"name": "Warehouse Supervisor", "description": "Employee managing storage, inventory, and shipment preparation of lumber."},
+      {"name": "Stock Record", "description": "Inventory entry tracking lumber quantities and storage locations.", "associations": ["Lumber","Location"]},
+      {"name": "Location", "description": "Specific place or area in the warehouse where lumber is stored."},
+      {"name": "Lumber Batch", "description": "Grouped collection of lumber units prepared for delivery.", "associations": ["Lumber"]},
+      {"name": "Sales Representative", "description": "Staff member handling customer orders and communication."},
+      {"name": "Customer Order", "description": "Initial purchase request made by a customer for lumber products."},
+      {"name": "Customer", "description": "Buyer placing orders for lumber or related products."},
+      {"name": "Sales Order", "description": "Confirmed internal record of a customer's purchase to be fulfilled."},
+      {"name": "Status Update", "description": "Information provided to a customer regarding the progress of their order."},
+      {"name": "Logistics Coordinator", "description": "Planner responsible for organizing deliveries and coordinating drivers."},
+      {"name": "Lumber Delivery", "description": "Scheduled transport of lumber batches to a customer's destination.", "associations": ["Lumber Batch","Destination","Load Size","Delivery Documents"]},
+      {"name": "Destination", "description": "Delivery address or client location where lumber is sent."},
+      {"name": "Load Size", "description": "Total volume or weight of lumber to be delivered."},
+      {"name": "Delivery Documents", "description": "Papers accompanying shipments such as delivery notes and transport manifests."},
+      {"name": "Delivery Completion Report", "description": "Record confirming that a delivery has been successfully completed."},
+      {"name": "Driver", "description": "Person responsible for transporting lumber batches to customers."}
+    ],
+  "associations": [
+      {"from": "Forest Supplier", "to": "Supplier Offer", "description": "Forest Supplier sends Supplier Offer."},
+      {"from": "Procurement Officer", "to": "Supplier Offer", "description": "Procurement Officer reviews Supplier Offer."},
+      {"from": "Forest Supplier", "to": "Log Shipment", "description": "Forest Supplier sends Log Shipment."},
+      {"from": "Log Shipment", "to": "Procurement Officer", "description": "Procurement Officer receives Log Shipment."},
+      {"from": "Sawmill Operator", "to": "Raw Log", "description": "Sawmill Operator processes Raw Log."},
+      {"from": "Sawmill Operator", "to": "Production Output", "description": "Sawmill Operator records Production Output."},
+      {"from": "Production Output", "to": "Warehouse Supervisor", "description": "Production Output goes to Warehouse Supervisor."},
+      {"from": "Warehouse Supervisor", "to": "Stock Record", "description": "Warehouse Supervisor updates Stock Record."},
+      {"from": "Warehouse Supervisor", "to": "Lumber Batch", "description": "Warehouse Supervisor prepares Lumber Batch."},
+      {"from": "Lumber Batch", "to": "Logistics Coordinator", "description": "Lumber Batch sent to Logistics Coordinator."},
+      {"from": "Logistics Coordinator", "to": "Delivery Completion Report", "description": "Logistics Coordinator issues Delivery Completion Report."},
+      {"from": "Logistics Coordinator", "to": "Lumber Delivery", "description": "Logistics Coordinator plans Lumber Delivery."},
+      {"from": "Driver", "to": "Lumber Delivery", "description": "Driver performs Lumber Delivery."},
+      {"from": "Lumber Delivery", "to": "Customer", "description": "Lumber Delivery reaches Customer."},
+      {"from": "Customer", "to": "Customer Order", "description": "Customer places Customer Order."},
+      {"from": "Customer Order", "to": "Sales Representative", "description": "Sales Representative receives Customer Order."},
+      {"from": "Sales Representative", "to": "Status Update", "description": "Sales Representative sends Status Update."},
+      {"from": "Status Update", "to": "Customer", "description": "Customer receives Status Update."},
+      {"from": "Sales Representative", "to": "Production Order", "description": "Sales Representative issues Production Order."},
+      {"from": "Production Order", "to": "Sawmill Operator", "description": "Sawmill Operator receives Production Order."},
+      {"from": "Sales Representative", "to": "Sales Order", "description": "Sales Representative creates Sales Order."},
+      {"from": "Sales Order", "to": "Logistics Coordinator", "description": "Sales Order sent to Logistics Coordinator."}
+    ],
+  "subdomains": {
+      "Supplies": {
+          "objects" : ["Forrest Supplier","Supplier Offer","Procurement Officer","Log Shipment","Raw Log","Type","Quality"]
+      },
+      "Lumber Production": {
+          "objects" : ["Sawmill Operator","Production Output","Lumber"]
+      },
+      "Warehouse": {
+          "objects" : ["Warehouse Supervisor","Stock Record","Lumber","Location","Lumber Batch"]
+      },
+      "Delivery": {
+          "objects" : ["Logistics Coordinator","Lumber Delivery","Lumber Batch","Destination","Load Size","Delivery Documents","Driver","Delivery Completion Report"]
+      },
+      "Order Management": {
+          "objects" : ["Sales Representative","Production Order","Sales Order"]
+      },
+      "Customer Affairs": {
+          "objects" : ["Customer","Customer Order","Status Update"]
+      },
+      "subdomain connections": ["Supplies--Lumber Production","Lumber Production--Warehouse","Warehouse--Delivery","Delivery--Customer Affairs","Customer Affairs--Order Management","Order Management--Lumber Production","Delivery--Order Management"]
+    },
+  "bounded contexts": {
+      "Lumber": {
+          "derived from": ["Supplies Subdomain", "Lumber Production Subdomain"],
+          "objects" : ["Forrest Supplier","Supplier Offer","Procurement Officer","Log Shipment","Raw Log","Type","Quality","Sawmill Operator","Production Output","Lumber"],
+          "name changes" : []
+      },
+      "Warehouse": {
+          "derived from": "Warehouse Subdomain",
+          "objects" : ["Warehouse Supervisor","Stock Record","Lumber Data","Location","Lumber Batch"],
+          "name changes" : ["Lumber -> Lumber Data"]
+      },
+      "Delivery": {
+          "derived from": "Delivery Subdomain",
+          "objects" : ["Logistics Coordinator","Lumber Delivery","Lumber Load","Destination","Load Size","Delivery Documents","Driver","Delivery Completion Report"],
+          "name changes" : ["Lumber Batch -> Lumber Load"]
+      },
+      "Order Management": {
+          "derived from": ["Order Management Subdomain",  "Customer Affairs Subdomain"],
+          "objects" : ["Sales Representative","Production Order","Sales Order","Customer","Customer Order","Status Update"],
+          "name changes" : []
+      }
+	}
+}
