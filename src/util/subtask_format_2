@@ -3,7 +3,7 @@
   {},
   "domain objects": [
 {},
-      {{"name": "", "description": "", "associations": ["a","b","c"]}}
+      {{"name": "", "description": "", "attributes": ["a","b","c"]}}
     ],
   "associations": [
 {}
