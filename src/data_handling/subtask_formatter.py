@@ -30,7 +30,10 @@ def load_tasks_from_stories():
     for file in os.scandir(user_story_dir):
         with open(file, 'r') as f:
 
-            new_file_name = os.path.basename(f.name).removesuffix(".txt")
+            new_file_name = os.path.basename(f.name)
+            if new_file_name.endswith(".txt"):
+                new_file_name = new_file_name.removesuffix(".txt")
+            print(new_file_name)
             if new_file_name in list_of_done_domains:
                 print(new_file_name)
                 continue
