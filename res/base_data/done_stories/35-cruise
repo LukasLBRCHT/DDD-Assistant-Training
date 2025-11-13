@@ -1,0 +1,18 @@
+A booking agent creates a new cruise booking for a passenger
+A booking agent confirms payment and issues a booking confirmation to the passenger.
+A booking agent updates the passenger record when a booking is modified or canceled.
+
+A passenger provides personal and travel details during the booking process.
+A passenger checks in at the port before boarding the cruise ship.
+A passenger signs up for onboard activities offered during the cruise.
+
+A cruise manager has access to records of all passengers.
+A cruise manager confirms port check ins of passengers.
+A cruise manager coordinates with the activity coordinator to ensure schedules are aligned with ship operations.
+A cruise manager receives reports from the medical officer about passenger health incidents.
+
+An activity coordinator plans daily onboard activities and updates the schedule for passengers.
+An activity coordinator confirms activity bookings.
+
+A medical officer examines passengers who report illnesses during the cruise.
+A medical officer communicates serious health cases to the cruise manager for incident reporting.

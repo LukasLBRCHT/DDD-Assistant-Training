@@ -1,0 +1,88 @@
+{
+  "domain-information":
+  [	"A booking agent creates a new cruise booking for a passenger",
+	"A booking agent confirms payment and issues a booking confirmation to the passenger.",
+	"A booking agent updates the passenger record when a booking is modified or canceled.",
+	"A passenger provides personal and travel details during the booking process.",
+	"A passenger checks in at the port before boarding the cruise ship.",
+	"A passenger signs up for onboard activities offered during the cruise.",
+	"A cruise manager has access to records of all passengers.",
+	"A cruise manager confirms port check ins of passengers.",
+	"A cruise manager coordinates with the activity coordinator to ensure schedules are aligned with ship operations.",
+	"A cruise manager receives reports from the medical officer about passenger health incidents.",
+	"An activity coordinator plans daily onboard activities and updates the schedule for passengers.",
+	"An activity coordinator confirms activity bookings.",
+	"A medical officer examines passengers who report illnesses during the cruise.",
+	"A medical officer communicates serious health cases to the cruise manager for incident reporting."
+],
+  "domain objects": [
+      {"name": "Booking Agent", "description": "Handles passenger bookings and payments."},
+      {"name": "Cruise Booking", "description": "Record of a passenger's cruise reservation."},
+      {"name": "Payment", "description": "Transaction for a cruise booking."},
+      {"name": "Booking Confirmation", "description": "Confirmation sent to a passenger after payment."},
+      {"name": "Passenger", "description": "Customer traveling on the cruise.", "attributes": ["Passenger Record"]},
+      {"name": "Passenger Record", "description": "Contains passenger details and booking history."},
+      {"name": "Port Check In", "description": "Process where passengers are verified before boarding."},
+      {"name": "Onboard Activity", "description": "Leisure or entertainment event available on the cruise."},
+      {"name": "Cruise Manager", "description": "Oversees ship operations, passengers, and reports."},
+      {"name": "Cruise Schedule", "description": "Planned timeline of cruise activities and events.", "attributes": ["Onboard Activity"]},
+      {"name": "Activity Coordinator", "description": "Plans and manages onboard activities for passengers."},
+      {"name": "Activity Booking", "description": "Passenger's reservation for an onboard activity.", "attributes": ["Onboard Activity"]},
+      {"name": "Medical Officer", "description": "Provides medical assistance and reports onboard incidents."},
+      {"name": "Illness Report", "description": "Notification from a passenger about a health issue."},
+      {"name": "Health Case Report", "description": "Formal report from the medical officer to management about a health case."}
+    ],
+  "associations": [
+      {"from": "Passenger", "to": "Cruise Booking", "description": "Passenger requests Cruise Booking."},
+      {"from": "Booking Agent", "to": "Cruise Booking", "description": "Booking Agent creates Cruise Booking."},
+      {"from": "Passenger", "to": "Payment", "description": "Passenger makes Payment."},
+      {"from": "Payment", "to": "Booking Agent", "description": "Payment notifies Booking Agent of completion."},
+      {"from": "Booking Agent", "to": "Passenger Record", "description": "Booking Agent updates Passenger Record."},
+      {"from": "Booking Agent", "to": "Booking Confirmation", "description": "Booking Agent issues Booking Confirmation."},
+      {"from": "Booking Confirmation", "to": "Passenger", "description": "Booking Confirmation is sent to Passenger."},
+      {"from": "Cruise Manager", "to": "Passenger Record", "description": "Cruise Manager reviews Passenger Record."},
+      {"from": "Passenger", "to": "Port Check In", "description": "Passenger completes Port Check In."},
+      {"from": "Cruise Manager", "to": "Port Check In", "description": "Cruise Manager verifies Port Check In."},
+      {"from": "Cruise Manager", "to": "Cruise Schedule", "description": "Cruise Manager oversees Cruise Schedule."},
+      {"from": "Activity Coordinator", "to": "Cruise Schedule", "description": "Activity Coordinator updates Cruise Schedule."},
+      {"from": "Activity Coordinator", "to": "Onboard Activity", "description": "Activity Coordinator manages Onboard Activity."},
+      {"from": "Passenger", "to": "Activity Booking", "description": "Passenger makes Activity Booking."},
+      {"from": "Activity Coordinator", "to": "Activity Booking", "description": "Activity Coordinator confirms Activity Booking."},
+      {"from": "Passenger", "to": "Illness Report", "description": "Passenger submits Illness Report."},
+      {"from": "Illness Report", "to": "Medical Officer", "description": "Illness Report alerts Medical Officer."},
+      {"from": "Medical Officer", "to": "Health Case Report", "description": "Medical Officer creates Health Case Report."},
+      {"from": "Health Case Report", "to": "Cruise Manager", "description": "Health Case Report sent to Cruise Manager."}
+    ],
+  "subdomains": {
+      "Registration": {
+          "objects" : ["Passenger","Passenger Record","Cruise Booking","Booking Agent","Payment","Booking Confirmation"]
+      },
+      "Cruise Management": {
+          "objects" : ["Cruise Manager","Passenger Record","Port Check In","Cruise Schedule"]
+      },
+      "Activity Planning": {
+          "objects" : ["Activity Coordinator","Cruise Schedule","Onboard Activity","Activity Booking"]
+      },
+      "Medical": {
+          "objects" : ["Medical Officer","Illness Report","Health Case Report"]
+      },
+      "subdomain connections": ["Registration--Cruise Management","Registration--Activity Planning","Cruise Management--Activity Planning","Cruise Management--Medical"]
+    },
+  "bounded contexts": {
+      "Registration": {
+          "derived from": "Registration Subdomain",
+          "objects" : ["Passenger","Registration Data","Cruise Booking","Booking Agent","Payment","Booking Confirmation"],
+          "name changes" : ["Passenger Record -> Registration Data"]
+      },
+      "Cruise Operations": {
+          "derived from": ["Cruise Management Subdomain", "Activity Planning Subdomain"],
+          "objects" : ["Cruise Manager","Passenger Record","Port Check In","Cruise Schedule","Activity Coordinator","Onboard Activity","Activity Booking"],
+          "name changes" : []
+      },
+      "Medical": {
+          "derived from": "Medical Subdomain",
+          "objects" : ["Medical Officer","Illness Report","Health Case Report"],
+          "name changes" : []
+      }
+	}
+}
