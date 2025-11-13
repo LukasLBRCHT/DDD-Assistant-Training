@@ -110,7 +110,7 @@ def create_json(stories, obj, asso, sub, bc):
 
     json_data = subtask_format.format(stories, obj, asso, sub, bc)
 
-    print(json_data)
+    return json_data
 
 def load_stories(text):
     # go over lines, add every one into a list
@@ -130,28 +130,31 @@ def load_stories(text):
 
 if __name__ == "__main__":
 
-    current_number = "32"
+    current_number = "33"
 
-    story_file = ""
+    file_name = ""
     stories = """"""
     for file in os.scandir(stories_dir):
         if file.name.startswith(current_number):
-            story_file = file.name
+            file_name = file.name
 
-    with open(story_file) as f:
+    with open(f"../../res/base_data/stories/{file_name}") as f:
         stories = f.read()
 
     stories = load_stories(stories)
 
     plain = """"""
-    objects_file = ""
-    for file in os.scandir(domain_objects_dir):
-        if file.name.startswith(current_number):
-            objects_file = file.name
+    objects_file = f"../../res/base_data/domain_objects/{file_name}"
+    # for file in os.scandir(domain_objects_dir):
+    #     if file.name.startswith(current_number):
+    #         objects_file = file.name
 
     with open(objects_file) as f:
         plain = f.read()
 
     objects, associations, subdomains, bounded_contexts = parse_domain_objects(plain)
 
-    create_json(stories, objects, associations, subdomains, bounded_contexts)
+    json_data = create_json(stories, objects, associations, subdomains, bounded_contexts)
+
+    with open(f"../../res/task_data/perm/{file_name}.json", "w") as json_file:
+        json_file.write(json_data)
