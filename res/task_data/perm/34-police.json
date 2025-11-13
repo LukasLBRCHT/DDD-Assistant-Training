@@ -1,0 +1,93 @@
+{
+  "domain-information":
+  [	"A dispatcher receives a citizen report about an ongoing incident and logs the details in the incident system.",
+	"A dispatcher assigns the nearest available patrol officer to respond to a reported incident.",
+	"A dispatcher updates the status of an incident when an officer arrives on the scene.",
+	"A patrol officer responds to an incident and assesses the situation for immediate action.",
+	"A patrol officer files a field report of the incident summarizing what happened at the scene.",
+	"A patrol officer transfers a serious incident case to an investigator for further examination.",
+	"An investigator takes over the investigation of a serious incident.",
+	"An investigator reviews a field report and creates a case file for ongoing investigation.",
+	"An investigator requests evidence collection from the evidence technician.",
+	"An evidence technician collects physical evidence from a scene and logs it into the evidence database.",
+	"An evidence technician assigns the evidence record to the investigation.",
+	"A records clerk receives completed case files from investigators and archives them in the department’s record system."
+],
+  "domain objects": [
+      {"name": "Dispatcher", "description": "Coordinates incident responses and assigns officers."},
+      {"name": "Citizen Report", "description": "Initial report submitted by a citizen about an incident."},
+      {"name": "Citizen", "description": "Individual reporting an incident to the police department."},
+      {"name": "Incident System", "description": "Digital system where incidents are logged and tracked.", "attributes": ["Incident"]},
+      {"name": "Incident", "description": "Recorded event requiring police response.", "attributes": ["Status","Field Report"]},
+      {"name": "Status", "description": "Current state of an incident, such as 'reported', 'in progress', or 'resolved'."},
+      {"name": "Field Report", "description": "Summary written by a patrol officer after responding to an incident."},
+      {"name": "Investigation", "description": "Ongoing process of examining an incident and collecting evidence.", "attributes": ["Case File","Incident","Evidence"]},
+      {"name": "Case File", "description": "Complete record of an investigation, containing all related information."},
+      {"name": "Evidence", "description": "Physical or digital material collected for an investigation."},
+      {"name": "Patrol Officer", "description": "Responds to reported incidents and files field reports."},
+      {"name": "Case Transfer", "description": "Formal process of assigning a case from a patrol officer to an investigator.", "attributes": ["Incident"]},
+      {"name": "Investigator", "description": "Handles complex cases and leads investigations."},
+      {"name": "Evidence Request", "description": "Request sent by an investigator for evidence collection or analysis."},
+      {"name": "Evidence Technician", "description": "Collects, logs, and manages physical evidence."},
+      {"name": "Evidence Database", "description": "System for recording and storing details of collected evidence.", "attributes": ["Evidence"]},
+      {"name": "Records Clerk", "description": "Archives completed case files in the department’s record system."},
+      {"name": "Record System", "description": "Central archive for managing and retrieving case files.", "attributes": ["Case File"]}
+    ],
+  "associations": [
+      {"from": "Citizen", "to": "Citizen Report", "description": "Citizen submits citizen report."},
+      {"from": "Dispatcher", "to": "Citizen Report", "description": "Dispatcher receives citizen report."},
+      {"from": "Dispatcher", "to": "Incident System", "description": "Dispatcher logs incident in incident system."},
+      {"from": "Dispatcher", "to": "Patrol Officer", "description": "Dispatcher assigns patrol officer to incident."},
+      {"from": "Patrol Officer", "to": "Incident", "description": "Patrol officer responds to incident."},
+      {"from": "Patrol Officer", "to": "Field Report", "description": "Patrol officer files field report."},
+      {"from": "Patrol Officer", "to": "Case Transfer", "description": "Patrol officer initiates case transfer."},
+      {"from": "Case Transfer", "to": "Investigator", "description": "Case transfer assigns investigator."},
+      {"from": "Investigator", "to": "Investigation", "description": "Investigator conducts investigation."},
+      {"from": "Investigator", "to": "Evidence Request", "description": "Investigator creates evidence request."},
+      {"from": "Evidence Request", "to": "Evidence Technician", "description": "Evidence request sent to evidence technician."},
+      {"from": "Evidence Technician", "to": "Evidence Database", "description": "Evidence technician logs evidence in database."},
+      {"from": "Evidence Technician", "to": "Investigation", "description": "Evidence technician assigns evidence to investigation."},
+      {"from": "Investigator", "to": "Records Clerk", "description": "Investigator submits case file to records clerk."},
+      {"from": "Records Clerk", "to": "Record System", "description": "Records clerk archives case file in record system."}
+    ],
+  "subdomains": {
+      "Dispatch": {
+          "objects" : ["Citizen","Citizen Report","Dispatcher","Incident System","Incident","Status"]
+      },
+      "First Response": {
+          "objects" : ["Patrol Officer","Incident","Field Report","Case Transfer"]
+      },
+      "Investigation": {
+          "objects" : ["Investigator","Investigation","Case File"]
+      },
+      "Forensics": {
+          "objects" : ["Evidence Request","Evidence Technician","Evidence Database","Evidence"]
+      },
+      "Record Keeping": {
+          "objects" : ["Records Clerk","Record System","Case File"]
+      },
+      "subdomain connections": ["Dispatch--First Response","First Response--Investigation","Investigation--Forensics","Investigation--Record Keeping"]
+    },
+  "bounded contexts": {
+      "Dispatch": {
+          "derived from": "Dispatch Subdomain",
+          "objects" : ["Citizen","Citizen Report","Dispatcher","Incident System","Incident","Status"],
+          "name changes" : []
+      },
+      "First Response": {
+          "derived from": "First Response Subdomain",
+          "objects" : ["Patrol Officer","Incident","Field Report","Case Transfer"],
+          "name changes" : ["Incident -> Incident Response"]
+      },
+      "Investigation Operations": {
+          "derived from": ["Investigation Subdomain","Forensics Subdomain"],
+          "objects" : ["Investigator","Investigation","Case Documentation","Evidence Request","Evidence Technician","Evidence Database","Evidence"],
+          "name changes" : ["Case File -> Case Documentation"]
+      },
+      "Record Keeping": {
+          "derived from": "Record Keeping Subdomain",
+          "objects" : ["Records Clerk","Record System","Closed Case"],
+          "name changes" : ["Case File -> Closed Case"]
+      }
+	}
+}

@@ -1,0 +1,16 @@
+A dispatcher receives a citizen report about an ongoing incident and logs the details in the incident system.
+A dispatcher assigns the nearest available patrol officer to respond to a reported incident.
+A dispatcher updates the status of an incident when an officer arrives on the scene.
+
+A patrol officer responds to an incident and assesses the situation for immediate action.
+A patrol officer files a field report of the incident summarizing what happened at the scene.
+A patrol officer transfers a serious incident case to an investigator for further examination.
+
+An investigator takes over the investigation of a serious incident.
+An investigator reviews a field report and creates a case file for ongoing investigation.
+An investigator requests evidence collection from the evidence technician.
+
+An evidence technician collects physical evidence from a scene and logs it into the evidence database.
+An evidence technician assigns the evidence record to the investigation.
+
+A records clerk receives completed case files from investigators and archives them in the department’s record system.
