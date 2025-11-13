@@ -1,0 +1,18 @@
+{{
+  "domain-information":
+  {},
+  "domain objects": [
+{},
+      {{"name": "", "description": "", "associations": ["a","b","c"]}}
+    ],
+  "associations": [
+{}
+    ],
+  "subdomains": {{
+{},
+      "subdomain connections": ["subdomain1--subdomain2","..."]
+    }},
+  "bounded contexts": {{
+{}
+	}}
+}}
