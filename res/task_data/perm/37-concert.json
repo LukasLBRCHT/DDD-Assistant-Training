@@ -1,0 +1,93 @@
+{
+  "domain-information":
+  [	"A client requests a concert event proposal from an event manager.",
+	"A client reviews the event proposal and sends revision requests to the event manager.",
+	"A client approves the final event plan before ticket sales begin.",
+	"An event manager creates an event plan based on the client’s initial request.",
+	"An event manager coordinates with a venue manager to request a venue at an available concert date.",
+	"An event manager updates the client about progress and any required schedule changes.",
+	"A venue manager responds to the request about his venue for the event manager.",
+	"A venue manager assigns a technical crew to handle stage setup for the concert.",
+	"A marketing coordinator receives the event plan and prepares promotional materials.",
+	"A marketing coordinator launches a ticket campaign and monitors early ticket sales.",
+	"A ticketing manager configures ticket categories and prices based on the ticket campaign.",
+	"A ticketing manager sends ticket sale reports to the event manager during the campaign.",
+	"A technical crew member performs final equipment checks before the concert begins."
+],
+  "domain objects": [
+      { "name": "Client", "description": "Person or group requesting a concert event." },
+      { "name": "Client Request", "description": "Initial request outlining what the client wants." },
+      { "name": "Event Manager", "description": "Coordinator responsible for planning the concert event." },
+      { "name": "Concert Event Proposal", "description": "Draft proposal describing the event concept and scope." },
+      { "name": "Revision Request", "description": "Client’s request for changes to the proposal." },
+      { "name": "Event Plan", "description": "Detailed plan for executing the concert." },
+      { "name": "Progress Update", "description": "Status message reporting planning progress." },
+      { "name": "Venue Request", "description": "Request sent to a venue for booking details.", "attributes": ["Concert Date","Venue"] },
+      { "name": "Concert Date", "description": "Specific date proposed for the event." },
+      { "name": "Venue", "description": "Location where the concert may take place." },
+      { "name": "Venue Manager", "description": "Manager responsible for venue availability and resources." },
+      { "name": "Technical Crew Member", "description": "Crew member responsible for technical setup." },
+      { "name": "Equipment Check", "description": "Verification of technical equipment readiness." },
+      { "name": "Marketing Coordinator", "description": "Person responsible for promoting the concert." },
+      { "name": "Promotional Material", "description": "Marketing assets created for the event." },
+      { "name": "Ticket Campaign", "description": "Plan for ticket sales and distribution.", "attributes": ["Sales Data","Ticket"] },
+      { "name": "Sales Data", "description": "Information on ticket sales performance." },
+      { "name": "Ticket", "description": "Ticket made available for purchase.", "attributes": ["Category","Price"] },
+      { "name": "Category", "description": "Ticket class or seating type." },
+      { "name": "Price", "description": "Cost assigned to a ticket." },
+      { "name": "Ticketing Manager", "description": "Person overseeing ticket sales and distribution." },
+      { "name": "Ticket Sale Report", "description": "Summary report of ticket sales." }
+    ],
+  "associations": [
+      { "from": "Client", "to": "Client Request", "description": "Client submits Client Request." },
+      { "from": "Client Request", "to": "Event Manager", "description": "Client Request is reviewed by Event Manager." },
+      { "from": "Event Manager", "to": "Concert Event Proposal", "description": "Event Manager creates Concert Event Proposal." },
+      { "from": "Client", "to": "Concert Event Proposal", "description": "Client reviews Concert Event Proposal." },
+      { "from": "Client", "to": "Revision Request", "description": "Client issues Revision Request." },
+      { "from": "Revision Request", "to": "Event Manager", "description": "Revision Request is received by Event Manager." },
+      { "from": "Event Manager", "to": "Progress Update", "description": "Event Manager creates Progress Update." },
+      { "from": "Progress Update", "to": "Client", "description": "Progress Update is sent to Client." },
+      { "from": "Event Manager", "to": "Event Plan", "description": "Event Manager prepares Event Plan." },
+      { "from": "Event Plan", "to": "Marketing Coordinator", "description": "Event Plan is provided to Marketing Coordinator." },
+      { "from": "Marketing Coordinator", "to": "Promotional Material", "description": "Marketing Coordinator creates Promotional Material." },
+      { "from": "Marketing Coordinator", "to": "Ticket Campaign", "description": "Marketing Coordinator initiates Ticket Campaign." },
+      { "from": "Ticketing Manager", "to": "Ticket Campaign", "description": "Ticketing Manager manages Ticket Campaign." },
+      { "from": "Ticketing Manager", "to": "Ticket Sale Report", "description": "Ticketing Manager generates Ticket Sale Report." },
+      { "from": "Event Manager", "to": "Venue Request", "description": "Event Manager sends Venue Request." },
+      { "from": "Venue Manager", "to": "Venue Request", "description": "Venue Manager responds to Venue Request." },
+      { "from": "Venue Manager", "to": "Technical Crew Member", "description": "Venue Manager assigns Technical Crew Member." },
+      { "from": "Technical Crew Member", "to": "Equipment Check", "description": "Technical Crew Member performs Equipment Check." }
+    ],
+  "subdomains": {
+      "Client Interaction": {
+          "objects" : ["Client","Client Request","Event Manager","Concert Event Proposal","Revision Request","Progress Update"]
+      },
+      "Event Supervision": {
+          "objects" : ["Event Manager","Event Plan"]
+      },
+      "Sales": {
+          "objects" : ["Marketing Coordinator","Promotional Material","Ticket Campaign","Sales Data","Ticket","Price","Category","Ticketing Manager","Ticket Sale Report"]
+      },
+      "Venue Organisation": {
+          "objects" : ["Venue Request","Concert Date","Venue","Venue Manager","Technical Crew Member","Equipment Check"]
+      },
+      "subdomain connections": ["Client Interaction--Event Supervision","Event Supervision--Sales","Event Supervision--Venue Organisation"]
+    },
+  "bounded contexts": {
+      "Client Interaction": {
+          "derived from": "Client Interaction Subdomain",
+          "objects" : ["Client","Client Request","Representative","Concert Event Proposal","Revision Request","Progress Update"],
+          "name changes" : ["Event Manager -> Representative"]
+      },
+      "Event Production": {
+          "derived from": "Event Supervision Subdomain",
+          "objects" : ["Event Manager","Event Plan", "Marketing Coordinator","Promotional Material","Ticket Campaign","Sales Data","Ticket","Price","Category","Ticketing Manager","Ticket Sale Report"],
+          "name changes" : []
+      },
+      "Venue Organisation": {
+          "derived from": "Venue Organisation Subdomain",
+          "objects" : ["Venue Request","Concert Date","Venue","Venue Manager","Technical Crew Member","Equipment Check"],
+          "name changes" : []
+      }
+	}
+}
