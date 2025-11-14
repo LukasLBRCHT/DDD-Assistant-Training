@@ -1,0 +1,125 @@
+{
+  "domain-information":
+  [	"A client provides a project brief to the creative producer.",
+	"A client reviews the initial project plan and sends revision requests.",
+	"A client approves the final storyboard before production begins.",
+	"A creative producer receives a project brief and creates a project plan.",
+	"A creative producer coordinates with the art director to set the visual direction.",
+	"A creative producer updates the client on project progress.",
+	"An art director reviews the project plan and assigns concept artists to create sketches.",
+	"An art director approves the sketch art before he passes it to a storyboard artist.",
+	"A storyboard artist creates storyboard frames based on the approved concept art.",
+	"A storyboard artist updates the storyboard when feedback comes from the art director.",
+	"An animator receives the approved storyboard and produces animated sequences.",
+	"An animator submits completed animation shots to the production manager for review.",
+	"A production manager reviews submitted shots and sends revision requests back to animators when needed.",
+	"A production manager compiles all final animation shots for quality review.",
+	"A quality reviewer checks the final compiled animation and approves it for client delivery."
+],
+  "domain objects": [
+      {"name": "Client", "description": "External party requesting the animation project."},
+      {"name": "Project Brief", "description": "Initial description of the client’s project needs."},
+      {"name": "Creative Producer", "description": "Person responsible for planning and coordinating the project."},
+      {"name": "Revision Request", "description": "Feedback asking for changes to project work."},
+      {"name": "Final Storyboard", "description": "Approved storyboard used for production.", "attributes": ["Storyboard Frame"]},
+      {"name": "Storyboard Frame", "description": "A single illustrated frame within the storyboard."},
+      {"name": "Project Plan", "description": "Structured plan of tasks, resources, and timeline."},
+      {"name": "Visual Direction", "description": "Guidelines defining the project’s artistic style."},
+      {"name": "Project Update", "description": "Status information sent to the client."},
+      {"name": "Art Director", "description": "Person overseeing artistic direction and quality."},
+      {"name": "Concept Artist", "description": "Artist creating early visual sketches for direction."},
+      {"name": "Sketch", "description": "Initial artwork created to establish visual ideas."},
+      {"name": "Storyboard Artist", "description": "Artist creating the storyboard from sketches."},
+      {"name": "Feedback", "description": "Art director’s guidance for improvements."},
+      {"name": "Animator", "description": "Artist producing animated sequences from the storyboard."},
+      {"name": "Sequence", "description": "A produced segment of animation."},
+      {"name": "Production Manager", "description": "Person reviewing animation work and coordinating revisions."},
+      {"name": "Final Animation", "description": "Collection of approved sequences forming the final piece."},
+      {"name": "Client Delivery", "description": "The package of final animation sent to the client."},
+      {"name": "Quality Reviewer", "description": "Person conducting the final quality check."}
+    ],
+  "associations": [
+      {"from": "Client", "to": "Project Brief", "description": "Client provides the Project Brief."},
+      {"from": "Project Brief", "to": "Creative Producer", "description": "Project Brief is received by Creative Producer."},
+      {"from": "Creative Producer", "to": "Project Plan", "description": "Creative Producer creates the Project Plan."},
+      {"from": "Client", "to": "Project Plan", "description": "Client reviews the Project Plan."},
+      {"from": "Client", "to": "Revision Request", "description": "Client issues a Revision Request."},
+      {"from": "Revision Request", "to": "Creative Producer", "description": "Revision Request is sent to Creative Producer."},
+      {"from": "Creative Producer", "to": "Project Update", "description": "Creative Producer creates a Project Update."},
+      {"from": "Project Update", "to": "Client", "description": "Project Update is sent to Client."},
+      {"from": "Creative Producer", "to": "Visual Direction", "description": "Creative Producer defines initial Visual Direction."},
+      {"from": "Art Director", "to": "Visual Direction", "description": "Art Director finalizes the Visual Direction."},
+      {"from": "Art Director", "to": "Project Plan", "description": "Art Director reviews the Project Plan."},
+      {"from": "Art Director", "to": "Feedback", "description": "Art Director creates Feedback."},
+      {"from": "Feedback", "to": "Storyboard Artist", "description": "Feedback is sent to Storyboard Artist."},
+      {"from": "Art Director", "to": "Final Storyboard", "description": "Art Director approves the Final Storyboard."},
+      {"from": "Client", "to": "Final Storyboard", "description": "Client approves the Final Storyboard."},
+      {"from": "Concept Artist", "to": "Sketch", "description": "Concept Artist creates Sketch."},
+      {"from": "Art Director", "to": "Concept Artist", "description": "Art Director assigns work to Concept Artist."},
+      {"from": "Art Director", "to": "Storyboard Artist", "description": "Art Director passes approved Sketches to Storyboard Artist."},
+      {"from": "Storyboard Artist", "to": "Sketch", "description": "Storyboard Artist uses Sketch as input."},
+      {"from": "Storyboard Artist", "to": "Storyboard Frame", "description": "Storyboard Artist creates Storyboard Frame."},
+      {"from": "Final Storyboard", "to": "Animator", "description": "Final Storyboard is provided to Animator."},
+      {"from": "Animator", "to": "Sequence", "description": "Animator produces a Sequence."},
+      {"from": "Production Manager", "to": "Sequence", "description": "Production Manager reviews the Sequence."},
+      {"from": "Production Manager", "to": "Revision Request", "description": "Production Manager sends Revision Request."},
+      {"from": "Revision Request", "to": "Animator", "description": "Revision Request is sent to Animator."},
+      {"from": "Production Manager", "to": "Final Animation", "description": "Production Manager compiles the Final Animation."},
+      {"from": "Quality Reviewer", "to": "Final Animation", "description": "Quality Reviewer reviews the Final Animation."},
+      {"from": "Quality Reviewer", "to": "Client Delivery", "description": "Quality Reviewer approves Client Delivery."},
+      {"from": "Client Delivery", "to": "Client", "description": "Client Delivery is sent to Client."}
+    ],
+  "subdomains": {
+      "Client Affairs": {
+          "objects" : ["Client","Project Brief","Creative Producer","Project Update","Revision Request","Project Plan"]
+      },
+      "Direction": {
+          "objects" : ["Visual Direction","Art Director","Project Plan","Final Storyboard","Feedback"]
+      },
+      "Concept Art": {
+          "objects" : ["Concept Art","Sketch"]
+      },
+      "Storyboard": {
+          "objects" : ["Storyboard Artist","Storyboard Frame"]
+      },
+      "Animation": {
+          "objects" : ["Animator","Sequence","Production Manager","Revision Request"]
+      },
+      "Finalisation": {
+          "objects" : ["Quality Reviewer","Final Animation","Client Delivery"]
+      },
+      "subdomain connections": ["Client Affairs--Direction","Direction--Concept Art","Direction--Storyboard","Direction--Animation","Animation--Finalisation","Finalisation--Client Affairs"]
+    },
+  "bounded contexts": {
+      "Client Affairs": {
+          "derived from": "Client Affairs Subdomain",
+          "objects" : ["Client","Project Brief","Creative Producer","Project Update","Client Revision","Project Proposal"],
+          "name changes" : ["Revision Request -> Client Revision","Project Plan -> Project Proposal"]
+      },
+      "Direction": {
+          "derived from": "Direction Subdomain",
+          "objects" : ["Visual Direction","Art Director","Project Plan","Final Storyboard","Feedback"],
+          "name changes" : []
+      },
+      "Concept Art": {
+          "derived from": "Concept Art Subdomain",
+          "objects" : ["Concept Art","Sketch"],
+          "name changes" : []
+      },
+      "Storyboard": {
+          "derived from": "Storyboard Subdomain",
+          "objects" : ["Storyboard Artist","Storyboard Frame"],
+          "name changes" : []
+      },
+      "Animation": {
+          "derived from": "Animation Subdomain",
+          "objects" : ["Animator","Sequence","Production Manager","Animation Revision"],
+          "name changes" : ["Revision Request -> Animation Revision"]
+      },
+      "Finalisation": {
+          "derived from": "Finalisation Subdomain",
+          "objects" : ["Quality Reviewer","Final Animation","Client Delivery"],
+          "name changes" : []
+      }
+	}
+}
