@@ -2,8 +2,7 @@
   "domain-information":
   {},
   "domain objects": [
-{},
-      {{"name": "", "description": "", "attributes": ["a","b","c"]}}
+{}
     ],
   "associations": [
 {}

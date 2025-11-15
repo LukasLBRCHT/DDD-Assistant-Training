@@ -20,6 +20,8 @@ import os
 
 import regex
 
+from data_handling.domain import Domain_Object
+
 domain_objects_dir = "../../res/base_data/domain_objects"
 stories_dir = "../../res/base_data/stories"
 subtask_format_url = "../util/subtask_format_2"
@@ -37,6 +39,56 @@ def format_correction(subdomain_objects):
 
     return final_string
 
+
+def extract_objects(objs):
+    extracted_objects = ""
+
+    object_list = []
+    last_root = None
+
+    for line in objs.splitlines():
+        if not line:
+            continue
+        name = line.strip()
+        new_object = Domain_Object(name)
+
+        if not name.startswith("-"):
+            last_root = new_object
+        else:
+            name = name.removeprefix("-")
+            new_object.set_name(name)
+
+            skip = name.startswith("(")
+            if skip:
+                name = name.removeprefix("(")
+                name = name.removesuffix(")")
+
+            last_root.add_attribute(name)
+
+            if skip:
+                continue
+
+        object_list.append(new_object)
+
+    for obj in object_list:
+
+        attributes_string = ""
+        if obj.object_attributes:
+            attributes_string += ", \"attributes\": ["
+            for attr in obj.object_attributes:
+                attributes_string += f"\"{attr}\","
+            attributes_string = attributes_string.removesuffix(",")
+            attributes_string += "]"
+
+
+        object_json = f"      {{\"name\": \"{obj.object_name}\", \"description\": \"\"{attributes_string}}},\n"
+        extracted_objects += object_json
+
+    extracted_objects = extracted_objects.removesuffix(",\n")
+
+    return extracted_objects
+
+
 def parse_domain_objects(txt):
 
     text = txt
@@ -45,16 +97,7 @@ def parse_domain_objects(txt):
     associations = split[1]
     subdomains = split[2]
 
-    extracted_objects = ""
-
-    for line in objects.splitlines():
-        if not line:
-            continue
-        name = line.strip()
-        object_json = f"      {{\"name\": \"{name}\", \"description\": \"\"}},\n"
-        extracted_objects += object_json
-
-    extracted_objects = extracted_objects.removesuffix(",\n")
+    extracted_objects = extract_objects(objects)
 
     #result_data += "\nassociations:\n"
 
@@ -130,7 +173,7 @@ def load_stories(text):
 
 if __name__ == "__main__":
 
-    current_number = "33"
+    current_number = "38"
 
     file_name = ""
     stories = """"""
