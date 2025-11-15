@@ -1,0 +1,109 @@
+{
+  "domain-information":
+  [	"A Zoo Keeper feeds an animal according to the care schedule assigned by the veterinary team.",
+	"A Zoo Keeper updates the animal care log.",
+	"A Zoo Keeper alerts the Veterinarian when an animal’s behavior deviates from normal patterns.",
+	"A Veterinarian conducts a scheduled health examination for an animal.",
+	"A Veterinarian issues a treatment plan for the keepers to follow during recovery.",
+	"A Veterinarian updates the medical record so management can track long-term health outcomes.",
+	"A Facility Coordinator receives a maintenance request from a keeper and contacts a habitat technician.",
+	"A Habitat Technician performs repairs to ensure the enclosure meets safety and regulatory standards.",
+	"A Habitat Technician reports completed maintenance to the facility coordinator for documentation.",
+	"An Education Coordinator plans a public presentation using animal information provided by the keepers.",
+	"An Education Coordinator prepares a guided tour schedule approved by the visitor services supervisor.",
+	"A Visitor Services Associate sells tickets according to pricing guidelines set by administration.",
+	"A Visitor Services Associate processes a membership application and forwards records to the member database team."
+],
+  "domain objects": [
+      {"name": "Zoo Keeper", "description": "Staff member responsible for daily animal care."},
+      {"name": "Care Schedule", "description": "Plan defining feeding and care routines for an animal.", "attributes": ["Feeding"]},
+      {"name": "Feeding", "description": "A specific feeding action carried out for an animal."},
+      {"name": "Animal", "description": "An animal kept at the zoo.", "attributes": ["Care Log", "Medical Record"]},
+      {"name": "Care Log", "description": "Daily record of care activities performed for an animal."},
+      {"name": "Medical Record", "description": "Health history and treatment information for an animal."},
+      {"name": "Behaviour Alert", "description": "Notification indicating unusual animal behavior."},
+      {"name": "Veterinarian", "description": "Medical professional responsible for animal health."},
+      {"name": "Health Examination", "description": "Routine medical check conducted on an animal."},
+      {"name": "Treatment Plan", "description": "Instructions for recovery care to be followed by keepers."},
+      {"name": "Habitat Technician", "description": "Staff member responsible for enclosure maintenance."},
+      {"name": "Maintenance Request", "description": "Request to resolve a habitat-related issue."},
+      {"name": "Facility Coordinator", "description": "Coordinator who manages maintenance requests and technician assignments."},
+      {"name": "Habitat", "description": "Animal enclosure requiring periodic maintenance.", "attributes": ["Animal"]},
+      {"name": "Habitat Repair", "description": "Work performed to fix or improve a habitat."},
+      {"name": "Maintenance Report", "description": "Record confirming completed habitat maintenance."},
+      {"name": "Education Coordinator", "description": "Staff member who prepares educational materials and programs."},
+      {"name": "Public Presentation", "description": "Educational presentation prepared for visitors."},
+      {"name": "Guided Tour Schedule", "description": "Planned schedule for zoo tours."},
+      {"name": "Visitor Services Associate", "description": "Front-facing staff handling tickets and memberships."},
+      {"name": "Ticket Sale", "description": "Transaction in which a visitor purchases entry."},
+      {"name": "Membership Application", "description": "Request from a visitor to become a zoo member."},
+      {"name": "Member Database Team", "description": "Team responsible for maintaining membership records."}
+    ],
+  "associations": [
+      {"from": "Zoo Keeper", "to": "Feeding", "description": "Zoo Keeper performs Feeding."},
+      {"from": "Feeding", "to": "Animal", "description": "Feeding is carried out for the Animal."},
+      {"from": "Zoo Keeper", "to": "Care Log", "description": "Zoo Keeper updates the Care Log."},
+      {"from": "Zoo Keeper", "to": "Behaviour Alert", "description": "Zoo Keeper creates a Behaviour Alert."},
+      {"from": "Behaviour Alert", "to": "Veterinarian", "description": "Behaviour Alert is sent to the Veterinarian."},
+      {"from": "Veterinarian", "to": "Care Schedule", "description": "Veterinarian assigns the Care Schedule."},
+      {"from": "Veterinarian", "to": "Medical Record", "description": "Veterinarian updates the Medical Record."},
+      {"from": "Veterinarian", "to": "Health Examination", "description": "Veterinarian performs the Health Examination."},
+      {"from": "Health Examination", "to": "Animal", "description": "Health Examination is conducted on the Animal."},
+      {"from": "Veterinarian", "to": "Treatment Plan", "description": "Veterinarian creates the Treatment Plan."},
+      {"from": "Zoo Keeper", "to": "Treatment Plan", "description": "Zoo Keeper follows the Treatment Plan."},
+      {"from": "Zoo Keeper", "to": "Maintenance Request", "description": "Zoo Keeper submits a Maintenance Request."},
+      {"from": "Maintenance Request", "to": "Facility Coordinator", "description": "Maintenance Request is received by the Facility Coordinator."},
+      {"from": "Facility Coordinator", "to": "Habitat Technician", "description": "Facility Coordinator assigns work to the Habitat Technician."},
+      {"from": "Habitat Technician", "to": "Habitat Repair", "description": "Habitat Technician performs the Habitat Repair."},
+      {"from": "Habitat Repair", "to": "Habitat", "description": "Habitat Repair is applied to the Habitat."},
+      {"from": "Habitat Technician", "to": "Maintenance Report", "description": "Habitat Technician creates a Maintenance Report."},
+      {"from": "Maintenance Report", "to": "Facility Coordinator", "description": "Maintenance Report is sent to the Facility Coordinator."},
+      {"from": "Education Coordinator", "to": "Public Presentation", "description": "Education Coordinator prepares the Public Presentation."},
+      {"from": "Zoo Keeper", "to": "Public Presentation", "description": "Zoo Keeper provides information for the Public Presentation."},
+      {"from": "Education Coordinator", "to": "Guided Tour Schedule", "description": "Education Coordinator creates the Guided Tour Schedule."},
+      {"from": "Visitor Services Associate", "to": "Guided Tour Schedule", "description": "Visitor Services Associate uses the Guided Tour Schedule."},
+      {"from": "Visitor Services Associate", "to": "Ticket Sale", "description": "Visitor Services Associate processes the Ticket Sale."},
+      {"from": "Visitor Services Associate", "to": "Membership Application", "description": "Visitor Services Associate accepts the Membership Application."},
+      {"from": "Membership Application", "to": "Member Database Team", "description": "Membership Application is forwarded to the Member Database Team."}
+    ],
+  "subdomains": {
+      "General Care": {
+          "objects" : ["Zoo Keeper","Feeding","Animal","Care Log","Care Schedule","Behaviour Alert"]
+      },
+      "Medical": {
+          "objects" : ["Veterinarian","Treatment Plan","Health Examination","Animal","Medical Record"]
+      },
+      "Facility": {
+          "objects" : ["Facility Coordinator","Habitat Technician","Maintenance Request","Habitat Repair","Habitat","Maintenance Report"]
+      },
+      "Public Programs": {
+          "objects" : ["Education Coordinator","Public Presentation","Guided Tour Schedule","Zoo Keeper"]
+      },
+      "Customer Affairs": {
+          "objects" : ["Visitor Services Associate","Ticket Sale","Membership Application","Member Database Team"]
+      },
+      "subdomain connections": ["General Care--Medical","General Care--Facility","Public Programs--General Care","Public Programs--Customer Affairs"]
+    },
+  "bounded contexts": {
+      "General Care": {
+          "derived from": "General Care Subdomain",
+          "objects" : ["Zoo Keeper","Feeding","Animal","Care Log","Care Schedule","Behaviour Alert"],
+          "name changes" : []
+      },
+      "Medical": {
+          "derived from": "Medical Subdomain",
+          "objects" : ["Veterinarian","Treatment Plan","Health Examination","Patient","Medical Record"],
+          "name changes" : ["Animal -> Patient"]
+      },
+      "Facility": {
+          "derived from": "Facility Subdomain",
+          "objects" : ["Facility Coordinator","Habitat Technician","Maintenance Request","Habitat Repair","Habitat","Maintenance Report"],
+          "name changes" : []
+      },
+      "Zoo Programs": {
+          "derived from": ["Public Programs Subdomain","Customer Affairs Subdomain"],
+          "objects" : ["Education Coordinator","Public Presentation","Guided Tour Schedule","Presenter","Visitor Services Associate","Ticket Sale","Membership Application","Member Database Team"],
+          "name changes" : ["Zoo Keeper -> Presenter"]
+      }
+	}
+}
