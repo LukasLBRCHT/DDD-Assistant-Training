@@ -1,0 +1,19 @@
+A Member signs up for a new membership to access the gym.
+A Member can access and view their membership record.
+A Member books a fitness class to join a scheduled session.
+A Member submits a request to freeze their membership for a short period.
+A Member book a personal training session with a trainer.
+
+A Front Desk Staff processes a sign up and creates a new membership record for a member.
+A Front Desk Staff updates a member's details when personal information changes.
+A Front Desk Staff forwards a member complaint to the facility manager for follow-up.
+A Front Desk Staff member receives a clients request to pause their membership and processes it.
+
+A Trainer schedules a new fitness class to add it to the weekly timetable.
+A Trainer reviews class attendance to adjust future class capacity.
+A Trainer provides personalized workout plans to help members reach their goals.
+A Trainer logs the performance of a member in their membership record.
+
+A Facility Manager inspects gym equipment to determine what needs maintenance.
+A Facility Manager submits a repair order to fix broken machines.
+A Facility Manager updates the status of equipment.

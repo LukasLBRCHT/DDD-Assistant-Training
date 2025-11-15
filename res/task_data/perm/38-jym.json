@@ -1,0 +1,93 @@
+{
+  "domain-information":
+  [	"A Member signs up for a new membership to access the gym.",
+	"A Member can access and view their membership record.",
+	"A Member books a fitness class to join a scheduled session.",
+	"A Member submits a request to freeze their membership for a short period.",
+	"A Member book a personal training session with a trainer.",
+	"A Front Desk Staff processes a sign up and creates a new membership record for a member.",
+	"A Front Desk Staff updates a member's details when personal information changes.",
+	"A Front Desk Staff forwards a member complaint to the facility manager for follow-up.",
+	"A Front Desk Staff member receives a clients request to pause their membership and processes it.",
+	"A Trainer schedules a new fitness class to add it to the weekly timetable.",
+	"A Trainer reviews class attendance to adjust future class capacity.",
+	"A Trainer provides personalized workout plans to help members reach their goals.",
+	"A Trainer logs the performance of a member in their membership record.",
+	"A Facility Manager inspects gym equipment to determine what needs maintenance.",
+	"A Facility Manager submits a repair order to fix broken machines.",
+	"A Facility Manager updates the status of equipment."
+],
+  "domain objects": [
+      {"name": "Member", "description": "Person who holds a gym membership and uses gym services.", "attributes": ["Membership Record"]},
+      {"name": "Membership Record", "description": "Stored information about a member’s membership status and history."},
+      {"name": "Sign Up", "description": "Action and data submitted to start a new membership."},
+      {"name": "Fitness Class", "description": "A scheduled group training session offered by the gym.", "attributes": ["Attendance","Capacity"]},
+      {"name": "Attendance", "description": "Count of members who attend a fitness class."},
+      {"name": "Capacity", "description": "Maximum number of members allowed in a fitness class."},
+      {"name": "Pause Request", "description": "Member’s request to temporarily freeze their membership."},
+      {"name": "Front Desk Staff", "description": "Staff responsible for membership handling and customer requests."},
+      {"name": "Member Complaint", "description": "A complaint submitted by a member about gym issues."},
+      {"name": "Trainer", "description": "Gym professional who conducts classes and personal training."},
+      {"name": "Weekly Timetable", "description": "List of all scheduled fitness classes for the week.", "attributes": ["Fitness Class"]},
+      {"name": "Workout Plan", "description": "A personalized training plan created by a trainer."},
+      {"name": "Personal Training Session", "description": "An individual training appointment between a trainer and a member."},
+      {"name": "Facility Manager", "description": "Staff responsible for equipment maintenance and facilities."},
+      {"name": "Gym Equipment", "description": "Exercise machines and equipment available in the gym.", "attributes": ["Status"]},
+      {"name": "Status", "description": "Current condition or usability state of equipment."},
+      {"name": "Repair Order", "description": "Request issued to repair malfunctioning gym equipment."}
+    ],
+  "associations": [
+      {"from": "Member", "to": "Sign Up", "description": "Member submits Sign Up."},
+      {"from": "Front Desk Staff", "to": "Sign Up", "description": "Front Desk Staff processes Sign Up."},
+      {"from": "Front Desk Staff", "to": "Membership Record", "description": "Front Desk Staff creates or updates Membership Record."},
+      {"from": "Member", "to": "Pause Request", "description": "Member submits Pause Request."},
+      {"from": "Front Desk Staff", "to": "Pause Request", "description": "Front Desk Staff handles Pause Request."},
+      {"from": "Front Desk Staff", "to": "Member Complaint", "description": "Front Desk Staff records Member Complaint."},
+      {"from": "Member Complaint", "to": "Facility Manager", "description": "Member Complaint is forwarded to Facility Manager."},
+      {"from": "Trainer", "to": "Fitness Class", "description": "Trainer schedules or updates Fitness Class."},
+      {"from": "Trainer", "to": "Weekly Timetable", "description": "Trainer adds classes to Weekly Timetable."},
+      {"from": "Member", "to": "Personal Training Session", "description": "Member requests Personal Training Session."},
+      {"from": "Trainer", "to": "Personal Training Session", "description": "Trainer conducts Personal Training Session."},
+      {"from": "Trainer", "to": "Workout Plan", "description": "Trainer creates Workout Plan."},
+      {"from": "Workout Plan", "to": "Member", "description": "Workout Plan is provided to Member."},
+      {"from": "Facility Manager", "to": "Gym Equipment", "description": "Facility Manager inspects Gym Equipment."},
+      {"from": "Facility Manager", "to": "Repair Order", "description": "Facility Manager submits Repair Order."}
+    ],
+  "subdomains": {
+      "Reception": {
+          "objects" : ["Member","Front Desk Staff","Sign Up","Membership Record","Pause Request","Member Complaint"]
+      },
+      "Fitness Classes": {
+          "objects" : ["Trainer","Weekly Timetable","Fitness Class","Attendance","Capacity"]
+      },
+      "Personal Training": {
+          "objects" : ["Trainer","Personal Training Session","Workout Plan","Membership Record"]
+      },
+      "Facility Management": {
+          "objects" : ["Facility Manager","Repair Order","Gym Equipment","Status"]
+      },
+      "subdomain connections": ["Reception--Fitness Classes","Reception--Personal Training","Reception--Facility Management"]
+    },
+  "bounded contexts": {
+      "Reception": {
+          "derived from": "Reception Subdomain",
+          "objects" : ["Member","Front Desk Staff","Sign Up","Membership Record","Pause Request","Member Complaint"],
+          "name changes" : []
+      },
+      "Fitness Classes": {
+          "derived from": "Fitness Classes Subdomain",
+          "objects" : ["Trainer","Weekly Timetable","Fitness Class","Attendance","Capacity"],
+          "name changes" : []
+      },
+      "Personal Training": {
+          "derived from": "Personal Training Subdomain",
+          "objects" : ["Personal Trainer","Personal Training Session","Workout Plan","Member Performance Record"],
+          "name changes" : ["Trainer -> Personal Trainer", "Membership Record -> Member Performance Record"]
+      },
+      "Facility Management": {
+          "derived from": "Facility Management Subdomain",
+          "objects" : ["Facility Manager","Repair Order","Gym Equipment","Status"],
+          "name changes" : []
+      }
+	}
+}
