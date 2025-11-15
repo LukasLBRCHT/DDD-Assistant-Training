@@ -1,0 +1,110 @@
+{
+  "domain-information":
+  [	"A Library Member requests a membership to receive a library card.",
+	"A Library Member makes a loan of a book which is registered on the library card.",
+	"A Library Member reports a lost book to notify the staff of an issue.",
+	"A Member Services Clerk approves a new membership request and unlocks a library card to the new member.",
+	"A Member Services Clerk creates a new member record after receiving an application.",
+	"A Member Services Clerk logs a lost-book report to start a follow-up process.",
+	"A Librarian catalogs a newly acquired book to add it to the library system.",
+	"A Librarian updates a book’s status when it is returned or marked as lost.",
+	"A Collection Archivist inspects old or damaged books to decide whether they need restoration.",
+	"A Collection Archivist schedules a preservation task to protect fragile works.",
+	"A Collection Archivist approves or rejects donated materials after evaluating their condition.",
+	"A Collection Archivist forwards new supply of books to a librarian.",
+	"An Acquisitions Manager reviews purchase suggestions by a supplier to determine which new titles should be bought.",
+	"An Acquisitions Manager places an order for new books with an external supplier.",
+	"An Acquisitions Manager updates the acquisitions budget to reflect new expenses.",
+	"An Acquisitions Manager forwards new supply of books to a librarian."
+],
+  "domain objects": [
+      {"name": "Library Member", "description": "A person registered to use library services.", "attributes": ["Member Record","Library Card"]},
+      {"name": "Member Record", "description": "The stored personal and borrowing information of a Library Member."},
+      {"name": "Library Card", "description": "The identification card issued to a Library Member."},
+      {"name": "Loan", "description": "A record of a Library Member borrowing a Book.", "attributes": ["Book"]},
+      {"name": "Book", "description": "A library item that can be borrowed.", "attributes": ["Status"]},
+      {"name": "Status", "description": "The current condition or availability state of a Book."},
+      {"name": "Membership Request", "description": "A request from a Library Member to obtain membership."},
+      {"name": "Lost Book Report", "description": "A report filed by a Library Member about a missing Book."},
+      {"name": "Member Services Clerk", "description": "A staff member responsible for assisting Library Members with administrative tasks."},
+      {"name": "Librarian", "description": "A staff member responsible for cataloging and managing library materials."},
+      {"name": "Library System", "description": "The catalog and inventory system used by the Librarian.", "attributes": ["Book"]},
+      {"name": "Collection Archivist", "description": "A staff member responsible for preserving and evaluating library materials."},
+      {"name": "Inspection", "description": "An assessment of a Book performed by the Collection Archivist."},
+      {"name": "Preservation Task", "description": "A restoration or protection activity scheduled for a Book."},
+      {"name": "Book Donor", "description": "A person or organization donating books to the library."},
+      {"name": "Donation", "description": "A contribution from a Book Donor.", "attributes": ["Book"]},
+      {"name": "Book Supply", "description": "A batch of provided books.", "attributes": ["Book"]},
+      {"name": "Acquisitions Manager", "description": "A staff member responsible for ordering new books and managing the acquisitions budget."},
+      {"name": "External Supplier", "description": "A provider that delivers Books to the library."},
+      {"name": "Purchase Suggestion", "description": "A proposed Book for acquisition.", "attributes": ["Book"]},
+      {"name": "Order", "description": "A request issued to acquire new Books.", "attributes": ["Book"]},
+      {"name": "Acquisitions Budget", "description": "The funds available for purchasing new Books."}
+    ],
+  "associations": [
+      {"from": "Library Member", "to": "Membership Request", "description": "Library Member submits a Membership Request."},
+      {"from": "Member Services Clerk", "to": "Membership Request", "description": "Member Services Clerk processes a Membership Request."},
+      {"from": "Member Services Clerk", "to": "Member Record", "description": "Member Services Clerk updates a Member Record."},
+      {"from": "Library Member", "to": "Lost Book Report", "description": "Library Member files a Lost Book Report."},
+      {"from": "Member Services Clerk", "to": "Lost Book Report", "description": "Member Services Clerk handles a Lost Book Report."},
+      {"from": "Member Services Clerk", "to": "Library Card", "description": "Member Services Clerk issues a Library Card."},
+      {"from": "Library Member", "to": "Loan", "description": "Library Member creates a Loan."},
+      {"from": "Collection Archivist", "to": "Inspection", "description": "Collection Archivist performs an Inspection."},
+      {"from": "Inspection", "to": "Book", "description": "Inspection evaluates a Book."},
+      {"from": "Collection Archivist", "to": "Preservation Task", "description": "Collection Archivist creates a Preservation Task."},
+      {"from": "Book Donor", "to": "Donation", "description": "Book Donor makes a Donation."},
+      {"from": "Collection Archivist", "to": "Donation", "description": "Collection Archivist reviews a Donation."},
+      {"from": "Collection Archivist", "to": "Book Supply", "description": "Collection Archivist receives a Supply."},
+      {"from": "Librarian", "to": "Library System", "description": "Librarian updates the Library System."},
+      {"from": "Book Supply", "to": "Librarian", "description": "Book Supply is delivered to the Librarian."},
+      {"from": "Acquisitions Manager", "to": "Order", "description": "Acquisitions Manager creates an Order."},
+      {"from": "External Supplier", "to": "Order", "description": "External Supplier fulfills an Order."},
+      {"from": "Acquisitions Manager", "to": "Purchase Suggestion", "description": "Acquisitions Manager evaluates a Purchase Suggestion."},
+      {"from": "Acquisitions Manager", "to": "Supply", "description": "Acquisitions Manager receives a Supply."}
+    ],
+  "subdomains": {
+      "Loaning": {
+          "objects" : ["Library Member","Member Record","Library Card","Member Services Clerk","Membership Request","Lost Book Report","Loan","Book"]
+      },
+      "Record Keeping": {
+          "objects" : ["Librarian","Library System","Book","Status"]
+      },
+      "Archiving": {
+          "objects" : ["Collection Archivist","Inspection","Preservation Task"]
+      },
+      "Donation": {
+          "objects" : ["Book Donor","Donation","Book","Collection Archivist","Book Supply"]
+      },
+      "Acquisition": {
+          "objects" : ["Acquisitions Manager","Order","Book","External Supplier","Purchase Suggestion","Book Supply","Acquisitions Budget"]
+      },
+      "subdomain connections": ["Loaning--Record Keeping","Archiving--Record Keeping","Donation--Record Keeping","Acquisition--Record Keeping"]
+    },
+  "bounded contexts": {
+      "Loaning": {
+          "derived from": "Loaning Subdomain",
+          "objects" : ["Library Member","Member Record","Library Card","Member Services Clerk","Membership Request","Lost Book Report","Loan","Loaned Book"],
+          "name changes" : ["Book -> Loaned Book"]
+      },
+      "Record Keeping": {
+          "derived from": "Record Keeping Subdomain",
+          "objects" : ["Librarian","Library System","Book Record","Status"],
+          "name changes" : ["Book -> Book Record"]
+      },
+      "Archiving": {
+          "derived from": "Archiving Subdomain",
+          "objects" : ["Collection Archivist","Inspection","Preservation Task"],
+          "name changes" : []
+      },
+      "Donation": {
+          "derived from": "Donation Subdomain",
+          "objects" : ["Book Donor","Donation","Book","Collection Archivist","Donation Supply"],
+          "name changes" : ["Collection Archivist -> Donation Reviewer","Book Supply -> Donation Supply"]
+      },
+      "Acquisition": {
+          "derived from": "Acquisition Subdomain",
+          "objects" : ["Acquisitions Manager","Order","Ordered Book","Suggested Title","External Supplier","Purchase Suggestion","Acquisitions Budget"],
+          "name changes" : ["Book -> Ordered Book","Book -> Suggested Title"]
+      }
+	}
+}
