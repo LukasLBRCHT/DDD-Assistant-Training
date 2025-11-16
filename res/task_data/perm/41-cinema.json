@@ -1,0 +1,108 @@
+{
+  "domain-information":
+  [	"A Cinema Manager selects upcoming films and assigns them to available auditoriums.",
+	"A Cinema Manager reviews attendance data during screenings to adjust future film schedules.",
+	"A Cinema Manager approves staffing plans created by the shift supervisor.",
+	"A Shift Supervisor prepares a screening schedule for projection staff.",
+	"A Shift Supervisor creates a staffing plan to assign clerks to concession and ticket stations.",
+	"A Shift Supervisor logs operational issues to report back to the cinema manager.",
+	"A Projectionist loads the scheduled film into the projection system.",
+	"A Projectionist checks the auditorium equipment to ensure the movie starts without interruptions.",
+	"A Projectionist reports equipment malfunctions to the shift supervisor for escalation.",
+	"A Concession Clerk restocks snack inventory to prepare for the evening rush.",
+	"A Concession Clerk records inventory shortages so the procurement team can place orders.",
+	"A Ticketing Clerk sells customers tickets for a screening according to schedule supervisor.",
+	"A Ticketing Clerk processes a refund request."
+],
+  "domain objects": [
+      {"name": "Cinema Manager", "description": "Oversees film scheduling, staffing approvals, and performance data."},
+      {"name": "Auditorium", "description": "A theater room where films are shown.", "attributes": ["Film","Equipment"]},
+      {"name": "Screening", "description": "A scheduled showing of a film.", "attributes": ["Film","Attendance"]},
+      {"name": "Film", "description": "A movie selected and scheduled for screening."},
+      {"name": "Attendance", "description": "Recorded number of visitors for a screening."},
+      {"name": "Equipment", "description": "Technical hardware supporting film projection."},
+      {"name": "Staffing Plan", "description": "Assignment of staff to stations for a shift.", "attributes": ["Ticket Station","Concession Station"]},
+      {"name": "Shift Supervisor", "description": "Prepares screening schedules and assigns staff."},
+      {"name": "Screening Schedule", "description": "A timetable listing screenings for projection operations.", "attributes": ["Screening"]},
+      {"name": "Ticket Station", "description": "Workstation where ticketing clerks sell tickets.", "attributes": ["Ticketing Clerk"]},
+      {"name": "Ticketing Clerk", "description": "Sells tickets and processes refunds."},
+      {"name": "Operational Issue Report", "description": "A record of problems encountered during a shift."},
+      {"name": "Projectionist", "description": "Runs the projection system and ensures smooth screenings."},
+      {"name": "Projection System", "description": "The system used to load and project films.", "attributes": ["Film"]},
+      {"name": "Equipment Malfunction Report", "description": "A report documenting faulty equipment."},
+      {"name": "Concession Station", "description": "Workstation for selling snacks.", "attributes": ["Concession Clerk"]},
+      {"name": "Concession Clerk", "description": "Handles snack sales and tracks inventory."},
+      {"name": "Snack Inventory", "description": "Stock of snacks available at concession."},
+      {"name": "Shortage Report", "description": "A record of items needing restocking."},
+      {"name": "Procurement Team", "description": "Handles ordering supplies for the cinema."},
+      {"name": "Ticket", "description": "Proof of entry for a screening.", "attributes": ["Screening"]},
+      {"name": "Customer", "description": "A visitor purchasing tickets or requesting refunds."},
+      {"name": "Refund Request", "description": "A customer-initiated request to refund a purchased ticket."}
+    ],
+  "associations": [
+      {"from": "Cinema Manager", "to": "Auditorium", "description": "Cinema Manager assigns films to Auditorium."},
+      {"from": "Cinema Manager", "to": "Screening", "description": "Cinema Manager adjusts Screening based on performance."},
+      {"from": "Shift Supervisor", "to": "Staffing Plan", "description": "Shift Supervisor creates the Staffing Plan."},
+      {"from": "Cinema Manager", "to": "Staffing Plan", "description": "Cinema Manager approves the Staffing Plan."},
+      {"from": "Shift Supervisor", "to": "Screening Schedule", "description": "Shift Supervisor prepares the Screening Schedule."},
+      {"from": "Shift Supervisor", "to": "Operational Issue Report", "description": "Shift Supervisor logs an Operational Issue Report."},
+      {"from": "Operational Issue Report", "to": "Cinema Manager", "description": "Operational Issue Report is sent to Cinema Manager."},
+      {"from": "Projectionist", "to": "Screening Schedule", "description": "Projectionist follows the Screening Schedule."},
+      {"from": "Projectionist", "to": "Equipment", "description": "Projectionist checks Equipment."},
+      {"from": "Projectionist", "to": "Projection System", "description": "Projectionist loads films into the Projection System."},
+      {"from": "Projectionist", "to": "Equipment Malfunction Report", "description": "Projectionist submits an Equipment Malfunction Report."},
+      {"from": "Equipment Malfunction Report", "to": "Shift Supervisor", "description": "Equipment Malfunction Report is forwarded to Shift Supervisor."},
+      {"from": "Ticketing Clerk", "to": "Ticket", "description": "Ticketing Clerk issues a Ticket."},
+      {"from": "Customer", "to": "Ticket", "description": "Customer buys a Ticket."},
+      {"from": "Customer", "to": "Refund Request", "description": "Customer initiates a Refund Request."},
+      {"from": "Ticketing Clerk", "to": "Refund Request", "description": "Ticketing Clerk processes the Refund Request."},
+      {"from": "Concession Clerk", "to": "Snack Inventory", "description": "Concession Clerk restocks Snack Inventory."},
+      {"from": "Concession Clerk", "to": "Shortage Report", "description": "Concession Clerk creates a Shortage Report."},
+      {"from": "Shortage Report", "to": "Procurement Team", "description": "Shortage Report is sent to Procurement Team."}
+    ],
+  "subdomains": {
+      "Administration": {
+          "objects" : ["Cinema Manager","Auditorium","Film","Screening","Attendance"]
+      },
+      "Shift Planning": {
+          "objects" : ["Shift Supervisor","Staffing Plan","Concession Station","Ticket Station","Screening Schedule","Screening","Operational Issue Report"]
+      },
+      "Projection": {
+          "objects" : ["Projectionist","Equipment","Projection System","Film","Equipment Malfunction Report"]
+      },
+      "Ticket Sale": {
+          "objects" : ["Ticketing Clerk","Ticket","Screening","Refund Request","Customer"]
+      },
+      "Concession": {
+          "objects" : ["Concession Clerk","Snack Inventory","Shortage Report","Procurement Team"]
+      },
+      "subdomain connections": ["Administration--Shift Planning","Shift Planning--Projection","Shift Planning--Concession","Shift Planning--Ticket Sale"]
+    },
+  "bounded contexts": {
+      "Administration": {
+          "derived from": "Administration Subdomain",
+          "objects" : ["Cinema Manager","Auditorium","Film","Screening Records","Attendance"],
+          "name changes" : ["Screening -> Screening Records"]
+      },
+      "Shift Planning": {
+          "derived from": "Shift Planning Subdomain",
+          "objects" : ["Shift Supervisor","Staffing Plan","Concession Station","Ticket Station","Screening Schedule","Screening","Operational Issue Report"],
+          "name changes" : []
+      },
+      "Projection": {
+          "derived from": "Projection Subdomain",
+          "objects" : ["Projectionist","Equipment","Projection System","Media","Equipment Malfunction Report"],
+          "name changes" : ["Film -> Media"]
+      },
+      "Ticket Sale": {
+          "derived from": "Ticket Sale Subdomain",
+          "objects" : ["Ticketing Clerk","Ticket","Booked Screening","Refund Request","Customer"],
+          "name changes" : ["Screening -> Booked Screening"]
+      },
+      "Concession": {
+          "derived from": "Concession Subdomain",
+          "objects" : ["Concession Clerk","Snack Inventory","Shortage Report","Procurement Team"],
+          "name changes" : []
+      }
+	}
+}
