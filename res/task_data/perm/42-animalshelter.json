@@ -1,0 +1,96 @@
+{
+  "domain-information":
+  [	"A Intake Coordinator receives a surrendered animal and creates an intake record for the shelter database.",
+	"A Intake Coordinator assigns the animal to an available caretaker for initial settling.",
+	"A Intake Coordinator forwards medical concerns to the veterinary technician after intake evaluation.",
+	"A Animal Caretaker provides daily feeding according to the care plan created by the veterinary technician.",
+	"A Animal Caretaker notes changes in an animal’s behavior in the observation log.",
+	"A Animal Caretaker requests medical review when an animal shows signs of stress or illness.",
+	"A Veterinary Technician performs a health assessment and updates the animal’s medical profile.",
+	"A Veterinary Technician prescribes a treatment routine and instructs the caretaker on how to follow it.",
+	"A Adoption Counselor reviews the animal’s profile to prepare adoption recommendations for adopters.",
+	"A Adoption Counselor schedules visits from adopters.",
+	"A Adoption Counselor registers an adoption of an animal by an adopter."
+],
+  "domain objects": [
+      {"name": "Intake Coordinator", "description": "Manages animal intake, records, and initial assignments."},
+      {"name": "Animal", "description": "Represents an animal in the shelter from different perspectives.", "attributes": ["Intake Record","Observation Log","Medical Profile"]},
+      {"name": "Intake Record", "description": "Document recording the animal's arrival details and initial assessment."},
+      {"name": "Observation Log", "description": "Keeps track of daily animal behavior and health observations."},
+      {"name": "Medical Profile", "description": "Records veterinary history and medical treatments."},
+      {"name": "Shelter Database", "description": "Central system storing animal records.", "attributes": ["Intake Record"]},
+      {"name": "Animal Caretaker", "description": "Provides daily care and monitoring of animals.", "attributes": ["Animal"]},
+      {"name": "Animal", "description": "A physical animal in the shelter."},
+      {"name": "Care Plan", "description": "Plan for daily feeding, exercise, and medical care for an animal."},
+      {"name": "Feeding", "description": "Scheduled feeding actions for animals."},
+      {"name": "Medical Review Request", "description": "Request from caretakers for veterinary review."},
+      {"name": "Veterinary Technician", "description": "Performs health assessments and updates medical profiles."},
+      {"name": "Health Assessment", "description": "Evaluation of an animal's health status."},
+      {"name": "Adoption Counselor", "description": "Guides adopters through visits and adoption decisions."},
+      {"name": "Adoption Recommendation", "description": "Counselor’s recommendation regarding suitability for adoption."},
+      {"name": "Adopter", "description": "Person interested in adopting an animal."},
+      {"name": "Visit", "description": "Interaction session where adopter meets animals."},
+      {"name": "Adoption", "description": "Final adoption transaction linking adopter to an animal."}
+    ],
+  "associations": [
+      {"from": "Intake Coordinator", "to": "Animal", "description": "Records intake of a new Animal."},
+      {"from": "Intake Coordinator", "to": "Shelter Database", "description": "Stores intake data in the Shelter Database."},
+      {"from": "Intake Coordinator", "to": "Animal Caretaker", "description": "Assigns Animal to an Animal Caretaker."},
+      {"from": "Intake Coordinator", "to": "Veterinary Technician", "description": "Requests initial veterinary review."},
+      {"from": "Animal Caretaker", "to": "Feeding", "description": "Performs scheduled Feeding for assigned Animals."},
+      {"from": "Animal Caretaker", "to": "Care Plan", "description": "Follows the Care Plan for each Animal."},
+      {"from": "Feeding", "to": "Animal", "description": "Feeding is applied to the Animal."},
+      {"from": "Animal Caretaker", "to": "Observation Log", "description": "Updates daily observations in Observation Log."},
+      {"from": "Animal Caretaker", "to": "Medical Review Request", "description": "Requests medical review for Animals."},
+      {"from": "Medical Review Request", "to": "Intake Coordinator", "description": "Medical review requests are submitted to Intake Coordinator."},
+      {"from": "Veterinary Technician", "to": "Health Assessment", "description": "Performs Health Assessment of the Animal."},
+      {"from": "Health Assessment", "to": "Animal", "description": "Health Assessment results are linked to the Animal."},
+      {"from": "Veterinary Technician", "to": "Medical Profile", "description": "Updates the Animal’s Medical Profile."},
+      {"from": "Veterinary Technician", "to": "Care Plan", "description": "Recommends updates to Care Plan."},
+      {"from": "Adoption Counselor", "to": "Animal", "description": "Evaluates Animal for potential adoption."},
+      {"from": "Adoption Counselor", "to": "Adoption Recommendation", "description": "Creates Adoption Recommendation for Adopter."},
+      {"from": "Adoption Recommendation", "to": "Adopter", "description": "Shares recommendation with the Adopter."},
+      {"from": "Adopter", "to": "Visit", "description": "Attends a Visit to meet Animals."},
+      {"from": "Adoption Counselor", "to": "Visit", "description": "Guides the Visit for the Adopter."},
+      {"from": "Adopter", "to": "Adoption", "description": "Finalizes Adoption of Animal."},
+      {"from": "Adoption Counselor", "to": "Adoption", "description": "Processes Adoption with Adopter."},
+      {"from": "Adoption", "to": "Animal", "description": "Links the Animal to its new Adopter."}
+    ],
+  "subdomains": {
+      "Animal Intake": {
+          "objects" : ["Intake Coordinator","Shelter Database","Animal","Intake Record"]
+      },
+      "Animal Care": {
+          "objects" : ["Animal Caretaker","Animal","Feeding","Observation Log"]
+      },
+      "Medical": {
+          "objects" : ["Veterinary Technician","Animal","Care Plan","Health Assessment","Medical Profile"]
+      },
+      "Adoption": {
+          "objects" : ["Adoption Counselor","Adoption Recommendation","Adopter","Visit","Adoption","Animal"]
+      },
+      "subdomain connections": ["Animal Intake--Animal Care","Animal Intake--Medical","Medical--Animal Care","Adoption--Animal Intake"]
+    },
+  "bounded contexts": {
+      "Animal Intake": {
+          "derived from": "Animal Intake Subdomain",
+          "objects" : ["Intake Coordinator","Shelter Database","Stray","Intake Record"],
+          "name changes" : ["Animal -> Stray"]
+      },
+      "Animal Care": {
+          "derived from": "Animal Care Subdomain",
+          "objects" : ["Animal Caretaker","Animal","Feeding","Observation Log"],
+          "name changes" : []
+      },
+      "Medical": {
+          "derived from": "Medical Subdomain",
+          "objects" : ["Veterinary Technician","Patient","Care Plan","Health Assessment","Medical Profile"],
+          "name changes" : ["Animal -> Patient"]
+      },
+      "Adoption": {
+          "derived from": "Adoption Subdomain",
+          "objects" : ["Adoption Counselor","Adoption Recommendation","Adopter","Visit","Adoption","Adopted Animal"],
+          "name changes" : ["Animal -> Adopted Animal"]
+      }
+	}
+}

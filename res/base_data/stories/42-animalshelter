@@ -1,0 +1,14 @@
+A Intake Coordinator receives a surrendered animal and creates an intake record for the shelter database.
+A Intake Coordinator assigns the animal to an available caretaker for initial settling.
+A Intake Coordinator forwards medical concerns to the veterinary technician after intake evaluation.
+
+A Animal Caretaker provides daily feeding according to the care plan created by the veterinary technician.
+A Animal Caretaker notes changes in an animal’s behavior in the observation log.
+A Animal Caretaker requests medical review when an animal shows signs of stress or illness.
+
+A Veterinary Technician performs a health assessment and updates the animal’s medical profile.
+A Veterinary Technician prescribes a treatment routine and instructs the caretaker on how to follow it.
+
+A Adoption Counselor reviews the animal’s profile to prepare adoption recommendations for adopters.
+A Adoption Counselor schedules visits from adopters.
+A Adoption Counselor registers an adoption of an animal by an adopter.
