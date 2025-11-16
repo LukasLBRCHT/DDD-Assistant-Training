@@ -1,0 +1,92 @@
+{
+  "domain-information":
+  [	"A Customer Service Representative opens a new account for a client and registers it in the banking system.",
+	"A Customer Service Representative updates a client’s personal information when documentation is provided.",
+	"A Loan Officer reviews a client’s loan application with its supporting financial documents.",
+	"A Loan Officer evaluates creditworthiness and forwards the application to the risk analyst.",
+	"A Loan Officer notifies the client of the loan decision once all internal reviews are completed.",
+	"A Risk Analyst performs a credit risk assessment of the application using income data and the client’s account history.",
+	"A Risk Analyst analyzes account patterns and reports suspicious transactions to the compliance officer.",
+	"A Risk Analyst sends approval of the loan request to the loan officer to confirm the risk level is acceptable.",
+	"A Compliance Officer investigates flagged transactions to ensure adherence to regulatory requirements.",
+	"A Compliance Officer files a compliance report and shares findings with the branch manager."
+],
+  "domain objects": [
+      {"name": "Customer Service Representative", "description": "Handles client onboarding, account management, and documentation."},
+      {"name": "Client", "description": "Bank customer with one or more accounts.", "attributes": ["Account"]},
+      {"name": "Account", "description": "Represents a client’s bank account."},
+      {"name": "Banking System", "description": "Stores client and account information.", "attributes": ["Account"]},
+      {"name": "Client Documentation", "description": "Documents submitted by the client for account or loan processing."},
+      {"name": "Loan Officer", "description": "Reviews loan applications and communicates decisions to clients."},
+      {"name": "Loan Application", "description": "Formal request from a client for credit, including supporting documents.", "attributes": ["Supporting Document"]},
+      {"name": "Supporting Document", "description": "Documents supporting the loan application."},
+      {"name": "Risk Analyst", "description": "Evaluates creditworthiness and monitors account risk."},
+      {"name": "Pattern Analysis", "description": "Analysis of account activity to detect unusual patterns."},
+      {"name": "Loan Decision", "description": "Outcome of the loan review process."},
+      {"name": "Credit Risk Assessment", "description": "Assessment of potential credit risk for a loan application."},
+      {"name": "Loan Request Approval", "description": "Risk analyst approval indicating loan can proceed."},
+      {"name": "Suspicious Transaction Report", "description": "Report of potentially suspicious account activity."},
+      {"name": "Compliance Officer", "description": "Ensures bank operations comply with regulations."},
+      {"name": "Compliance Report", "description": "Summary of compliance investigations and findings."},
+      {"name": "Branch Manager", "description": "Oversees branch operations and receives compliance updates."}
+    ],
+  "associations": [
+      {"from": "Customer Service Representative", "to": "Banking System", "description": "Customer Service Representative records Account in Banking System."},
+      {"from": "Client", "to": "Client Documentation", "description": "Client provides Client Documentation."},
+      {"from": "Customer Service Representative", "to": "Client Documentation", "description": "Customer Service Representative verifies Client Documentation."},
+      {"from": "Customer Service Representative", "to": "Account", "description": "Customer Service Representative creates Account for Client."},
+      {"from": "Client", "to": "Loan Application", "description": "Client submits Loan Application."},
+      {"from": "Loan Officer", "to": "Loan Application", "description": "Loan Officer reviews Loan Application."},
+      {"from": "Loan Officer", "to": "Risk Analyst", "description": "Loan Officer forwards Loan Application to Risk Analyst."},
+      {"from": "Risk Analyst", "to": "Credit Risk Assessment", "description": "Risk Analyst performs Credit Risk Assessment for Loan Application."},
+      {"from": "Credit Risk Assessment", "to": "Account", "description": "Credit Risk Assessment uses Client Account for evaluation."},
+      {"from": "Credit Risk Assessment", "to": "Loan Application", "description": "Credit Risk Assessment evaluates Loan Application."},
+      {"from": "Risk Analyst", "to": "Loan Request Approval", "description": "Risk Analyst sends Loan Request Approval to Loan Officer."},
+      {"from": "Loan Request Approval", "to": "Loan Officer", "description": "Loan Request Approval informs Loan Officer of risk decision."},
+      {"from": "Loan Officer", "to": "Loan Decision", "description": "Loan Officer issues Loan Decision to Client."},
+      {"from": "Loan Decision", "to": "Client", "description": "Loan Decision notifies Client."},
+      {"from": "Risk Analyst", "to": "Pattern Analysis", "description": "Risk Analyst performs Pattern Analysis on Account."},
+      {"from": "Pattern Analysis", "to": "Account", "description": "Pattern Analysis examines Account for irregularities."},
+      {"from": "Risk Analyst", "to": "Suspicious Transaction Report", "description": "Risk Analyst creates Suspicious Transaction Report."},
+      {"from": "Compliance Officer", "to": "Suspicious Transaction Report", "description": "Compliance Officer reviews Suspicious Transaction Report."},
+      {"from": "Compliance Officer", "to": "Compliance Report", "description": "Compliance Officer generates Compliance Report."},
+      {"from": "Compliance Report", "to": "Branch Manager", "description": "Compliance Report informs Branch Manager."}
+    ],
+  "subdomains": {
+      "Customer Registration": {
+          "objects" : ["Customer Service Representative","Client","Banking System","Account","Client Documentation"]
+      },
+      "Loaning": {
+          "objects" : ["Client","Loan Application","Supporting Document","Loan Officer","Risk Analyst","Credit Risk Assessment","Loan Request Approval","Loan Decision"]
+      },
+      "Account Inspection": {
+          "objects" : ["Risk Analyst","Pattern Analysis","Account","Suspicious Transaction Report"]
+      },
+      "Compliance": {
+          "objects" : ["Compliance Officer","Compliance Report","Branch Manager"]
+      },
+      "subdomain connections": ["Customer Registration--Loaning","Account Inspection--Customer Registration","Account Inspection--Compliance"]
+    },
+  "bounded contexts": {
+      "Customer Registration": {
+          "derived from": "Customer Registration Subdomain",
+          "objects" : ["Customer Service Representative","Applicant","Banking System","Account","Client Documentation"],
+          "name changes" : ["Client -> Applicant"]
+      },
+      "Loaning": {
+          "derived from": "Loaning Subdomain",
+          "objects" : ["Client","Loan Application","Supporting Document","Loan Officer","Risk Analyst","Credit Risk Assessment","Loan Request Approval","Loan Decision"],
+          "name changes" : []
+      },
+      "Account Inspection": {
+          "derived from": "Account Inspection Subdomain",
+          "objects" : ["Account Inspector","Pattern Analysis","Account Transaction Data","Suspicious Transaction Report"],
+          "name changes" : ["Risk Analyst -> Account Inspector","Account -> Account Transaction Data"]
+      },
+      "Compliance": {
+          "derived from": "Compliance Subdomain",
+          "objects" : ["Compliance Officer","Compliance Report","Branch Manager"],
+          "name changes" : []
+      }
+	}
+}
