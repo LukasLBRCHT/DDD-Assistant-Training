@@ -1,0 +1,117 @@
+{
+  "domain-information":
+  [	"A Driver completes a scheduled route and reports minor delays to the dispatcher.",
+	"A Driver performs a pre-trip check and changes the status of the vehicle if there are any issues.",
+	"A Dispatcher assigns vehicles to drivers based on the daily service plan.",
+	"A Dispatcher monitors route progress and contacts drivers when significant delays occur.",
+	"A Dispatcher submits an incident report to operations management after service disruptions.",
+	"A Maintenance Technician inspects a vehicle that was flagged by a driver during pre-trip checks.",
+	"A Maintenance Technician completes routine servicing and updates the maintenance record.",
+	"A Maintenance Technician changes the vehicle status to mark it as available.",
+	"A Customer Service Agent responds to passenger complaints and forwards unresolved issues to operations.",
+	"A Customer Service Agent reviews lost-and-found submissions and documents items for pickup.",
+	"A Transport Planner updates the long-term route plan based on ridership data from operations.",
+	"A Transport Planner coordinates with dispatch to introduce temporary detours for construction periods."
+],
+  "domain objects": [
+      {"name": "Daily Service Plan", "description": "Plan listing assigned drivers and vehicles for daily service.", "attributes": ["Driver"]},
+      {"name": "Driver", "description": "Person responsible for completing scheduled routes.", "attributes": ["Vehicle"]},
+      {"name": "Vehicle", "description": "Assigned transport vehicle with status and maintenance data.", "attributes": ["Vehicle Status", "Maintenance Record"]},
+      {"name": "Vehicle Status", "description": "Current operational state of a vehicle."},
+      {"name": "Maintenance Record", "description": "History of inspections and repairs performed on a vehicle."},
+      {"name": "Dispatcher", "description": "Staff member who assigns vehicles and monitors route progress."},
+      {"name": "Scheduled Route", "description": "Planned service route assigned to a driver."},
+      {"name": "Delay Report", "description": "Driver's report documenting delays on a route."},
+      {"name": "Pre Trip Check", "description": "Driver-conducted inspection performed before starting a route."},
+      {"name": "Incident Report", "description": "Dispatcher's report detailing service disruptions."},
+      {"name": "Maintenance Technician", "description": "Technician responsible for inspecting and repairing vehicles."},
+      {"name": "Customer Service Agent", "description": "Agent assisting passengers with complaints and lost items."},
+      {"name": "Passenger", "description": "Rider using the transport service."},
+      {"name": "Customer Complaint", "description": "Complaint submitted by a passenger about service issues."},
+      {"name": "Unresolved Issue", "description": "Customer issue escalated to operations management."},
+      {"name": "Lost And Found Submission", "description": "Passenger report of lost or found items."},
+      {"name": "Item Documentation", "description": "Record of lost-and-found items for pickup."},
+      {"name": "Transport Planner", "description": "Planner who adjusts long-term routes and introduces detours."},
+      {"name": "Route Plan", "description": "Long-term plan defining network routes.", "attributes": ["Scheduled Route"]},
+      {"name": "Route Alternative", "description": "Temporary or modified route used for detours."},
+      {"name": "Routine Servicing", "description": "Scheduled maintenance performed on a vehicle."},
+      {"name": "Ridership Data", "description": "Usage statistics collected from operations."},
+      {"name": "Operations Management", "description": "Management unit overseeing service issues and reports."}
+    ],
+  "associations": [
+      {"from": "Dispatcher", "to": "Daily Service Plan", "description": "Dispatcher assigns service tasks with Daily Service Plan."},
+      {"from": "Dispatcher", "to": "Scheduled Route", "description": "Dispatcher monitors progress with Scheduled Route."},
+      {"from": "Dispatcher", "to": "Incident Report", "description": "Dispatcher submits disruption details with Incident Report."},
+      {"from": "Incident Report", "to": "Operations Management", "description": "Incident Report notifies Operations Management."},
+      {"from": "Driver", "to": "Scheduled Route", "description": "Driver completes service using Scheduled Route."},
+      {"from": "Driver", "to": "Delay Report", "description": "Driver records delays with Delay Report."},
+      {"from": "Dispatcher", "to": "Delay Report", "description": "Dispatcher reviews delays using Delay Report."},
+      {"from": "Driver", "to": "Pre Trip Check", "description": "Driver performs inspection using Pre Trip Check."},
+      {"from": "Pre Trip Check", "to": "Vehicle", "description": "Pre Trip Check evaluates Vehicle."},
+      {"from": "Driver", "to": "Vehicle Status", "description": "Driver updates Vehicle Status."},
+      {"from": "Maintenance Technician", "to": "Vehicle", "description": "Maintenance Technician inspects Vehicle."},
+      {"from": "Maintenance Technician", "to": "Routine Servicing", "description": "Maintenance Technician performs maintenance with Routine Servicing."},
+      {"from": "Routine Servicing", "to": "Vehicle", "description": "Routine Servicing updates Vehicle condition."},
+      {"from": "Maintenance Technician", "to": "Maintenance Record", "description": "Maintenance Technician updates Maintenance Record."},
+      {"from": "Passenger", "to": "Customer Complaint", "description": "Passenger submits complaint using Customer Complaint."},
+      {"from": "Customer Service Agent", "to": "Customer Complaint", "description": "Customer Service Agent handles Customer Complaint."},
+      {"from": "Passenger", "to": "Lost And Found Submission", "description": "Passenger submits Lost And Found Submission."},
+      {"from": "Customer Service Agent", "to": "Lost And Found Submission", "description": "Customer Service Agent reviews Lost And Found Submission."},
+      {"from": "Customer Service Agent", "to": "Item Documentation", "description": "Customer Service Agent records items with Item Documentation."},
+      {"from": "Customer Service Agent", "to": "Unresolved Issue", "description": "Customer Service Agent escalates Unresolved Issue."},
+      {"from": "Unresolved Issue", "to": "Operations Management", "description": "Unresolved Issue alerts Operations Management."},
+      {"from": "Operations Management", "to": "Ridership Data", "description": "Operations Management provides Ridership Data."},
+      {"from": "Transport Planner", "to": "Route Plan", "description": "Transport Planner updates Route Plan."},
+      {"from": "Transport Planner", "to": "Ridership Data", "description": "Transport Planner analyzes Ridership Data."},
+      {"from": "Transport Planner", "to": "Route Alternative", "description": "Transport Planner creates Route Alternative."},
+      {"from": "Route Alternative", "to": "Dispatcher", "description": "Route Alternative is communicated to Dispatcher."}
+    ],
+  "subdomains": {
+      "Dispatch": {
+          "objects" : ["Dispatcher","Daily Service Plan","Driver","Scheduled Route","Incident Report"]
+      },
+      "Transport": {
+          "objects" : ["Driver","Scheduled Route","Pre Trip Check","Vehicle"]
+      },
+      "Maintenance": {
+          "objects" : ["Maintenance Technician","Vehicle","Maintenance Record","Vehicle Status","Routine Servicing"]
+      },
+      "Customer Interaction": {
+          "objects" : ["Passenger","Customer Service Agent","Customer Complaint","Lost And Found Submission","Item Documentation","Unresolved Issue"]
+      },
+      "Administration": {
+          "objects" : ["Operations Management","Ridership Data"]
+      },
+      "Route Planning": {
+          "objects" : ["Transport Planner","Route Plan","Route Alternative"]
+      },
+      "subdomain connections": ["Dispatch--Transport","Transport--Maintenance","Dispatch--Administration","Customer Interaction--Administration","Route Planning--Administration","Route Planning--Dispatch"]
+    },
+  "bounded contexts": {
+      "Dispatch": {
+          "derived from": "Dispatch Subdomain",
+          "objects" : ["Dispatcher","Daily Service Plan","Driver Assignment","Monitored Route","Traffic Incident Report"],
+          "name changes" : ["Driver -> Driver Assignment", "Scheduled Route -> Monitored Route", "Incident Report -> Traffic Incident Report"]
+      },
+      "Transport": {
+          "derived from": "Transport Subdomain",
+          "objects" : ["Driver","Scheduled Route","Pre Trip Check","Vehicle"],
+          "name changes" : []
+      },
+      "Maintenance": {
+          "derived from": "Maintenance Subdomain",
+          "objects" : ["Maintenance Technician","Asset","Maintenance Record","Vehicle Status","Routine Servicing"],
+          "name changes" : ["Vehicle -> Asset"]
+      },
+      "Customer Interaction": {
+          "derived from": "Customer Interaction Subdomain",
+          "objects" : ["Passenger","Customer Service Agent","Customer Complaint","Lost And Found Submission","Item Documentation","Unresolved Issue"],
+          "name changes" : []
+      },
+      "Traffic Operations": {
+          "derived from": ["Route Planning Subdomain", "Administration"],
+          "objects" : ["Transport Planner","Route Plan","Route Alternative","Operations Management","Ridership Data"],
+          "name changes" : []
+      }
+	}
+}
