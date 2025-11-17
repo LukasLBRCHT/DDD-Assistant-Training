@@ -12,3 +12,28 @@ class Domain_Object:
 
     def set_name(self, name):
         self.object_name = name
+
+class Bounded_Context:
+
+    def __init__(self):
+        self.meanings = dict()
+
+    def add_renaming(self, former, current):
+        self.meanings[former] = current
+
+    def compress(self):
+
+        if not self.meanings:
+            return ""
+
+        name_changes = ""
+        print(self.meanings)
+        for original in self.meanings.keys():
+            change = f"\"{original} -> {self.meanings[original]}\","
+            print(change)
+            name_changes += change
+
+        name_changes = name_changes.removesuffix(",")
+        print(name_changes)
+
+        return name_changes

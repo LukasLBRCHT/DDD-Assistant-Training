@@ -20,7 +20,7 @@ import os
 
 import regex
 
-from data_handling.domain import Domain_Object
+from data_handling.domain import Domain_Object, Bounded_Context
 
 domain_objects_dir = "../../res/base_data/domain_objects"
 stories_dir = "../../res/base_data/stories"
@@ -29,15 +29,38 @@ subtask_format_url = "../util/subtask_format_2"
 ws = " "
 
 
-def format_correction(subdomain_objects):
+def extract_lists(subdomain_objects):
     objects = subdomain_objects.split(",")
-    final_string = ""
-    for obj in objects:
-        object_string = f"\"{obj.strip()}\","
-        final_string += object_string
-    final_string = final_string.removesuffix(",")
+    subdomain_objects = ""
+    bc_objects = ""
+    bc = Bounded_Context()
 
-    return final_string
+    for obj in objects:
+        plain_strg = obj.strip()
+        object_string = f"\"{plain_strg}\","
+
+        if "(" in plain_strg:
+            split = plain_strg.split("(")
+            original = split[0]
+            object_string = f"\"{original}\","
+            renaming = split[1].removesuffix(")")
+
+            bc.add_renaming(original, renaming)
+            renaming = f"\"{renaming}\","
+
+            bc_objects += renaming
+        else:
+            bc_objects += object_string
+
+        subdomain_objects += object_string
+
+    bc_name_changes = bc.compress()
+
+    subdomain_objects = subdomain_objects.removesuffix(",")
+    bc_objects = bc_objects.removesuffix(",")
+    bc_name_changes = bc_name_changes.removesuffix(",")
+
+    return subdomain_objects, bc_objects, bc_name_changes
 
 
 def extract_objects(objs):
@@ -89,6 +112,31 @@ def extract_objects(objs):
     return extracted_objects
 
 
+def extract_subd_n_bc(subdomains):
+    extracted_subdomains = ""
+    extracted_bounded_contexts = ""
+
+    subdomain_pattern = r"(.*?):(.*)"
+    for line in subdomains.splitlines():
+
+        if not line:
+            continue
+
+        match = regex.search(subdomain_pattern, line)
+
+        subdomain_name = match.group(1)
+        subdomain_objects = match.group(2)
+
+        subdomain_objects, bc_objects, name_changes = extract_lists(subdomain_objects)
+
+        object_json_subdomain = f"{ws * 6}\"{subdomain_name}\": {{\n{ws * 10}\"objects\" : [{subdomain_objects}]\n{ws * 6}}},\n"
+        object_json_bounded_context = f"{ws * 6}\"{subdomain_name}\": {{\n{ws * 10}\"derived from\": \"{subdomain_name} Subdomain\",\n{ws * 10}\"objects\" : [{bc_objects}],\n{ws * 10}\"name changes\" : [{name_changes}]\n{ws * 6}}},\n"
+
+        extracted_subdomains += object_json_subdomain
+        extracted_bounded_contexts += object_json_bounded_context
+
+    return extracted_subdomains, extracted_bounded_contexts
+
 def parse_domain_objects(txt):
 
     text = txt
@@ -120,27 +168,7 @@ def parse_domain_objects(txt):
     extracted_associations = extracted_associations.removesuffix(",\n")
     #result_data += "\n\nsubdomains:\n"
 
-    extracted_subdomains = ""
-    extracted_bounded_contexts = ""
-
-    subdomain_pattern = r"(.*?):(.*)"
-    for line in subdomains.splitlines():
-
-        if not line:
-            continue
-
-        match = regex.search(subdomain_pattern, line)
-
-        subdomain_name = match.group(1)
-        subdomain_objects = match.group(2)
-
-        subdomain_objects = format_correction(subdomain_objects)
-
-        object_json_subdomain = f"{ws*6}\"{subdomain_name}\": {{\n{ws*10}\"objects\" : [{subdomain_objects}]\n{ws*6}}},\n"
-        object_json_bounded_context = f"{ws*6}\"{subdomain_name}\": {{\n{ws*10}\"derived from\": \"{subdomain_name} Subdomain\",\n{ws*10}\"objects\" : [{subdomain_objects}],\n{ws*10}\"name changes\" : []\n{ws*6}}},\n"
-
-        extracted_subdomains += object_json_subdomain
-        extracted_bounded_contexts += object_json_bounded_context
+    extracted_subdomains, extracted_bounded_contexts = extract_subd_n_bc(subdomains)
 
     extracted_subdomains = extracted_subdomains.removesuffix(",\n")
     extracted_bounded_contexts = extracted_bounded_contexts.removesuffix(",\n")
@@ -173,7 +201,7 @@ def load_stories(text):
 
 if __name__ == "__main__":
 
-    current_number = "38"
+    current_number = "46"
 
     file_name = ""
     stories = """"""
