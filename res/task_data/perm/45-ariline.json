@@ -1,0 +1,82 @@
+{
+  "domain-information":
+  [	"A Pilot reviews the flight plan and requests clarification from operations before departure.",
+	"A Pilot reports an in-flight technical irregularity to maintenance after landing.",
+	"An Operations Coordinator assigns a pilot, flight attendants and an aircraft pilot to a flight plan.",
+	"An Operations Coordinator issues a disruption notice to customer service when delays exceed a threshold.",
+	"A Maintenance Engineer performs an inspection and updates the aircraft’s maintenance record.",
+	"A Maintenance Engineer addresses a reported technical issue and releases the aircraft back into service.",
+	"A Maintenance Engineer flags an aircraft for extended maintenance and notifies operations to reassign flights.",
+	"A Customer Service Agent assists passengers with rebooking options after a disruption notice.",
+	"A Customer Service Agent processes a check-in of a passenger.",
+	"A Customer Service Agent coordinates with baggage services to locate and forward missing luggage."
+],
+  "domain objects": [
+      {"name": "Pilot", "description": "Certified flight crew member responsible for operating an aircraft."},
+      {"name": "Flight Plan", "description": "Operational document defining aircraft, crew, route, and timing.", "attributes": ["Pilot","Aircraft","Flight Attendant"]},
+      {"name": "Aircraft", "description": "Air vehicle assigned to flights and subject to maintenance.", "attributes": ["Maintenance Record"]},
+      {"name": "Maintenance Record", "description": "Historical log of inspections, repairs, and technical actions on an aircraft."},
+      {"name": "Flight Attendant", "description": "Cabin crew member assigned to passenger operations on a flight."},
+      {"name": "Clarification Request", "description": "Pilot’s request for operational clarification regarding a flight plan."},
+      {"name": "Irregularity Report", "description": "Pilot-submitted report describing a technical irregularity encountered during flight."},
+      {"name": "Operations Coordinator", "description": "Staff member responsible for crew assignment, aircraft allocation, and operational coordination."},
+      {"name": "Disruption Notice", "description": "Notification sent to customer service when operational delays or issues occur."},
+      {"name": "Customer Service Agent", "description": "Agent assisting passengers with check-in, rebooking, and baggage issues."},
+      {"name": "Maintenance Engineer", "description": "Technician performing aircraft inspections, repairs, and technical assessments."},
+      {"name": "Inspection", "description": "Maintenance activity evaluating the condition of an aircraft."},
+      {"name": "Maintenance Extension Notification", "description": "Alert indicating that an aircraft requires extended maintenance time."},
+      {"name": "Passenger", "description": "Traveler using flight services."},
+      {"name": "Rebooking Options", "description": "Possible alternative travel arrangements offered to passengers."},
+      {"name": "Check In", "description": "Process of registering a passenger for a flight and issuing travel documents."},
+      {"name": "Baggage Services", "description": "Unit responsible for handling, locating, and forwarding passenger luggage."}
+    ],
+  "associations": [
+      {"from": "Operations Coordinator", "to": "Flight Plan", "description": "Operations Coordinator assigns crew and aircraft to the Flight Plan."},
+      {"from": "Pilot", "to": "Flight Plan", "description": "Pilot reviews and prepares for the Flight Plan."},
+      {"from": "Pilot", "to": "Clarification Request", "description": "Pilot initiates a Clarification Request."},
+      {"from": "Clarification Request", "to": "Operations Coordinator", "description": "Clarification Request is sent to the Operations Coordinator."},
+      {"from": "Operations Coordinator", "to": "Disruption Notice", "description": "Operations Coordinator issues a Disruption Notice."},
+      {"from": "Disruption Notice", "to": "Customer Service Agent", "description": "Disruption Notice is received by the Customer Service Agent."},
+      {"from": "Pilot", "to": "Irregularity Report", "description": "Pilot submits an Irregularity Report."},
+      {"from": "Maintenance Engineer", "to": "Irregularity Report", "description": "Maintenance Engineer evaluates the Irregularity Report."},
+      {"from": "Maintenance Engineer", "to": "Inspection", "description": "Maintenance Engineer performs the Inspection."},
+      {"from": "Inspection", "to": "Aircraft", "description": "Inspection is conducted on the Aircraft."},
+      {"from": "Maintenance Engineer", "to": "Maintenance Record", "description": "Maintenance Engineer updates the Maintenance Record."},
+      {"from": "Maintenance Engineer", "to": "Maintenance Extension Notification", "description": "Maintenance Engineer creates a Maintenance Extension Notification."},
+      {"from": "Maintenance Extension Notification", "to": "Operations Coordinator", "description": "Maintenance Extension Notification is sent to the Operations Coordinator."},
+      {"from": "Customer Service Agent", "to": "Check In", "description": "Customer Service Agent processes the Check In."},
+      {"from": "Passenger", "to": "Check In", "description": "Passenger participates in the Check In."},
+      {"from": "Customer Service Agent", "to": "Rebooking Options", "description": "Customer Service Agent provides Rebooking Options."},
+      {"from": "Rebooking Options", "to": "Passenger", "description": "Rebooking Options are offered to the Passenger."},
+      {"from": "Customer Service Agent", "to": "Baggage Services", "description": "Customer Service Agent coordinates with Baggage Services."}
+    ],
+  "subdomains": {
+      "Flight Planning": {
+          "objects" : ["Operations Coordinator","Flight Plan","Pilot","Aircraft","Flight Attendant","Clarification Request","Disruption Notice"]
+      },
+      "Maintenance": {
+          "objects" : ["Irregularity Report","Maintenance Engineer","Inspection","Aircraft","Maintenance Record","Maintenance Extension Notification"]
+      },
+      "Passenger Affairs": {
+          "objects" : ["Customer Service Agent","Passenger","Check In","Rebooking Options","Baggage Services"]
+      },
+      "subdomain connections": ["Flight Planning--Maintenance","Flight Planning--Passenger Affairs"]
+    },
+  "bounded contexts": {
+      "Flight Planning": {
+          "derived from": "Flight Planning Subdomain",
+          "objects" : ["Operations Coordinator","Flight Plan","Pilot","Aircraft","Flight Attendant","Clarification Request","Disruption Notice"],
+          "name changes" : []
+      },
+      "Maintenance": {
+          "derived from": "Maintenance Subdomain",
+          "objects" : ["Irregularity Report","Maintenance Engineer","Inspection","Asset","Maintenance Record","Maintenance Extension Notification"],
+          "name changes" : ["Aircraft -> Asset"]
+      },
+      "Passenger Affairs": {
+          "derived from": "Passenger Affairs Subdomain",
+          "objects" : ["Customer Service Agent","Passenger","Check In","Rebooking Options","Baggage Services"],
+          "name changes" : []
+      }
+	}
+}
