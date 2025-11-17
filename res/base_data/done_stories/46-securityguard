@@ -1,0 +1,14 @@
+A Security Guard performs a scheduled patrol and logs observations for the shift supervisor.
+A Security Guard responds to an access-control request and verifies the identity of a visitor.
+A Security Guard writes a report about what happened during the job.
+
+A Shift Supervisor processes a security order by a client.
+A Shift Supervisor reviews the guard’s patrol logs and follows up on unusual observations.
+A Shift Supervisor assigns guards to a job for a client site based on availability and required certifications.
+
+A Training Officer registers a new guard for mandatory certification and tracks their completion status.
+A Training Officer organizes security training courses for guards to participate in.
+
+An Evaluation Agent receives feedback by the client.
+An Evaluation Agent reviews the report by the guard.
+An Evaluation Agent updates the performance record of a guard.

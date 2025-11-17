@@ -1,0 +1,92 @@
+{
+  "domain-information":
+  [	"A Security Guard performs a scheduled patrol and logs observations for the shift supervisor.",
+	"A Security Guard responds to an access-control request and verifies the identity of a visitor.",
+	"A Security Guard writes a report about what happened during the job.",
+	"A Shift Supervisor processes a security order by a client.",
+	"A Shift Supervisor reviews the guard’s patrol logs and follows up on unusual observations.",
+	"A Shift Supervisor assigns guards to a job for a client site based on availability and required certifications.",
+	"A Training Officer registers a new guard for mandatory certification and tracks their completion status.",
+	"A Training Officer organizes security training courses for guards to participate in.",
+	"An Evaluation Agent receives feedback by the client.",
+	"An Evaluation Agent reviews the report by the guard.",
+	"An Evaluation Agent updates the performance record of a guard."
+],
+  "domain objects": [
+      {"name": "Security Guard", "description": "", "attributes": ["Availability","Certification","Completion Status","Performance Record"]},
+      {"name": "Availability", "description": ""},
+      {"name": "Certification", "description": ""},
+      {"name": "Completion Status", "description": ""},
+      {"name": "Performance Record", "description": ""},
+      {"name": "Scheduled Patrol", "description": "", "attributes": ["Observation Log"]},
+      {"name": "Observation Log", "description": ""},
+      {"name": "Shift Supervisor", "description": ""},
+      {"name": "Visitor", "description": ""},
+      {"name": "Access Control Request", "description": ""},
+      {"name": "Client", "description": "", "attributes": ["Client Site"]},
+      {"name": "Client Site", "description": ""},
+      {"name": "Security Job", "description": "", "attributes": ["Security Guard","Client"]},
+      {"name": "Security Order", "description": ""},
+      {"name": "Training Officer", "description": ""},
+      {"name": "Training Course", "description": ""},
+      {"name": "Registration", "description": ""},
+      {"name": "Evaluation Agent", "description": ""},
+      {"name": "Feedback", "description": ""},
+      {"name": "Job Report", "description": ""}
+    ],
+  "associations": [
+      {"from": "Client", "to": "Security Order", "description": ""},
+      {"from": "Shift Supervisor", "to": "Security Order", "description": ""},
+      {"from": "Shift Supervisor", "to": "Security Job", "description": ""},
+      {"from": "Client", "to": "Feedback", "description": ""},
+      {"from": "Shift Supervisor", "to": "Observation Log", "description": ""},
+      {"from": "Security Guard", "to": "Registration", "description": ""},
+      {"from": "Security Guard", "to": "Training Course", "description": ""},
+      {"from": "Training Officer", "to": "Registration", "description": ""},
+      {"from": "Training Officer", "to": "Training Course", "description": ""},
+      {"from": "Security Guard", "to": "Scheduled Patrol", "description": ""},
+      {"from": "Security Guard", "to": "Access Control Request", "description": ""},
+      {"from": "Visitor", "to": "Access Control Request", "description": ""},
+      {"from": "Security Guard", "to": "Job Report", "description": ""},
+      {"from": "Evaluation Agent", "to": "Job Report", "description": ""},
+      {"from": "Feedback", "to": "Evaluation Agent", "description": ""},
+      {"from": "Evaluation Agent", "to": "Performance Record", "description": ""}
+    ],
+  "subdomains": {
+      "Job Order": {
+          "objects" : ["Client","Security Order","Shift Supervisor","Client Site","Security Guard","Availability","Certification"]
+      },
+      "Security Services": {
+          "objects" : ["Security Order","Scheduled Patrol","Observation Log","Access Control Request","Visitor"]
+      },
+      "Training": {
+          "objects" : ["Training Officer","Registration","Training Course","Security Guard","Completion Status"]
+      },
+      "Evaluation": {
+          "objects" : ["Evaluation Agent","Performance Record","Job Report","Feedback"]
+      },
+      "subdomain connections": ["Job Order--Security Services","Training--Security Services","Job Order--Evaluation","Evaluation--Security Services"]
+    },
+  "bounded contexts": {
+      "Job Order": {
+          "derived from": "Job Order Subdomain",
+          "objects" : ["Client","Security Order","Shift Supervisor","Client Site","Assigned Guard","Availability","Certification"],
+          "name changes" : ["Security Guard -> Assigned Guard"]
+      },
+      "Security Services": {
+          "derived from": "Security Services Subdomain",
+          "objects" : ["Security Order","Scheduled Patrol","Observation Log","Access Control Request","Visitor"],
+          "name changes" : []
+      },
+      "Training": {
+          "derived from": "Training Subdomain",
+          "objects" : ["Training Officer","Registration","Training Course","Trainee","Completion Status"],
+          "name changes" : ["Security Guard -> Trainee"]
+      },
+      "Evaluation": {
+          "derived from": "Evaluation Subdomain",
+          "objects" : ["Evaluation Agent","Performance Record","Job Report","Feedback"],
+          "name changes" : []
+      }
+	}
+}
