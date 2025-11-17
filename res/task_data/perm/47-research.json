@@ -1,0 +1,102 @@
+{
+  "domain-information":
+  [	"A Sales Consultant discusses a new research need with a client to clarify project expectations.",
+	"A Sales Consultant prepares a project proposal and submits it to a project manager for feasibility review.",
+	"A Project Manager evaluates the proposal and drafts a study plan to align team resources.",
+	"A Project Manager schedules internal milestones for the study.",
+	"A Research Analyst views the study plan to assess the requirements.",
+	"A Research Analyst collects raw data from approved sources to begin the analysis phase.",
+	"A Research Analyst processes and analyzes the collected data to identify emerging patterns.",
+	"A Research Analyst creates report documenting the current state of the research.",
+	"A Field Researcher views the study plan to get an overview of the study.",
+	"A Field Researcher conducts interviews with selected participants to gather qualitative insights.",
+	"A Field Researcher uploads transcripts and notes to support the analysts' work.",
+	"A Quality Reviewer examines the draft research report to ensure accuracy and methodological consistency.",
+	"A Quality Reviewer approves the final report and releases it to the sales consultant for client delivery."
+],
+  "domain objects": [
+      {"name": "Sales Consultant", "description": "Initiates and manages client research requests."},
+      {"name": "Research Need", "description": "Client's expressed research requirement."},
+      {"name": "Client", "description": "Requester of the research project."},
+      {"name": "Project Proposal", "description": "Outline of project scope and approach."},
+      {"name": "Project Manager", "description": "Oversees study planning and coordination."},
+      {"name": "Study Plan", "description": "Plan detailing study tasks and timelines."},
+      {"name": "Internal Milestone", "description": "Scheduled checkpoint for study progress."},
+      {"name": "Research Analyst", "description": "Collects and analyzes research data."},
+      {"name": "Field Researcher", "description": "Gathers primary data from participants."},
+      {"name": "Raw Data", "description": "Unprocessed collected data."},
+      {"name": "Data Analysis", "description": "Process of examining and interpreting data."},
+      {"name": "Interview", "description": "Conversation to gather insights."},
+      {"name": "Participant", "description": "Individual taking part in interviews."},
+      {"name": "Interview Data", "description": "Transcripts and notes from interviews."},
+      {"name": "Quality Reviewer", "description": "Checks and validates research reports."},
+      {"name": "Research Report", "description": "Draft report of findings."},
+      {"name": "Final Report", "description": "Approved report sent to client."}
+    ],
+  "associations": [
+      {"from": "Client", "to": "Research Need", "description": "Client defines the Research Need."},
+      {"from": "Sales Consultant", "to": "Research Need", "description": "Sales Consultant refines the Research Need."},
+      {"from": "Sales Consultant", "to": "Project Proposal", "description": "Sales Consultant creates the Proposal."},
+      {"from": "Project Manager", "to": "Project Proposal", "description": "Project Manager reviews the Proposal."},
+      {"from": "Project Manager", "to": "Study Plan", "description": "Project Manager creates the Study Plan."},
+      {"from": "Field Researcher", "to": "Study Plan", "description": "Field Researcher reviews the Study Plan."},
+      {"from": "Field Researcher", "to": "Interview", "description": "Field Researcher conducts the Interview."},
+      {"from": "Participant", "to": "Interview", "description": "Participant provides input in the Interview."},
+      {"from": "Field Researcher", "to": "Interview Data", "description": "Field Researcher records Interview Data."},
+      {"from": "Interview Data", "to": "Research Analyst", "description": "Interview Data is provided to the Analyst."},
+      {"from": "Research Analyst", "to": "Study Plan", "description": "Research Analyst reviews the Study Plan."},
+      {"from": "Research Analyst", "to": "Raw Data", "description": "Research Analyst collects Raw Data."},
+      {"from": "Research Analyst", "to": "Data Analysis", "description": "Research Analyst performs Data Analysis."},
+      {"from": "Data Analysis", "to": "Raw Data", "description": "Data Analysis references the Raw Data."},
+      {"from": "Research Analyst", "to": "Research Report", "description": "Research Analyst writes the Report."},
+      {"from": "Quality Reviewer", "to": "Research Report", "description": "Reviewer evaluates the Report."},
+      {"from": "Quality Reviewer", "to": "Final Report", "description": "Reviewer approves the Final Report."},
+      {"from": "Sales Consultant", "to": "Final Report", "description": "Sales Consultant receives the Final Report."},
+      {"from": "Final Report", "to": "Client", "description": "Final Report is delivered to the Client."}
+    ],
+  "subdomains": {
+      "Initialization": {
+          "objects" : ["Client","Research Need","Sales Consultant","Project Proposal"]
+      },
+      "Study Planning": {
+          "objects" : ["Project Manager","Study Plan","Internal Milestone"]
+      },
+      "Field Research": {
+          "objects" : ["Field Researcher","Interview","Participant","Interview Data"]
+      },
+      "Data Analysis": {
+          "objects" : ["Research Analyst","Raw Data","Data Analysis"]
+      },
+      "Finalization": {
+          "objects" : ["Quality Reviewer","Research Report","Final Report"]
+      },
+      "subdomain connections": ["Initialization--Study Planning","Study Planning--Field Research","Study Planning--Data Analysis","Field Research--Data Analysis","Data Analysis--Finalization","Finalization--Initialization"]
+    },
+  "bounded contexts": {
+      "Initialization": {
+          "derived from": "Initialization Subdomain",
+          "objects" : ["Client","Research Need","Sales Consultant","Project Proposal"],
+          "name changes" : []
+      },
+      "Study Planning": {
+          "derived from": "Study Planning Subdomain",
+          "objects" : ["Project Manager","Study Plan","Internal Milestone"],
+          "name changes" : []
+      },
+      "Field Research": {
+          "derived from": "Field Research Subdomain",
+          "objects" : ["Field Researcher","Interview","Participant","Interview Data"],
+          "name changes" : []
+      },
+      "Data Analysis": {
+          "derived from": "Data Analysis Subdomain",
+          "objects" : ["Research Analyst","Raw Data","Data Analysis"],
+          "name changes" : []
+      },
+      "Finalization": {
+          "derived from": "Finalization Subdomain",
+          "objects" : ["Quality Reviewer","Research Report","Final Report"],
+          "name changes" : []
+      }
+	}
+}
