@@ -34,7 +34,7 @@
       {"name": "Exam", "description": "Formal test evaluating student performance."},
       {"name": "Tuition Fee", "description": "Payment required from students to attend courses."},
       {"name": "Accountant", "description": "Staff member managing tuition payments and financial records."},
-  {"name": "Payment Reminder", "description": "Notice sent to students about unpaid fees."}
+      {"name": "Payment Reminder", "description": "Notice sent to students about unpaid fees."}
     ],
   "associations": [
       {"from": "Student", "to": "Application Form", "description": "Student submits filled out Application Form"},
