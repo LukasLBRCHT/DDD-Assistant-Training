@@ -1,0 +1,100 @@
+{
+  "domain-information":
+  [	"A Client requests a deep cleaning service to prepare their home.",
+	"A Client updates an existing booking to include window cleaning for an upcoming event.",
+	"A Service Coordinator reviews a new cleaning request to determine staffing and time requirements.",
+	"A Service Coordinator schedules a cleaning team for a confirmed booking to ensure proper coverage.",
+	"A Cleaning Staff member gathers the required cleaning supplies before heading to the job site.",
+	"A Cleaning Staff member performs the scheduled cleaning tasks to meet the client’s expectations.",
+	"A Cleaning Staff member reports a supply shortage to ensure future jobs remain stocked.",
+	"A Quality Inspector reviews the completed cleaning work to verify that standards are met.",
+	"A Quality Inspector documents any issues found during inspection to guide corrections.",
+	"A Quality Inspector confirms the job as complete so the client can be notified of the finished service.",
+	"A Supply Clerk receives a report about a supply shortage.",
+	"A Supply Clerk makes an order for new supply, so the inventory has enough stock.",
+	"A Supply Clerk manages and monitors the inventory to make sure all supplies are up to standard."
+],
+  "domain objects": [
+      {"name": "Client", "description": "Person requesting a cleaning service.", "attributes": ["Home"]},
+      {"name": "Home", "description": "Client’s residence to be cleaned."},
+      {"name": "Cleaning Booking", "description": "Scheduled cleaning service request.", "attributes": ["Deep Cleaning Service","Window Cleaning Service","Home","Date","Completion Status"]},
+      {"name": "Deep Cleaning Service", "description": "Thorough cleaning option."},
+      {"name": "Window Cleaning Service", "description": "Window-focused cleaning option."},
+      {"name": "Date", "description": "Scheduled service time."},
+      {"name": "Completion Status", "description": "State of job completion."},
+      {"name": "Service Coordinator", "description": "Plans and schedules cleaning work."},
+      {"name": "Cleaning Team", "description": "Group assigned to a booking.", "attributes": ["Cleaning Staff Member"]},
+      {"name": "Cleaning Staff Member", "description": "Worker performing cleaning tasks."},
+      {"name": "Cleaning Supply", "description": "Material used for cleaning tasks."},
+      {"name": "Supply Shortage Report", "description": "Notice of low supply."},
+      {"name": "Quality Inspector", "description": "Reviewer ensuring work quality."},
+      {"name": "Inspection", "description": "Check of completed cleaning."},
+      {"name": "Issue Documentation", "description": "Record of problems found."},
+      {"name": "Supply Clerk", "description": "Staff managing supplies and stock."},
+      {"name": "Supply Order", "description": "Request for new supplies."},
+      {"name": "Supply Inventory", "description": "Collection of available supplies.", "attributes": ["Cleaning Supplies"]}
+    ],
+  "associations": [
+      {"from": "Client", "to": "Cleaning Booking", "description": "Client creates the Cleaning Booking."},
+      {"from": "Service Coordinator", "to": "Cleaning Booking", "description": "Service Coordinator manages the Cleaning Booking."},
+      {"from": "Service Coordinator", "to": "Cleaning Team", "description": "Service Coordinator assigns the Cleaning Team."},
+      {"from": "Cleaning Team", "to": "Cleaning Booking", "description": "Cleaning Team performs the Cleaning Booking."},
+      {"from": "Cleaning Staff Member", "to": "Deep Cleaning Service", "description": "Cleaning Staff Member carries out the Deep Cleaning Service."},
+      {"from": "Cleaning Staff Member", "to": "Window Cleaning Service", "description": "Cleaning Staff Member performs the Window Cleaning Service."},
+      {"from": "Quality Inspector", "to": "Inspection", "description": "Quality Inspector conducts the Inspection."},
+      {"from": "Inspection", "to": "Window Cleaning Service", "description": "Inspection checks the Window Cleaning Service."},
+      {"from": "Inspection", "to": "Deep Cleaning Service", "description": "Inspection checks the Deep Cleaning Service."},
+      {"from": "Quality Inspector", "to": "Completion Status", "description": "Quality Inspector updates the Completion Status."},
+      {"from": "Quality Inspector", "to": "Issue Documentation", "description": "Quality Inspector creates the Issue Documentation."},
+      {"from": "Cleaning Staff Member", "to": "Cleaning Supply", "description": "Cleaning Staff Member uses the Cleaning Supply."},
+      {"from": "Cleaning Staff Member", "to": "Supply Shortage Report", "description": "Cleaning Staff Member submits the Supply Shortage Report."},
+      {"from": "Supply Clerk", "to": "Supply Shortage Report", "description": "Supply Clerk processes the Supply Shortage Report."},
+      {"from": "Supply Clerk", "to": "Supply Order", "description": "Supply Clerk creates the Supply Order."},
+      {"from": "Supply Clerk", "to": "Supply Inventory", "description": "Supply Clerk manages the Supply Inventory."}
+    ],
+  "subdomains": {
+      "Service Request": {
+          "objects" : ["Client","Home","Cleaning Booking","Date","Window Cleaning Service","Deep Cleaning Service"]
+      },
+      "Service Organization": {
+          "objects" : ["Service Coordinator","Cleaning Booking","Cleaning Team","Cleaning Staff Member"]
+      },
+      "Cleaning": {
+          "objects" : ["Cleaning Staff Member","Deep Cleaning Service","Window Cleaning Service","Cleaning Supply"]
+      },
+      "Inspection": {
+          "objects" : ["Quality Inspector","Inspection","Completion Status","Issue Documentation"]
+      },
+      "Inventory Management": {
+          "objects" : ["Supply Clerk","Supply Shortage Report","Supply Inventory","Cleaning Supply","Supply Order"]
+      },
+      "subdomain connections": ["Service Request--Service Organization","Service Organization--Cleaning","Inspection--Cleaning","Cleaning-Inventory Management"]
+    },
+  "bounded contexts": {
+      "Service Request": {
+          "derived from": "Service Request Subdomain",
+          "objects" : ["Client","Home","Cleaning Booking","Date","Window Cleaning Booking","Deep Cleaning Booking"],
+          "name changes" : ["Window Cleaning Service -> Window Cleaning Booking","Deep Cleaning Service -> Deep Cleaning Booking"]
+      },
+      "Service Organization": {
+          "derived from": "Service Organization Subdomain",
+          "objects" : ["Service Coordinator","Cleaning Job","Cleaning Team","Assigned Staff"],
+          "name changes" : ["Cleaning Booking -> Cleaning Job","Cleaning Staff Member -> Assigned Staff"]
+      },
+      "Cleaning": {
+          "derived from": "Cleaning Subdomain",
+          "objects" : ["Cleaning Staff Member","Deep Cleaning Service","Window Cleaning Service","Used Supply"],
+          "name changes" : ["Cleaning Supply -> Used Supply"]
+      },
+      "Inspection": {
+          "derived from": "Inspection Subdomain",
+          "objects" : ["Quality Inspector","Inspection","Completion Status","Issue Documentation"],
+          "name changes" : []
+      },
+      "Inventory Management": {
+          "derived from": "Inventory Management Subdomain",
+          "objects" : ["Supply Clerk","Supply Shortage Report","Supply Inventory","Cleaning Supply Stock","Supply Order"],
+          "name changes" : ["Cleaning Supply -> Cleaning Supply Stock"]
+      }
+	}
+}
