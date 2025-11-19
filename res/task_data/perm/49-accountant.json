@@ -1,0 +1,93 @@
+{
+  "domain-information":
+  [	"A Business Owner submits monthly sales documents so the financial records stay up to date.",
+	"A Business Owner approves a large expense to allow the bookkeeper to process it.",
+	"A Business Owner sends supporting documents to an auditor upon request.",
+	"An Accountant reviews the submitted sales documents to prepare accurate financial entries.",
+	"An Accountant creates an invoice for a client to ensure the business gets paid.",
+	"A Bookkeeper records a new expense in the system so costs remain properly tracked.",
+	"A Bookkeeper categorizes recent receipts to keep the accounts organized.",
+	"A Bookkeeper notifies the accountant about a missing receipt to resolve an inconsistency.",
+	"An Auditor examines recent financial statements of an owner to verify they comply with regulations.",
+	"An Auditor requests supporting documents to clarify unusual transactions.",
+	"An Auditor finalizes the review so the business owner receives confirmation of compliance."
+],
+  "domain objects": [
+      {"name": "Business Owner", "description": "Person responsible for submitting records and approving financial actions."},
+      {"name": "Monthly Sales Document", "description": "Report showing sales activity for a given month."},
+      {"name": "Expense", "description": "Cost incurred by the business that must be recorded."},
+      {"name": "Accountant", "description": "Professional who prepares entries, reviews data, and manages invoices."},
+      {"name": "Account", "description": "Financial record containing entries, owner details, and receipts.", "attributes": ["Financial Entry","Business Owner","Receipt"]},
+      {"name": "Financial Entry", "description": "Recorded financial transaction created from business documents."},
+      {"name": "Receipt", "description": "Proof of purchase used to validate expenses."},
+      {"name": "Invoice", "description": "Billing document issued to a client for services or products."},
+      {"name": "Client", "description": "Customer who receives invoices and pays the business."},
+      {"name": "Bookkeeper", "description": "Person who records expenses and organizes receipts."},
+      {"name": "Inconsistency Notification", "description": "Message alerting the accountant about missing or conflicting data."},
+      {"name": "Auditor", "description": "Independent reviewer ensuring financial statements meet regulations."},
+      {"name": "Financial Statement", "description": "Formal report summarizing the business’s financial performance."},
+      {"name": "Regulations", "description": "Financial rules and standards the business must follow."},
+      {"name": "Document Request", "description": "Request from the auditor to obtain additional documentation."},
+      {"name": "Supporting Document", "description": "Additional evidence provided to verify financial transactions."},
+      {"name": "Finance Review", "description": "Final assessment confirming compliance with financial rules."}
+    ],
+  "associations": [
+      {"from": "Business Owner", "to": "Monthly Sales Document", "description": "Business Owner submits Monthly Sales Documents."},
+      {"from": "Business Owner", "to": "Expense", "description": "Business Owner authorizes or creates Expenses."},
+      {"from": "Accountant", "to": "Monthly Sales Document", "description": "Accountant reviews Monthly Sales Documents."},
+      {"from": "Accountant", "to": "Account", "description": "Accountant updates the Account with financial entries."},
+      {"from": "Accountant", "to": "Invoice", "description": "Accountant creates an Invoice."},
+      {"from": "Invoice", "to": "Client", "description": "Invoice is issued to the Client."},
+      {"from": "Client", "to": "Business Owner", "description": "Client is connected to the Business Owner as the service provider."},
+      {"from": "Bookkeeper", "to": "Expense", "description": "Bookkeeper records Expenses."},
+      {"from": "Bookkeeper", "to": "Inconsistency Notification", "description": "Bookkeeper generates an Inconsistency Notification."},
+      {"from": "Inconsistency Notification", "to": "Accountant", "description": "Inconsistency Notification is sent to the Accountant."},
+      {"from": "Bookkeeper", "to": "Receipt", "description": "Bookkeeper organizes Receipts."},
+      {"from": "Business Owner", "to": "Financial Statement", "description": "Business Owner provides Financial Statements."},
+      {"from": "Auditor", "to": "Financial Statement", "description": "Auditor reviews Financial Statements."},
+      {"from": "Auditor", "to": "Document Request", "description": "Auditor creates a Document Request."},
+      {"from": "Document Request", "to": "Auditor", "description": "Document Request is returned to the Auditor."},
+      {"from": "Auditor", "to": "Finance Review", "description": "Auditor performs the Finance Review."},
+      {"from": "Business Owner", "to": "Finance Review", "description": "Business Owner receives the Finance Review."},
+      {"from": "Business Owner", "to": "Supporting Document", "description": "Business Owner provides Supporting Documents."},
+      {"from": "Auditor", "to": "Supporting Document", "description": "Auditor examines Supporting Documents."},
+      {"from": "Auditor", "to": "Regulations", "description": "Auditor checks compliance with Regulations."}
+    ],
+  "subdomains": {
+      "Accounting": {
+          "objects" : ["Business Owner","Accountant","Monthly Sales Document","Account","Financial Entry"]
+      },
+      "Billing": {
+          "objects" : ["Invoice","Client","Business Owner"]
+      },
+      "Bookkeeping": {
+          "objects" : ["Bookkeeper","Expense","Inconsistency Notification","Receipt"]
+      },
+      "Auditing": {
+          "objects" : ["Auditor","Financial Statement","Document Request","Supporting Document","Finance Review"]
+      },
+      "subdomain connections": ["Accounting--Billing","Accounting--Bookkeeping","Accounting--Auditing"]
+    },
+  "bounded contexts": {
+      "Accounting": {
+          "derived from": "Accounting Subdomain",
+          "objects" : ["Accounting Customer","Accountant","Monthly Sales Document","Account","Financial Entry"],
+          "name changes" : ["Business Owner -> Accounting Customer"]
+      },
+      "Billing": {
+          "derived from": "Billing Subdomain",
+          "objects" : ["Invoice","Customer Client","Business Owner"],
+          "name changes" : ["Client -> Customer Client"]
+      },
+      "Bookkeeping": {
+          "derived from": "Bookkeeping Subdomain",
+          "objects" : ["Bookkeeper","Expense","Inconsistency Notification","Receipt"],
+          "name changes" : []
+      },
+      "Auditing": {
+          "derived from": "Auditing Subdomain",
+          "objects" : ["Auditor","Financial Statement","Document Request","Supporting Document","Finance Review"],
+          "name changes" : []
+      }
+	}
+}
