@@ -1,0 +1,72 @@
+{
+  "domain-information":
+  [	"A Customer requests a quote for a new insurance policy to understand potential costs.",
+	"A Customer submits personal information so the agent can prepare an accurate offer.",
+	"An Insurance Agent reviews the customer’s request to determine suitable coverage options.",
+	"An Insurance Agent finalizes a policy agreement so the customer can activate coverage.",
+	"An Underwriter evaluates the policy details to assess the level of risk involved.",
+	"An Underwriter adjusts the policy terms to reflect the assessed risk.",
+	"A Claims Adjuster receives a damage report from the customer to begin a claims review.",
+	"A Claims Adjuster inspects the reported damage to verify the claim.",
+	"A Claims Adjuster approves the payout so the customer can receive compensation.",
+	"An Underwriter reviews past claims to update future risk guidelines."
+],
+  "domain objects": [
+      {"name": "Customer", "description": "Person seeking insurance services.", "attributes": ["Personal Information"]},
+      {"name": "Quote Request", "description": "Customer request for estimated policy pricing.", "attributes": ["Insurance Policy"]},
+      {"name": "Insurance Policy", "description": "Formal insurance contract defining coverage.", "attributes": ["Policy Terms"]},
+      {"name": "Policy Terms", "description": "Specific conditions and limits of an insurance policy."},
+      {"name": "Personal Information", "description": "Customer data required to prepare insurance offers."},
+      {"name": "Insurance Agent", "description": "Representative preparing quotes and agreements."},
+      {"name": "Policy Agreement", "description": "Final policy document ready for activation."},
+      {"name": "Underwriter", "description": "Specialist assessing risk and adjusting policy terms."},
+      {"name": "Claims Adjuster", "description": "Employee reviewing claims and approving payouts."},
+      {"name": "Damage Report", "description": "Customer-provided description of an incident.", "attributes": ["Claim"]},
+      {"name": "Claim", "description": "Formal request for insurance compensation."},
+      {"name": "Claims Review", "description": "Assessment of the validity of a claim."},
+      {"name": "Payout", "description": "Approved financial compensation for a claim."},
+      {"name": "Risk Guidelines", "description": "Internal rules defining acceptable risk thresholds."},
+      {"name": "Risk Assessment", "description": "Evaluation of a policy’s risk level."}
+    ],
+  "associations": [
+      {"from": "Customer", "to": "Quote Request", "description": "Customer creates the Quote Request."},
+      {"from": "Customer", "to": "Policy Agreement", "description": "Customer receives or accepts the Policy Agreement."},
+      {"from": "Insurance Agent", "to": "Quote Request", "description": "Insurance Agent evaluates the Quote Request."},
+      {"from": "Insurance Agent", "to": "Personal Information", "description": "Insurance Agent uses the Personal Information."},
+      {"from": "Insurance Agent", "to": "Policy Agreement", "description": "Insurance Agent prepares the Policy Agreement."},
+      {"from": "Underwriter", "to": "Risk Assessment", "description": "Underwriter performs the Risk Assessment."},
+      {"from": "Risk Assessment", "to": "Insurance Policy", "description": "Risk Assessment informs the Insurance Policy."},
+      {"from": "Underwriter", "to": "Risk Guidelines", "description": "Underwriter updates the Risk Guidelines."},
+      {"from": "Underwriter", "to": "Claim", "description": "Underwriter reviews the Claim."},
+      {"from": "Customer", "to": "Damage Report", "description": "Customer submits the Damage Report."},
+      {"from": "Damage Report", "to": "Claims Adjuster", "description": "Damage Report is sent to the Claims Adjuster."},
+      {"from": "Claims Adjuster", "to": "Claims Review", "description": "Claims Adjuster initiates the Claims Review."},
+      {"from": "Claims Review", "to": "Claim", "description": "Claims Review evaluates the Claim."},
+      {"from": "Claims Adjuster", "to": "Payout", "description": "Claims Adjuster authorizes the Payout."},
+      {"from": "Payout", "to": "Customer", "description": "Payout is sent to Customer."}
+    ],
+  "subdomains": {
+      "Quotes": {
+          "objects" : ["Customer","Personal Information","Insurance Agent","Quote Request","Insurance Policy","Policy Terms","Policy Agreement"]
+      },
+      "Risk Assessment": {
+          "objects" : ["Underwriter","Risk Assessment","Risk Guidelines"]
+      },
+      "Claims": {
+          "objects" : ["Claims Adjuster","Damage Report","Claim","Claims Review","Payout"]
+      },
+      "subdomain connections": ["Risk Assessment--Claims","Risk Assessment--Quotes"]
+    },
+  "bounded contexts": {
+      "Quote Evaluation": {
+          "derived from": ["Quotes Subdomain","Risk Assessment Subdomain"],
+          "objects" : ["Customer","Personal Information","Insurance Agent","Quote Request","Insurance Policy","Policy Terms","Policy Agreement","Underwriter","Risk Assessment","Risk Guidelines"],
+          "name changes" : []
+      },
+      "Claims": {
+          "derived from": "Claims Subdomain",
+          "objects" : ["Claims Adjuster","Damage Report","Claim","Claims Review","Payout"],
+          "name changes" : []
+      }
+	}
+}
