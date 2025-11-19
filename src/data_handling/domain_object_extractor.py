@@ -1,21 +1,4 @@
-# Todo
-"""
-stell dir vor du schreibst in eine datei:
 
-object1
-object2
-associations:
-object1-object2
-
-und dann macht das skript daraus:
-"domain objects": [
-      {"name": "object1", "description": ""}
-      {"name": "object2", "description": ""}
-    ],
-  "associations": [
-      {"from": "object1", "to": "object2", "description": ""},
-    ]
-"""
 import os
 
 import regex
@@ -41,7 +24,7 @@ def extract_lists(subdomain_objects):
 
         if "(" in plain_strg:
             split = plain_strg.split("(")
-            original = split[0]
+            original = split[0].strip()
             object_string = f"\"{original}\","
             renaming = split[1].removesuffix(")")
 
@@ -144,6 +127,7 @@ def parse_domain_objects(txt):
     objects = split[0]
     associations = split[1]
     subdomains = split[2]
+    subdomain_connections = split[3]
 
     extracted_objects = extract_objects(objects)
 
@@ -165,21 +149,31 @@ def parse_domain_objects(txt):
 
         extracted_associations += object_json
 
+    connection_list = ""
+
+    for line in subdomain_connections.splitlines():
+        if not line:
+            continue
+
+        connection_list += f"\"{line}\","
+
+    connection_list = connection_list.removesuffix(",")
+    connections_json = f"\"subdomain connections\": [{connection_list}]"
+
     extracted_associations = extracted_associations.removesuffix(",\n")
-    #result_data += "\n\nsubdomains:\n"
 
     extracted_subdomains, extracted_bounded_contexts = extract_subd_n_bc(subdomains)
 
     extracted_subdomains = extracted_subdomains.removesuffix(",\n")
     extracted_bounded_contexts = extracted_bounded_contexts.removesuffix(",\n")
 
-    return extracted_objects,extracted_associations,extracted_subdomains,extracted_bounded_contexts
+    return extracted_objects,extracted_associations,extracted_subdomains,extracted_bounded_contexts, connections_json
 
-def create_json(stories, obj, asso, sub, bc):
+def create_json(stories, obj, asso, sub, bc, con):
     with open(subtask_format_url, 'r') as format_file:
         subtask_format = format_file.read()
 
-    json_data = subtask_format.format(stories, obj, asso, sub, bc)
+    json_data = subtask_format.format(stories, obj, asso, sub, con, bc)
 
     return json_data
 
@@ -201,7 +195,7 @@ def load_stories(text):
 
 if __name__ == "__main__":
 
-    current_number = "46"
+    current_number = "49"
 
     file_name = ""
     stories = """"""
@@ -223,9 +217,9 @@ if __name__ == "__main__":
     with open(objects_file) as f:
         plain = f.read()
 
-    objects, associations, subdomains, bounded_contexts = parse_domain_objects(plain)
+    objects, associations, subdomains, bounded_contexts, connections = parse_domain_objects(plain)
 
-    json_data = create_json(stories, objects, associations, subdomains, bounded_contexts)
+    json_data = create_json(stories, objects, associations, subdomains, bounded_contexts, connections)
 
     with open(f"../../res/task_data/perm/{file_name}.json", "w") as json_file:
         json_file.write(json_data)

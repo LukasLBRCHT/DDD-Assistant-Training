@@ -9,7 +9,7 @@
     ],
   "subdomains": {{
 {},
-      "subdomain connections": ["subdomain1--subdomain2","..."]
+      {}
     }},
   "bounded contexts": {{
 {}
