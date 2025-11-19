@@ -1,0 +1,92 @@
+{
+  "domain-information":
+  [	"A Designer sketches a new clothing concept to explore ideas for the next collection.",
+	"A Designer selects fabrics for the sample production of a concept.",
+	"A Production Manager reviews the design to estimate materials and manufacturing effort.",
+	"A Production Manager approves a sample run so production can start.",
+	"A Production Manager adds a piece to the collection after its concept has been approved.",
+	"A Manufacturing Officer sends an order for production of the new collection to a manufacturer.",
+	"A Manufacturing Officer receives an order from a retail buyer.",
+	"A Marketing Manager creates a campaign outline to introduce the upcoming collection.",
+	"A Marketing Manager requests final product media from the designer to prepare promotional content.",
+	"A Retail Buyer reviews the collection to decide which items to stock in stores.",
+	"A Retail Buyer places an order for selected pieces to meet expected customer demand.",
+	"A Retail Buyer confirms delivery dates to ensure the products arrive in time for launch.",
+	"A Designer reviews feedback from the buyer to adjust future design choices."
+],
+  "domain objects": [
+      {"name": "Designer", "description": "Person creating clothing concepts and related materials."},
+      {"name": "Clothing Concept", "description": "Initial design idea for a potential garment."},
+      {"name": "Sample Production", "description": "Small production run of a concept using selected fabrics."},
+      {"name": "Fabric", "description": "Material chosen for producing sample pieces."},
+      {"name": "Collection", "description": "Set of finalized pieces prepared for a season or release."},
+      {"name": "Piece", "description": "Individual garment derived from a clothing concept."},
+      {"name": "Campaign Outline", "description": "Initial structure of the marketing campaign for a collection."},
+      {"name": "Production Manager", "description": "Person estimating and approving production-related work."},
+      {"name": "Effort Estimate", "description": "Assessment of materials and work needed for a concept."},
+      {"name": "Marketing Manager", "description": "Person planning and coordinating marketing activities."},
+      {"name": "Final Product Media", "description": "Images or media files used for promotional content."},
+      {"name": "Retail Buyer", "description": "Person selecting and ordering pieces for retail stores."},
+      {"name": "Retail Order", "description": "Order placed by a retail buyer for specific pieces with delivery dates."},
+      {"name": "Delivery Date", "description": "Confirmed date for delivering ordered pieces."},
+      {"name": "Feedback", "description": "Input from the retail buyer regarding the pieces or collection."},
+      {"name": "Manufacturing Officer", "description": "Person coordinating production and handling manufacturing requests."},
+      {"name": "Production Order", "description": "Instruction to manufacture items in a collection."},
+      {"name": "Manufacturer", "description": "Entity responsible for producing physical garments."}
+    ],
+  "associations": [
+      {"from": "Designer", "to": "Clothing Concept", "description": "Designer creates the Clothing Concept."},
+      {"from": "Designer", "to": "Sample Production", "description": "Designer initiates Sample Production."},
+      {"from": "Production Manager", "to": "Clothing Concept", "description": "Production Manager reviews the Clothing Concept."},
+      {"from": "Production Manager", "to": "Sample Production", "description": "Production Manager approves the Sample Production."},
+      {"from": "Production Manager", "to": "Effort Estimate", "description": "Production Manager produces the Effort Estimate."},
+      {"from": "Production Manager", "to": "Collection", "description": "Production Manager adds a Piece to the Collection."},
+      {"from": "Marketing Manager", "to": "Campaign Outline", "description": "Marketing Manager creates the Campaign Outline."},
+      {"from": "Marketing Manager", "to": "Final Product Media", "description": "Marketing Manager requests Final Product Media."},
+      {"from": "Designer", "to": "Final Product Media", "description": "Designer provides the Final Product Media."},
+      {"from": "Manufacturing Officer", "to": "Production Order", "description": "Manufacturing Officer issues the Production Order."},
+      {"from": "Production Order", "to": "Manufacturer", "description": "Production Order is sent to the Manufacturer."},
+      {"from": "Retail Buyer", "to": "Collection", "description": "Retail Buyer reviews the Collection."},
+      {"from": "Retail Buyer", "to": "Retail Order", "description": "Retail Buyer creates the Retail Order."},
+      {"from": "Manufacturing Officer", "to": "Retail Order", "description": "Manufacturing Officer receives the Retail Order."},
+      {"from": "Retail Order", "to": "Feedback", "description": "Retail Order leads to generated Feedback."},
+      {"from": "Designer", "to": "Feedback", "description": "Designer reviews the Feedback."}
+    ],
+  "subdomains": {
+      "Collection Design": {
+          "objects" : ["Designer","Production Manager","Clothing Concept","Sample Production","Effort Estimate","Collection","Piece"]
+      },
+      "Marketing": {
+          "objects" : ["Marketing Manager","Campaign Outline","Final Product Media"]
+      },
+      "Manufacturing": {
+          "objects" : ["Manufacturing Officer","Production Order","Manufacturer"]
+      },
+      "Distribution": {
+          "objects" : ["Retail Buyer","Collection","Retail Order","Piece","Delivery Date","Feedback"]
+      },
+      "subdomain connections": ["Collection Design--Marketing","Collection Design--Manufacturing","Distribution--Collection Design","Distribution--Manufacturing"]
+    },
+  "bounded contexts": {
+      "Collection Design": {
+          "derived from": "Collection Design Subdomain",
+          "objects" : ["Designer","Production Manager","Clothing Concept","Sample Production","Effort Estimate","Collection","Piece"],
+          "name changes" : []
+      },
+      "Marketing": {
+          "derived from": "Marketing Subdomain",
+          "objects" : ["Marketing Manager","Campaign Outline","Final Product Media"],
+          "name changes" : []
+      },
+      "Manufacturing": {
+          "derived from": "Manufacturing Subdomain",
+          "objects" : ["Manufacturing Officer","Production Order","Manufacturer"],
+          "name changes" : []
+      },
+      "Distribution": {
+          "derived from": "Distribution Subdomain",
+          "objects" : ["Retail Buyer","Catalogue","Retail Order","Piece Selection","Delivery Date","Feedback"],
+          "name changes" : ["Collection -> Catalogue","Piece -> Piece Selection"]
+      }
+	}
+}
