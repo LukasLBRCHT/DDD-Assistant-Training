@@ -1,0 +1,87 @@
+{
+  "domain-information":
+  [	"A Property Owner requests to list their home for sale so the agent can begin the process.",
+	"A Property Owner provides additional property details to complete the listing.",
+	"A Buyer asks for available homes within a certain price range to explore options.",
+	"A Buyer schedules a home viewing to see if the property fits their needs.",
+	"A Real Estate Agent prepares a new property listing to make it available to buyers.",
+	"A Real Estate Agent organizes a viewing appointment to show the property to interested buyers.",
+	"A Real Estate Agent submits a purchase offer on behalf of the buyer to start negotiations.",
+	"An Appraiser inspects the property to provide an estimated market value.",
+	"An Appraiser sends the valuation report to the agent for use in the negotiation.",
+	"An Appraiser reviews mandatory files submitted by the owner to confirm the accuracy of the valuation."
+],
+  "domain objects": [
+      {"name": "Property Owner", "description": "Person who owns the property and initiates the listing."},
+      {"name": "Listing", "description": "Published offer to sell a property.", "attributes": ["Property"]},
+      {"name": "Property", "description": "The home or real estate unit being sold.", "attributes": ["Property Details"]},
+      {"name": "Property Details", "description": "Key characteristics of the property."},
+      {"name": "Buyer", "description": "Person interested in purchasing a property."},
+      {"name": "Home Search", "description": "Buyer’s request for properties matching criteria.", "attributes": ["Price Range"]},
+      {"name": "Price Range", "description": "Budget bounds defined by the buyer."},
+      {"name": "Home Viewing Request", "description": "Request to view a specific listing.", "attributes": ["Listing"]},
+      {"name": "Real Estate Agent", "description": "Professional managing listings and interactions between parties."},
+      {"name": "Viewing Appointment", "description": "Scheduled time to tour a property.", "attributes": ["Date","Buyer","Property"]},
+      {"name": "Date", "description": "Scheduled day for an appointment."},
+      {"name": "Purchase Offer", "description": "Formal proposal from the buyer to purchase a property."},
+      {"name": "Appraiser", "description": "Expert estimating the property’s value."},
+      {"name": "Inspection", "description": "Appraiser’s on-site evaluation of the property."},
+      {"name": "Valuation Report", "description": "Document stating the estimated market value.", "attributes": ["Listing","Estimated Market Value"]},
+      {"name": "Estimated Market Value", "description": "Appraiser’s determined price estimation."},
+      {"name": "Mandatory Files", "description": "Required documents provided by the property owner."}
+    ],
+  "associations": [
+      {"from": "Property Owner", "to": "Listing", "description": "Property Owner initiates the Listing."},
+      {"from": "Real Estate Agent", "to": "Listing", "description": "Real Estate Agent prepares the Listing."},
+      {"from": "Buyer", "to": "Home Search", "description": "Buyer starts a Home Search."},
+      {"from": "Home Search", "to": "Listing", "description": "Home Search filters available Listings."},
+      {"from": "Buyer", "to": "Home Viewing Request", "description": "Buyer submits a Home Viewing Request."},
+      {"from": "Real Estate Agent", "to": "Home Viewing Request", "description": "Real Estate Agent reviews the Home Viewing Request."},
+      {"from": "Real Estate Agent", "to": "Viewing Appointment", "description": "Real Estate Agent schedules the Viewing Appointment."},
+      {"from": "Real Estate Agent", "to": "Purchase Offer", "description": "Real Estate Agent creates the Purchase Offer."},
+      {"from": "Purchase Offer", "to": "Property Owner", "description": "Purchase Offer is sent to the Property Owner."},
+      {"from": "Appraiser", "to": "Inspection", "description": "Appraiser conducts the Inspection."},
+      {"from": "Inspection", "to": "Property", "description": "Inspection evaluates the Property."},
+      {"from": "Appraiser", "to": "Valuation Report", "description": "Appraiser produces the Valuation Report."},
+      {"from": "Valuation Report", "to": "Real Estate Agent", "description": "Valuation Report is delivered to the Real Estate Agent."},
+      {"from": "Property Owner", "to": "Mandatory Files", "description": "Property Owner provides Mandatory Files."},
+      {"from": "Appraiser", "to": "Mandatory Files", "description": "Appraiser reviews the Mandatory Files."}
+    ],
+  "subdomains": {
+      "Listing": {
+          "objects" : ["Property Owner","Listing","Property","Property Details","Real Estate Agent"]
+      },
+      "Home Search": {
+          "objects" : ["Buyer","Home Search","Price Range","Listing"]
+      },
+      "Property Viewing": {
+          "objects" : ["Buyer","Real Estate Agent","Listing","Property","Home Viewing Request","Purchase Offer"]
+      },
+      "Property Appraisal": {
+          "objects" : ["Appraiser","Inspection","Valuation Report","Estimated Market Value","Mandatory Files"]
+      },
+      "subdomain connections": ["Home Search--Listing","Property Viewing--Listing","Property Appraisal--Listing","Property Appraisal--Property Viewing"]
+    },
+  "bounded contexts": {
+      "Listing": {
+          "derived from": "Listing Subdomain",
+          "objects" : ["Property Owner","Listing","Property","Property Details","Reviewing Agent"],
+          "name changes" : ["Real Estate Agent -> Reviewing Agent"]
+      },
+      "Home Search": {
+          "derived from": "Home Search Subdomain",
+          "objects" : ["Searcher","Home Search","Price Range","Listing Entry"],
+          "name changes" : ["Buyer -> Searcher","Listing -> Listing Entry"]
+      },
+      "Property Viewing": {
+          "derived from": "Property Viewing Subdomain",
+          "objects" : ["Buyer","Real Estate Agent","Target Listing","Target","Home Viewing Request","Purchase Offer"],
+          "name changes" : ["Listing -> Target Listing","Property -> Target"]
+      },
+      "Property Appraisal": {
+          "derived from": "Property Appraisal Subdomain",
+          "objects" : ["Appraiser","Inspection","Valuation Report","Estimated Market Value","Mandatory Files"],
+          "name changes" : []
+      }
+	}
+}
