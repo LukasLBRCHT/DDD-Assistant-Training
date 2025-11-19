@@ -1,0 +1,64 @@
+{
+  "domain-information":
+  [	"A Student assigns a subject for the next tutoring session to improve their understanding.",
+	"A Student submits homework questions so the tutor can prepare for the session.",
+	"A Parent books a new tutoring package to support their child’s long-term learning.",
+	"A Parent updates the student’s availability to allow proper session scheduling.",
+	"A Tutor reviews the student’s submitted questions to plan the lesson.",
+	"A Tutor conducts a tutoring session to explain key concepts and provide practice.",
+	"A Tutor records the student’s progress after the session to track improvement.",
+	"An Academic Coordinator reviews a booking for a tutor package.",
+	"An Academic Coordinator assigns a tutor to the student based on subject needs.",
+	"An Academic Coordinator reviews progress records to ensure the student is on track.",
+	"An Academic Coordinator adjusts the learning plan to better support the student’s goals."
+],
+  "domain objects": [
+      {"name": "Student", "description": "Learner receiving tutoring support", "attributes": ["Availability","Progress Record","Tutor"]},
+      {"name": "Availability", "description": "Times when the student is free for tutoring"},
+      {"name": "Progress Record", "description": "Notes on a student’s learning progress"},
+      {"name": "Tutor", "description": "Instructor providing tutoring to the student"},
+      {"name": "Subject", "description": "Topic the student wants to study"},
+      {"name": "Homework Question", "description": "Student-submitted questions for the tutor"},
+      {"name": "Parent", "description": "Guardian managing the student’s tutoring arrangements"},
+      {"name": "Tutoring Package", "description": "Purchased bundle of tutoring sessions"},
+      {"name": "Tutoring Session", "description": "Scheduled lesson between student and tutor", "attributes": ["Subject"]},
+      {"name": "Academic Coordinator", "description": "Staff member managing tutor assignments and oversight"},
+      {"name": "Learning Plan", "description": "Plan outlining learning goals and steps for the student"}
+    ],
+  "associations": [
+      {"from": "Student", "to": "Subject", "description": "Student selects a subject"},
+      {"from": "Student", "to": "Homework Question", "description": "Student submits homework questions"},
+      {"from": "Student", "to": "Tutoring Session", "description": "Student participates in a tutoring session"},
+      {"from": "Parent", "to": "Student", "description": "Parent manages the student’s arrangements"},
+      {"from": "Tutor", "to": "Homework Question", "description": "Tutor reviews homework questions"},
+      {"from": "Tutor", "to": "Tutoring Session", "description": "Tutor delivers a tutoring session"},
+      {"from": "Tutor", "to": "Progress Record", "description": "Tutor writes a progress record"},
+      {"from": "Parent", "to": "Tutoring Package", "description": "Parent purchases a tutoring package"},
+      {"from": "Academic Coordinator", "to": "Tutoring Package", "description": "Academic Coordinator reviews a tutoring package"},
+      {"from": "Academic Coordinator", "to": "Student", "description": "Academic Coordinator oversees the student"},
+      {"from": "Academic Coordinator", "to": "Tutor", "description": "Academic Coordinator assigns a tutor"},
+      {"from": "Academic Coordinator", "to": "Learning Plan", "description": "Academic Coordinator updates the learning plan"},
+      {"from": "Tutor", "to": "Learning Plan", "description": "Tutor follows the learning plan"}
+    ],
+  "subdomains": {
+      "Tutoring Sessions": {
+          "objects" : ["Student","Tutor","Progress Record","Subject","Tutoring Session","Homework Question"]
+      },
+      "Organization": {
+          "objects" : ["Parent","Academic Coordinator","Student","Availability","Tutoring Package","Learning Plan"]
+      },
+      "subdomain connections": ["Tutoring Sessions--Organization"]
+    },
+  "bounded contexts": {
+      "Tutoring Sessions": {
+          "derived from": "Tutoring Sessions Subdomain",
+          "objects" : ["Student","Tutor","Progress Record","Subject","Tutoring Session","Homework Question"],
+          "name changes" : []
+      },
+      "Organization": {
+          "derived from": "Organization Subdomain",
+          "objects" : ["Parent","Academic Coordinator","Child","Availability","Tutoring Package","Learning Plan"],
+          "name changes" : ["Student -> Child"]
+      }
+	}
+}
