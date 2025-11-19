@@ -27,13 +27,10 @@ class Bounded_Context:
             return ""
 
         name_changes = ""
-        print(self.meanings)
         for original in self.meanings.keys():
             change = f"\"{original} -> {self.meanings[original]}\","
-            print(change)
             name_changes += change
 
         name_changes = name_changes.removesuffix(",")
-        print(name_changes)
 
         return name_changes
