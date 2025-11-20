@@ -1,0 +1,72 @@
+{
+  "domain-information":
+  [	"A Customer browses available restaurants to decide what to order.",
+	"A Customer places a new food order to receive a meal at home.",
+	"A Restaurant Staff member accepts the order to begin meal preparation.",
+	"A Restaurant Staff member packages the meal to make it ready for pickup.",
+	"A Delivery Driver picks up the packaged meal to start the delivery.",
+	"A Delivery Driver updates the delivery status to inform the customer of progress.",
+	"A Delivery Driver delivers the meal to complete the order.",
+	"A Support Agent reviews a reported issue to understand the customer’s concern.",
+	"A Support Agent contacts the restaurant to verify details about a missing item.",
+	"A Support Agent issues a refund or credit to resolve the customer’s complaint."
+],
+  "domain objects": [
+      {"name":"Customer","description":"Person placing orders and receiving deliveries."},
+      {"name":"Restaurant","description":"Food provider offering meals to customers."},
+      {"name":"Food Order","description":"Order placed by a customer for a meal.","attributes":["Restaurant","Meal"]},
+      {"name":"Meal","description":"Prepared food item included in a food order."},
+      {"name":"Meal Package","description":"Packaged meal prepared for pickup.","attributes":["Food Order"]},
+      {"name":"Pick Up","description":"Event where a driver collects the meal package."},
+      {"name":"Delivery Driver","description":"Driver responsible for picking up and delivering orders."},
+      {"name":"Delivery","description":"Process of transporting a meal package to a customer.","attributes":["Delivery Status","Meal Package"]},
+      {"name":"Delivery Status","description":"State of the delivery"},
+      {"name":"Support Agent","description":"Staff member resolving customer issues."},
+      {"name":"Issue Report","description":"Customer-submitted problem related to an order."},
+      {"name":"Refund","description":"Compensation issued to a customer for a valid issue."},
+      {"name":"Restaurant Staff Member","description":"Staff preparing and packaging food orders."}
+    ],
+  "associations": [
+      {"from":"Customer","to":"Restaurant","description":"Customer browses available restaurants."},
+      {"from":"Customer","to":"Food Order","description":"Customer places a food order."},
+      {"from":"Restaurant Staff Member","to":"Food Order","description":"Restaurant Staff Member accepts the food order."},
+      {"from":"Restaurant Staff Member","to":"Meal Package","description":"Restaurant Staff Member packages the meal."},
+      {"from":"Delivery Driver","to":"Pick Up","description":"Delivery Driver performs the pickup."},
+      {"from":"Pick Up","to":"Meal Package","description":"Pick Up handles the meal package."},
+      {"from":"Delivery Driver","to":"Delivery","description":"Delivery Driver carries out the delivery."},
+      {"from":"Delivery","to":"Customer","description":"Delivery reaches the customer."},
+      {"from":"Customer","to":"Issue Report","description":"Customer submits an issue report."},
+      {"from":"Support Agent","to":"Issue Report","description":"Support Agent reviews the issue report."},
+      {"from":"Support Agent","to":"Refund","description":"Support Agent issues a refund."},
+      {"from":"Refund","to":"Customer","description":"Refund is granted to the customer."}
+    ],
+  "subdomains": {
+      "Ordering": {
+          "objects" : ["Customer","Restaurant Staff Member","Restaurant","Food Order","Meal"]
+      },
+      "Delivery": {
+          "objects" : ["Delivery Driver","Pick Up","Meal Package","Food Order","Meal","Delivery","Delivery Status"]
+      },
+      "Customer Issues": {
+          "objects" : ["Support Agent","Issue Report","Refund"]
+      },
+      "subdomain connections": ["Ordering--Delivery","Ordering--Customer Issues"]
+    },
+  "bounded contexts": {
+      "Ordering": {
+          "derived from": "Ordering Subdomain",
+          "objects" : ["Customer","Restaurant Staff Member","Restaurant","Food Order","Meal"],
+          "name changes" : []
+      },
+      "Delivery": {
+          "derived from": "Delivery Subdomain",
+          "objects" : ["Delivery Driver","Pick Up","Meal Package","Order Assignment","Item","Delivery","Delivery Status"],
+          "name changes" : ["Food Order -> Order Assignment","Meal -> Item"]
+      },
+      "Customer Issues": {
+          "derived from": "Customer Issues Subdomain",
+          "objects" : ["Support Agent","Issue Report","Refund"],
+          "name changes" : []
+      }
+	}
+}
