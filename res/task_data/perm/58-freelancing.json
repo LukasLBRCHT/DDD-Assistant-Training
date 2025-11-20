@@ -1,0 +1,90 @@
+{
+  "domain-information":
+  [	"A Freelancer creates a profile to showcase skills and experience to potential clients.",
+	"A Freelancer submits a proposal for a new project to secure work.",
+	"A Client posts a project description to find a suitable freelancer.",
+	"A Client reviews submitted proposals to select the best candidate for the project.",
+	"A Freelancer communicates with the client to clarify requirements before starting work.",
+	"A Freelancer delivers the completed work to meet the project deadline.",
+	"A Client provides feedback on the delivered work to indicate satisfaction or request revisions.",
+	"A Platform Manager verifies new project postings to ensure they meet platform guidelines.",
+	"A Platform Manager monitors payments to confirm freelancers are compensated correctly.",
+	"A Platform Manager handles reported disputes to resolve conflicts between freelancers and clients."
+],
+  "domain objects": [
+      {"name": "Freelancer", "description": "Independent worker offering services"},
+      {"name": "Profile", "description": "Freelancer Profile showing skills and experience", "attributes": ["Skill", "Experience"]},
+      {"name": "Skill", "description": "Freelancer capability or expertise"},
+      {"name": "Experience", "description": "Freelancer past work background"},
+      {"name": "Project Proposal", "description": "Freelancer submission for a project", "attributes": ["Deadline"]},
+      {"name": "Deadline", "description": "Time by which work must be completed"},
+      {"name": "Client", "description": "Person posting projects and hiring freelancers"},
+      {"name": "Project Description", "description": "Client description of required work"},
+      {"name": "Completed Work", "description": "Finished work delivered for a project"},
+      {"name": "Contact", "description": "Communication exchange between Client and Freelancer"},
+      {"name": "Feedback", "description": "Client evaluation of Completed Work", "attributes": ["Completed Work"]},
+      {"name": "Payment", "description": "Money paid for Completed Work", "attributes": ["Completed Work"]},
+      {"name": "Platform Manager", "description": "Administrator overseeing platform activity"},
+      {"name": "Platform Guidelines", "description": "Rules for acceptable platform use"},
+      {"name": "Verification", "description": "Platform Manager review of submissions"},
+      {"name": "Dispute Report", "description": "Complaint raised about a conflict"}
+    ],
+  "associations": [
+      {"from": "Freelancer", "to": "Profile", "description": "Freelancer creates Profile"},
+      {"from": "Freelancer", "to": "Project Proposal", "description": "Freelancer submits Project Proposal"},
+      {"from": "Client", "to": "Project Description", "description": "Client posts Project Description"},
+      {"from": "Project Description", "to": "Project Proposal", "description": "Project Description receives Project Proposal"},
+      {"from": "Freelancer", "to": "Contact", "description": "Freelancer sends Contact message"},
+      {"from": "Client", "to": "Contact", "description": "Client sends Contact message"},
+      {"from": "Freelancer", "to": "Completed Work", "description": "Freelancer produces Completed Work"},
+      {"from": "Completed Work", "to": "Client", "description": "Completed Work is delivered to Client"},
+      {"from": "Client", "to": "Feedback", "description": "Client gives Feedback"},
+      {"from": "Feedback", "to": "Freelancer", "description": "Feedback is shown to Freelancer"},
+      {"from": "Client", "to": "Payment", "description": "Client issues Payment"},
+      {"from": "Payment", "to": "Freelancer", "description": "Payment is transferred to Freelancer"},
+      {"from": "Platform Manager", "to": "Payment", "description": "Platform Manager monitors Payment"},
+      {"from": "Platform Manager", "to": "Verification", "description": "Platform Manager performs Verification"},
+      {"from": "Verification", "to": "Project Proposal", "description": "Verification checks Project Proposal"},
+      {"from": "Platform Manager", "to": "Platform Guidelines", "description": "Platform Manager enforces Platform Guidelines"},
+      {"from": "Platform Manager", "to": "Dispute Report", "description": "Platform Manager files Dispute Report"},
+      {"from": "Client", "to": "Dispute Report", "description": "Client submits Dispute Report"},
+      {"from": "Freelancer", "to": "Dispute Report", "description": "Freelancer submits Dispute Report"}
+    ],
+  "subdomains": {
+      "Freelancer Workspace": {
+          "objects" : ["Freelancer","Profile","Experience","Skill","Project Proposal","Deadline"]
+      },
+      "Client Commission": {
+          "objects" : ["Client","Project Description"]
+      },
+      "Project Execution": {
+          "objects" : ["Contact","Completed Work","Feedback","Payment"]
+      },
+      "Administration": {
+          "objects" : ["Platform Manager","Verification","Platform Guidelines","Dispute Report"]
+      },
+      "subdomain connections": ["Freelancer Workspace--Project Execution","Client Commission--Project Execution","Administration--Project Execution","Administration--Freelancer Workspace","Administration--Client Commission"]
+    },
+  "bounded contexts": {
+      "Freelancer Workspace": {
+          "derived from": "Freelancer Workspace Subdomain",
+          "objects" : ["Freelancer","Profile","Experience","Skill","Project Proposal","Deadline"],
+          "name changes" : []
+      },
+      "Client Commission": {
+          "derived from": "Client Commission Subdomain",
+          "objects" : ["Client","Project Description"],
+          "name changes" : []
+      },
+      "Project Execution": {
+          "derived from": "Project Execution Subdomain",
+          "objects" : ["Contact","Completed Work","Feedback","Payment"],
+          "name changes" : []
+      },
+      "Administration": {
+          "derived from": "Administration Subdomain",
+          "objects" : ["Platform Manager","Verification","Platform Guidelines","Dispute Report"],
+          "name changes" : []
+      }
+	}
+}
