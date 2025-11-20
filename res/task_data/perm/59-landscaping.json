@@ -1,0 +1,76 @@
+{
+  "domain-information":
+  [	"A Client requests a landscaping service to improve their garden or yard.",
+	"A Client provides details about their property so the designer can create a tailored plan.",
+	"A Landscape Designer assesses the property to develop a design concept.",
+	"A Landscape Designer prepares a project plan to outline required materials and tasks.",
+	"A Crew Member performs tasks according to the project plan.",
+	"A Crew Member reports low supply of materials to ensure the project can continue.",
+	"A Supply Manager orders new plants and tools to restock inventory.",
+	"A Supply Manager confirms delivery of landscaping materials to ensure readiness for upcoming projects.",
+	"A Landscape Designer reviews completed work to ensure it matches the original design."
+],
+  "domain objects": [
+      {"name": "Client", "description": "Person requesting landscaping services."},
+      {"name": "Landscaping Request", "description": "Initial request from a Client describing desired landscaping work.", "attributes": ["Property Details"]},
+      {"name": "Property Details", "description": "Information about the Client’s property relevant to design and planning."},
+      {"name": "Landscape Designer", "description": "Professional responsible for creating design concepts and project plans."},
+      {"name": "Design Concept", "description": "Proposed visual and functional layout for the Client’s landscape."},
+      {"name": "Project Plan", "description": "Detailed plan defining required Materials and Tasks for the project.", "attributes": ["Material", "Task"]},
+      {"name": "Material", "description": "Item such as plants or tools needed to complete landscaping tasks."},
+      {"name": "Task", "description": "Work unit required to carry out the Project Plan."},
+      {"name": "Crew Member", "description": "Worker performing Tasks defined in the Project Plan."},
+      {"name": "Supply Shortage Report", "description": "Report indicating insufficient Materials during project execution."},
+      {"name": "Supply Manager", "description": "Person responsible for monitoring inventory and ordering Materials."},
+      {"name": "Inventory", "description": "Collection of available Materials for ongoing and future projects.", "attributes": ["Material"]},
+      {"name": "Supply Order", "description": "Request sent to a Supplier to replenish needed Materials."},
+      {"name": "Supply Delivery", "description": "Shipment of Materials arriving from a Supplier."},
+      {"name": "Supplier", "description": "External provider fulfilling Supply Orders."},
+      {"name": "Landscaping Review", "description": "Evaluation by the Landscape Designer comparing completed work to the design."}
+    ],
+  "associations": [
+      {"from": "Client", "to": "Landscaping Request", "description": "Client submits a Landscaping Request to initiate a new project."},
+      {"from": "Landscape Designer", "to": "Landscaping Request", "description": "Landscape Designer reviews the Landscaping Request to understand client needs."},
+      {"from": "Landscape Designer", "to": "Design Concept", "description": "Landscape Designer creates a Design Concept based on project requirements."},
+      {"from": "Landscape Designer", "to": "Project Plan", "description": "Landscape Designer produces a Project Plan that specifies Tasks and Materials."},
+      {"from": "Design Concept", "to": "Project Plan", "description": "Design Concept informs the structure and content of the Project Plan."},
+      {"from": "Crew Member", "to": "Project Plan", "description": "Crew Member follows the Project Plan to perform the required Tasks."},
+      {"from": "Landscape Designer", "to": "Landscaping Review", "description": "Landscape Designer performs a Landscaping Review to verify project completion quality."},
+      {"from": "Crew Member", "to": "Supply Shortage Report", "description": "Crew Member creates a Supply Shortage Report when Materials are insufficient."},
+      {"from": "Supply Shortage Report", "to": "Supply Manager", "description": "Supply Shortage Report notifies the Supply Manager about low Materials."},
+      {"from": "Supply Manager", "to": "Supply Order", "description": "Supply Manager issues a Supply Order to obtain needed Materials."},
+      {"from": "Supply Order", "to": "Supplier", "description": "Supply Order requests Material fulfillment from the Supplier."},
+      {"from": "Supplier", "to": "Supply Delivery", "description": "Supplier provides a Supply Delivery to send Materials."},
+      {"from": "Supply Delivery", "to": "Supply Manager", "description": "Supply Delivery is received and confirmed by the Supply Manager."},
+      {"from": "Supply Manager", "to": "Inventory", "description": "Supply Manager updates Inventory with new Materials."}
+    ],
+  "subdomains": {
+      "Client Request": {
+          "objects" : ["Client","Landscaping Request","Property Details"]
+      },
+      "Service": {
+          "objects" : ["Landscape Designer","Crew Member","Design Concept","Project Plan","Material","Task","Landscaping Review"]
+      },
+      "Supplies": {
+          "objects" : ["Supply Manager","Supply Shortage Report","Inventory","Material","Supply Order","Supplier","Supply Delivery"]
+      },
+      "subdomain connections": ["Client Request--Service","Service--Supplies"]
+    },
+  "bounded contexts": {
+      "Client Request": {
+          "derived from": "Client Request Subdomain",
+          "objects" : ["Client","Landscaping Request","Property Details"],
+          "name changes" : []
+      },
+      "Service": {
+          "derived from": "Service Subdomain",
+          "objects" : ["Landscape Designer","Crew Member","Design Concept","Project Plan","Material","Task","Landscaping Review"],
+          "name changes" : []
+      },
+      "Supplies": {
+          "derived from": "Supplies Subdomain",
+          "objects" : ["Supply Manager","Supply Shortage Report","Inventory","Material Stock","Supply Order","Supplier","Supply Delivery"],
+          "name changes" : ["Material -> Material Stock"]
+      }
+	}
+}
