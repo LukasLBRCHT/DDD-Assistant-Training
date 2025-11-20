@@ -1,0 +1,85 @@
+{
+  "domain-information":
+  [	"A Store Clerk scans items at checkout to process the customer’s payment for the purchase.",
+	"A Store Clerk registers the bill for the purchase.",
+	"A Store Clerk deletes or alters an item in a purchase.",
+	"A Store Clerk reports low stock on certain items so they can be reordered.",
+	"A Store Manager supervises inventory logs for items to monitor stock levels and sales trends.",
+	"A Store Manager accesses recorded purchases to analyse customer behaviour.",
+	"A Store Manager creates a sales volume report.",
+	"A Store Manager places an order with the supplier to replenish needed products.",
+	"A Supplier delivers new stock to the store to maintain inventory.",
+	"A Supplier confirms delivery quantities to ensure the store receives the correct items.",
+	"A Store Manager adjusts shelf placement in the store layout based on product popularity to improve sales."
+],
+  "domain objects": [
+      {"name": "Store Clerk", "description": "Employee who processes purchases and manages frontline operations."},
+      {"name": "Customer", "description": "Person buying items at the store."},
+      {"name": "Item Scan", "description": "Recorded scan of an item during checkout."},
+      {"name": "Payment", "description": "Transfer of money from the customer for the purchase."},
+      {"name": "Purchase", "description": "Transaction containing selected store items and a bill.", "attributes": ["Store Item","Bill"]},
+      {"name": "Store Item", "description": "Product available for sale in the store.", "attributes": ["Price"]},
+      {"name": "Price", "description": "Cost assigned to a store item."},
+      {"name": "Bill", "description": "Charge summary for a completed purchase."},
+      {"name": "Low Stock Report", "description": "Notice indicating that a store item is running low."},
+      {"name": "Store Manager", "description": "Person overseeing store operations, inventory and reporting."},
+      {"name": "Inventory Log", "description": "Record of store item quantities and movement.", "attributes": ["Store Item"]},
+      {"name": "Replenishment Order", "description": "Order issued to supplier for more store items.", "attributes": ["Store Item"]},
+      {"name": "Supplier", "description": "External provider that supplies items to the store."},
+      {"name": "Stock Delivery", "description": "Arrival of ordered items from the supplier."},
+      {"name": "Sales Volume Report", "description": "Summary report of item sales over a given period."}
+    ],
+  "associations": [
+      {"from": "Store Clerk", "to": "Purchase", "description": "Store Clerk creates and updates the Purchase."},
+      {"from": "Store Clerk", "to": "Item Scan", "description": "Store Clerk performs an Item Scan."},
+      {"from": "Item Scan", "to": "Store Item", "description": "Item Scan references the scanned Store Item."},
+      {"from": "Customer", "to": "Payment", "description": "Customer issues the Payment."},
+      {"from": "Payment", "to": "Purchase", "description": "Payment finalizes the Purchase."},
+      {"from": "Store Clerk", "to": "Low Stock Report", "description": "Store Clerk creates the Low Stock Report."},
+      {"from": "Low Stock Report", "to": "Store Manager", "description": "Low Stock Report is delivered to the Store Manager."},
+      {"from": "Store Manager", "to": "Purchase", "description": "Store Manager reviews the Purchase."},
+      {"from": "Store Manager", "to": "Inventory Log", "description": "Store Manager consults the Inventory Log."},
+      {"from": "Store Manager", "to": "Replenishment Order", "description": "Store Manager creates the Replenishment Order."},
+      {"from": "Replenishment Order", "to": "Supplier", "description": "Replenishment Order is submitted to the Supplier."},
+      {"from": "Supplier", "to": "Stock Delivery", "description": "Supplier sends the Stock Delivery."},
+      {"from": "Stock Delivery", "to": "Store Manager", "description": "Stock Delivery is confirmed by the Store Manager."},
+      {"from": "Store Manager", "to": "Sales Volume Report", "description": "Store Manager generates the Sales Volume Report."}
+    ],
+  "subdomains": {
+      "Checkout": {
+          "objects" : ["Store Clerk","Customer","Item Scan","Purchase","Store Item","Bill","Payment"]
+      },
+      "Inventory Keeping": {
+          "objects" : ["Store Manager","Low Stock Report","Inventory Log","Store Item"]
+      },
+      "Sales Analysis": {
+          "objects" : ["Purchase","Sales Volume Report"]
+      },
+      "Restocking": {
+          "objects" : ["Replenishment Order","Store Item","Supplier","Stock Delivery"]
+      },
+      "subdomain connections": ["Checkout--Inventory Keeping","Checkout--Sales Analysis","Inventory Keeping--Restocking"]
+    },
+  "bounded contexts": {
+      "Checkout": {
+          "derived from": "Checkout Subdomain",
+          "objects" : ["Store Clerk","Customer","Item Scan","Purchase","Store Item","Bill","Payment"],
+          "name changes" : []
+      },
+      "Inventory Keeping": {
+          "derived from": "Inventory Keeping Subdomain",
+          "objects" : ["Store Manager","Low Stock Report","Inventory Log","Item Record"],
+          "name changes" : ["Store Item -> Item Record"]
+      },
+      "Sales Analysis": {
+          "derived from": "Sales Analysis Subdomain",
+          "objects" : ["Purchase Record","Sales Volume Report"],
+          "name changes" : ["Purchase -> Purchase Record"]
+      },
+      "Restocking": {
+          "derived from": "Restocking Subdomain",
+          "objects" : ["Replenishment Order","Ordered Item","Supplier","Stock Delivery"],
+          "name changes" : ["Store Item -> Ordered Item"]
+      }
+	}
+}
