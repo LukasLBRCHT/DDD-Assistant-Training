@@ -1,0 +1,69 @@
+{
+  "domain-information":
+  [	"A Seller lists an item for auction to attract potential bidders.",
+	"A Seller updates the item description to provide clearer details for the auction.",
+	"A Bidder searches for active auctions to find items of interest.",
+	"A Bidder places a bid on an item to compete for ownership.",
+	"A Bidder increases their bid to stay ahead of other bidders.",
+	"An Auction Manager reviews a new listing.",
+	"An Auction Manager starts the auction at the scheduled time to open bidding.",
+	"An Auction Manager monitors bidding activity to ensure everything runs smoothly.",
+	"An Auction Manager declares the winning bidder once the auction ends.",
+	"A Shipping Officer orchestrates the delivery of the item to the winning bidder.",
+	"A Seller confirms shipment of the sold item to the shipping officer so it can be completed."
+],
+  "domain objects": [
+      {"name": "Seller", "description": "Person offering an item for auction."},
+      {"name": "Listing", "description": "Public posting that offers an item for auction.", "attributes": ["Item"]},
+      {"name": "Item", "description": "Object being auctioned.", "attributes": ["Item Description"]},
+      {"name": "Item Description", "description": "Details that describe the item."},
+      {"name": "Bidder", "description": "Person placing bids on auctioned items."},
+      {"name": "Bid", "description": "Offer from a bidder to purchase the item."},
+      {"name": "Auction Manager", "description": "Person overseeing auction setup and bidding."},
+      {"name": "Auction", "description": "Process in which bidders compete for the item.", "attributes": ["Item","Scheduled Time","Winner"]},
+      {"name": "Scheduled Time", "description": "Planned start time of the auction."},
+      {"name": "Winner", "description": "Bidder who wins the auction."},
+      {"name": "Shipping Officer", "description": "Person coordinating delivery to the winner."},
+      {"name": "Delivery", "description": "Transfer of the sold item to the winning bidder.", "attributes": ["Item","Winner"]}
+    ],
+  "associations": [
+      {"from": "Seller", "to": "Listing", "description": "Seller creates the listing."},
+      {"from": "Seller", "to": "Item", "description": "Seller provides the item."},
+      {"from": "Auction Manager", "to": "Listing", "description": "Auction Manager reviews the listing."},
+      {"from": "Auction Manager", "to": "Auction", "description": "Auction Manager manages the auction."},
+      {"from": "Bidder", "to": "Listing", "description": "Bidder views the listing."},
+      {"from": "Bidder", "to": "Bid", "description": "Bidder submits a bid."},
+      {"from": "Auction Manager", "to": "Bid", "description": "Auction Manager monitors the bid."},
+      {"from": "Shipping Officer", "to": "Delivery", "description": "Shipping Officer performs the delivery."},
+      {"from": "Delivery", "to": "Bidder", "description": "Delivery is handed to the bidder."}
+    ],
+  "subdomains": {
+      "Item Listing": {
+          "objects" : ["Seller","Listing","Item","Item Description"]
+      },
+      "Auctioning": {
+          "objects" : ["Bidder","Auction Manger","Bid","Auction","Item","Scheduled Time","Winner"]
+      },
+      "Item Delivery": {
+          "objects" : ["Shipping Officer","Delivery","Item","Winner"]
+      },
+      "subdomain connections": ["Item Listing--Auctioning","Auctioning--Item Delivery"]
+    },
+  "bounded contexts": {
+      "Item Listing": {
+          "derived from": "Item Listing Subdomain",
+          "objects" : ["Seller","Listing","Item","Item Description"],
+          "name changes" : []
+      },
+      "Auctioning": {
+          "derived from": "Auctioning Subdomain",
+          "objects" : ["Bidder","Auction Manager","Bid","Auction","Auction Item","Scheduled Time","Winner"],
+          "name changes" : ["Item -> Auction Item"]
+      },
+      "Item Delivery": {
+          "derived from": "Item Delivery Subdomain",
+          "objects" : ["Shipping Officer","Delivery","Shipped Item","Recipient"],
+          "name changes" : ["Item -> Shipped Item","Winner -> Recipient"]
+      }
+	}
+}
