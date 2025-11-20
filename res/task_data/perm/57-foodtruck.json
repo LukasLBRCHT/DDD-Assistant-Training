@@ -1,0 +1,88 @@
+{
+  "domain-information":
+  [	"A Food Truck Owner plans the daily route to reach popular customer locations.",
+	"A Food Truck Owner updates the truck menu to edit items for the day.",
+	"A Food Truck Owner assigns chefs to a food truck.",
+	"A Chef prepares ingredients early to ensure timely service during operating hours.",
+	"A Chef cooks menu items as orders arrive to serve customers quickly.",
+	"A Chef registers a payment by a customer.",
+	"A Customer places an order for food to enjoy a meal from the food truck.",
+	"A Customer pays for the meal using a card or cash to complete the transaction.",
+	"A Supply Vendor receives a report by a chef that is running low on ingredients.",
+	"A Supply Vendor delivers fresh ingredients to the truck to maintain its stock levels.",
+	"A Supply Vendor confirms the delivery with the chef to ensure accuracy.",
+	"A Food Truck Owner reviews sales at the end of the day to track performance.",
+	"A Food Truck Owner adjusts future routes and menu items based on customer feedback."
+],
+  "domain objects": [
+      {"name":"Food Truck Owner","description":"Person who operates and manages the food truck daily"},
+      {"name":"Daily Route","description":"Planned path for the food truck to reach customer locations"},
+      {"name":"Food Truck","description":"Vehicle used to prepare and sell meals","attributes":["Daily Route","Menu","Stock Level"]},
+      {"name":"Menu","description":"List of items offered by the food truck","attributes":["Item"]},
+      {"name":"Item","description":"Individual food option on the menu","attributes":["Ingredient"]},
+      {"name":"Ingredient","description":"Component used to prepare items"},
+      {"name":"Stock Level","description":"Current quantity of each ingredient in the food truck","attributes":["Ingredient"]},
+      {"name":"Chef","description":"Person who prepares meals and manages ingredients"},
+      {"name":"Order","description":"Customer request for one or more items","attributes":["Item"]},
+      {"name":"Customer","description":"Person who places an order and pays for items"},
+      {"name":"Payment","description":"Transaction made by customer to purchase food"},
+      {"name":"Supply Vendor","description":"External provider of ingredients to the food truck"},
+      {"name":"Delivery","description":"Transport of ingredients from vendor to truck","attributes":["Ingredient"]},
+      {"name":"Feedback","description":"Customer opinions or suggestions about food or service"},
+      {"name":"Low Stock Report","description":"Notification about running low ingredients sent to vendor"}
+    ],
+  "associations": [
+      {"from":"Food Truck Owner","to":"Chef","description":"Food Truck Owner assigns Chef to the food truck"},
+      {"from":"Chef","to":"Food Truck","description":"Chef prepares meals using Food Truck"},
+      {"from":"Food Truck Owner","to":"Food Truck","description":"Food Truck Owner manages Food Truck details"},
+      {"from":"Chef","to":"Order","description":"Chef prepares items for Order"},
+      {"from":"Customer","to":"Order","description":"Customer places Order for food"},
+      {"from":"Chef","to":"Ingredient","description":"Chef uses Ingredient to prepare items"},
+      {"from":"Customer","to":"Payment","description":"Customer makes Payment for order"},
+      {"from":"Chef","to":"Payment","description":"Chef records Payment for order"},
+      {"from":"Customer","to":"Feedback","description":"Customer provides Feedback about service or food"},
+      {"from":"Food Truck Owner","to":"Feedback","description":"Food Truck Owner reviews Feedback"},
+      {"from":"Food Truck Owner","to":"Payment","description":"Food Truck Owner monitors Payment"},
+      {"from":"Chef","to":"Low Stock Report","description":"Chef reports Low Stock Report"},
+      {"from":"Low Stock Report","to":"Supply Vendor","description":"Low Stock Report notifies Supply Vendor"},
+      {"from":"Supply Vendor","to":"Delivery","description":"Supply Vendor delivers Delivery"},
+      {"from":"Chef","to":"Delivery","description":"Chef confirms Delivery from Supply Vendor"}
+    ],
+  "subdomains": {
+      "Truck Infrastructure": {
+          "objects" : ["Owner","Chef","Food Truck","Daily Route","Menu","Item","Stock Level","Ingredient"]
+      },
+      "Serving": {
+          "objects" : ["Chef","Customer","Order","Item","Payment"]
+      },
+      "Supplies": {
+          "objects" : ["Supply Vendor","Low Stock Report","Delivery","Ingredient"]
+      },
+      "Analytics": {
+          "objects" : ["Payment","Feedback"]
+      },
+      "subdomain connections": ["Truck Infrastructure--Serving","Serving--Analytics","Truck Infrastructure--Analytics","Truck Infrastructure--Supplies"]
+    },
+  "bounded contexts": {
+      "Truck Infrastructure": {
+          "derived from": "Truck Infrastructure Subdomain",
+          "objects" : ["Owner","Chef Assignment","Food Truck","Daily Route","Menu","Menu Item","Stock Level","Ingredient"],
+          "name changes" : ["Chef -> Chef Assignment","Item -> Menu Item"]
+      },
+      "Serving": {
+          "derived from": "Serving Subdomain",
+          "objects" : ["Chef","Customer","Order","Ordered Item","Payment"],
+          "name changes" : ["Item -> Ordered Item"]
+      },
+      "Supplies": {
+          "derived from": "Supplies Subdomain",
+          "objects" : ["Supply Vendor","Low Stock Report","Delivery","Ingredient Load"],
+          "name changes" : ["Ingredient -> Ingredient Load"]
+      },
+      "Analytics": {
+          "derived from": "Analytics Subdomain",
+          "objects" : ["Sales Record","Feedback"],
+          "name changes" : ["Payment -> Sales Record"]
+      }
+	}
+}
