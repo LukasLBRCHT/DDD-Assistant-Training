@@ -1,0 +1,15 @@
+A Customer submits a customization request to outline desired vehicle modifications.
+A Customer approves a proposed customization plan to confirm the budget.
+
+A Customization Specialist designs a customization plan consisting of customization tasks.
+A Customization Specialist evaluates the customer request to determine feasible modifications.
+A Customization Specialist prepares a work order to coordinate tasks with the technicians.
+
+A Technician performs customization tasks on the vehicle to implement the approved design.
+A Technician reports missing or depleted parts to avoid delays in the customization process.
+
+A Parts Manager checks inventory levels to verify whether parts required for upcoming jobs are available.
+A Parts Manager places an order for parts to support complex customization projects.
+
+A Quality Inspector reviews the completed vehicle to ensure modifications meet safety and design standards.
+A Quality Inspector issues a completion approval of the work order so the vehicle can be returned to the customer.

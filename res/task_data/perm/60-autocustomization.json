@@ -1,0 +1,90 @@
+{
+  "domain-information":
+  [	"A Customer submits a customization request to outline desired vehicle modifications.",
+	"A Customer approves a proposed customization plan to confirm the budget.",
+	"A Customization Specialist designs a customization plan consisting of customization tasks.",
+	"A Customization Specialist evaluates the customer request to determine feasible modifications.",
+	"A Customization Specialist prepares a work order to coordinate tasks with the technicians.",
+	"A Technician performs customization tasks on the vehicle to implement the approved design.",
+	"A Technician reports missing or depleted parts to avoid delays in the customization process.",
+	"A Parts Manager checks inventory levels to verify whether parts required for upcoming jobs are available.",
+	"A Parts Manager places an order for parts to support complex customization projects.",
+	"A Quality Inspector reviews the completed vehicle to ensure modifications meet safety and design standards.",
+	"A Quality Inspector issues a completion approval of the work order so the vehicle can be returned to the customer."
+],
+  "domain objects": [
+      {"name":  "Customer", "description": "Person requesting and approving vehicle customization"},
+      {"name":  "Customization Request", "description": "Description of the customer’s desired vehicle modifications"},
+      {"name":  "Vehicle", "description": "Customer’s vehicle that will be customized"},
+      {"name":  "Modification", "description": "Specific change or enhancement requested for the vehicle"},
+      {"name":  "Customization Plan", "description": "Proposed design including tasks and budget for customization"},
+      {"name":  "Customization Task", "description": "Action performed to modify the vehicle"},
+      {"name":  "Budget", "description": "Estimated cost for the planned customization"},
+      {"name":  "Customization Specialist", "description": "Expert designing the customization and preparing work orders"},
+      {"name":  "Work Order", "description": "Document assigning tasks to technicians"},
+      {"name":  "Technician", "description": "Person performing the customization tasks"},
+      {"name":  "Part Depletion Report", "description": "Notice that needed parts are missing or running low"},
+      {"name":  "Parts Manager", "description": "Person responsible for inventory and part orders"},
+      {"name":  "Inventory", "description": "Collection of available parts for customization work"},
+      {"name":  "Part", "description": "Component needed for vehicle modifications"},
+      {"name":  "Part Order", "description": "Request for new parts to restock inventory"},
+      {"name":  "Quality Inspector", "description": "Person checking the correctness and safety of modifications"},
+      {"name":  "Modification Review", "description": "Inspection of finished modifications on the vehicle"},
+      {"name":  "Completion Approval", "description": "Final confirmation that the work order is complete"}
+    ],
+  "associations": [
+      {"from": "Customer", "to": "Customization Request", "description": "Customer creates the Customization Request"},
+      {"from": "Customization Specialist", "to": "Customization Request", "description": "Customization Specialist evaluates the Customization Request"},
+      {"from": "Customization Specialist", "to": "Customization Plan", "description": "Customization Specialist creates the Customization Plan"},
+      {"from": "Customer", "to": "Customization Plan", "description": "Customer approves the Customization Plan"},
+      {"from": "Customization Specialist", "to": "Work Order", "description": "Customization Specialist issues the Work Order"},
+      {"from": "Work Order", "to": "Technician", "description": "Work Order assigns tasks to the Technician"},
+      {"from": "Technician", "to": "Customization Task", "description": "Technician performs the Customization Task"},
+      {"from": "Customization Task", "to": "Vehicle", "description": "Customization Task is applied to the Vehicle"},
+      {"from": "Quality Inspector", "to": "Modification Review", "description": "Quality Inspector performs the Modification Review"},
+      {"from": "Modification Review", "to": "Vehicle", "description": "Modification Review evaluates the Vehicle"},
+      {"from": "Quality Inspector", "to": "Completion Approval", "description": "Quality Inspector issues the Completion Approval"},
+      {"from": "Completion Approval", "to": "Work Order", "description": "Completion Approval validates the Work Order"},
+      {"from": "Technician", "to": "Part Depletion Report", "description": "Technician submits the Part Depletion Report"},
+      {"from": "Part Depletion Report", "to": "Parts Manager", "description": "Part Depletion Report notifies the Parts Manager"},
+      {"from": "Parts Manager", "to": "Inventory", "description": "Parts Manager updates the Inventory"},
+      {"from": "Parts Manager", "to": "Part Order", "description": "Parts Manager creates the Part Order"}
+    ],
+  "subdomains": {
+      "Planning": {
+          "objects" : ["Customer","Customization Request","Vehicle","Modification","Customization Plan","Customization Task","Budget"]
+      },
+      "Modification": {
+          "objects" : ["Customization Specialist","Customization Plan","Work Order","Technician","Customization Task"]
+      },
+      "Inspection": {
+          "objects" : ["Quality Inspector","Modification Review","Completion Approval"]
+      },
+      "Inventory Keeping": {
+          "objects" : ["Parts Manager","Part Depletion Report","Inventory","Part","Part Order"]
+      },
+      "subdomain connections": ["Planning--Modification","Inspection--Modification","Modification--Inventory Keeping"]
+    },
+  "bounded contexts": {
+      "Planning": {
+          "derived from": "Planning Subdomain",
+          "objects" : ["Customer","Customization Request","Vehicle","Modification","Customization Proposal","Planned Task","Budget"],
+          "name changes" : ["Customization Plan -> Customization Proposal","Customization Task -> Planned Task"]
+      },
+      "Modification": {
+          "derived from": "Modification Subdomain",
+          "objects" : ["Customization Specialist","Customization Plan","Work Order","Technician","Customization Task"],
+          "name changes" : []
+      },
+      "Inspection": {
+          "derived from": "Inspection Subdomain",
+          "objects" : ["Quality Inspector","Modification Review","Completion Approval"],
+          "name changes" : []
+      },
+      "Inventory Keeping": {
+          "derived from": "Inventory Keeping Subdomain",
+          "objects" : ["Parts Manager","Part Depletion Report","Inventory","Part","Part Order"],
+          "name changes" : []
+      }
+	}
+}
