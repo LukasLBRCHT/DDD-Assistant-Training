@@ -1,14 +1,15 @@
 A Customer requests a moving quote to understand the expected cost of relocating their belongings.
-A Customer schedules a moving date to secure the company’s availability for the relocation.
+A Customer schedules a moving date for the relocation as well as the locations for pick up and delivery.
 
+A Move Coordinator assess a moving quote for a customer.
 A Move Coordinator reviews the customer’s inventory list to determine the resources required for moving day.
 A Move Coordinator assigns a moving crew to ensure all tasks are covered for the scheduled relocation.
 
-A Packing Specialist packs fragile items carefully to prevent damage during transit.
+A Packing Specialist logs each box before transit.
 A Packing Specialist labels packed boxes so the delivery team can place them correctly at the new location.
 
-A Driver performs a vehicle inspection before departure to confirm the moving truck is safe for long-distance transport.
+A Driver assesses the route before departure.
 A Driver updates the delivery status during the trip to keep the coordinator informed of progress.
 
-A Crew Supervisor oversees loading activities to ensure heavy items are secured properly.
-A Crew Supervisor performs a final walkthrough of the old location to confirm nothing has been left behind.
+A Crew Supervisor confirms the delivery with the customer once the relocation is completed.
+A Crew Supervisor creates a report for the coordinator that summarizes the relocation services.

@@ -1,0 +1,80 @@
+{
+  "domain-information":
+  [	"A Customer requests a moving quote to understand the expected cost of relocating their belongings.",
+	"A Customer schedules a moving date for the relocation as well as the locations for pick up and delivery.",
+	"A Move Coordinator assess a moving quote for a customer.",
+	"A Move Coordinator reviews the customer’s inventory list to determine the resources required for moving day.",
+	"A Move Coordinator assigns a moving crew to ensure all tasks are covered for the scheduled relocation.",
+	"A Packing Specialist logs each box before transit.",
+	"A Packing Specialist labels packed boxes so the delivery team can place them correctly at the new location.",
+	"A Driver assesses the route before departure.",
+	"A Driver updates the delivery status during the trip to keep the coordinator informed of progress.",
+	"A Crew Supervisor confirms the delivery with the customer once the relocation is completed.",
+	"A Crew Supervisor creates a report for the coordinator that summarizes the relocation services."
+],
+  "domain objects": [
+      {"name": "Customer", "description": "person requesting and receiving relocation services", "attributes": ["Inventory List"]},
+      {"name": "Inventory List", "description": "detailed list of the customer’s items to be moved"},
+      {"name": "Moving Quote", "description": "estimated cost for the relocation"},
+      {"name": "Relocation", "description": "planned moving service for the customer", "attributes": ["Moving Date","Pick Up Location","Delivery Location"]},
+      {"name": "Moving Date", "description": "scheduled day for the move"},
+      {"name": "Pick Up Location", "description": "place where items are collected"},
+      {"name": "Delivery Location", "description": "place where items are delivered"},
+      {"name": "Move Coordinator", "description": "team member managing and overseeing the relocation process"},
+      {"name": "Moving Crew", "description": "team performing the physical moving tasks", "attributes": ["Packing Specialist","Driver","Crew Supervisor"]},
+      {"name": "Packing Specialist", "description": "crew member responsible for packing and labeling boxes"},
+      {"name": "Driver", "description": "crew member responsible for transport and route handling"},
+      {"name": "Crew Supervisor", "description": "crew member overseeing on site moving operations"},
+      {"name": "Box", "description": "packed container holding customer items", "attributes": ["Label"]},
+      {"name": "Label", "description": "marking used to identify a box and its destination"},
+      {"name": "Delivery", "description": "transport stage of the relocation", "attributes": ["Route","Delivery Status"]},
+      {"name": "Route", "description": "planned path from pick up to delivery", "attributes": ["Pick Up Location","Delivery Location"]},
+      {"name": "Delivery Status", "description": "progress info about the current delivery"},
+      {"name": "Delivery Confirmation", "description": "acknowledgment that delivery is complete"},
+      {"name": "Relocation Report", "description": "summary of the relocation created after completion"}
+    ],
+  "associations": [
+      {"from": "Customer", "to": "Moving Quote", "description": "Customer requests a Moving Quote to estimate the relocation"},
+      {"from": "Move Coordinator", "to": "Moving Quote", "description": "Move Coordinator reviews the Moving Quote for accuracy and approval"},
+      {"from": "Customer", "to": "Relocation", "description": "Customer schedules the Relocation for their move"},
+      {"from": "Move Coordinator", "to": "Relocation", "description": "Move Coordinator manages the details of the Relocation"},
+      {"from": "Move Coordinator", "to": "Inventory List", "description": "Move Coordinator checks the Inventory List to plan resources"},
+      {"from": "Move Coordinator", "to": "Moving Crew", "description": "Move Coordinator assigns the Moving Crew to handle the relocation"},
+      {"from": "Moving Crew", "to": "Relocation", "description": "Moving Crew carries out the tasks required for the Relocation"},
+      {"from": "Move Coordinator", "to": "Delivery", "description": "Move Coordinator oversees the Delivery stage of the relocation"},
+      {"from": "Driver", "to": "Delivery", "description": "Driver performs and updates the Delivery during transport"},
+      {"from": "Driver", "to": "Route", "description": "Driver follows the Route to complete the relocation"},
+      {"from": "Packing Specialist", "to": "Box", "description": "Packing Specialist prepares and labels each Box"},
+      {"from": "Crew Supervisor", "to": "Relocation Report", "description": "Crew Supervisor creates the Relocation Report after the move"},
+      {"from": "Relocation Report", "to": "Move Coordinator", "description": "Relocation Report is submitted to the Move Coordinator for review"},
+      {"from": "Crew Supervisor", "to": "Delivery Confirmation", "description": "Crew Supervisor records the Delivery Confirmation with the customer"},
+      {"from": "Customer", "to": "Delivery Confirmation", "description": "Customer acknowledges the Delivery Confirmation once the move is complete"}
+    ],
+  "subdomains": {
+      "Planning": {
+          "objects" : ["Customer","Inventory List","Moving Quote","Relocation","Moving Date","Pickup Location","Delivery Location","Moving Crew","Driver","Packaging Specialist","Crew Supervisor"]
+      },
+      "Transit": {
+          "objects" : ["Delivery","Delivery Status","Route","Pickup Location","Delivery Location"]
+      },
+      "Loading": {
+          "objects" : ["Box","Label"]
+      },
+      "Supervision": {
+          "objects" : ["Relocation Report","Delivery Confirmation"]
+      },
+      "subdomain connections": ["Planning--Transit","Planning--Loading","Planning--Supervision"]
+    },
+  "bounded contexts": {
+      "Planning": {
+          "derived from": "Planning Subdomain",
+          "objects" : ["Customer","Inventory List","Moving Quote","Relocation","Moving Date","Pickup Location","Delivery Location","Moving Crew","Driver","Packaging Specialist","Crew Supervisor"],
+          "name changes" : []
+      },
+      "Execution": {
+          "derived from": ["Transit Subdomain","Loading Subdomain","Supervision Subdomain"],
+          "objects" : ["Delivery","Delivery Status","Route","Route Start","Route Destination","Box","Label","Relocation Report","Delivery Confirmation"],
+          "name changes" : ["Pickup Location -> Route Start","Delivery Location -> Route Destination"]
+      }
+	}
+}
