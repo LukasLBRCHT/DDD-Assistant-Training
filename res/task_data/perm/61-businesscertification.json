@@ -1,0 +1,78 @@
+{
+  "domain-information":
+  [	"A Business Owner submits a certification application to request evaluation of their company.",
+	"A Business Owner uploads compliance documents to show their company meets required standards.",
+	"An Audit Coordinator reviews a certification application to assign a qualified auditor.",
+	"An Audit Coordinator schedules an on-site audit to ensure the business can be inspected properly.",
+	"An Auditor evaluates compliance documents to identify areas needing deeper investigation.",
+	"An Auditor performs an on-site audit to verify the business follows its documented processes.",
+	"An Auditor submits an audit report to summarise findings for the certification board and the compliance officer.",
+	"A Certification Board Member reviews an audit report to determine whether the company meets certification criteria.",
+	"A Certification Board Member issues a certification decision to approve or reject the application.",
+	"A Compliance Officer handles follow-up messaging to help businesses correct issues identified during an audit.",
+	"A Compliance Officer schedules an evaluation meeting with the business owner to discuss the audit."
+],
+  "domain objects": [
+      {"name": "Business Owner", "description": "Person submitting and managing the company’s certification request", "attributes": ["Company"]},
+      {"name": "Company", "description": "Business seeking certification"},
+      {"name": "Certification Application", "description": "Application used to request certification", "attributes": ["Compliance Document","Auditor"]},
+      {"name": "Compliance Document", "description": "File showing the company meets certain standards"},
+      {"name": "Auditor", "description": "Person reviewing documents and doing on site checks"},
+      {"name": "Audit Coordinator", "description": "Person assigning auditors and handling scheduling"},
+      {"name": "On Site Audit", "description": "Inspection at the company location"},
+      {"name": "Audit Report", "description": "Write up of the auditor’s findings"},
+      {"name": "Certification Board Member", "description": "Person deciding if the company gets certified"},
+      {"name": "Certification Decision", "description": "Outcome issued after reviewing the audit."},
+      {"name": "Compliance Officer", "description": "Person supporting the business with follow up steps"},
+      {"name": "Follow Up Messaging", "description": "Messages helping the business fix issues"},
+      {"name": "Evaluation Meeting", "description": "Meeting to talk through audit issues"}
+    ],
+  "associations": [
+      {"from": "Business Owner", "to": "Certification Application", "description": "Business Owner creates the Certification Application to begin the process"},
+      {"from": "Audit Coordinator", "to": "Certification Application", "description": "Audit Coordinator checks the Certification Application to assign an auditor"},
+      {"from": "Audit Coordinator", "to": "Auditor", "description": "Audit Coordinator assigns an Auditor to the case"},
+      {"from": "Auditor", "to": "Compliance Document", "description": "Auditor reviews each Compliance Document for compliance issues"},
+      {"from": "Auditor", "to": "On Site Audit", "description": "Auditor performs the On Site Audit at the company"},
+      {"from": "Auditor", "to": "Audit Report", "description": "Auditor creates the Audit Report after finishing the checks"},
+      {"from": "Audit Report", "to": "Compliance Officer", "description": "Audit Report is passed to the Compliance Officer for follow up"},
+      {"from": "Certification Board Member", "to": "Audit Report", "description": "Certification Board Member reviews the Audit Report to make a decision"},
+      {"from": "Certification Board Member", "to": "Certification Decision", "description": "Certification Board Member issues the Certification Decision"},
+      {"from": "Certification Decision", "to": "Certification Application", "description": "Certification Decision is tied to the Certification Application as its result"},
+      {"from": "Compliance Officer", "to": "Follow Up Messaging", "description": "Compliance Officer sends Follow Up Messaging to guide improvements"},
+      {"from": "Compliance Officer", "to": "Evaluation Meeting", "description": "Compliance Officer sets up the Evaluation Meeting with the business"},
+      {"from": "Business Owner", "to": "Follow Up Messaging", "description": "Business Owner receives the Follow Up Messaging for next steps"},
+      {"from": "Business Owner", "to": "Evaluation Meeting", "description": "Business Owner joins the Evaluation Meeting to review issues"}
+    ],
+  "subdomains": {
+      "Application": {
+          "objects" : ["Business Owner","Company","Certification Application","Compliance Document","Auditor"]
+      },
+      "Auditing": {
+          "objects" : ["Audit Coordinator","Auditor","On Site Audit","Audit Report"]
+      },
+      "Board Decision": {
+          "objects" : ["Certification Board Member","Certification Decision"]
+      },
+      "Client Affairs": {
+          "objects" : ["Compliance Officer","Follow Up Messaging","Evaluation Meeting"]
+      },
+      "subdomain connections": ["Application--Auditing","Auditing--Board Decision","Board Decision--Application","Auditing--Client Affairs","Application--Client Affairs"]
+    },
+  "bounded contexts": {
+      "Application": {
+          "derived from": "Application Subdomain",
+          "objects" : ["Business Owner","Company","Certification Application","Compliance Document","Auditor Assignment"],
+          "name changes" : ["Auditor -> Auditor Assignment"]
+      },
+      "Audit Examination": {
+          "derived from": ["Auditing Subdomain","Board Decision Subdomain"],
+          "objects" : ["Audit Coordinator","Auditor","On Site Audit","Audit Report","Certification Board Member","Certification Decision"],
+          "name changes" : []
+      },
+      "Client Affairs": {
+          "derived from": "Client Affairs Subdomain",
+          "objects" : ["Compliance Officer","Follow Up Messaging","Evaluation Meeting"],
+          "name changes" : []
+      }
+	}
+}
