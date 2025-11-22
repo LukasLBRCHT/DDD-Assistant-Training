@@ -1,0 +1,104 @@
+{
+  "domain-information":
+  [	"A Visitor buys an admission ticket to access the museum’s permanent and temporary exhibits.",
+	"A Visitor joins a guided tour to learn more about the significance of selected artifacts.",
+	"A Curator selects artifacts for a new exhibition to highlight a specific historical theme.",
+	"A Curator updates exhibit descriptions to ensure the information presented is accurate and engaging.",
+	"A Curator leads guided tours to educate visitors about the exhibition.",
+	"A Conservator evaluates an aging artifact to determine the level of restoration it requires.",
+	"A Conservator applies preservation treatments to protect fragile items from further deterioration.",
+	"An Education Coordinator arranges a workshop for school groups to support interactive learning.",
+	"An Education Coordinator prepares learning materials to help teachers integrate museum content into their classes.",
+	"A Museum Store Manager reviews sales trends to restock items that appeal to recent visitors.",
+	"A Museum Store Manager administrates merchandise items connected to the latest exhibits.",
+	"A Museum Coordinator creates a schedule containing exhibits and workshops."
+],
+  "domain objects": [
+      {"name": "Visitor", "description": "Person who comes to the museum"},
+      {"name": "Admission Ticket", "description": "Ticket that lets a visitor enter exhibits", "attributes": ["Exhibit"]},
+      {"name": "Guided Tour", "description": "Tour that gives visitors curated explanations"},
+      {"name": "Curator", "description": "Staff member who creates and manages exhibits"},
+      {"name": "Exhibit", "description": "Museum presentation that shows selected artifacts", "attributes": ["Artifact","Exhibit Description"]},
+      {"name": "Artifact", "description": "Historical or artistic item in the museum"},
+      {"name": "Exhibit Description", "description": "Text that explains an artifact or exhibit"},
+      {"name": "Conservator", "description": "Specialist who protects and restores artifacts"},
+      {"name": "Restoration Evaluation", "description": "Check of an artifact to see how much repair it needs"},
+      {"name": "Preservation Treatment", "description": "Work done to stabilize or protect an artifact"},
+      {"name": "Education Coordinator", "description": "Staff member who organizes workshops and learning offers"},
+      {"name": "Workshop", "description": "Interactive learning session for visitors or school groups", "attributes": ["Learning Material"]},
+      {"name": "Learning Material", "description": "Handouts or digital material used in workshops"},
+      {"name": "Museum Store Manager", "description": "Person who handles shop items and sales"},
+      {"name": "Sales Trends Review", "description": "Look at recent sales to decide what to restock"},
+      {"name": "Merchandise Item", "description": "Store product often linked to an exhibit", "attributes": ["Exhibit"]},
+      {"name": "Museum Coordinator", "description": "Person who oversees scheduling across the museum"},
+      {"name": "Museum Schedule", "description": "Plan that lists exhibitions and workshops", "attributes": ["Exhibit","Workshop"]}
+    ],
+  "associations": [
+      {"from": "Visitor", "to": "Admission Ticket", "description": "Visitor gets an Admission Ticket"},
+      {"from": "Visitor", "to": "Guided Tour", "description": "Visitor joins a Guided Tour"},
+      {"from": "Curator", "to": "Exhibit", "description": "Curator creates or updates an Exhibit"},
+      {"from": "Curator", "to": "Guided Tour", "description": "Curator leads or contributes to a Guided Tour"},
+      {"from": "Museum Coordinator", "to": "Museum Schedule", "description": "Museum Coordinator creates a Museum Schedule"},
+      {"from": "Education Coordinator", "to": "Workshop", "description": "Education Coordinator organizes a Workshop"},
+      {"from": "Conservator", "to": "Restoration Evaluation", "description": "Conservator performs a Restoration Evaluation"},
+      {"from": "Restoration Evaluation", "to": "Artifact", "description": "Restoration Evaluation examines an Artifact"},
+      {"from": "Conservator", "to": "Preservation Treatment", "description": "Conservator applies a Preservation Treatment"},
+      {"from": "Preservation Treatment", "to": "Artifact", "description": "Preservation Treatment is applied to an Artifact"},
+      {"from": "Museum Store Manager", "to": "Merchandise Item", "description": "Museum Store Manager manages Merchandise Item"},
+      {"from": "Museum Store Manager", "to": "Sales Trends Review", "description": "Museum Store Manager performs a Sales Trends Review"},
+      {"from": "Sales Trends Review", "to": "Merchandise Item", "description": "Sales Trends Review guides updates to Merchandise Item"}
+    ],
+  "subdomains": {
+      "Entry": {
+          "objects" : ["Visitor","Admission Ticket","Exhibit"]
+      },
+      "Exhibition": {
+          "objects" : ["Curator","Exhibit","Guided Tour","Artifact","Exhibit Description"]
+      },
+      "Preservation": {
+          "objects" : ["Conservator","Restoration Evaluation","Preservation Treatment","Artifact"]
+      },
+      "Merchandising": {
+          "objects" : ["Museum Store Manager","Merchandise Item","Exhibit","Sales Trends Review"]
+      },
+      "Scheduling": {
+          "objects" : ["Museum Coordinator","Museum Schedule","Exhibit","Workshop"]
+      },
+      "Workshops": {
+          "objects" : ["Education Coordinator","Workshop","Learning Material"]
+      },
+      "subdomain connections": ["Entry--Exhibition","Preservation--Exhibition","Merchandising--Exhibition","Scheduling--Exhibition","Scheduling--Workshops"]
+    },
+  "bounded contexts": {
+      "Entry": {
+          "derived from": "Entry Subdomain",
+          "objects" : ["Visitor","Admission Ticket","Exhibit Booking"],
+          "name changes" : ["Exhibit -> Exhibit Booking"]
+      },
+      "Exhibition": {
+          "derived from": "Exhibition Subdomain",
+          "objects" : ["Curator","Exhibit","Guided Tour","Artifact","Exhibit Description"],
+          "name changes" : []
+      },
+      "Preservation": {
+          "derived from": "Preservation Subdomain",
+          "objects" : ["Conservator","Restoration Evaluation","Preservation Treatment","Preservation Item"],
+          "name changes" : ["Artifact -> Preservation Item"]
+      },
+      "Merchandising": {
+          "derived from": "Merchandising Subdomain",
+          "objects" : ["Museum Store Manager","Merchandise Item","Item Theme","Sales Trends Review"],
+          "name changes" : ["Exhibit -> Item Theme"]
+      },
+      "Scheduling": {
+          "derived from": "Scheduling Subdomain",
+          "objects" : ["Museum Coordinator","Museum Schedule","Exhibit Period","Workshop Appointment"],
+          "name changes" : ["Exhibit -> Exhibit Period","Workshop -> Workshop Appointment"]
+      },
+      "Workshops": {
+          "derived from": "Workshops Subdomain",
+          "objects" : ["Education Coordinator","Workshop","Learning Material"],
+          "name changes" : []
+      }
+	}
+}
