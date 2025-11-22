@@ -1,0 +1,101 @@
+{
+  "domain-information":
+  [	"A Guest purchases a day pass to enter the park and gain access to all major attractions.",
+	"A Guest checks in at an attraction.",
+	"A Guest reserves a ride time slot to avoid long waiting lines during peak hours.",
+	"A Ride Operator registers a guest checking in.",
+	"A Ride Operator performs a safety check on a roller coaster to ensure the ride is ready for guests.",
+	"A Ride Operator assists guests boarding a ride to maintain safety and steady throughput.",
+	"A Maintenance Technician inspects a malfunctioning attraction to diagnose issues before reopening.",
+	"A Maintenance Technician orders replacement parts when a repair requires specialized components.",
+	"An Entertainment Manager schedules live shows at certain attractions throughout the day.",
+	"An Entertainment Manager coordinates with performers to adjust show timing in response to crowd levels.",
+	"A Park Administrator is in contact with all theme park staff, receiving and sending messages.",
+	"A Park Administrator evaluates customer feedback."
+],
+  "domain objects": [
+      {"name": "Guest", "description": "person visiting the park with access to attractions"},
+      {"name": "Day Pass", "description": "ticket that lets a guest enter the park"},
+      {"name": "Check In", "description": "record of a guest entering an attraction"},
+      {"name": "Attraction", "description": "ride or show location in the park", "attributes": ["Ride Time Slot"]},
+      {"name": "Ride Time Slot", "description": "reserved time window for a guest to ride"},
+      {"name": "Ride Operator", "description": "staff member running and supervising a ride"},
+      {"name": "Safety Check", "description": "quick check to make sure a ride is safe to run"},
+      {"name": "Maintenance Technician", "description": "staff member handling attraction repairs"},
+      {"name": "Malfunction Inspection", "description": "review of a broken attraction to find issues"},
+      {"name": "Replacement Part Order", "description": "request for parts needed to fix an attraction"},
+      {"name": "Entertainment Manager", "description": "staff coordinating live shows and performers"},
+      {"name": "Live Show", "description": "scheduled performance linked to an attraction", "attributes": ["Performer","Attraction"]},
+      {"name": "Performer", "description": "person taking part in a live show"},
+      {"name": "Park Administrator", "description": "staff overseeing operations and communication"},
+      {"name": "Messaging", "description": "communication exchanged between park staff"},
+      {"name": "Customer Feedback", "description": "input from guests about their experience"}
+    ],
+  "associations": [
+      {"from": "Guest", "to": "Day Pass", "description": "Guest purchases or uses a Day Pass"},
+      {"from": "Guest", "to": "Check In", "description": "Guest creates a Check In at an attraction"},
+      {"from": "Guest", "to": "Ride Time Slot", "description": "Guest reserves a Ride Time Slot"},
+      {"from": "Ride Operator", "to": "Attraction", "description": "Ride Operator manages an Attraction"},
+      {"from": "Ride Operator", "to": "Safety Check", "description": "Ride Operator performs a Safety Check"},
+      {"from": "Safety Check", "to": "Attraction", "description": "Safety Check verifies an Attraction is safe"},
+      {"from": "Ride Operator", "to": "Check In", "description": "Ride Operator registers a Check In"},
+      {"from": "Check In", "to": "Attraction", "description": "Check In links a Guest to an Attraction"},
+      {"from": "Maintenance Technician", "to": "Malfunction Inspection", "description": "Maintenance Technician runs a Malfunction Inspection"},
+      {"from": "Malfunction Inspection", "to": "Attraction", "description": "Malfunction Inspection examines an Attraction"},
+      {"from": "Maintenance Technician", "to": "Replacement Part Order", "description": "Maintenance Technician creates a Replacement Part Order"},
+      {"from": "Entertainment Manager", "to": "Live Show", "description": "Entertainment Manager schedules a Live Show"},
+      {"from": "Entertainment Manager", "to": "Performer", "description": "Entertainment Manager coordinates with a Performer"},
+      {"from": "Park Administrator", "to": "Customer Feedback", "description": "Park Administrator reviews Customer Feedback"},
+      {"from": "Guest", "to": "Customer Feedback", "description": "Guest provides Customer Feedback"},
+      {"from": "Park Administrator", "to": "Messaging", "description": "Park Administrator sends or receives Messaging"},
+      {"from": "Ride Operator", "to": "Messaging", "description": "Ride Operator participates in Messaging"},
+      {"from": "Maintenance Technician", "to": "Messaging", "description": "Maintenance Technician participates in Messaging"},
+      {"from": "Entertainment Manager", "to": "Messaging", "description": "Entertainment Manager participates in Messaging"},
+      {"from": "Performer", "to": "Messaging", "description": "Performer participates in Messaging"}
+    ],
+  "subdomains": {
+      "Booking": {
+          "objects" : ["Guest","Day Pass","Check In","Ride Time Slot"]
+      },
+      "Ride Operation": {
+          "objects" : ["Ride Operator","Attraction","Safety Check","Ride Time Slot"]
+      },
+      "Maintenance": {
+          "objects" : ["Maintenance Technician","Malfunction Inspection","Replacement Part Order"]
+      },
+      "Live Shows": {
+          "objects" : ["Entertainment Manager","Performer","Live Show","Attraction"]
+      },
+      "Administration": {
+          "objects" : ["Park Administrator","Customer Feedback","Messaging"]
+      },
+      "subdomain connections": ["Booking--Ride Operation","Maintenance--Ride Operation","Live Shows--Ride Operation","Administration--All Subdomains"]
+    },
+  "bounded contexts": {
+      "Booking": {
+          "derived from": "Booking Subdomain",
+          "objects" : ["Guest","Day Pass","Check In","Time Slot Booking"],
+          "name changes" : ["Ride Time Slot -> Time Slot Booking"]
+      },
+      "Ride Operation": {
+          "derived from": "Ride Operation Subdomain",
+          "objects" : ["Ride Operator","Attraction","Safety Check","Ride Time Slot"],
+          "name changes" : []
+      },
+      "Maintenance": {
+          "derived from": "Maintenance Subdomain",
+          "objects" : ["Maintenance Technician","Malfunction Inspection","Replacement Part Order"],
+          "name changes" : []
+      },
+      "Live Shows": {
+          "derived from": "Live Shows Subdomain",
+          "objects" : ["Entertainment Manager","Performer","Live Show","Show Venue"],
+          "name changes" : ["Attraction -> Show Venue"]
+      },
+      "Administration": {
+          "derived from": "Administration Subdomain",
+          "objects" : ["Park Administrator","Customer Feedback","Messaging"],
+          "name changes" : []
+      }
+	}
+}
