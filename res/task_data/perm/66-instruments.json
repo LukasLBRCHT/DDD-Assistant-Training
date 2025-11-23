@@ -1,0 +1,86 @@
+{
+  "domain-information":
+  [	"A Customer asks for help choosing an instrument to find one that fits their skill level and music style.",
+	"A Customer signs a rental agreement to use an instrument for a short period before committing to a purchase.",
+	"A Sales Associate evaluates the customer’s needs to recommend suitable brands and models.",
+	"A Sales Associate prepares a rental package so the instrument is ready for pickup on the same day.",
+	"A Repair Technician inspects a damaged instrument to diagnose issues that affect playability.",
+	"A Repair Technician performs adjustments and repairs to restore the instrument to proper condition.",
+	"An Inventory Manager checks stock levels to ensure commonly rented or purchased instruments are available.",
+	"An Inventory Manager logs incoming shipments to update the store’s catalog for the sales team.",
+	"A Quality Specialist checks instruments before they go on display to guarantee they meet store standards.",
+	"A Quality Specialist verifies repaired instruments to confirm they are ready for customer pickup."
+],
+  "domain objects": [
+      {"name": "Customer", "description": "Person looking to rent or buy an instrument"},
+      {"name": "Instrument", "description": "Music item offered for rental or purchase", "attributes": ["Brand","Model"]},
+      {"name": "Brand", "description": "Maker of an instrument"},
+      {"name": "Model", "description": "Specific version of an instrument"},
+      {"name": "Rental Package", "description": "Set of items prepared for an instrument rental", "attributes": ["Rental Agreement"]},
+      {"name": "Rental Agreement", "description": "Terms the Customer accepts for renting"},
+      {"name": "Purchase", "description": "Customer’s decision to buy an instrument"},
+      {"name": "Sales Associate", "description": "Staff member helping customers choose instruments"},
+      {"name": "Repair Technician", "description": "Person fixing damaged instruments"},
+      {"name": "Inspection", "description": "Initial check of instrument condition"},
+      {"name": "Repair", "description": "Work done to restore an instrument"},
+      {"name": "Inventory Manager", "description": "Person managing stock and incoming instruments"},
+      {"name": "Stock Levels", "description": "Current availability of instruments", "attributes": ["Instrument"]},
+      {"name": "Shipment", "description": "Incoming delivery of instruments"},
+      {"name": "Store Catalogue", "description": "List of instruments available for sale or rental", "attributes": ["Instrument"]},
+      {"name": "Quality Specialist", "description": "Person checking instruments for quality"},
+      {"name": "Standard Check", "description": "Quality test for instruments before display"},
+      {"name": "Repair Confirmation", "description": "Final approval that a Repair is complete"}
+    ],
+  "associations": [
+      {"from": "Customer", "to": "Instrument", "description": "Customer looks at an Instrument to decide what fits their needs"},
+      {"from": "Sales Associate", "to": "Instrument", "description": "Sales Associate recommends an Instrument"},
+      {"from": "Customer", "to": "Rental Package", "description": "Customer receives a Rental Package for temporary use"},
+      {"from": "Rental Package", "to": "Instrument", "description": "Rental Package includes the Instrument"},
+      {"from": "Customer", "to": "Purchase", "description": "Customer makes a Purchase decision"},
+      {"from": "Purchase", "to": "Instrument", "description": "Purchase is tied to a chosen Instrument"},
+      {"from": "Sales Associate", "to": "Rental Package", "description": "Sales Associate prepares the Rental Package"},
+      {"from": "Sales Associate", "to": "Purchase", "description": "Sales Associate processes the Purchase"},
+      {"from": "Repair Technician", "to": "Inspection", "description": "Repair Technician performs the Inspection"},
+      {"from": "Inspection", "to": "Instrument", "description": "Inspection checks the Instrument"},
+      {"from": "Repair Technician", "to": "Repair", "description": "Repair Technician carries out the Repair"},
+      {"from": "Repair", "to": "Instrument", "description": "Repair work is applied to the Instrument"},
+      {"from": "Quality Specialist", "to": "Standard Check", "description": "Quality Specialist performs the Standard Check"},
+      {"from": "Standard Check", "to": "Instrument", "description": "Standard Check evaluates the Instrument"},
+      {"from": "Quality Specialist", "to": "Repair Confirmation", "description": "Quality Specialist issues the Repair Confirmation"},
+      {"from": "Repair Confirmation", "to": "Repair", "description": "Repair Confirmation validates the Repair"},
+      {"from": "Inventory Manager", "to": "Stock Levels", "description": "Inventory Manager reviews Stock Levels"},
+      {"from": "Inventory Manager", "to": "Store Catalogue", "description": "Inventory Manager updates the Store Catalogue"},
+      {"from": "Inventory Manager", "to": "Shipment", "description": "Inventory Manager logs the Shipment"},
+      {"from": "Shipment", "to": "Store Catalogue", "description": "Shipment adds new items to the Store Catalogue"},
+      {"from": "Sales Associate", "to": "Store Catalogue", "description": "Sales Associate browses the Store Catalogue"}
+    ],
+  "subdomains": {
+      "Sales": {
+          "objects" : ["Customer","Sales Associate","Instrument","Brand","Model","Rental Package","Rental Agreement","Purchase"]
+      },
+      "Quality Assurance": {
+          "objects" : ["Repair Technician","Quality Specialist","Inspection","Repair","Repair Confirmation","Instrument"]
+      },
+      "Inventory Keeping": {
+          "objects" : ["Inventory Manager","Stock Levels","Instrument","Store Catalogue","Shipment"]
+      },
+      "subdomain connections": ["Sales--Inventory Keeping","Sales--Quality Assurance","Quality Assurance--Inventory Keeping"]
+    },
+  "bounded contexts": {
+      "Sales": {
+          "derived from": "Sales Subdomain",
+          "objects" : ["Customer","Sales Associate","Instrument","Brand","Model","Rental Package","Rental Agreement","Purchase"],
+          "name changes" : []
+      },
+      "Quality Assurance": {
+          "derived from": "Quality Assurance Subdomain",
+          "objects" : ["Repair Technician","Quality Specialist","Inspection","Repair","Repair Confirmation","Asset"],
+          "name changes" : ["Instrument -> Asset"]
+      },
+      "Inventory Keeping": {
+          "derived from": "Inventory Keeping Subdomain",
+          "objects" : ["Inventory Manager","Stock Levels","Instrument Record","Store Catalogue","Shipment"],
+          "name changes" : ["Instrument -> Instrument Record"]
+      }
+	}
+}
