@@ -10,5 +10,5 @@ A Safety Officer files a hazard report to document issues that could affect plan
 A Fuel Coordinator schedules fuel deliveries to maintain an adequate supply for continuous production.
 A Fuel Coordinator reviews fuel usage data to identify irregular consumption patterns.
 
-A Grid Controller requests a production increase to stabilize the grid during peak hours.
+A Grid Controller requests a production increase from the operator to stabilize the grid during peak hours.
 A Grid Controller confirms a power-output change to maintain balance across connected regions.

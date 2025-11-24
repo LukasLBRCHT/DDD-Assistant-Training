@@ -1,0 +1,79 @@
+{
+  "domain-information":
+  [	"A Plant Operator adjusts generation levels to match the daily electricity demand.",
+	"A Plant Operator records operational readings to track performance across the facility.",
+	"A Maintenance Technician performs routine inspections to prevent machinery failures.",
+	"A Maintenance Technician replaces worn components to keep the turbines running efficiently.",
+	"A Safety Officer conducts a safety check to ensure all procedures are followed before maintenance begins.",
+	"A Safety Officer files a hazard report to document issues that could affect plant operations.",
+	"A Fuel Coordinator schedules fuel deliveries to maintain an adequate supply for continuous production.",
+	"A Fuel Coordinator reviews fuel usage data to identify irregular consumption patterns.",
+	"A Grid Controller requests a production increase from the operator to stabilize the grid during peak hours.",
+	"A Grid Controller confirms a power-output change to maintain balance across connected regions."
+],
+  "domain objects": [
+      {"name": "Plant Operator", "description": "person running daily plant operations"},
+      {"name": "Operational Reading", "description": "logged data showing how equipment is performing"},
+      {"name": "Maintenance Technician", "description": "person handling inspections and repairs"},
+      {"name": "Routine Inspection", "description": "regular check to spot wear or issues early"},
+      {"name": "Component Replacement", "description": "swap of worn parts to keep equipment working"},
+      {"name": "Machinery", "description": "plant equipment involved in generation and fuel use", "attributes": ["Fuel Usage Data","Generation Level"]},
+      {"name": "Fuel Usage Data", "description": "info showing how much fuel the machinery consumes"},
+      {"name": "Generation Level", "description": "current output level of the machinery"},
+      {"name": "Safety Officer", "description": "person ensuring safety rules are followed"},
+      {"name": "Safety Check", "description": "confirmation that conditions are safe before work"},
+      {"name": "Hazard Report", "description": "record describing risks found in the plant"},
+      {"name": "Fuel Coordinator", "description": "person managing fuel supply and usage"},
+      {"name": "Fuel Delivery", "description": "scheduled shipment of fuel to the plant"},
+      {"name": "Grid Controller", "description": "external controller requesting output changes"},
+      {"name": "Production Increase Request", "description": "ask from the grid controller to raise output"},
+      {"name": "Power Output Change", "description": "actual adjustment made to machinery output"}
+    ],
+  "associations": [
+      {"from": "Plant Operator", "to": "Generation Level", "description": "Plant Operator adjusts the Generation Level"},
+      {"from": "Plant Operator", "to": "Operational Reading", "description": "Plant Operator records an Operational Reading"},
+      {"from": "Operational Reading", "to": "Machinery", "description": "Operational Reading describes the Machinery"},
+      {"from": "Grid Controller", "to": "Production Increase Request", "description": "Grid Controller issues a Production Increase Request"},
+      {"from": "Production Increase Request", "to": "Plant Operator", "description": "Production Increase Request is sent to the Plant Operator"},
+      {"from": "Grid Controller", "to": "Power Output Change", "description": "Grid Controller confirms a Power Output Change"},
+      {"from": "Power Output Change", "to": "Machinery", "description": "Power Output Change affects the Machinery"},
+      {"from": "Fuel Coordinator", "to": "Fuel Delivery", "description": "Fuel Coordinator schedules a Fuel Delivery"},
+      {"from": "Fuel Coordinator", "to": "Fuel Usage Data", "description": "Fuel Coordinator reviews the Fuel Usage Data"},
+      {"from": "Maintenance Technician", "to": "Routine Inspection", "description": "Maintenance Technician performs a Routine Inspection"},
+      {"from": "Routine Inspection", "to": "Machinery", "description": "Routine Inspection is done on the Machinery"},
+      {"from": "Maintenance Technician", "to": "Component Replacement", "description": "Maintenance Technician performs a Component Replacement"},
+      {"from": "Component Replacement", "to": "Machinery", "description": "Component Replacement is applied to the Machinery"},
+      {"from": "Safety Officer", "to": "Safety Check", "description": "Safety Officer performs a Safety Check"},
+      {"from": "Safety Check", "to": "Component Replacement", "description": "Safety Check is required before Component Replacement"},
+      {"from": "Safety Check", "to": "Routine Inspection", "description": "Safety Check is required before a Routine Inspection"}
+    ],
+  "subdomains": {
+      "Generation": {
+          "objects" : ["Plant Operator","Machinery","Generation Level","Operational Reading","Grid Controller","Power Output Change","Production Increase Request"]
+      },
+      "Fueling": {
+          "objects" : ["Fuel Coordinator","Fuel Usage Data","Machinery","Fuel Delivery"]
+      },
+      "Inspection": {
+          "objects" : ["Maintenance Technician","Safety Officer","Routine Inspection","Component Replacement","Machinery","Safety Check","Hazard Report"]
+      },
+      "subdomain connections": ["Generation--Fueling","Generation--Inspection","Fueling--Inspection"]
+    },
+  "bounded contexts": {
+      "Generation": {
+          "derived from": "Generation Subdomain",
+          "objects" : ["Plant Operator","Generator","Generation Level","Operational Reading","Grid Controller","Power Output Change","Production Increase Request"],
+          "name changes" : ["Machinery -> Generator"]
+      },
+      "Fueling": {
+          "derived from": "Fueling Subdomain",
+          "objects" : ["Fuel Coordinator","Fuel Usage Data","Unit","Fuel Delivery"],
+          "name changes" : ["Machinery -> Unit"]
+      },
+      "Inspection": {
+          "derived from": "Inspection Subdomain",
+          "objects" : ["Maintenance Technician","Safety Officer","Routine Inspection","Component Replacement","Machinery","Safety Check","Hazard Report"],
+          "name changes" : []
+      }
+	}
+}
