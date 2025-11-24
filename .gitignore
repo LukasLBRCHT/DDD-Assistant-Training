@@ -4,3 +4,4 @@
 .idea
 /src/sandbox/
 /res/base_data/domain_objects
+/src/data_handling/generic_domains.py
