@@ -1,0 +1,103 @@
+{
+  "domain-information":
+  [	"A Field Surveyor collects soil samples near the project site to document current environmental conditions",
+	"A Field Surveyor notes unusual water discoloration to alert the assessment team of a potential contamination source",
+	"A Wildlife Biologist monitors local bird activity to understand how the planned project might disrupt nesting patterns",
+	"A Wildlife Biologist compares recent habitat observations with past records to detect early signs of ecosystem stress",
+	"A Regulatory Analyst reviews environmental regulations to determine which legal requirements apply to the developer’s project",
+	"A Regulatory Analyst prepares a compliance checklist to guide the assessment team through mandatory evaluation steps",
+	"A Project Developer submits a site blueprint to request an official environmental impact evaluation",
+	"A Project Developer clarifies the planned construction timeline so the assessment team can align their reporting schedule",
+	"An Environmental Report Writer compiles survey data into a draft impact report for the developer",
+	"An Environmental Report Writer adjusts the final recommendations after receiving feedback from the regulatory review"
+],
+  "domain objects": [
+      {"name": "Field Surveyor", "description": "person who gathers on site measurements and observations"},
+      {"name": "Soil Sample", "description": "collected material used to document conditions at the project site", "attributes": ["Project Site"]},
+      {"name": "Project Site", "description": "geographic area where the project is planned", "attributes": ["Local Bird Activity","Site Blueprint"]},
+      {"name": "Local Bird Activity", "description": "record of bird presence and behavior near the project site"},
+      {"name": "Site Blueprint", "description": "plan drawing submitted for environmental evaluation"},
+      {"name": "Project", "description": "planned development that must undergo environmental review", "attributes": ["Project Site","Construction Timeline Plan","Legal Requirements"]},
+      {"name": "Construction Timeline Plan", "description": "planned schedule for project construction"},
+      {"name": "Legal Requirements", "description": "rules that the project must follow under environmental law"},
+      {"name": "Contamination Alert", "description": "notification about a possible pollution source"},
+      {"name": "Wildlife Biologist", "description": "specialist who studies habitat and species conditions"},
+      {"name": "Habitat Observation", "description": "note on ecosystem or species behavior around the site"},
+      {"name": "Regulatory Analyst", "description": "expert who interprets environmental regulations"},
+      {"name": "Environmental Regulations", "description": "laws and rules that govern environmental protection"},
+      {"name": "Compliance Checklist", "description": "list of steps the assessment team must complete"},
+      {"name": "Project Developer", "description": "party submitting the project for evaluation"},
+      {"name": "Environmental Report Writer", "description": "person who prepares the environmental impact report"},
+      {"name": "Draft Impact Report", "description": "initial version of the environmental impact analysis", "attributes": ["Survey Data"]},
+      {"name": "Survey Data", "description": "information collected during field and habitat surveys"},
+      {"name": "Regulatory Review", "description": "review of project details against environmental regulations"},
+      {"name": "Assessment Team", "description": "group coordinating evaluation tasks and schedules"},
+      {"name": "Reporting Schedule", "description": "timeline for preparing and delivering assessment outputs"}
+    ],
+  "associations": [
+      {"from": "Field Surveyor", "to": "Soil Sample", "description": "Field Surveyor collects Soil Sample for analysis"},
+      {"from": "Field Surveyor", "to": "Contamination Alert", "description": "Field Surveyor creates Contamination Alert when noticing unusual conditions"},
+      {"from": "Contamination Alert", "to": "Assessment Team", "description": "Contamination Alert informs Assessment Team of a potential issue"},
+      {"from": "Assessment Team", "to": "Reporting Schedule", "description": "Assessment Team defines Reporting Schedule for the evaluation"},
+      {"from": "Regulatory Analyst", "to": "Compliance Checklist", "description": "Regulatory Analyst prepares Compliance Checklist for required steps"},
+      {"from": "Compliance Checklist", "to": "Assessment Team", "description": "Compliance Checklist guides Assessment Team activities"},
+      {"from": "Project Developer", "to": "Project", "description": "Project Developer submits Project for review"},
+      {"from": "Project Developer", "to": "Site Blueprint", "description": "Project Developer provides Site Blueprint for assessment"},
+      {"from": "Project Developer", "to": "Construction Timeline Plan", "description": "Project Developer shares Construction Timeline Plan with evaluators"},
+      {"from": "Construction Timeline Plan", "to": "Assessment Team", "description": "Construction Timeline Plan helps Assessment Team plan their work"},
+      {"from": "Wildlife Biologist", "to": "Local Bird Activity", "description": "Wildlife Biologist records Local Bird Activity near the site"},
+      {"from": "Wildlife Biologist", "to": "Habitat Observation", "description": "Wildlife Biologist creates Habitat Observation during field study"},
+      {"from": "Habitat Observation", "to": "Project Site", "description": "Habitat Observation describes conditions at the Project Site"},
+      {"from": "Regulatory Analyst", "to": "Legal Requirements", "description": "Regulatory Analyst identifies Legal Requirements for the project"},
+      {"from": "Regulatory Analyst", "to": "Environmental Regulations", "description": "Regulatory Analyst reviews Environmental Regulations to interpret rules"},
+      {"from": "Regulatory Analyst", "to": "Regulatory Review", "description": "Regulatory Analyst conducts Regulatory Review for the project"},
+      {"from": "Regulatory Review", "to": "Environmental Report Writer", "description": "Regulatory Review informs Environmental Report Writer of compliance needs"},
+      {"from": "Environmental Report Writer", "to": "Draft Impact Report", "description": "Environmental Report Writer produces Draft Impact Report"},
+      {"from": "Draft Impact Report", "to": "Project Developer", "description": "Draft Impact Report is delivered back to Project Developer"}
+    ],
+  "subdomains": {
+      "Assessment": {
+          "objects" : ["Assessment Team","Reporting Schedule","Compliance Checklist","Contamination Alert"]
+      },
+      "Field Survey": {
+          "objects" : ["Field Surveyor","Soil Sample","Project Site"]
+      },
+      "Project Development": {
+          "objects" : ["Project Developer","Project","Project Site","Site Blueprint","Construction Timeline Plan"]
+      },
+      "Wildlife Observation": {
+          "objects" : ["Wildlife Biologist","Habitat Observation","Local Bird Activity","Project Site"]
+      },
+      "Regulations": {
+          "objects" : ["Regulatory Analyst","Environmental Report Writer","Legal Requirements","Environmental Regulations","Regulatory Review","Draft Impact Report","Survey Data"]
+      },
+      "subdomain connections": ["Field Survey--Project Development","Wildlife Observation--Project Development","Regulations--Project Development","Project Development--Assessment","Field Survey--Assessment","Regulations--Assessment"]
+    },
+  "bounded contexts": {
+      "Assessment": {
+          "derived from": "Assessment Subdomain",
+          "objects" : ["Assessment Team","Reporting Schedule","Compliance Checklist","Contamination Alert"],
+          "name changes" : []
+      },
+      "Field Survey": {
+          "derived from": "Field Survey Subdomain",
+          "objects" : ["Field Surveyor","Soil Sample","Extraction Site"],
+          "name changes" : ["Project Site -> Extraction Site"]
+      },
+      "Project Development": {
+          "derived from": "Project Development Subdomain",
+          "objects" : ["Project Developer","Project","Project Site","Site Blueprint","Construction Timeline Plan"],
+          "name changes" : []
+      },
+      "Wildlife Observation": {
+          "derived from": "Wildlife Observation Subdomain",
+          "objects" : ["Wildlife Biologist","Habitat Observation","Local Bird Activity","Habitat Area"],
+          "name changes" : ["Project Site -> Habitat Area"]
+      },
+      "Regulations": {
+          "derived from": "Regulations Subdomain",
+          "objects" : ["Regulatory Analyst","Environmental Report Writer","Legal Requirements","Environmental Regulations","Regulatory Review","Draft Impact Report","Survey Data"],
+          "name changes" : []
+      }
+	}
+}
