@@ -1,0 +1,78 @@
+{
+  "domain-information":
+  [	"A Customer browses the catalog and compares skincare product models",
+	"A Customer purchases a skincare product",
+	"A Customer leaves a review of their purchased skincare product",
+	"A Sales Associate guides customers through product options and explains key features to help them make informed choices",
+	"A Sales Associate processes purchases and coordinates deliveries to ensure customers receive their skincare products promptly",
+	"A Product Specialist evaluates new skincare product models and recommends additions to the catalog based on trends and customer feedback",
+	"A Product Specialist writes detailed descriptions and usage tips to help customers understand each model",
+	"An Inventory Manager monitors stock levels in the warehouse system and reorders popular skincare products to prevent shortages",
+	"An Inventory Manager updates the warehouse system when shipments arrive to keep availability accurate",
+	"An Inventory Manager tracks returns and restocks skincare products or accessories to maintain proper inventory"
+],
+  "domain objects": [
+      {"name":"Customer", "description":"Person who explores products and buys skincare products"},
+      {"name":"Catalogue", "description":"Collection of skincare product models offered to customers", "attributes":["Skincare Product Model"]},
+      {"name":"Skincare Product Model", "description":"Specific model type listed in the catalog", "attributes":["Description"]},
+      {"name":"Description", "description":"Text explaining features or usage of a skincare product model"},
+      {"name":"Skincare Product", "description":"Physical skincare product purchased or delivered", "attributes":["Skincare Product Model"]},
+      {"name":"Review", "description":"Customer feedback about a purchased skincare product", "attributes":["Skincare Product"]},
+      {"name":"Sales Associate", "description":"Employee helping customers choose and buy skincare products"},
+      {"name":"Purchase", "description":"Record of a customer buying a skincare product"},
+      {"name":"Delivery", "description":"Process of sending a purchased skincare product to a customer"},
+      {"name":"Product Specialist", "description":"Expert evaluating models and refining catalog content"},
+      {"name":"Inventory Manager", "description":"Employee overseeing stock and warehouse data"},
+      {"name":"Stock Levels", "description":"Information showing how many skincare products are available", "attributes":["Skincare Product"]},
+      {"name":"Reorder", "description":"Action of requesting new stock for low-quantity skincare products"},
+      {"name":"Shipment", "description":"Incoming delivery of skincare products or accessories to the warehouse"},
+      {"name":"Warehouse System", "description":"System tracking product availability and stock data", "attributes":["Stock Levels"]}
+    ],
+  "associations": [
+      {"from":"Customer", "to":"Catalogue", "description":"Customer looks through the Catalogue"},
+      {"from":"Customer", "to":"Purchase", "description":"Customer makes a Purchase"},
+      {"from":"Sales Associate", "to":"Purchase", "description":"Sales Associate helps complete the Purchase"},
+      {"from":"Purchase", "to":"Skincare Product", "description":"Purchase includes a Skincare Product"},
+      {"from":"Sales Associate", "to":"Delivery", "description":"Sales Associate arranges the Delivery"},
+      {"from":"Delivery", "to":"Skincare Product", "description":"Delivery sends the Skincare Product"},
+      {"from":"Customer", "to":"Delivery", "description":"Customer receives the Delivery"},
+      {"from":"Customer", "to":"Review", "description":"Customer writes a Review"},
+      {"from":"Product Specialist", "to":"Catalogue", "description":"Product Specialist updates the Catalogue"},
+      {"from":"Product Specialist", "to":"Skincare Product Model", "description":"Product Specialist evaluates the Skincare Product Model"},
+      {"from":"Product Specialist", "to":"Description", "description":"Product Specialist creates the Description"},
+      {"from":"Inventory Manager", "to":"Warehouse System", "description":"Inventory Manager works with the Warehouse System"},
+      {"from":"Inventory Manager", "to":"Stock Levels", "description":"Inventory Manager checks the Stock Levels"},
+      {"from":"Inventory Manager", "to":"Reorder", "description":"Inventory Manager triggers a Reorder"},
+      {"from":"Inventory Manager", "to":"Shipment", "description":"Inventory Manager handles the Shipment"},
+      {"from":"Shipment", "to":"Warehouse System", "description":"Shipment updates the Warehouse System"}
+    ],
+  "subdomains": {
+      "Sale": {
+          "objects" : ["Customer","Sales Associate","Skincare Product","Purchase","Delivery","Review"]
+      },
+      "Cataloguing": {
+          "objects" : ["Product Specialist","Catalogue","Skincare Product Model","Description"]
+      },
+      "Inventory Keeping": {
+          "objects" : ["Inventory Manager","Warehouse System","Stock Levels","Skincare Product","Reorder","Shipment"]
+      },
+      "subdomain connections": ["Sale-Cataloguing","Inventory Keeping-Cataloguing"]
+    },
+  "bounded contexts": {
+      "Sale": {
+          "derived from": "Sale Subdomain",
+          "objects" : ["Customer","Sales Associate","Purchased Skincare Product","Purchase","Delivery","Review"],
+          "name changes" : ["Skincare Product -> Purchased Skincare Product"]
+      },
+      "Cataloguing": {
+          "derived from": "Cataloguing Subdomain",
+          "objects" : ["Product Specialist","Catalogue","Skincare Product Model","Description"],
+          "name changes" : []
+      },
+      "Inventory Keeping": {
+          "derived from": "Inventory Keeping Subdomain",
+          "objects" : ["Inventory Manager","Warehouse System","Stock Levels","Skincare Product Record","Reorder","Shipment"],
+          "name changes" : ["Skincare Product -> Skincare Product Record"]
+      }
+	}
+}

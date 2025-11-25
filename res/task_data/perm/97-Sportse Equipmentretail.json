@@ -1,0 +1,78 @@
+{
+  "domain-information":
+  [	"A Customer browses the catalog and compares sportse equipment models",
+	"A Customer purchases a sportse equipment",
+	"A Customer leaves a review of their purchased sportse equipment",
+	"A Sales Associate guides customers through product options and explains key features to help them make informed choices",
+	"A Sales Associate processes purchases and coordinates deliveries to ensure customers receive their sportse equipment promptly",
+	"A Product Specialist evaluates new sportse equipment models and recommends additions to the catalog based on trends and customer feedback",
+	"A Product Specialist writes detailed descriptions and usage tips to help customers understand each model",
+	"An Inventory Manager monitors stock levels in the warehouse system and reorders popular sportse equipment to prevent shortages",
+	"An Inventory Manager updates the warehouse system when shipments arrive to keep availability accurate",
+	"An Inventory Manager tracks returns and restocks sportse equipment or accessories to maintain proper inventory"
+],
+  "domain objects": [
+      {"name":"Customer", "description":"Person who explores products and buys sportse equipment"},
+      {"name":"Catalogue", "description":"Collection of sportse equipment models offered to customers", "attributes":["Sportse Equipment Model"]},
+      {"name":"Sportse Equipment Model", "description":"Specific model type listed in the catalog", "attributes":["Description"]},
+      {"name":"Description", "description":"Text explaining features or usage of a sportse equipment model"},
+      {"name":"Sportse Equipment", "description":"Physical sportse equipment purchased or delivered", "attributes":["Sportse Equipment Model"]},
+      {"name":"Review", "description":"Customer feedback about a purchased sportse equipment", "attributes":["Sportse Equipment"]},
+      {"name":"Sales Associate", "description":"Employee helping customers choose and buy sportse equipment"},
+      {"name":"Purchase", "description":"Record of a customer buying a sportse equipment"},
+      {"name":"Delivery", "description":"Process of sending a purchased sportse equipment to a customer"},
+      {"name":"Product Specialist", "description":"Expert evaluating models and refining catalog content"},
+      {"name":"Inventory Manager", "description":"Employee overseeing stock and warehouse data"},
+      {"name":"Stock Levels", "description":"Information showing how many sportse equipment are available", "attributes":["Sportse Equipment"]},
+      {"name":"Reorder", "description":"Action of requesting new stock for low-quantity sportse equipment"},
+      {"name":"Shipment", "description":"Incoming delivery of sportse equipment or accessories to the warehouse"},
+      {"name":"Warehouse System", "description":"System tracking product availability and stock data", "attributes":["Stock Levels"]}
+    ],
+  "associations": [
+      {"from":"Customer", "to":"Catalogue", "description":"Customer looks through the Catalogue"},
+      {"from":"Customer", "to":"Purchase", "description":"Customer makes a Purchase"},
+      {"from":"Sales Associate", "to":"Purchase", "description":"Sales Associate helps complete the Purchase"},
+      {"from":"Purchase", "to":"Sportse Equipment", "description":"Purchase includes a Sportse Equipment"},
+      {"from":"Sales Associate", "to":"Delivery", "description":"Sales Associate arranges the Delivery"},
+      {"from":"Delivery", "to":"Sportse Equipment", "description":"Delivery sends the Sportse Equipment"},
+      {"from":"Customer", "to":"Delivery", "description":"Customer receives the Delivery"},
+      {"from":"Customer", "to":"Review", "description":"Customer writes a Review"},
+      {"from":"Product Specialist", "to":"Catalogue", "description":"Product Specialist updates the Catalogue"},
+      {"from":"Product Specialist", "to":"Sportse Equipment Model", "description":"Product Specialist evaluates the Sportse Equipment Model"},
+      {"from":"Product Specialist", "to":"Description", "description":"Product Specialist creates the Description"},
+      {"from":"Inventory Manager", "to":"Warehouse System", "description":"Inventory Manager works with the Warehouse System"},
+      {"from":"Inventory Manager", "to":"Stock Levels", "description":"Inventory Manager checks the Stock Levels"},
+      {"from":"Inventory Manager", "to":"Reorder", "description":"Inventory Manager triggers a Reorder"},
+      {"from":"Inventory Manager", "to":"Shipment", "description":"Inventory Manager handles the Shipment"},
+      {"from":"Shipment", "to":"Warehouse System", "description":"Shipment updates the Warehouse System"}
+    ],
+  "subdomains": {
+      "Sale": {
+          "objects" : ["Customer","Sales Associate","Sportse Equipment","Purchase","Delivery","Review"]
+      },
+      "Cataloguing": {
+          "objects" : ["Product Specialist","Catalogue","Sportse Equipment Model","Description"]
+      },
+      "Inventory Keeping": {
+          "objects" : ["Inventory Manager","Warehouse System","Stock Levels","Sportse Equipment","Reorder","Shipment"]
+      },
+      "subdomain connections": ["Sale-Cataloguing","Inventory Keeping-Cataloguing"]
+    },
+  "bounded contexts": {
+      "Sale": {
+          "derived from": "Sale Subdomain",
+          "objects" : ["Customer","Sales Associate","Purchased Sportse Equipment","Purchase","Delivery","Review"],
+          "name changes" : ["Sportse Equipment -> Purchased Sportse Equipment"]
+      },
+      "Cataloguing": {
+          "derived from": "Cataloguing Subdomain",
+          "objects" : ["Product Specialist","Catalogue","Sportse Equipment Model","Description"],
+          "name changes" : []
+      },
+      "Inventory Keeping": {
+          "derived from": "Inventory Keeping Subdomain",
+          "objects" : ["Inventory Manager","Warehouse System","Stock Levels","Sportse Equipment Record","Reorder","Shipment"],
+          "name changes" : ["Sportse Equipment -> Sportse Equipment Record"]
+      }
+	}
+}

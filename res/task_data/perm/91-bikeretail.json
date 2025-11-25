@@ -1,0 +1,78 @@
+{
+  "domain-information":
+  [	"A Customer browses the catalog and compares bike models",
+	"A Customer purchases a bike",
+	"A Customer leaves a review of their purchased bike",
+	"A Sales Associate guides customers through product options and explains key features to help them make informed choices",
+	"A Sales Associate processes purchases and coordinates deliveries to ensure customers receive their bikes promptly",
+	"A Product Specialist evaluates new bike models and recommends additions to the catalog based on trends and customer feedback",
+	"A Product Specialist writes detailed descriptions and usage tips to help customers understand each model",
+	"An Inventory Manager monitors stock levels in the warehouse system and reorders popular bikes to prevent shortages",
+	"An Inventory Manager updates the warehouse system when shipments arrive to keep availability accurate",
+	"An Inventory Manager tracks returns and restocks bikes or accessories to maintain proper inventory"
+],
+  "domain objects": [
+      {"name":"Customer", "description":"Person who explores products and buys bikes"},
+      {"name":"Catalogue", "description":"Collection of bike models offered to customers", "attributes":["Bike Model"]},
+      {"name":"Bike Model", "description":"Specific model type listed in the catalog", "attributes":["Description"]},
+      {"name":"Description", "description":"Text explaining features or usage of a bike model"},
+      {"name":"Bike", "description":"Physical bike purchased or delivered", "attributes":["Bike Model"]},
+      {"name":"Review", "description":"Customer feedback about a purchased bike", "attributes":["Bike"]},
+      {"name":"Sales Associate", "description":"Employee helping customers choose and buy bikes"},
+      {"name":"Purchase", "description":"Record of a customer buying a bike"},
+      {"name":"Delivery", "description":"Process of sending a purchased bike to a customer"},
+      {"name":"Product Specialist", "description":"Expert evaluating models and refining catalog content"},
+      {"name":"Inventory Manager", "description":"Employee overseeing stock and warehouse data"},
+      {"name":"Stock Levels", "description":"Information showing how many bikes are available", "attributes":["Bike"]},
+      {"name":"Reorder", "description":"Action of requesting new stock for low-quantity bikes"},
+      {"name":"Shipment", "description":"Incoming delivery of bikes or accessories to the warehouse"},
+      {"name":"Warehouse System", "description":"System tracking product availability and stock data", "attributes":["Stock Levels"]}
+    ],
+  "associations": [
+      {"from":"Customer", "to":"Catalogue", "description":"Customer looks through the Catalogue"},
+      {"from":"Customer", "to":"Purchase", "description":"Customer makes a Purchase"},
+      {"from":"Sales Associate", "to":"Purchase", "description":"Sales Associate helps complete the Purchase"},
+      {"from":"Purchase", "to":"Bike", "description":"Purchase includes a Bike"},
+      {"from":"Sales Associate", "to":"Delivery", "description":"Sales Associate arranges the Delivery"},
+      {"from":"Delivery", "to":"Bike", "description":"Delivery sends the Bike"},
+      {"from":"Customer", "to":"Delivery", "description":"Customer receives the Delivery"},
+      {"from":"Customer", "to":"Review", "description":"Customer writes a Review"},
+      {"from":"Product Specialist", "to":"Catalogue", "description":"Product Specialist updates the Catalogue"},
+      {"from":"Product Specialist", "to":"Bike Model", "description":"Product Specialist evaluates the Bike Model"},
+      {"from":"Product Specialist", "to":"Description", "description":"Product Specialist creates the Description"},
+      {"from":"Inventory Manager", "to":"Warehouse System", "description":"Inventory Manager works with the Warehouse System"},
+      {"from":"Inventory Manager", "to":"Stock Levels", "description":"Inventory Manager checks the Stock Levels"},
+      {"from":"Inventory Manager", "to":"Reorder", "description":"Inventory Manager triggers a Reorder"},
+      {"from":"Inventory Manager", "to":"Shipment", "description":"Inventory Manager handles the Shipment"},
+      {"from":"Shipment", "to":"Warehouse System", "description":"Shipment updates the Warehouse System"}
+    ],
+  "subdomains": {
+      "Sale": {
+          "objects" : ["Customer","Sales Associate","Bike","Purchase","Delivery","Review"]
+      },
+      "Cataloguing": {
+          "objects" : ["Product Specialist","Catalogue","Bike Model","Description"]
+      },
+      "Inventory Keeping": {
+          "objects" : ["Inventory Manager","Warehouse System","Stock Levels","Bike","Reorder","Shipment"]
+      },
+      "subdomain connections": ["Sale-Cataloguing","Inventory Keeping-Cataloguing"]
+    },
+  "bounded contexts": {
+      "Sale": {
+          "derived from": "Sale Subdomain",
+          "objects" : ["Customer","Sales Associate","Purchased Bike","Purchase","Delivery","Review"],
+          "name changes" : ["Bike -> Purchased Bike"]
+      },
+      "Cataloguing": {
+          "derived from": "Cataloguing Subdomain",
+          "objects" : ["Product Specialist","Catalogue","Bike Model","Description"],
+          "name changes" : []
+      },
+      "Inventory Keeping": {
+          "derived from": "Inventory Keeping Subdomain",
+          "objects" : ["Inventory Manager","Warehouse System","Stock Levels","Bike Record","Reorder","Shipment"],
+          "name changes" : ["Bike -> Bike Record"]
+      }
+	}
+}
