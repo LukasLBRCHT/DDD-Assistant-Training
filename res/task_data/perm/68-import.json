@@ -1,0 +1,104 @@
+{
+  "domain-information":
+  [	"A Procurement Manager requests a price quote from an overseas supplier to compare options for a new product line",
+	"A Procurement Manager reviews a supplier’s compliance documents to ensure the goods meet local import rules",
+	"A Supplier sends a proforma invoice to confirm the product cost and shipping terms",
+	"A Supplier adjusts the shipment schedule after receiving the buyer’s updated delivery expectations",
+	"A Logistics Coordinator books international freight with a carrier to secure space on an upcoming vessel",
+	"A Logistics Coordinator tracks the carrier’s progress to update the buyer on expected arrival time",
+	"A Customs Specialist prepares a customs declaration to make sure the goods can legally enter the country",
+	"A Customs Specialist checks the product classification codes to avoid delays during the border inspection",
+	"A Warehouse Receiver inspects the delivered goods to verify that quantities match the import documents",
+	"A Warehouse Receiver logs the received shipment into inventory so the order can be released to the buyer"
+],
+  "domain objects": [
+      {"name": "Procurement Manager", "description": "role that handles buying activities and contacts suppliers"},
+      {"name": "Price Quote Request", "description": "request sent to a supplier asking for pricing and terms"},
+      {"name": "Supplier", "description": "party that sells goods and provides documents"},
+      {"name": "Compliance Document", "description": "papers proving the goods meet import and safety rules"},
+      {"name": "Local Import Rules", "description": "regulations the goods must follow in the destination country"},
+      {"name": "Proforma Invoice", "description": "initial invoice showing product cost and shipping terms", "attributes": ["Product Cost", "Shipping Terms"]},
+      {"name": "Product Cost", "description": "price charged for the goods"},
+      {"name": "Shipping Terms", "description": "conditions that define who pays and handles transport"},
+      {"name": "Shipment Schedule", "description": "supplier’s planned timeline for sending the goods"},
+      {"name": "Delivery Expectation", "description": "buyer’s desired arrival time for the goods"},
+      {"name": "Buyer", "description": "organization receiving and paying for the goods"},
+      {"name": "Logistics Coordinator", "description": "role that arranges transport and tracks freight"},
+      {"name": "International Freight Booking", "description": "reservation for cargo transport with a carrier", "attributes": ["Carrier"]},
+      {"name": "Carrier", "description": "company that physically transports the shipment"},
+      {"name": "Arrival Update", "description": "status info about when the shipment is expected to arrive"},
+      {"name": "Customs Specialist", "description": "role that handles the paperwork for clearing goods at the border"},
+      {"name": "Code Check", "description": "verification of product classification codes for customs"},
+      {"name": "Warehouse Receiver", "description": "role that inspects and logs goods when they arrive"},
+      {"name": "Inventory", "description": "stock records that show what goods are available", "attributes": ["Shipment"]},
+      {"name": "Shipment", "description": "set of goods transported together", "attributes": ["Customs Declaration", "International Freight Booking", "Shipment Schedule"]},
+      {"name": "Customs Declaration", "description": "document submitted to customs describing the goods"}
+    ],
+  "associations": [
+      {"from": "Procurement Manager", "to": "Local Import Rules", "description": "Procurement Manager checks Local Import Rules when evaluating suppliers"},
+      {"from": "Procurement Manager", "to": "Price Quote Request", "description": "Procurement Manager creates a Price Quote Request and sends it out"},
+      {"from": "Procurement Manager", "to": "Compliance Document", "description": "Procurement Manager reviews Compliance Document sent by suppliers"},
+      {"from": "Supplier", "to": "Proforma Invoice", "description": "Supplier issues a Proforma Invoice for the buyer"},
+      {"from": "Supplier", "to": "Compliance Document", "description": "Supplier provides Compliance Document for their goods"},
+      {"from": "Price Quote Request", "to": "Supplier", "description": "Price Quote Request is addressed to the Supplier"},
+      {"from": "Supplier", "to": "Shipment Schedule", "description": "Supplier prepares a Shipment Schedule for the order"},
+      {"from": "Proforma Invoice", "to": "Buyer", "description": "Proforma Invoice is sent to the Buyer"},
+      {"from": "Buyer", "to": "Delivery Expectation", "description": "Buyer sets a Delivery Expectation for the shipment"},
+      {"from": "Supplier", "to": "Delivery Expectation", "description": "Supplier adjusts plans based on the Delivery Expectation"},
+      {"from": "Warehouse Receiver", "to": "Inventory", "description": "Warehouse Receiver updates Inventory after inspecting goods"},
+      {"from": "Shipment", "to": "Buyer", "description": "Shipment is ultimately destined for the Buyer"},
+      {"from": "Customs Specialist", "to": "Customs Declaration", "description": "Customs Specialist prepares the Customs Declaration"},
+      {"from": "Customs Specialist", "to": "Code Check", "description": "Customs Specialist performs a Code Check for correct classification"},
+      {"from": "Code Check", "to": "Shipment", "description": "Code Check applies to the Shipment being cleared"},
+      {"from": "Logistics Coordinator", "to": "International Freight Booking", "description": "Logistics Coordinator creates the International Freight Booking"},
+      {"from": "Logistics Coordinator", "to": "Carrier", "description": "Logistics Coordinator interacts with the Carrier for booking"},
+      {"from": "Logistics Coordinator", "to": "Arrival Update", "description": "Logistics Coordinator produces an Arrival Update"},
+      {"from": "Arrival Update", "to": "Buyer", "description": "Arrival Update informs the Buyer about shipment timing"},
+      {"from": "Arrival Update", "to": "Shipment", "description": "Arrival Update describes status of a Shipment"}
+    ],
+  "subdomains": {
+      "Contracting": {
+          "objects" : ["Supplier","Buyer","Proforma Invoice","Product Cost","Shipping Terms","Delivery Expectation","Shipment Schedule"]
+      },
+      "Customs": {
+          "objects" : ["Customs Specialist","Customs Declaration","Code Check","Shipment"]
+      },
+      "Freight Logistics": {
+          "objects" : ["Logistics Coordinator","International Freight Booking","Carrier","Shipment","Arrival Update"]
+      },
+      "Reception": {
+          "objects" : ["Warehouse Receiver","Inventory","Shipment"]
+      },
+      "Compliance Evaluation": {
+          "objects" : ["Procurement Manager","Local Import Rules","Price Quote Request","Compliance Document"]
+      },
+      "subdomain connections": ["Contracting--Compliance Evaluation","Freight Logistics--Reception","Customs--Freight Logistics","Reception--Contracting"]
+    },
+  "bounded contexts": {
+      "Contracting": {
+          "derived from": "Contracting Subdomain",
+          "objects" : ["Supplier","Buyer","Proforma Invoice","Product Cost","Shipping Terms","Delivery Expectation","Shipment Schedule"],
+          "name changes" : []
+      },
+      "Customs": {
+          "derived from": "Customs Subdomain",
+          "objects" : ["Customs Specialist","Customs Declaration","Code Check","Goods"],
+          "name changes" : ["Shipment -> Goods"]
+      },
+      "Freight Logistics": {
+          "derived from": "Freight Logistics Subdomain",
+          "objects" : ["Logistics Coordinator","International Freight Booking","Carrier","Shipment","Arrival Update"],
+          "name changes" : []
+      },
+      "Reception": {
+          "derived from": "Reception Subdomain",
+          "objects" : ["Warehouse Receiver","Inventory","Load"],
+          "name changes" : ["Shipment -> Load"]
+      },
+      "Compliance Evaluation": {
+          "derived from": "Compliance Evaluation Subdomain",
+          "objects" : ["Procurement Manager","Local Import Rules","Price Quote Request","Compliance Document"],
+          "name changes" : []
+      }
+	}
+}

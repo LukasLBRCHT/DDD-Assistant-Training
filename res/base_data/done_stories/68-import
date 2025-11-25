@@ -5,7 +5,7 @@ A Supplier sends a proforma invoice to confirm the product cost and shipping ter
 A Supplier adjusts the shipment schedule after receiving the buyer’s updated delivery expectations
 
 A Logistics Coordinator books international freight with a carrier to secure space on an upcoming vessel
-A Logistics Coordinator tracks the vessel’s progress to update the buyer on expected arrival time
+A Logistics Coordinator tracks the carrier’s progress to update the buyer on expected arrival time
 
 A Customs Specialist prepares a customs declaration to make sure the goods can legally enter the country
 A Customs Specialist checks the product classification codes to avoid delays during the border inspection
