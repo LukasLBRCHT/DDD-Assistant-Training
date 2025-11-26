@@ -1,0 +1,98 @@
+{
+  "domain-information":
+  [	"A Media Planner analyzes target demographics to choose the best media channels for an advertising campaign",
+	"A Media Planner schedules ad placements across print, digital, and broadcast outlets to maximize reach",
+	"A Content Creator designs visual and written ads to capture audience attention and convey the message",
+	"A Content Creator produces multiple ad variations to test which format performs best on different channels",
+	"An Account Manager liaises with advertisers to understand their goals and align campaigns with budgets",
+	"An Account Manager negotiates contracts with media outlets to secure prime ad space at optimal rates",
+	"An Advertiser approves ad concepts and placements to ensure brand consistency and campaign effectiveness",
+	"An Advertiser reviews performance reports to decide on continuing, adjusting, or pausing campaigns",
+	"A Campaign Analyst tracks ad metrics such as impressions, clicks, and engagement to evaluate success",
+	"A Campaign Analyst identifies trends in audience behavior to improve targeting for future campaigns",
+	"A Social Media Coordinator posts ads on social platforms and monitors interactions to boost engagement",
+	"A Social Media Coordinator responds to comments and messages to maintain positive brand perception"
+],
+  "domain objects": [
+      {"name": "Media Planner", "description": "Person who plans channels and schedules for the Advertising Campaign"},
+      {"name": "Advertising Campaign", "description": "Coordinated set of ads targeting a specific audience", "attributes": ["Media Channel","Advertisement Variation","Performance Report","Target Audience"]},
+      {"name": "Media Channel", "description": "Medium where ads are placed"},
+      {"name": "Performance Report", "description": "Summary of how the Advertising Campaign performs"},
+      {"name": "Target Audience", "description": "Group the Advertising Campaign aims to reach"},
+      {"name": "Outlet", "description": "Media provider offering ad placement options", "attributes": ["Media Channel","Placement Schedule"]},
+      {"name": "Placement Schedule", "description": "Timing of when ads appear on an Outlet"},
+      {"name": "Content Creator", "description": "Person who designs ad content and visuals"},
+      {"name": "Advertisement Variation", "description": "Different creative versions of an advertisement"},
+      {"name": "Account Manager", "description": "Person who coordinates with the Advertiser and media partners"},
+      {"name": "Contract Negotiation", "description": "Process for agreeing on terms with an Outlet"},
+      {"name": "Advertiser", "description": "Client who owns the brand and approves ads"},
+      {"name": "Campaign Analyst", "description": "Person who evaluates campaign data and audience behavior"},
+      {"name": "Social Media Coordinator", "description": "Person who posts ads and manages social engagement"},
+      {"name": "Posting", "description": "Published social media content"},
+      {"name": "User Interaction", "description": "Engagement actions by a User on a Posting"},
+      {"name": "User", "description": "Person interacting with posted advertisements"}
+    ],
+  "associations": [
+      {"from": "Media Planner", "to": "Advertising Campaign", "description": "Media Planner structures the Advertising Campaign"},
+      {"from": "Media Planner", "to": "Media Channel", "description": "Media Planner selects the Media Channel"},
+      {"from": "Content Creator", "to": "Advertisement Variation", "description": "Content Creator produces each Advertisement Variation"},
+      {"from": "Advertiser", "to": "Advertisement Variation", "description": "Advertiser approves the Advertisement Variation"},
+      {"from": "Account Manager", "to": "Advertiser", "description": "Account Manager coordinates with the Advertiser"},
+      {"from": "Advertiser", "to": "Advertising Campaign", "description": "Advertiser defines goals for the Advertising Campaign"},
+      {"from": "Account Manager", "to": "Contract Negotiation", "description": "Account Manager initiates the Contract Negotiation"},
+      {"from": "Contract Negotiation", "to": "Outlet", "description": "Contract Negotiation establishes terms with the Outlet"},
+      {"from": "Campaign Analyst", "to": "Performance Report", "description": "Campaign Analyst compiles the Performance Report"},
+      {"from": "Campaign Analyst", "to": "Target Audience", "description": "Campaign Analyst studies the Target Audience"},
+      {"from": "Advertiser", "to": "Performance Report", "description": "Advertiser reviews the Performance Report"},
+      {"from": "Social Media Coordinator", "to": "Posting", "description": "Social Media Coordinator publishes the Posting"},
+      {"from": "Posting", "to": "Advertisement Variation", "description": "Posting includes the Advertisement Variation"},
+      {"from": "User", "to": "User Interaction", "description": "User performs the User Interaction"},
+      {"from": "User Interaction", "to": "Posting", "description": "User Interaction occurs on the Posting"},
+      {"from": "Social Media Coordinator", "to": "User Interaction", "description": "Social Media Coordinator monitors the User Interaction"}
+    ],
+  "subdomains": {
+      "Supervision": {
+          "objects" : ["Media Planner","Advertiser","Advertising Campaign","Media Channel"]
+      },
+      "Outlet Contracting": {
+          "objects" : ["Account Manager","Outlet","Contract Negotiation","Media Channel","Placement Schedule"]
+      },
+      "Analysis": {
+          "objects" : ["Campaign Analyst","Performance Report","Target Audience"]
+      },
+      "Ad Creation": {
+          "objects" : ["Content Creation","Advertisement Variation"]
+      },
+      "Social Media": {
+          "objects" : ["Social Media Coordinator","User","Posting","User Interaction"]
+      },
+      "subdomain connections": ["Supervision--Outlet Contracting","Supervision--Analysis","Supervision--Ad Creation","Supervision--Social Media","Social Media--Ad Creation"]
+    },
+  "bounded contexts": {
+      "Supervision": {
+          "derived from": "Supervision Subdomain",
+          "objects" : ["Media Planner","Advertiser","Advertising Campaign","Channel Candidate"],
+          "name changes" : ["Media Channel -> Channel Candidate"]
+      },
+      "Outlet Contracting": {
+          "derived from": "Outlet Contracting Subdomain",
+          "objects" : ["Account Manager","Outlet","Contract Negotiation","Media Channel","Placement Schedule"],
+          "name changes" : []
+      },
+      "Analysis": {
+          "derived from": "Analysis Subdomain",
+          "objects" : ["Campaign Analyst","Performance Report","Target Audience"],
+          "name changes" : []
+      },
+      "Ad Creation": {
+          "derived from": "Ad Creation Subdomain",
+          "objects" : ["Content Creator","Advertisement Variation"],
+          "name changes" : []
+      },
+      "Social Media": {
+          "derived from": "Social Media Subdomain",
+          "objects" : ["Social Media Coordinator","User","Posting","User Interaction"],
+          "name changes" : []
+      }
+	}
+}
