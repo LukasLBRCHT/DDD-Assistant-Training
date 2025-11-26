@@ -1,0 +1,121 @@
+{
+  "domain-information":
+  [	"A Reporter interviews local officials and witnesses to gather accurate information for a front-page story",
+	"A Reporter verifies facts and cross-checks sources to ensure the news is reliable before submission",
+	"An Editor reviews submitted articles to refine clarity, tone, and style for the newspaper’s audience",
+	"An Editor decides which stories make it to the front page to prioritize the most relevant news",
+	"A Layout Designer arranges articles, images, and advertisements on newspaper pages to create a readable layout",
+	"A Layout Designer adjusts spacing and font sizes to fit breaking news into the next edition",
+	"A Printer receives the final page layout and prints thousands of physical newspapers for the morning distribution",
+	"A Printer coordinates ink and paper supply to ensure production runs smoothly without delays",
+	"A Distribution Manager plans delivery routes to ensure newspapers reach stores, subscribers, and street vendors on time",
+	"A Distribution Manager tracks delivery performance and reports delays to the editorial team to adjust future logistics",
+	"A Subscription Coordinator processes new subscriptions to maintain a steady readership base",
+	"A Subscription Coordinator handles customer questions and updates addresses to ensure newspapers are delivered correctly"
+],
+  "domain objects": [
+      {"name": "Reporter", "description": "Person who gathers info and creates news content"},
+      {"name": "Interview", "description": "Conversation used by the Reporter to collect details"},
+      {"name": "Local", "description": "Local official or witness providing info"},
+      {"name": "Reliability Verification", "description": "Process where the Reporter checks facts"},
+      {"name": "Source", "description": "Original provider of information for verification"},
+      {"name": "Article Submission", "description": "Content the Reporter sends in as News", "attributes": ["News"]},
+      {"name": "News", "description": "Information forming the basis of submitted articles"},
+      {"name": "Editor", "description": "Person who reviews and approves article content"},
+      {"name": "Style Review", "description": "Editor’s refinement of clarity and tone"},
+      {"name": "Submission Approval", "description": "Decision by the Editor that an article is ready"},
+      {"name": "Layout Designer", "description": "Person who arranges content for print"},
+      {"name": "Newspaper Page Layout", "description": "Arrangement of articles and visuals"},
+      {"name": "Printer", "description": "Person or system producing physical newspapers"},
+      {"name": "Final Page Layout", "description": "Completed layout ready for printing"},
+      {"name": "Ink Supply", "description": "Ink resources used by the Printer"},
+      {"name": "Paper Supply", "description": "Paper resources needed for printing"},
+      {"name": "Newspaper Copy", "description": "Printed newspaper unit"},
+      {"name": "Distribution Manager", "description": "Person who oversees newspaper delivery"},
+      {"name": "Delivery Route", "description": "Plan for delivering newspapers", "attributes": ["Customer","Delivery Performance"]},
+      {"name": "Customer", "description": "Recipient of newspapers", "attributes": ["Address"]},
+      {"name": "Address", "description": "Location where a Customer receives delivery"},
+      {"name": "Delivery Performance", "description": "Measurement of how well delivery goes"},
+      {"name": "Delay Report", "description": "Message sent when deliveries run late"},
+      {"name": "Editorial Team", "description": "Group informed about delivery delays"},
+      {"name": "Subscription Coordinator", "description": "Person who manages subscriptions"},
+      {"name": "Subscription", "description": "Active newspaper subscription by a Customer"},
+      {"name": "Customer Question", "description": "Message from Customer to ask or clarify something"}
+    ],
+  "associations": [
+      {"from": "Reporter", "to": "Interview", "description": "Reporter conducts an Interview"},
+      {"from": "Interview", "to": "Local", "description": "Interview involves a Local source"},
+      {"from": "Reporter", "to": "Reliability Verification", "description": "Reporter performs Reliability Verification"},
+      {"from": "Reliability Verification", "to": "Source", "description": "Reliability Verification checks the Source"},
+      {"from": "Reporter", "to": "Article Submission", "description": "Reporter creates an Article Submission"},
+      {"from": "Layout Designer", "to": "Newspaper Page Layout", "description": "Layout Designer builds the Newspaper Page Layout"},
+      {"from": "Newspaper Page Layout", "to": "Article Submission", "description": "Newspaper Page Layout places Article Submission"},
+      {"from": "Layout Designer", "to": "Article Submission", "description": "Layout Designer arranges the Article Submission"},
+      {"from": "Layout Designer", "to": "Final Page Layout", "description": "Layout Designer produces the Final Page Layout"},
+      {"from": "Final Page Layout", "to": "Printer", "description": "Final Page Layout is delivered to the Printer"},
+      {"from": "Editor", "to": "Style Review", "description": "Editor performs the Style Review"},
+      {"from": "Style Review", "to": "Article Submission", "description": "Style Review refines the Article Submission"},
+      {"from": "Editor", "to": "Submission Approval", "description": "Editor grants the Submission Approval"},
+      {"from": "Submission Approval", "to": "Article Submission", "description": "Submission Approval confirms the Article Submission"},
+      {"from": "Printer", "to": "Ink Supply", "description": "Printer requires Ink Supply"},
+      {"from": "Printer", "to": "Paper Supply", "description": "Printer uses Paper Supply"},
+      {"from": "Printer", "to": "Newspaper Copy", "description": "Printer produces the Newspaper Copy"},
+      {"from": "Newspaper Copy", "to": "Distribution Manager", "description": "Newspaper Copy goes to the Distribution Manager"},
+      {"from": "Subscription Coordinator", "to": "Subscription", "description": "Subscription Coordinator handles the Subscription"},
+      {"from": "Subscription Coordinator", "to": "Customer Question", "description": "Subscription Coordinator receives a Customer Question"},
+      {"from": "Subscription Coordinator", "to": "Address", "description": "Subscription Coordinator updates the Address"},
+      {"from": "Customer", "to": "Subscription", "description": "Customer holds a Subscription"},
+      {"from": "Customer", "to": "Customer Question", "description": "Customer submits a Customer Question"},
+      {"from": "Distribution Manager", "to": "Delay Report", "description": "Distribution Manager issues a Delay Report"},
+      {"from": "Delay Report", "to": "Editorial Team", "description": "Delay Report is sent to the Editorial Team"},
+      {"from": "Distribution Manager", "to": "Delivery Route", "description": "Distribution Manager organizes Delivery Route"}
+    ],
+  "subdomains": {
+      "Research": {
+          "objects" : ["Reporter","Interview","Local","Reliability Verification","Source"]
+      },
+      "Submission": {
+          "objects" : ["Editor","Article Submission","News","Style Review","Submission Approval"]
+      },
+      "Layout Design": {
+          "objects" : ["Layout Designer","Article Submission","Newspaper Page Layout","Final Page Layout"]
+      },
+      "Printing": {
+          "objects" : ["Printer","Ink Supply","Paper Supply","Newspaper Copy"]
+      },
+      "Distribution": {
+          "objects" : ["Distribution Manager","Delivery Route","Delivery Performance","Customer","Address","Delay Report","Editorial Team"]
+      },
+      "Subscriptions": {
+          "objects" : ["Subscription Coordinator","Customer","Address","Subscription","Customer Question"]
+      },
+      "subdomain connections": ["Research--Submission","Submission--Layout Design","Layout Design--Printing","Printing--Distribution","Distribution--Subscriptions"]
+    },
+  "bounded contexts": {
+      "Article Creation": {
+          "derived from": ["Research Subdomain","Submission Subdomain"],
+          "objects" : ["Reporter","Interview","Local","Reliability Verification","Source","Editor","Article Submission","News","Style Review","Submission Approval"],
+          "name changes" : []
+      },
+      "Layout Design": {
+          "derived from": "Layout Design Subdomain",
+          "objects" : ["Layout Designer","Article","Page Layout Draft","Final Page Layout"],
+          "name changes" : ["Article Submission -> Article","Newspaper Page Layout -> Page Layout Draft"]
+      },
+      "Printing": {
+          "derived from": "Printing Subdomain",
+          "objects" : ["Printer","Ink Supply","Paper Supply","Newspaper Copy"],
+          "name changes" : []
+      },
+      "Distribution": {
+          "derived from": "Distribution Subdomain",
+          "objects" : ["Distribution Manager","Delivery Route","Delivery Performance","Recipient","Stop","Delay Report","Editorial Team"],
+          "name changes" : ["Customer -> Recipient","Address -> Stop"]
+      },
+      "Subscriptions": {
+          "derived from": "Subscriptions Subdomain",
+          "objects" : ["Subscription Coordinator","Subscriber","Address","Subscription","Customer Question"],
+          "name changes" : ["Customer -> Subscriber"]
+      }
+	}
+}
