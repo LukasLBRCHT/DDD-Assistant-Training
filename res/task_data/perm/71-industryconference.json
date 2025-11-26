@@ -1,0 +1,100 @@
+{
+  "domain-information":
+  [	"A Conference Organizer selects the conference theme and sets the program to attract relevant professionals",
+	"A Conference Organizer coordinates venue bookings and catering to ensure the event runs smoothly",
+	"A Speaker prepares a presentation on emerging industry trends to educate and inspire attendees",
+	"A Speaker submits session materials in advance to allow organizers to review and include them in the conference program",
+	"An Attendee registers online and selects preferred sessions to customize their conference experience",
+	"An Attendee provides feedback after sessions to help improve future conferences",
+	"A Session Moderator introduces speakers and manages Q&A to keep sessions on track and engaging",
+	"A Session Moderator collects audience questions to highlight the most relevant topics for discussion",
+	"A Sponsor negotiates branding opportunities to showcase products and services to attendees",
+	"A Sponsor holds networking events to connect with potential clients and industry partners",
+	"A Conference Coordinator monitors registrations and sends reminders to ensure high attendance",
+	"A Conference Coordinator arranges transportation and accommodation information for out-of-town participants"
+],
+  "domain objects": [
+      {"name": "Conference Organizer", "description": "person responsible for planning and coordinating the overall conference"},
+      {"name": "Conference", "description": "the full event that includes theme, agenda, and program", "attributes": ["Theme","Agenda","Conference Program"]},
+      {"name": "Theme", "description": "central topic that defines the conference focus"},
+      {"name": "Agenda", "description": "planned schedule of sessions and activities"},
+      {"name": "Conference Program", "description": "collection of sessions and events included in the conference", "attributes": ["Session","Networking Event"]},
+      {"name": "Venue Booking", "description": "arrangement securing the physical location for the conference"},
+      {"name": "Catering", "description": "coordination of food and beverage services for the event"},
+      {"name": "Speaker", "description": "person presenting content or expertise at a session"},
+      {"name": "Attendee", "description": "participant registered to join the conference"},
+      {"name": "Feedback", "description": "attendee input on sessions or overall conference quality"},
+      {"name": "Session Moderator", "description": "person leading the session flow and managing audience interaction"},
+      {"name": "Session", "description": "individual event block featuring a speaker and presentation", "attributes": ["Presentation","Audience Question"]},
+      {"name": "Audience Question", "description": "question submitted by attendees during a session"},
+      {"name": "Presentation", "description": "speaker delivered talk or visual material", "attributes": ["Session Material"]},
+      {"name": "Session Material", "description": "supporting files or documents submitted by speakers"},
+      {"name": "Sponsor", "description": "organization supporting the conference for visibility and networking"},
+      {"name": "Branding Negotiation", "description": "discussion between organizer and sponsor about promotional opportunities"},
+      {"name": "Networking Event", "description": "interactive gathering for attendees and sponsors to connect"},
+      {"name": "Registration", "description": "attendee sign up process for conference participation"},
+      {"name": "Reminder", "description": "notification sent to attendees regarding upcoming conference details"},
+      {"name": "Accommodation Information", "description": "details provided to help attendees arrange lodging for the event"}
+    ],
+  "associations": [
+      {"from": "Conference Organizer", "to": "Conference", "description": "Conference Organizer oversees the planning and setup of the Conference"},
+      {"from": "Conference Organizer", "to": "Conference Program", "description": "Conference Organizer defines and structures the Conference Program"},
+      {"from": "Conference Organizer", "to": "Catering", "description": "Conference Organizer arranges Catering for the event"},
+      {"from": "Conference Organizer", "to": "Venue Booking", "description": "Conference Organizer manages the Venue Booking needed for the Conference"},
+      {"from": "Conference Organizer", "to": "Branding Negotiation", "description": "Conference Organizer participates in Branding Negotiation for sponsor visibility"},
+      {"from": "Session Moderator", "to": "Session", "description": "Session Moderator facilitates and manages the flow of the Session"},
+      {"from": "Session Moderator", "to": "Speaker", "description": "Session Moderator coordinates with the Speaker during the Session"},
+      {"from": "Speaker", "to": "Session", "description": "Speaker presents content and contributes expertise in the Session"},
+      {"from": "Speaker", "to": "Presentation", "description": "Speaker creates and delivers the Presentation"},
+      {"from": "Conference Organizer", "to": "Session Material", "description": "Conference Organizer reviews and prepares Session Material for inclusion"},
+      {"from": "Sponsor", "to": "Branding Negotiation", "description": "Sponsor engages in Branding Negotiation to secure exposure"},
+      {"from": "Sponsor", "to": "Networking Event", "description": "Sponsor hosts or contributes to a Networking Event"},
+      {"from": "Attendee", "to": "Registration", "description": "Attendee completes a Registration to join the Conference"},
+      {"from": "Registration", "to": "Session", "description": "Registration links an Attendee to a chosen Session"},
+      {"from": "Registration", "to": "Networking Event", "description": "Registration includes options for joining a Networking Event"},
+      {"from": "Conference Coordinator", "to": "Registration", "description": "Conference Coordinator monitors and manages each Registration"},
+      {"from": "Conference Coordinator", "to": "Reminder", "description": "Conference Coordinator sends a Reminder related to the Conference"},
+      {"from": "Reminder", "to": "Attendee", "description": "Reminder reaches the Attendee with important updates"},
+      {"from": "Conference Coordinator", "to": "Accommodation Information", "description": "Conference Coordinator provides Accommodation Information for participants"},
+      {"from": "Accommodation Information", "to": "Attendee", "description": "Accommodation Information supports the Attendee with travel planning"},
+      {"from": "Attendee", "to": "Feedback", "description": "Attendee submits Feedback after participating"},
+      {"from": "Feedback", "to": "Conference Organizer", "description": "Feedback informs the Conference Organizer about attendee experience"}
+    ],
+  "subdomains": {
+      "Organization": {
+          "objects" : ["Conference Organizer","Conference","Theme","Conference Program","Networking Event","Session","Catering","Venue Booking"]
+      },
+      "Attendance": {
+          "objects" : ["Attendee","Conference Coordinator","Registration","Reminder","Accommodation Information","Feedback"]
+      },
+      "Session Holding": {
+          "objects" : ["Session Moderator","Speaker","Session","Audience Question","Presentation","Session Material"]
+      },
+      "Sponsoring": {
+          "objects" : ["Sponsor","Branding Negotiation","Networking Event"]
+      },
+      "subdomain connections": ["Organization--All Subdomains","Attendance--Session Holding","Attendance--Sponsoring"]
+    },
+  "bounded contexts": {
+      "Organization": {
+          "derived from": "Organization Subdomain",
+          "objects" : ["Conference Organizer","Conference","Theme","Conference Program","Networking Event Entry","Session Entry","Catering","Venue Booking"],
+          "name changes" : ["Networking Event -> Networking Event Entry","Session -> Session Entry"]
+      },
+      "Attendance": {
+          "derived from": "Attendance Subdomain",
+          "objects" : ["Attendee","Conference Coordinator","Registration","Reminder","Accommodation Information","Feedback"],
+          "name changes" : []
+      },
+      "Session Holding": {
+          "derived from": "Session Holding Subdomain",
+          "objects" : ["Session Moderator","Speaker","Session","Audience Question","Presentation","Session Material"],
+          "name changes" : []
+      },
+      "Sponsoring": {
+          "derived from": "Sponsoring Subdomain",
+          "objects" : ["Sponsor","Branding Negotiation","Networking Event"],
+          "name changes" : []
+      }
+	}
+}
