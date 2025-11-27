@@ -1,0 +1,92 @@
+{
+  "domain-information":
+  [	"A User creates a new discussion thread to start a conversation on a topic of interest",
+	"A User replies to posts within threads to share experiences and ask follow-up questions",
+	"A Moderator reviews new threads and posts to ensure content follows forum guidelines",
+	"A Moderator flags inappropriate posts to maintain a safe and respectful environment",
+	"A Content Reviewer evaluates popular threads to highlight high-quality discussions for the community",
+	"A Content Reviewer summarizes frequently asked questions to create a helpful knowledge base",
+	"A User votes on posts to show agreement or appreciation for helpful contributions",
+	"A User bookmarks threads to return to discussions later and track ongoing conversations",
+	"A Moderator organizes threads into categories to make topics easier to find",
+	"A Moderator temporarily locks threads to prevent off-topic or heated arguments",
+	"A System automatically recommends related threads to users based on their activity and interests",
+	"A System notifies users about replies to their posts to keep them engaged in conversations"
+],
+  "domain objects": [
+      {"name":"User", "description":"Person participating in discussions and interactions", "attributes":["History"]},
+      {"name":"History", "description":"Record of a User’s past activity"},
+      {"name":"Discussion Thread", "description":"Main conversation container in the forum", "attributes":["Topic","Post","Flag"]},
+      {"name":"Topic", "description":"Subject that a Discussion Thread focuses on"},
+      {"name":"Post", "description":"Message contributed to a Discussion Thread", "attributes":["Reply","Vote"]},
+      {"name":"Reply", "description":"Response to a Post"},
+      {"name":"Vote", "description":"User feedback expressing support for a Post"},
+      {"name":"Flag", "description":"Marker indicating that content needs Moderator attention"},
+      {"name":"Moderator", "description":"User responsible for keeping discussions safe and organized"},
+      {"name":"Forum Guidelines", "description":"Rules that define acceptable content"},
+      {"name":"Content Reviewer", "description":"User who highlights valuable content and creates summaries"},
+      {"name":"Highlight", "description":"Mark indicating a notable Discussion Thread"},
+      {"name":"FAQ", "description":"Collection of common questions and useful answers"},
+      {"name":"Bookmark", "description":"Saved link to a Discussion Thread for later access"},
+      {"name":"Category", "description":"Grouping used to organize related Discussion Threads", "attributes":["Topic","Discussion Thread"]},
+      {"name":"Lock", "description":"State preventing new Posts in a Discussion Thread"},
+      {"name":"System", "description":"Automated process handling recommendations and notifications"},
+      {"name":"Recommendation", "description":"Suggested Discussion Threads for a User", "attributes":["Discussion Thread"]},
+      {"name":"Notification", "description":"Message informing a User about activity related to them"}
+    ],
+  "associations": [
+      {"from":"User", "to":"Discussion Thread", "description":"User creates or engages with a Discussion Thread"},
+      {"from":"User", "to":"Post", "description":"User writes a Post within a discussion"},
+      {"from":"User", "to":"Bookmark", "description":"User saves a Bookmark for later access"},
+      {"from":"Moderator", "to":"Forum Guidelines", "description":"Moderator enforces the Forum Guidelines"},
+      {"from":"Moderator", "to":"Discussion Thread", "description":"Moderator manages a Discussion Thread"},
+      {"from":"Moderator", "to":"Category", "description":"Moderator assigns a Discussion Thread to a Category"},
+      {"from":"Moderator", "to":"Flag", "description":"Moderator handles a Flag on content"},
+      {"from":"System", "to":"Notification", "description":"System generates a Notification"},
+      {"from":"Reply", "to":"Notification", "description":"Reply triggers a Notification"},
+      {"from":"Notification", "to":"User", "description":"Notification is delivered to a User"},
+      {"from":"System", "to":"History", "description":"System updates a User’s History"},
+      {"from":"System", "to":"Recommendation", "description":"System creates a Recommendation"},
+      {"from":"Content Reviewer", "to":"Discussion Thread", "description":"Content Reviewer evaluates a Discussion Thread"},
+      {"from":"Content Reviewer", "to":"Highlight", "description":"Content Reviewer adds a Highlight"},
+      {"from":"Highlight", "to":"Discussion Thread", "description":"Highlight references a notable Discussion Thread"},
+      {"from":"Content Reviewer", "to":"FAQ", "description":"Content Reviewer compiles an FAQ"}
+    ],
+  "subdomains": {
+      "Discussion": {
+          "objects" : ["User","History","Discussion Thread","Topic","Post","Vote","Reply","Bookmark"]
+      },
+      "Moderation": {
+          "objects" : ["Moderator","Forum Guidelines","Category","Topic","Lock","Flag","Discussion Thread"]
+      },
+      "Highlights": {
+          "objects" : ["Content Reviewer","Highlight","FAQ"]
+      },
+      "System Functions": {
+          "objects" : ["System","History","Recommendation","Discussion Thread"]
+      },
+      "subdomain connections": ["Moderation--Discussion","Highlights--Discussion","System Functions--Discussion"]
+    },
+  "bounded contexts": {
+      "Discussion": {
+          "derived from": "Discussion Subdomain",
+          "objects" : ["User","Personal History","Discussion Thread","Discussion Topic","Post","Vote","Reply","Bookmark"],
+          "name changes" : ["History -> Personal History","Topic -> Discussion Topic"]
+      },
+      "Moderation": {
+          "derived from": "Moderation Subdomain",
+          "objects" : ["Moderator","Forum Guidelines","Category","Category Topic","Lock","Flag","Discussion Entry"],
+          "name changes" : ["Topic -> Category Topic","Discussion Thread -> Discussion Entry"]
+      },
+      "Highlights": {
+          "derived from": "Highlights Subdomain",
+          "objects" : ["Content Reviewer","Highlight","FAQ"],
+          "name changes" : []
+      },
+      "System Functions": {
+          "derived from": "System Functions Subdomain",
+          "objects" : ["System","History Data","Recommendation","Recommended Discussion"],
+          "name changes" : ["History -> History Data","Discussion Thread -> Recommended Discussion"]
+      }
+	}
+}
