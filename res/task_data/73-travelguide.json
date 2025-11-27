@@ -1,0 +1,86 @@
+{
+  "domain-information":
+  [	"A Traveler searches for destinations based on interests and preferred activities to plan their next trip",
+	"A Traveler saves favorite spots and creates a personal itinerary to organize their journey",
+	"A Travel Planner curates destination guides with tips on attractions, restaurants, and accommodations",
+	"A Travel Planner updates guides regularly to keep information accurate and relevant",
+	"A Content Contributor writes reviews and shares photos of visited locations to help other travelers",
+	"A Content Contributor rates local businesses and experiences to provide community-driven insights",
+	"A Platform Administrator manages user accounts and ensures content complies with platform policies",
+	"A Platform Administrator analyzes usage data to improve features and enhance user experience",
+	"A Booking Manager integrates hotels and transport options for the destination into the platform for easy reservation",
+	"A Booking Manager confirms availability and updates listings to prevent double bookings",
+	"A Recommendation Engine evaluates traveler preferences and suggests tailored itineraries",
+	"A Recommendation Engine tracks engagement with suggestions to refine future recommendations"
+],
+  "domain objects": [
+      {"name": "Traveler", "description": "Person who searches destinations and creates trip plans", "attributes": ["Preference"]},
+      {"name": "Preference", "description": "Traveler’s interests that guide suggestions"},
+      {"name": "Travel Destination", "description": "Place a Traveler can visit, with guides and reservation options", "attributes": ["Destination Guide","Reservation Option"]},
+      {"name": "Destination Guide", "description": "Curated info about a Travel Destination", "attributes": ["Attraction","Accommodation"]},
+      {"name": "Attraction", "description": "Point of interest within a destination"},
+      {"name": "Accommodation", "description": "Place where a Traveler can stay"},
+      {"name": "Itinerary", "description": "Planned sequence of Travel Destinations for a trip", "attributes": ["Travel Destination"]},
+      {"name": "Travel Planner", "description": "Person who prepares and updates destination guides"},
+      {"name": "Content Contributor", "description": "User who shares reviews and photos", "attributes": ["User Account"]},
+      {"name": "User Account", "description": "Account profile for platform users"},
+      {"name": "Review", "description": "Feedback and rating for a visited place", "attributes": ["Rating"]},
+      {"name": "Location", "description": "Specific place tied to an Attraction or Accommodation", "attributes": ["Attraction","Accommodation"]},
+      {"name": "Platform Administrator", "description": "Person who manages accounts and platform compliance"},
+      {"name": "Usage Data", "description": "Information about how users interact with the platform"},
+      {"name": "Booking Manager", "description": "Person who manages reservations and availability"},
+      {"name": "Reservation Option", "description": "Bookable option for a destination", "attributes": ["Accommodation","Travel"]},
+      {"name": "Recommendation Engine", "description": "System that evaluates preferences to suggest trips"},
+      {"name": "Itinerary Recommendation", "description": "Suggested trip plan generated for a Traveler"}
+    ],
+  "associations": [
+      {"from": "Traveler", "to": "Travel Destination", "description": "Traveler explores Travel Destination options"},
+      {"from": "Traveler", "to": "Itinerary", "description": "Traveler creates or saves an Itinerary"},
+      {"from": "Travel Planner", "to": "Destination Guide", "description": "Travel Planner produces each Destination Guide"},
+      {"from": "Booking Manager", "to": "Reservation Option", "description": "Booking Manager manages each Reservation Option"},
+      {"from": "Content Contributor", "to": "Review", "description": "Content Contributor creates a Review"},
+      {"from": "Review", "to": "Location", "description": "Review evaluates a Location"},
+      {"from": "Platform Administrator", "to": "User Account", "description": "Platform Administrator manages a User Account"},
+      {"from": "Platform Administrator", "to": "Usage Data", "description": "Platform Administrator reviews Usage Data"},
+      {"from": "Recommendation Engine", "to": "Preference", "description": "Recommendation Engine uses Preference"},
+      {"from": "Recommendation Engine", "to": "Itinerary Recommendation", "description": "Recommendation Engine generates an Itinerary Recommendation"},
+      {"from": "Traveler", "to": "Itinerary Recommendation", "description": "Traveler receives an Itinerary Recommendation"}
+    ],
+  "subdomains": {
+      "Travel Search": {
+          "objects" : ["Traveler","Preference","Itinerary","Travel Destination","Recommendation Engine","Itinerary Recommendation"]
+      },
+      "Booking": {
+          "objects" : ["Booking Manager","Reservation Option","Travel","Accommodation"]
+      },
+      "Planning": {
+          "objects" : ["Travel Planner","Destination Guide","Attraction","Accommodation"]
+      },
+      "User Interaction": {
+          "objects" : ["Content Contributor","User Account","Review","Rating","Location","Attraction","Accommodation","Platform Administrator","Usage Data"]
+      },
+      "subdomain connections": ["Travel Search--Booking","Travel Search--Planning","User Interaction--Planning"]
+    },
+  "bounded contexts": {
+      "Travel Search": {
+          "derived from": "Travel Search Subdomain",
+          "objects" : ["Traveler","Preference","Personal Itinerary","Travel Destination","Recommendation Engine","Itinerary Recommendation"],
+          "name changes" : ["Itinerary -> Personal Itinerary"]
+      },
+      "Booking": {
+          "derived from": "Booking Subdomain",
+          "objects" : ["Booking Manager","Reservation Option","Travel Listing","Accommodation Listing"],
+          "name changes" : ["Travel -> Travel Listing","Accommodation -> Accommodation Listing"]
+      },
+      "Planning": {
+          "derived from": "Planning Subdomain",
+          "objects" : ["Travel Planner","Destination Guide","Attraction Tip","Accommodation Tip"],
+          "name changes" : ["Attraction -> Attraction Tip","Accommodation -> Accommodation Tip"]
+      },
+      "User Interaction": {
+          "derived from": "User Interaction Subdomain",
+          "objects" : ["Content Contributor","User Account","Review","Rating","Location","Attraction","Accommodation","Platform Administrator","Usage Data"],
+          "name changes" : []
+      }
+	}
+}
