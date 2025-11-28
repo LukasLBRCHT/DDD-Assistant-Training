@@ -1,0 +1,76 @@
+{
+  "domain-information":
+  [	"A Pet Owner requests a pet sitter for a specific time period to ensure their pet is cared for while they are away",
+	"A Pet Owner provides detailed care instructions to communicate feeding, walking, and medication needs",
+	"A Pet Sitter reviews assigned pet care requests to prepare for visits and plan activities",
+	"A Pet Sitter visits the pet and logs updates to keep the owner informed about the pet’s wellbeing",
+	"A Pet Sitter coordinates with other sitters to handle overlapping schedules or emergencies",
+	"A Pet Sitter delivers a report at the end of the visit to summarize the pet’s activities and behavior",
+	"A Coordinator confirms bookings with pet owners to secure schedules and prevent double-booking",
+	"A Coordinator matches available sitters with pet requests based on experience and pet type",
+	"A Pet Owner makes payment for services to complete the booking and confirm the sitter’s assignment",
+	"A Coordinator sends reminders to pet owners and sitters to ensure visits occur as scheduled"
+],
+  "domain objects": [
+      {"name": "Pet Owner", "description": "Person who requests and pays for pet sitting services"},
+      {"name": "Pet Care Request", "description": "Request describing how a pet should be cared for during a time period", "attributes": ["Pet","Time Period","Care Instructions"]},
+      {"name": "Pet", "description": "Animal that requires care"},
+      {"name": "Time Period", "description": "Span of time during which care is needed"},
+      {"name": "Care Instructions", "description": "Details about feeding, walking, or medication needs"},
+      {"name": "Pet Sitter", "description": "Person who performs the pet care visit"},
+      {"name": "Update Log", "description": "Record of updates the sitter sends during a visit"},
+      {"name": "Schedule Coordination", "description": "Coordination process for handling overlapping or shared schedules"},
+      {"name": "Care Report", "description": "Summary of the pet’s activities and behavior after a visit"},
+      {"name": "Coordinator", "description": "Person who manages bookings and sitter assignments"},
+      {"name": "Booking", "description": "Confirmed arrangement between owner, sitter, and request"},
+      {"name": "Payment", "description": "Transaction made by the owner to complete the booking"},
+      {"name": "Reminder", "description": "Notification sent about an upcoming booking", "attributes": ["Booking"]}
+    ],
+  "associations": [
+      {"from": "Pet Owner", "to": "Pet Care Request", "description": "Pet Owner creates a Pet Care Request"},
+      {"from": "Coordinator", "to": "Pet Care Request", "description": "Coordinator reviews and manages the Pet Care Request"},
+      {"from": "Coordinator", "to": "Booking", "description": "Coordinator sets up a Booking"},
+      {"from": "Booking", "to": "Pet Care Request", "description": "Booking references the related Pet Care Request"},
+      {"from": "Booking", "to": "Pet Sitter", "description": "Booking assigns a Pet Sitter"},
+      {"from": "Coordinator", "to": "Schedule Coordination", "description": "Coordinator initiates Schedule Coordination"},
+      {"from": "Pet Sitter", "to": "Schedule Coordination", "description": "Pet Sitter participates in Schedule Coordination"},
+      {"from": "Pet Sitter", "to": "Update Log", "description": "Pet Sitter creates an Update Log"},
+      {"from": "Update Log", "to": "Pet Owner", "description": "Update Log informs the Pet Owner"},
+      {"from": "Pet Sitter", "to": "Care Report", "description": "Pet Sitter writes the Care Report"},
+      {"from": "Care Report", "to": "Pet Care Request", "description": "Care Report describes the Pet Care Request outcome"},
+      {"from": "Pet Owner", "to": "Payment", "description": "Pet Owner issues the Payment"},
+      {"from": "Payment", "to": "Booking", "description": "Payment completes the Booking"},
+      {"from": "Coordinator", "to": "Reminder", "description": "Coordinator sends a Reminder"},
+      {"from": "Reminder", "to": "Pet Sitter", "description": "Reminder notifies the Pet Sitter"},
+      {"from": "Reminder", "to": "Pet Owner", "description": "Reminder notifies the Pet Owner"}
+    ],
+  "subdomains": {
+      "Customer Requests": {
+          "objects" : ["Pet Owner","Pet Care Request","Pet","Time Period","Care Instructions","Payment"]
+      },
+      "Organisation": {
+          "objects" : ["Coordinator","Pet Sitter","Schedule Coordination","Booking","Pet Care Request"]
+      },
+      "Pet Care": {
+          "objects" : ["Pet Sitter","Care Report","Update Log","Pet Care Request"]
+      },
+      "subdomain connections": ["Customer Requests--Organisation","Organisation--Pet Care","Pet Care--Customer Requests"]
+    },
+  "bounded contexts": {
+      "Customer Requests": {
+          "derived from": "Customer Requests Subdomain",
+          "objects" : ["Pet Owner","Pet Care Request","Pet","Time Period","Care Instructions","Payment"],
+          "name changes" : []
+      },
+      "Organisation": {
+          "derived from": "Organisation Subdomain",
+          "objects" : ["Coordinator","Sitter Assignment","Schedule Coordination","Booking","Pet Care Appointment"],
+          "name changes" : ["Pet Sitter -> Sitter Assignment","Pet Care Request -> Pet Care Appointment"]
+      },
+      "Pet Care": {
+          "derived from": "Pet Care Subdomain",
+          "objects" : ["Pet Sitter","Care Report","Update Log","Pet Care Job"],
+          "name changes" : ["Pet Care Request -> Pet Care Job"]
+      }
+	}
+}
