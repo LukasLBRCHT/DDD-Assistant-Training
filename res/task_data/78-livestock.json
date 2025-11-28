@@ -1,0 +1,111 @@
+{
+  "domain-information":
+  [	"A Ranch Owner sets breeding goals and budget plans to ensure sustainable herd growth",
+	"A Ranch Owner reviews sales reports and adjusts operations to maximize profitability",
+	"A Herd Manager tracks cattle movements and organizes pastures to maintain grazing balance",
+	"A Herd Manager records births to keep accurate livestock count",
+	"A Veterinarian conducts health checks and administers vaccines to prevent disease outbreaks",
+	"A Veterinarian advises the herd manager on treatment plans to maintain herd wellness",
+	"A Feeding Coordinator plans ration schedules and orders feed to support optimal growth",
+	"A Feeding Coordinator monitors water and nutrient intake to ensure cattle health",
+	"A Sales Agent negotiates with buyers and schedules deliveries to maximize revenue",
+	"A Sales Agent maintains client records and follows up on past sales to build customer relationships"
+],
+  "domain objects": [
+      {"name": "Ranch Owner", "description": "person responsible for ranch strategy and oversight"},
+      {"name": "Breeding Goal", "description": "target outcomes for herd growth and genetics"},
+      {"name": "Budget Plan", "description": "planned costs and financial limits for ranch operations"},
+      {"name": "Sales Report", "description": "summary of sales outcomes and revenue details"},
+      {"name": "Herd Manager", "description": "person managing daily herd operations"},
+      {"name": "Pasture", "description": "grazing area used to distribute cattle", "attributes": ["Cattle"]},
+      {"name": "Cattle", "description": "individual animals in the herd"},
+      {"name": "Cattle Movement", "description": "record of where cattle are moved"},
+      {"name": "Livestock Count", "description": "total number of cattle tracked on the ranch", "attributes": ["Cattle"]},
+      {"name": "Birth Record", "description": "record of newborn cattle"},
+      {"name": "Veterinarian", "description": "specialist maintaining herd health"},
+      {"name": "Health Check", "description": "inspection of cattle health status"},
+      {"name": "Vaccination", "description": "applied vaccine given to cattle"},
+      {"name": "Treatment Plan", "description": "recommended care steps for health issues"},
+      {"name": "Feeding Coordinator", "description": "person planning and supervising feed routines"},
+      {"name": "Ration Schedule", "description": "planned feeding routine for cattle", "attributes": ["Feed Intake"]},
+      {"name": "Feed Intake", "description": "amount of feed consumed by cattle"},
+      {"name": "Feed Order", "description": "request for purchased feed"},
+      {"name": "Sales Agent", "description": "person handling cattle sales and buyer communication"},
+      {"name": "Delivery", "description": "transport of cattle to buyers"},
+      {"name": "Buyer", "description": "customer purchasing cattle", "attributes": ["Client Record"]},
+      {"name": "Client Record", "description": "information about buyer interactions and history"}
+    ],
+  "associations": [
+      {"from": "Ranch Owner", "to": "Breeding Goal", "description": "Ranch Owner defines the Breeding Goal"},
+      {"from": "Ranch Owner", "to": "Budget Plan", "description": "Ranch Owner sets the Budget Plan"},
+      {"from": "Herd Manager", "to": "Breeding Goal", "description": "Herd Manager aligns work with the Breeding Goal"},
+      {"from": "Herd Manager", "to": "Pasture", "description": "Herd Manager assigns cattle to the Pasture"},
+      {"from": "Herd Manager", "to": "Cattle Movement", "description": "Herd Manager records the Cattle Movement"},
+      {"from": "Cattle Movement", "to": "Pasture", "description": "Cattle Movement updates the Pasture location"},
+      {"from": "Herd Manager", "to": "Livestock Count", "description": "Herd Manager maintains the Livestock Count"},
+      {"from": "Herd Manager", "to": "Birth Record", "description": "Herd Manager logs each Birth Record"},
+      {"from": "Birth Record", "to": "Livestock Count", "description": "Birth Record increases the Livestock Count"},
+      {"from": "Veterinarian", "to": "Health Check", "description": "Veterinarian performs the Health Check"},
+      {"from": "Health Check", "to": "Cattle", "description": "Health Check is applied to Cattle"},
+      {"from": "Veterinarian", "to": "Vaccination", "description": "Veterinarian administers the Vaccination"},
+      {"from": "Vaccination", "to": "Cattle", "description": "Vaccination is given to Cattle"},
+      {"from": "Veterinarian", "to": "Treatment Plan", "description": "Veterinarian prepares the Treatment Plan"},
+      {"from": "Treatment Plan", "to": "Herd Manager", "description": "Treatment Plan guides the Herd Manager"},
+      {"from": "Feeding Coordinator", "to": "Ration Schedule", "description": "Feeding Coordinator creates the Ration Schedule"},
+      {"from": "Feeding Coordinator", "to": "Feed Intake", "description": "Feeding Coordinator monitors the Feed Intake"},
+      {"from": "Cattle", "to": "Feed Intake", "description": "Cattle generate the Feed Intake"},
+      {"from": "Feeding Coordinator", "to": "Feed Order", "description": "Feeding Coordinator places the Feed Order"},
+      {"from": "Sales Agent", "to": "Delivery", "description": "Sales Agent arranges the Delivery"},
+      {"from": "Delivery", "to": "Buyer", "description": "Delivery goes to the Buyer"},
+      {"from": "Delivery", "to": "Sales Report", "description": "Delivery contributes data to the Sales Report"},
+      {"from": "Sales Agent", "to": "Sales Report", "description": "Sales Agent prepares the Sales Report"},
+      {"from": "Sales Agent", "to": "Client Record", "description": "Sales Agent maintains the Client Record"},
+      {"from": "Sales Agent", "to": "Budget Plan", "description": "Sales Agent informs the Budget Plan"},
+      {"from": "Ranch Owner", "to": "Sales Report", "description": "Ranch Owner reviews the Sales Report"}
+    ],
+  "subdomains": {
+      "Livestock Management": {
+          "objects" : ["Herd Manager","Pasture","Cattle Movement","Cattle","Livestock Count","Birth Record"]
+      },
+      "Animal Health": {
+          "objects" : ["Veterinarian","Health Check","Vaccination","Treatment Plan","Cattle"]
+      },
+      "Feeding": {
+          "objects" : ["Feeding Coordinator","Ration Schedule","Feed Intake","Feed Order"]
+      },
+      "Supervision": {
+          "objects" : ["Ranch Owner","Breeding Goals","Budget Plan","Sales Report"]
+      },
+      "Sales": {
+          "objects" : ["Sales Agent","Delivery","Buyer","Client Record"]
+      },
+      "subdomain connections": ["Supervision--Livestock Management","Animal Health--Livestock Management","Feeding--Livestock Management","Supervision--Sales"]
+    },
+  "bounded contexts": {
+      "Livestock Management": {
+          "derived from": "Livestock Management Subdomain",
+          "objects" : ["Herd Manager","Pasture","Cattle Movement","Cattle","Livestock Count","Birth Record"],
+          "name changes" : []
+      },
+      "Animal Health": {
+          "derived from": "Animal Health Subdomain",
+          "objects" : ["Veterinarian","Health Check","Vaccination","Treatment Plan","Animal Patient"],
+          "name changes" : ["Cattle -> Animal Patient"]
+      },
+      "Feeding": {
+          "derived from": "Feeding Subdomain",
+          "objects" : ["Feeding Coordinator","Ration Schedule","Feed Intake","Feed Order"],
+          "name changes" : []
+      },
+      "Supervision": {
+          "derived from": "Supervision Subdomain",
+          "objects" : ["Ranch Owner","Breeding Goals","Budget Plan","Sales Report"],
+          "name changes" : []
+      },
+      "Sales": {
+          "derived from": "Sales Subdomain",
+          "objects" : ["Sales Agent","Delivery","Buyer","Client Record"],
+          "name changes" : []
+      }
+	}
+}
