@@ -1,0 +1,74 @@
+{
+  "domain-information":
+  [	"A Client identifies repetitive tasks in their workflow and requests a review to find automation opportunities",
+	"A Client provides process documentation to help the consultant understand current operations",
+	"An Automation Consultant analyzes workflows and recommends suitable automation solutions to improve efficiency",
+	"An Automation Consultant designs a workflow automation plan and demonstrates it to the client for approval",
+	"An Automation Consultant sets up automation scripts and connects systems to reduce manual work",
+	"An Automation Consultant monitors automated processes and adjusts settings to optimize performance",
+	"A System Administrator configures software permissions to ensure automated tasks run securely",
+	"A System Administrator supervises automation workflows to prevent disruption to daily operations",
+	"A Client reviews performance reports from the automation tools to assess time and cost savings",
+	"A Client provides feedback to the consultant to refine the automation and add new capabilities"
+],
+  "domain objects": [
+      {"name": "Client", "description": "Person or organization requesting workflow automation"},
+      {"name": "Review Request", "description": "Initial request to examine tasks and processes for automation potential", "attributes": ["Task", "Process Documentation"]},
+      {"name": "Task", "description": "Individual activity within the client’s workflow"},
+      {"name": "Process Documentation", "description": "Material describing how the client’s current workflow operates"},
+      {"name": "Automation Consultant", "description": "Specialist who analyzes workflows and designs automation"},
+      {"name": "Workflow Analysis", "description": "Evaluation of client workflows to identify automation opportunities"},
+      {"name": "Workflow Automation Plan", "description": "Proposed setup for automating parts of the workflow", "attributes": ["Automation Script"]},
+      {"name": "Automation Script", "description": "Executable automation logic that performs tasks automatically"},
+      {"name": "System Administrator", "description": "Person managing system permissions and operational stability"},
+      {"name": "Software Permission", "description": "Access settings required for automation scripts to run"},
+      {"name": "Workflow Supervision", "description": "Oversight activity ensuring automated workflows run smoothly"},
+      {"name": "Performance Report", "description": "Summary of automation results and efficiency gains"},
+      {"name": "Automation Feedback", "description": "Client input about improvements or issues with the automation"}
+    ],
+  "associations": [
+      {"from": "Client", "to": "Review Request", "description": "Client creates the Review Request"},
+      {"from": "Automation Consultant", "to": "Workflow Analysis", "description": "Automation Consultant performs the Workflow Analysis"},
+      {"from": "Workflow Analysis", "to": "Review Request", "description": "Workflow Analysis is based on the Review Request"},
+      {"from": "Automation Consultant", "to": "Workflow Automation Plan", "description": "Automation Consultant prepares the Workflow Automation Plan"},
+      {"from": "Workflow Analysis", "to": "Workflow Automation Plan", "description": "Workflow Analysis informs the Workflow Automation Plan"},
+      {"from": "Workflow Automation Plan", "to": "Client", "description": "Workflow Automation Plan is presented to the Client"},
+      {"from": "Automation Script", "to": "Performance Report", "description": "Automation Script produces the Performance Report"},
+      {"from": "System Administrator", "to": "Software Permission", "description": "System Administrator configures the Software Permission"},
+      {"from": "Software Permission", "to": "Automation Script", "description": "Software Permission enables the Automation Script"},
+      {"from": "System Administrator", "to": "Workflow Supervision", "description": "System Administrator carries out the Workflow Supervision"},
+      {"from": "Workflow Supervision", "to": "Automation Script", "description": "Workflow Supervision monitors the Automation Script"},
+      {"from": "Client", "to": "Performance Report", "description": "Client reviews the Performance Report"},
+      {"from": "Client", "to": "Automation Feedback", "description": "Client provides the Automation Feedback"},
+      {"from": "Automation Feedback", "to": "Automation Consultant", "description": "Automation Feedback is sent to the Automation Consultant"}
+    ],
+  "subdomains": {
+      "Client Requests": {
+          "objects" : ["Client","Review Request","Task","Process Documentation","Automation Feedback"]
+      },
+      "Automation Design": {
+          "objects" : ["Automation Consultant","Workflow Analysis","Workflow Automation Plan","Automation Script","Performance Report"]
+      },
+      "Administration": {
+          "objects" : ["System Administrator","Software Permission","Workflow Supervision"]
+      },
+      "subdomain connections": ["Client Requests--Automation Design","Automation Design--Administration"]
+    },
+  "bounded contexts": {
+      "Client Requests": {
+          "derived from": "Client Requests Subdomain",
+          "objects" : ["Client","Review Request","Task","Process Documentation","Automation Feedback"],
+          "name changes" : []
+      },
+      "Automation Design": {
+          "derived from": "Automation Design Subdomain",
+          "objects" : ["Automation Consultant","Workflow Analysis","Workflow Automation Plan","Automation Script","Performance Report"],
+          "name changes" : []
+      },
+      "Administration": {
+          "derived from": "Administration Subdomain",
+          "objects" : ["System Administrator","Software Permission","Workflow Supervision"],
+          "name changes" : []
+      }
+	}
+}
