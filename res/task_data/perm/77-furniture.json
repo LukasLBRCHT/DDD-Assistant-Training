@@ -1,0 +1,91 @@
+{
+  "domain-information":
+  [	"A Client shares their room measurements and style preferences to request a custom piece of furniture",
+	"A Client approves a design draft to confirm it matches their vision before production begins",
+	"A Furniture Designer sketches a concept and selects materials to create a detailed design plan",
+	"A Furniture Designer revises designs based on client feedback to ensure the final piece is perfect",
+	"A Carpenter cuts and assembles wood pieces to craft the furniture according to the approved design",
+	"A Carpenter finishes surfaces and applies protective coatings to enhance durability and appearance",
+	"A Quality Inspector checks the completed furniture to ensure it meets craftsmanship standards",
+	"A Quality Inspector reports any issues to the carpenter for adjustments before delivery",
+	"A Delivery Coordinator schedules transportation and handles logistics to bring furniture safely to the client",
+	"A Delivery Coordinator confirms delivery with the client and collects feedback to close the project"
+],
+  "domain objects": [
+      {"name": "Client", "description": "person requesting a custom furniture piece"},
+      {"name": "Piece Request", "description": "initial request describing what furniture the client wants", "attributes": ["Room Measurements","Style Preference"]},
+      {"name": "Room Measurements", "description": "dimensions provided by the client"},
+      {"name": "Style Preference", "description": "client’s preferred look and style"},
+      {"name": "Design Draft", "description": "early visual and material concept of the furniture", "attributes": ["Material"]},
+      {"name": "Material", "description": "selected materials to be used in the furniture"},
+      {"name": "Furniture Designer", "description": "professional who creates and refines the design"},
+      {"name": "Feedback", "description": "client’s notes to adjust or approve work"},
+      {"name": "Final Design", "description": "approved design blueprint for production"},
+      {"name": "Carpenter", "description": "craftsperson building the furniture"},
+      {"name": "Furniture Assembly", "description": "construction process for the furniture"},
+      {"name": "Furniture Piece", "description": "completed furniture product"},
+      {"name": "Quality Inspector", "description": "person responsible for checking quality standards"},
+      {"name": "Standard Check", "description": "quality review of the finished piece"},
+      {"name": "Issue Report", "description": "notes on problems found during inspection"},
+      {"name": "Delivery Coordinator", "description": "person arranging furniture delivery"},
+      {"name": "Delivery", "description": "transport of the finished furniture to the client", "attributes": ["Delivery Time","Furniture Piece"]},
+      {"name": "Delivery Time", "description": "scheduled time for delivery"}
+    ],
+  "associations": [
+      {"from": "Client", "to": "Piece Request", "description": "Client submits the Piece Request"},
+      {"from": "Piece Request", "to": "Furniture Designer", "description": "Piece Request is passed to the Furniture Designer"},
+      {"from": "Furniture Designer", "to": "Design Draft", "description": "Furniture Designer creates the Design Draft"},
+      {"from": "Design Draft", "to": "Piece Request", "description": "Design Draft is aligned with the Piece Request"},
+      {"from": "Client", "to": "Design Draft", "description": "Client reviews the Design Draft"},
+      {"from": "Client", "to": "Feedback", "description": "Client provides Feedback"},
+      {"from": "Feedback", "to": "Furniture Designer", "description": "Feedback is used by the Furniture Designer"},
+      {"from": "Furniture Designer", "to": "Final Design", "description": "Furniture Designer produces the Final Design"},
+      {"from": "Final Design", "to": "Carpenter", "description": "Final Design is forwarded to Carpenter"},
+      {"from": "Carpenter", "to": "Furniture Assembly", "description": "Carpenter performs the Furniture Assembly"},
+      {"from": "Furniture Assembly", "to": "Furniture Piece", "description": "Furniture Assembly results in the Furniture Piece"},
+      {"from": "Quality Inspector", "to": "Standard Check", "description": "Quality Inspector performs the Standard Check"},
+      {"from": "Standard Check", "to": "Furniture Piece", "description": "Standard Check evaluates the Furniture Piece"},
+      {"from": "Quality Inspector", "to": "Issue Report", "description": "Quality Inspector creates an Issue Report"},
+      {"from": "Issue Report", "to": "Carpenter", "description": "Issue Report is sent to the Carpenter"},
+      {"from": "Delivery Coordinator", "to": "Delivery", "description": "Delivery Coordinator arranges the Delivery"},
+      {"from": "Client", "to": "Delivery", "description": "Client confirms the Delivery"},
+      {"from": "Feedback", "to": "Delivery Coordinator", "description": "Feedback is shared with the Delivery Coordinator"}
+    ],
+  "subdomains": {
+      "Assignment": {
+          "objects" : ["Client","Piece Request","Room Measurements","Style Preference"]
+      },
+      "Design": {
+          "objects" : ["Furniture Designer","Design Draft","Material","Feedback","Final Design"]
+      },
+      "Production": {
+          "objects" : ["Carpenter","Furniture Assembly","Furniture Piece","Quality Inspector","Standard Check","Issue Report"]
+      },
+      "Distribution": {
+          "objects" : ["Delivery Coordinator","Delivery","Furniture Piece","Delivery Time","Feedback"]
+      },
+      "subdomain connections": ["Assignment--Design","Design--Production","Distribution--Production","Assignment--Distribution"]
+    },
+  "bounded contexts": {
+      "Assignment": {
+          "derived from": "Assignment Subdomain",
+          "objects" : ["Client","Piece Request","Room Measurements","Style Preference"],
+          "name changes" : []
+      },
+      "Design": {
+          "derived from": "Design Subdomain",
+          "objects" : ["Furniture Designer","Design Draft","Material","Design Feedback","Final Design"],
+          "name changes" : ["Feedback -> Design Feedback"]
+      },
+      "Production": {
+          "derived from": "Production Subdomain",
+          "objects" : ["Carpenter","Furniture Assembly","Furniture Piece","Quality Inspector","Standard Check","Issue Report"],
+          "name changes" : []
+      },
+      "Distribution": {
+          "derived from": "Distribution Subdomain",
+          "objects" : ["Delivery Coordinator","Delivery","Furniture Load","Delivery Time","Delivery Feedback"],
+          "name changes" : ["Furniture Piece -> Furniture Load","Feedback -> Delivery Feedback"]
+      }
+	}
+}
