@@ -1,0 +1,98 @@
+{
+  "domain-information":
+  [	"A Product Manager defines new features and updates the platform roadmap to improve user engagement",
+	"A Product Manager analyzes user feedback and usage patterns to prioritize development efforts",
+	"A Content Moderator reviews posts and removes inappropriate content to maintain community standards",
+	"A Content Moderator flags suspicious accounts and reports them to the security team to prevent misuse",
+	"A Community Manager organizes campaigns to encourage user participation",
+	"A Community Manager responds to user inquiries and moderates discussions to foster positive interactions",
+	"A Data Analyst tracks platform metrics and generates reports to guide strategic decisions",
+	"A Data Analyst identifies trends in user behavior and shares insights with the product team to optimize features",
+	"A User contributes posts, images, and videos to share experiences and interact with the community",
+	"A User comments on other users’ content and participates in polls or campaigns to increase engagement"
+],
+  "domain objects": [
+      {"name": "Product Manager", "description": "person responsible for defining features and steering platform direction"},
+      {"name": "Platform Roadmap", "description": "plan outlining upcoming platform features and improvements", "attributes": ["Feature"]},
+      {"name": "Feature", "description": "individual platform capability planned or delivered"},
+      {"name": "User Feedback", "description": "input from users about their experience or feature needs"},
+      {"name": "Content Moderator", "description": "person who reviews and manages platform content"},
+      {"name": "Post", "description": "user generated content shared on the platform", "attributes": ["Comment"]},
+      {"name": "Comment", "description": "user response or remark attached to a post"},
+      {"name": "Review", "description": "evaluation step performed on content for compliance or quality"},
+      {"name": "User", "description": "platform participant who creates and interacts with content", "attributes": ["User Account","Usage Data"]},
+      {"name": "User Account", "description": "profile and identity container for a user"},
+      {"name": "Usage Data", "description": "record of user actions and behavior on the platform"},
+      {"name": "Flag", "description": "marker indicating content or accounts requiring attention"},
+      {"name": "Security Team", "description": "group responsible for handling misuse or suspicious activity"},
+      {"name": "Community", "description": "organized group of users and related interactions", "attributes": ["Community Manager","Discussion"]},
+      {"name": "Community Manager", "description": "person who manages community interactions and activities"},
+      {"name": "Discussion", "description": "conversation thread between users"},
+      {"name": "Campaign", "description": "organized community activity promoting engagement"},
+      {"name": "User Inquiry", "description": "message from a user requesting help or information"},
+      {"name": "Data Analyst", "description": "person who interprets platform metrics and user behavior"},
+      {"name": "Platform Report", "description": "compiled data summary of platform performance", "attributes": ["Platform Metrics"]},
+      {"name": "Platform Metrics", "description": "quantitative indicators of platform performance"}
+    ],
+  "associations": [
+      {"from": "Product Manager", "to": "Platform Roadmap", "description": "Product Manager defines and updates the Platform Roadmap"},
+      {"from": "User", "to": "Post", "description": "User creates a Post"},
+      {"from": "User", "to": "Comment", "description": "User writes a Comment"},
+      {"from": "User", "to": "Community", "description": "User participates in a Community"},
+      {"from": "Content Moderator", "to": "Review", "description": "Content Moderator performs a Review"},
+      {"from": "Review", "to": "Post", "description": "Review evaluates a Post"},
+      {"from": "Content Moderator", "to": "Flag", "description": "Content Moderator creates a Flag"},
+      {"from": "Flag", "to": "User Account", "description": "Flag is attached to a User Account"},
+      {"from": "Flag", "to": "Security Team", "description": "Flag is forwarded to the Security Team"},
+      {"from": "Community Manager", "to": "Discussion", "description": "Community Manager manages a Discussion"},
+      {"from": "Community Manager", "to": "Campaign", "description": "Community Manager organizes a Campaign"},
+      {"from": "Community Manager", "to": "User Inquiry", "description": "Community Manager handles a User Inquiry"},
+      {"from": "User", "to": "Campaign", "description": "User engages with a Campaign"},
+      {"from": "User", "to": "User Inquiry", "description": "User submits a User Inquiry"},
+      {"from": "User", "to": "User Feedback", "description": "User provides User Feedback"},
+      {"from": "Product Manager", "to": "User Feedback", "description": "Product Manager reviews User Feedback"},
+      {"from": "Data Analyst", "to": "Usage Data", "description": "Data Analyst analyzes Usage Data"},
+      {"from": "Data Analyst", "to": "Platform Report", "description": "Data Analyst produces a Platform Report"},
+      {"from": "Platform Report", "to": "Product Manager", "description": "Platform Report informs the Product Manager"}
+    ],
+  "subdomains": {
+      "User Activities": {
+          "objects" : ["User","User Account","Usage Data","Post","Comment"]
+      },
+      "Moderation": {
+          "objects" : ["Content Moderator","Review","Flag","Security Team"]
+      },
+      "Platform Administration": {
+          "objects" : ["Product Manager","Platform Roadmap","Feature","User Feedback"]
+      },
+      "Communities": {
+          "objects" : ["Community Manager","Community","Discussion","Campaign","User Inquiry"]
+      },
+      "Data Analysis": {
+          "objects" : ["Data Analyst","Usage Data","Platform Report","Platform Metrics"]
+      },
+      "subdomain connections": ["User Activities--Communities","Moderation--User Activities","Platform Administration--User Activities","Data Analysis--User Activities","Platform Administration--Data Analysis"]
+    },
+  "bounded contexts": {
+      "User Activities": {
+          "derived from": "User Activities Subdomain",
+          "objects" : ["User","User Account","Personal Usage Data","Post","Comment"],
+          "name changes" : ["Usage Data -> Personal Usage Data"]
+      },
+      "Moderation": {
+          "derived from": "Moderation Subdomain",
+          "objects" : ["Content Moderator","Review","Flag","Security Team"],
+          "name changes" : []
+      },
+      "Platform Supervision": {
+          "derived from": ["Platform Administration Subdomain","Data Analysis Subdomain"],
+          "objects" : ["Product Manager","Platform Roadmap","Feature","User Feedback","Data Analyst","Usage Data","Platform Report","Platform Metrics"],
+          "name changes" : []
+      },
+      "Communities": {
+          "derived from": "Communities Subdomain",
+          "objects" : ["Community Manager","Community","Discussion","Campaign","User Inquiry"],
+          "name changes" : []
+      }
+	}
+}
