@@ -1,0 +1,67 @@
+{
+  "domain-information":
+  [	"An Archivist evaluates incoming documents and organizes them into relevant collections to maintain order",
+	"An Archivist creates descriptive metadata to make documents easy to find for future reference",
+	"A Records Manager oversees the storage of official municipal records and ensures proper filing procedures",
+	"A Records Manager updates digital catalogs to reflect newly archived materials",
+	"A Research Assistant assists visitors in locating historical records and government documents",
+	"A Research Assistant compiles copies of requested documents to support research or legal needs",
+	"A Public Services Officer responds to citizen inquiries and guides them on accessing public records",
+	"A Public Services Officer coordinates document requests",
+	"A Citizen searches the archive catalog online and requests access to birth certificates, permits, or historical reports",
+	"A Citizen submits formal document requests to support personal research or legal matters"
+],
+  "domain objects": [
+      {"name": "Archivist", "description": "Person who evaluates and organizes incoming documents"},
+      {"name": "Document", "description": "Any item stored in the archive with descriptive metadata", "attributes": ["Metadata"]},
+      {"name": "Metadata", "description": "Descriptive information created to help locate a Document"},
+      {"name": "Collection", "description": "Group of related Documents organized for easier access", "attributes": ["Document"]},
+      {"name": "Records Manager", "description": "Person who oversees municipal records and keeps filing procedures in order"},
+      {"name": "Municipal Record", "description": "Official record maintained by the municipality"},
+      {"name": "Digital Archive", "description": "Online archive storing Documents digitally", "attributes": ["Document"]},
+      {"name": "Research Assistant", "description": "Person who helps visitors find documents and prepares research copies"},
+      {"name": "Copy", "description": "Reproduced version of a Document for research or legal use"},
+      {"name": "Public Services Officer", "description": "Person who handles citizen inquiries and coordinates Document Requests"},
+      {"name": "Citizen Inquiry", "description": "Question submitted by a Citizen about how to find or access records"},
+      {"name": "Document Request", "description": "Formal request for access to specific documents"},
+      {"name": "Citizen", "description": "Individual who searches catalogs and requests documents"},
+      {"name": "Access Request", "description": "Request submitted by a Citizen to obtain access to a Document"}
+    ],
+  "associations": [
+      {"from": "Archivist", "to": "Document", "description": "Archivist evaluates and organizes Document"},
+      {"from": "Archivist", "to": "Collection", "description": "Archivist assigns Document to a Collection"},
+      {"from": "Research Assistant", "to": "Document", "description": "Research Assistant locates Document for visitors"},
+      {"from": "Research Assistant", "to": "Copy", "description": "Research Assistant produces Copy for research"},
+      {"from": "Copy", "to": "Document", "description": "Copy is created from a specific Document"},
+      {"from": "Records Manager", "to": "Municipal Record", "description": "Records Manager oversees Municipal Record"},
+      {"from": "Records Manager", "to": "Digital Archive", "description": "Records Manager updates the Digital Archive"},
+      {"from": "Public Services Officer", "to": "Document Request", "description": "Public Services Officer coordinates Document Request"},
+      {"from": "Public Services Officer", "to": "Citizen Inquiry", "description": "Public Services Officer responds to Citizen Inquiry"},
+      {"from": "Citizen", "to": "Access Request", "description": "Citizen submits Access Request"},
+      {"from": "Access Request", "to": "Document", "description": "Access Request concerns a specific Document"},
+      {"from": "Citizen", "to": "Digital Archive", "description": "Citizen searches the Digital Archive"},
+      {"from": "Citizen", "to": "Document Request", "description": "Citizen submits a Document Request"},
+      {"from": "Citizen", "to": "Citizen Inquiry", "description": "Citizen initiates a Citizen Inquiry"}
+    ],
+  "subdomains": {
+      "Archiving": {
+          "objects" : ["Archivist","Document","Metadata","Collection","Records Manager","Municipal Record","Digital Archive"]
+      },
+      "Researching": {
+          "objects" : ["Citizen","Research Assistant","Public Services Officer","Copy","Access Request","Document Request","Citizen Inquiry"]
+      },
+      "subdomain connections": ["Archiving--Researching"]
+    },
+  "bounded contexts": {
+      "Archiving": {
+          "derived from": "Archiving Subdomain",
+          "objects" : ["Archivist","Document","Metadata","Collection","Records Manager","Municipal Record","Digital Archive"],
+          "name changes" : []
+      },
+      "Researching": {
+          "derived from": "Researching Subdomain",
+          "objects" : ["Citizen","Research Assistant","Public Services Officer","Copy","Access Request","Document Request","Citizen Inquiry"],
+          "name changes" : []
+      }
+	}
+}
