@@ -1,0 +1,95 @@
+{
+  "domain-information":
+  [	"A Refinery Manager oversees daily production and allocates resources to meet the refinery’s output targets",
+	"A Refinery Manager reviews reports from engineers and analysts to adjust operations and optimize efficiency",
+	"A Process Engineer monitors processing units and adjusts operating parameters to maintain smooth production",
+	"A Process Engineer collaborates with the Quality Analyst to troubleshoot issues that affect product specifications",
+	"A Quality Analyst tests batches of refined products and documents results to ensure standards are met",
+	"A Quality Analyst reports deviations in product quality and recommends adjustments to maintain consistency",
+	"A Logistics Coordinator schedules deliveries and coordinates storage to meet customer demand and minimize downtime",
+	"A Logistics Coordinator tracks inventory levels and communicates with the Procurement Officer to replenish critical supplies",
+	"A Procurement Officer sources crude oil and other feedstocks and negotiates contracts to secure reliable supply",
+	"A Procurement Officer evaluates supplier performance and adjusts purchasing plans to optimize cost and reliability"
+],
+  "domain objects": [
+      {"name": "Refinery Manager", "description": "Person supervising refinery operations and resource allocation"},
+      {"name": "Resource", "description": "Material or capacity needed for refinery processes"},
+      {"name": "Engineer Report", "description": "Summary of observations and adjustments from the process engineer"},
+      {"name": "Analyst Report", "description": "Quality or performance findings sent to the refinery manager"},
+      {"name": "Process Engineer", "description": "Engineer monitoring processing units and operational settings"},
+      {"name": "Processing Unit", "description": "Equipment used to refine materials through controlled parameters", "attributes": ["Operating Parameter"]},
+      {"name": "Operating Parameter", "description": "Setting that affects processing unit performance"},
+      {"name": "Issue Troubleshooting", "description": "Joint effort to resolve production or quality problems"},
+      {"name": "Product Batch", "description": "Quantity of refined product produced under shared conditions"},
+      {"name": "Quality Analyst", "description": "Analyst testing product batches and verifying specifications"},
+      {"name": "Quality Documentation", "description": "Recorded results of product quality tests"},
+      {"name": "Logistics Coordinator", "description": "Person organizing storage, transport, and inventory"},
+      {"name": "Product Storage", "description": "Stored refined products awaiting distribution", "attributes": ["Product Batch"]},
+      {"name": "Inventory Levels", "description": "Status of available resources or stored products", "attributes": ["Resource"]},
+      {"name": "Delivery", "description": "Movement of product batches to a recipient", "attributes": ["Product Batch"]},
+      {"name": "Procurement Officer", "description": "Person handling sourcing and supplier negotiations"},
+      {"name": "Supply Order", "description": "Order placed to acquire needed materials"},
+      {"name": "Supplier", "description": "External provider of crude oil or other feedstocks"},
+      {"name": "Performance Evaluation", "description": "Assessment of supplier reliability and cost efficiency"},
+      {"name": "Client", "description": "Person interested in buying refinery products"}
+    ],
+  "associations": [
+      {"from": "Refinery Manager", "to": "Resource", "description": "Refinery Manager allocates Resource to support operations"},
+      {"from": "Refinery Manager", "to": "Product Batch", "description": "Refinery Manager oversees Product Batch outcomes"},
+      {"from": "Process Engineer", "to": "Processing Unit", "description": "Process Engineer monitors Processing Unit"},
+      {"from": "Processing Unit", "to": "Resource", "description": "Processing Unit consumes Resource during production"},
+      {"from": "Processing Unit", "to": "Product Batch", "description": "Processing Unit produces Product Batch"},
+      {"from": "Process Engineer", "to": "Engineer Report", "description": "Process Engineer creates Engineer Report"},
+      {"from": "Engineer Report", "to": "Refinery Manager", "description": "Engineer Report informs Refinery Manager"},
+      {"from": "Quality Analyst", "to": "Analyst Report", "description": "Quality Analyst prepares Analyst Report"},
+      {"from": "Analyst Report", "to": "Refinery Manager", "description": "Analyst Report is reviewed by Refinery Manager"},
+      {"from": "Quality Analyst", "to": "Quality Documentation", "description": "Quality Analyst records Quality Documentation"},
+      {"from": "Quality Documentation", "to": "Product Batch", "description": "Quality Documentation is linked to Product Batch"},
+      {"from": "Quality Analyst", "to": "Issue Troubleshooting", "description": "Quality Analyst contributes to Issue Troubleshooting"},
+      {"from": "Process Engineer", "to": "Issue Troubleshooting", "description": "Process Engineer collaborates on Issue Troubleshooting"},
+      {"from": "Logistics Coordinator", "to": "Product Storage", "description": "Logistics Coordinator manages Product Storage"},
+      {"from": "Logistics Coordinator", "to": "Delivery", "description": "Logistics Coordinator schedules Delivery"},
+      {"from": "Delivery", "to": "Client", "description": "Delivery transports product to Client"},
+      {"from": "Logistics Coordinator", "to": "Inventory Levels", "description": "Logistics Coordinator monitors Inventory Levels"},
+      {"from": "Logistics Coordinator", "to": "Procurement Officer", "description": "Logistics Coordinator informs Procurement Officer"},
+      {"from": "Procurement Officer", "to": "Supply Order", "description": "Procurement Officer issues Supply Order"},
+      {"from": "Supply Order", "to": "Supplier", "description": "Supply Order is placed with Supplier"},
+      {"from": "Procurement Officer", "to": "Performance Evaluation", "description": "Procurement Officer performs Performance Evaluation"},
+      {"from": "Performance Evaluation", "to": "Supply Order", "description": "Performance Evaluation influences Supply Order"},
+      {"from": "Supply Order", "to": "Inventory Levels", "description": "Supply Order affects Inventory Levels"}
+    ],
+  "subdomains": {
+      "Supervision": {
+          "objects" : ["Refinery Manager","Resource","Product Batch"]
+      },
+      "Operating": {
+          "objects" : ["Process Engineer","Processing Unit","Operating Parameter","Resource","Product Batch","Engineer Report","Quality Analyst","Quality Documentation","Issue Troubleshooting","Analyst Report"]
+      },
+      "Distribution": {
+          "objects" : ["Logistics Coordinator","Product Storage","Product Batch","Inventory Levels","Resource","Delivery","Product Batch","Client","Procurement Officer","Supply Order","Supplier","Performance Evaluation"]
+      },
+      "subdomain connections": ["Supervision--Operating","Operating--Distribution"]
+    },
+  "bounded contexts": {
+      "Supervision": {
+          "derived from": "Supervision Subdomain",
+          "objects" : ["Refinery Manager","Resource","Product Batch"],
+          "name changes" : []
+      },
+      "Operating": {
+          "derived from": "Operating Subdomain",
+          "objects" : ["Process Engineer","Processing Unit","Operating Parameter","Processing Material","Processing Product","Engineer Report","Quality Analyst","Quality Documentation","Issue Troubleshooting","Analyst Report"],
+          "name changes" : ["Resource -> Processing Material","Product Batch -> Processing Product"]
+      },
+      "Inventory Keeping": {
+          "derived from": "Distribution Subdomain",
+          "objects" : ["Logistics Coordinator","Product Storage","Product Stock","Inventory Levels","Resource Stock","Procurement Officer","Supply Order","Supplier","Performance Evaluation"],
+          "name changes" : ["Product Batch -> Product Stock","Resource -> Resource Stock"]
+      },
+      "Delivery": {
+          "derived from": "Distribution Subdomain",
+          "objects" : ["Delivery","Product Load","Client"],
+          "name changes" : ["Product Batch -> Product Load"]
+      }
+	}
+}
