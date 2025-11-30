@@ -1,0 +1,73 @@
+{
+  "domain-information":
+  [	"A Postal Clerk receives packages from customers and issues receipts to confirm acceptance",
+	"A Postal Clerk weighs mail and calculates postage to ensure correct pricing",
+	"A Sorting Officer organizes incoming mail by destination and scans items to track their location",
+	"A Sorting Officer prepares delivery batches to streamline routes for carriers",
+	"A Delivery Carrier picks up sorted packages and delivers them to recipients on schedule",
+	"A Delivery Carrier updates delivery status to inform the post office and customers",
+	"A Sender fills out a shipping form and chooses a delivery option to send a parcel efficiently",
+	"A Recipient tracks their incoming package online and confirms receipt to complete the delivery"
+],
+  "domain objects": [
+      {"name":"Postal Clerk","description":"Employee who receives packages and calculates postage"},
+      {"name":"Package","description":"Physical parcel submitted by a customer","attributes":["Receipt","Weight"]},
+      {"name":"Receipt","description":"Proof that a package was accepted"},
+      {"name":"Weight","description":"Measured weight of a package"},
+      {"name":"Postage","description":"Calculated cost for sending a package"},
+      {"name":"Customer","description":"Person sending or receiving mail"},
+      {"name":"Sorting Officer","description":"Employee who sorts mail and prepares delivery batches"},
+      {"name":"Mail","description":"Grouped postal items prepared for routing","attributes":["Package","Location"]},
+      {"name":"Location","description":"Current place of a mail item"},
+      {"name":"Delivery Batch","description":"Collection of mail prepared for a delivery route","attributes":["Mail"]},
+      {"name":"Route","description":"Planned path for delivering a delivery batch","attributes":["Delivery Batch","Delivery Status"]},
+      {"name":"Delivery Status","description":"Progress update for a delivery"},
+      {"name":"Delivery Carrier","description":"Worker who transports and delivers mail"},
+      {"name":"Shipping Form","description":"Form completed by a customer to initiate a shipment"},
+      {"name":"Receipt Confirmation","description":"Customer confirmation that mail was received"}
+    ],
+  "associations": [
+      {"from":"Customer","to":"Package","description":"Customer prepares or submits the Package"},
+      {"from":"Postal Clerk","to":"Package","description":"Postal Clerk accepts and processes the Package"},
+      {"from":"Postal Clerk","to":"Postage","description":"Postal Clerk calculates the Postage"},
+      {"from":"Postage","to":"Package","description":"Postage reflects the cost of sending the Package"},
+      {"from":"Customer","to":"Postage","description":"Customer pays or reviews the Postage"},
+      {"from":"Sorting Officer","to":"Mail","description":"Sorting Officer organizes and scans the Mail"},
+      {"from":"Sorting Officer","to":"Delivery Batch","description":"Sorting Officer prepares the Delivery Batch"},
+      {"from":"Customer","to":"Receipt Confirmation","description":"Customer provides the Receipt Confirmation"},
+      {"from":"Receipt Confirmation","to":"Mail","description":"Receipt Confirmation indicates the Mail was received"},
+      {"from":"Delivery Carrier","to":"Route","description":"Delivery Carrier follows the Route"},
+      {"from":"Customer","to":"Route","description":"Customer reviews tracking details along the Route"},
+      {"from":"Customer","to":"Shipping Form","description":"Customer fills out the Shipping Form"},
+      {"from":"Shipping Form","to":"Package","description":"Shipping Form provides details about the Package"}
+    ],
+  "subdomains": {
+      "Shipping": {
+          "objects" : ["Customer","Postal Clerk","Package","Receipt","Weight","Postage","Shipping Form"]
+      },
+      "Mail Organisation": {
+          "objects" : ["Sorting Officer","Delivery Batch","Mail","Location"]
+      },
+      "Distribution": {
+          "objects" : ["Delivery Carrier","Customer","Route","Receipt Confirmation"]
+      },
+      "subdomain connections": ["Shipping--Mail Organisation","Mail Organisation--Distribution"]
+    },
+  "bounded contexts": {
+      "Shipping": {
+          "derived from": "Shipping Subdomain",
+          "objects" : ["Sender","Postal Clerk","Package","Receipt","Weight","Postage","Shipping Form"],
+          "name changes" : ["Customer -> Sender"]
+      },
+      "Mail Organisation": {
+          "derived from": "Mail Organisation Subdomain",
+          "objects" : ["Sorting Officer","Delivery Batch","Mail","Location"],
+          "name changes" : []
+      },
+      "Distribution": {
+          "derived from": "Distribution Subdomain",
+          "objects" : ["Delivery Carrier","Recipient","Route","Receipt Confirmation"],
+          "name changes" : ["Customer -> Recipient"]
+      }
+	}
+}
