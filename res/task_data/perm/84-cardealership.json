@@ -1,0 +1,72 @@
+{
+  "domain-information":
+  [	"A Sales Consultant greets customers and shows them vehicles that match their preferences",
+	"A Sales Consultant arranges test drives and collects feedback to help the customer decide",
+	"A Finance Officer reviews customer credit applications and offers financing options for car purchases",
+	"A Finance Officer prepares loan or lease agreements to complete the sale",
+	"An Inventory Manager tracks the vehicles on the lot and updates availability records for the sales team",
+	"An Inventory Manager orders new cars from manufacturers to keep popular models in stock",
+	"A Customer browses available cars online and visits the dealership to compare models",
+	"A Customer negotiates trade-ins or purchases to complete their vehicle acquisition"
+],
+  "domain objects": [
+      {"name": "Sales Consultant", "description": "Employee who guides customers through selecting and evaluating vehicles"},
+      {"name": "Vehicle", "description": "Car available for viewing, test driving, or purchase"},
+      {"name": "Test Drive", "description": "Customer trial of a vehicle before deciding on a purchase"},
+      {"name": "Customer", "description": "Person interested in browsing, evaluating, or purchasing a vehicle"},
+      {"name": "Feedback", "description": "Customer impressions about a vehicle or test drive"},
+      {"name": "Finance Officer", "description": "Staff member who reviews financing eligibility and prepares agreements"},
+      {"name": "Credit Application", "description": "Customer submission used to evaluate financing options"},
+      {"name": "Car Purchase", "description": "Transaction record for buying a vehicle including financing details"},
+      {"name": "Financing Option", "description": "Proposed loan terms available to a customer"},
+      {"name": "Lease Agreement", "description": "Contract outlining terms for leasing a vehicle"},
+      {"name": "Inventory Manager", "description": "Employee who tracks vehicle availability and manages stock levels"},
+      {"name": "Manufacturing Order", "description": "Order request for new vehicles sent to a manufacturer"},
+      {"name": "Manufacturer", "description": "External vehicle producer receiving inventory orders"}
+    ],
+  "associations": [
+      {"from": "Inventory Manager", "to": "Manufacturing Order", "description": "Inventory Manager creates a Manufacturing Order to request new vehicles"},
+      {"from": "Manufacturing Order", "to": "Manufacturer", "description": "Manufacturing Order is sent to the Manufacturer for processing"},
+      {"from": "Inventory Manager", "to": "Vehicle", "description": "Inventory Manager tracks each Vehicle in the lot"},
+      {"from": "Customer", "to": "Credit Application", "description": "Customer submits a Credit Application for financing review"},
+      {"from": "Sales Consultant", "to": "Vehicle", "description": "Sales Consultant presents a Vehicle to assist customer decisions"},
+      {"from": "Customer", "to": "Test Drive", "description": "Customer participates in a Test Drive to evaluate a vehicle"},
+      {"from": "Test Drive", "to": "Vehicle", "description": "Test Drive uses a specific Vehicle for evaluation"},
+      {"from": "Sales Consultant", "to": "Test Drive", "description": "Sales Consultant arranges the Test Drive for the customer"},
+      {"from": "Customer", "to": "Feedback", "description": "Customer provides Feedback based on their sales experience"},
+      {"from": "Feedback", "to": "Sales Consultant", "description": "Feedback is directed to the Sales Consultant for service improvement"},
+      {"from": "Customer", "to": "Car Purchase", "description": "Customer initiates a Car Purchase to acquire a vehicle"},
+      {"from": "Car Purchase", "to": "Vehicle", "description": "Car Purchase is tied to the Vehicle being bought"},
+      {"from": "Finance Officer", "to": "Car Purchase", "description": "Finance Officer prepares documentation for the Car Purchase"},
+      {"from": "Finance Officer", "to": "Credit Application", "description": "Finance Officer evaluates the Credit Application for approval"}
+    ],
+  "subdomains": {
+      "Consulting": {
+          "objects" : ["Sales Consultant","Customer","Vehicle","Test Drive","Feedback"]
+      },
+      "Finances": {
+          "objects" : ["Customer","Finance Officer","Car Purchase","Financing Option","Lease Agreement","Credit Application"]
+      },
+      "Inventory Keeping": {
+          "objects" : ["Inventory Manager","Vehicle","Manufacturing Order","Manufacturer"]
+      },
+      "subdomain connections": ["Inventory Keeping--Consulting","Consulting--Finances"]
+    },
+  "bounded contexts": {
+      "Consulting": {
+          "derived from": "Consulting Subdomain",
+          "objects" : ["Sales Consultant","Customer","Vehicle","Test Drive","Feedback"],
+          "name changes" : []
+      },
+      "Finances": {
+          "derived from": "Finances Subdomain",
+          "objects" : ["Buyer","Finance Officer","Car Purchase","Financing Option","Lease Agreement","Credit Application"],
+          "name changes" : ["Customer -> Buyer"]
+      },
+      "Inventory Keeping": {
+          "derived from": "Inventory Keeping Subdomain",
+          "objects" : ["Inventory Manager","Vehicle Record","Manufacturing Order","Manufacturer"],
+          "name changes" : ["Vehicle -> Vehicle Record"]
+      }
+	}
+}
