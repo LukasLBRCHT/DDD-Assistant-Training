@@ -1,0 +1,84 @@
+{
+  "domain-information":
+  [	"A Fire Chief develops response strategies and allocates units to different stations to optimize coverage",
+	"A Fire Chief reviews incident reports and adjusts department protocols to improve safety and efficiency",
+	"A Dispatcher receives emergency calls and coordinates the deployment of fire units",
+	"A Dispatcher communicates with firefighters in the field to provide updates and critical instructions",
+	"A Firefighter responds to emergencies and operates equipment to extinguish fires and rescue people",
+	"A Firefighter conducts safety checks on fire trucks to ensure readiness for the next call",
+	"A Training Officer organizes drills to prepare personnel for complex emergency scenarios",
+	"A Training Officer evaluates firefighter performance and updates training materials to address observed gaps"
+],
+  "domain objects": [
+      {"name": "Fire Chief", "description": "Senior officer who directs strategy and oversees department operations"},
+      {"name": "Response Strategy", "description": "Planned approach for allocating fire units and handling emergencies"},
+      {"name": "Station", "description": "Facility that hosts fire units and resources", "attributes": ["Fire Unit"]},
+      {"name": "Fire Unit", "description": "Team of firefighters assigned to a station or deployment", "attributes": ["Firefighter"]},
+      {"name": "Firefighter", "description": "Emergency responder who handles fire suppression and rescue tasks"},
+      {"name": "Incident Report", "description": "Record describing details and outcomes of a fire incident"},
+      {"name": "Dispatcher", "description": "Operator who receives emergency calls and coordinates deployments"},
+      {"name": "Emergency Call", "description": "Incoming report requesting emergency response"},
+      {"name": "Field Messaging", "description": "Communication exchanged between dispatcher and firefighters"},
+      {"name": "Safety Check", "description": "Routine inspection performed to ensure equipment readiness"},
+      {"name": "Fire Truck", "description": "Vehicle used to transport firefighters and equipment"},
+      {"name": "Gear", "description": "Protective and operational equipment used by firefighters"},
+      {"name": "Training Officer", "description": "Specialist responsible for drills, instruction, and skill development"},
+      {"name": "Drill", "description": "Training exercise conducted to prepare for emergency scenarios", "attributes": ["Training Material"]},
+      {"name": "Training Material", "description": "Guides, instructions, or resources used in firefighter training"},
+      {"name": "Performance Evaluation", "description": "Assessment of a firefighter’s skills and training progress"}
+    ],
+  "associations": [
+      {"from": "Fire Chief", "to": "Response Strategy", "description": "Fire Chief creates and updates Response Strategy"},
+      {"from": "Fire Chief", "to": "Station", "description": "Fire Chief allocates resources across each Station"},
+      {"from": "Fire Chief", "to": "Incident Report", "description": "Fire Chief reviews each Incident Report for improvements"},
+      {"from": "Dispatcher", "to": "Emergency Call", "description": "Dispatcher receives and processes each Emergency Call"},
+      {"from": "Dispatcher", "to": "Fire Unit", "description": "Dispatcher deploys each Fire Unit to incidents"},
+      {"from": "Fire Unit", "to": "Emergency Call", "description": "Fire Unit responds to the Emergency Call"},
+      {"from": "Firefighter", "to": "Field Messaging", "description": "Firefighter exchanges Field Messaging during operations"},
+      {"from": "Dispatcher", "to": "Field Messaging", "description": "Dispatcher sends Field Messaging to guiding firefighters"},
+      {"from": "Firefighter", "to": "Safety Check", "description": "Firefighter performs each Safety Check"},
+      {"from": "Safety Check", "to": "Fire Truck", "description": "Safety Check verifies condition of the Fire Truck"},
+      {"from": "Safety Check", "to": "Gear", "description": "Safety Check inspects necessary Gear"},
+      {"from": "Firefighter", "to": "Drill", "description": "Firefighter participates in each Drill"},
+      {"from": "Training Officer", "to": "Drill", "description": "Training Officer organizes each Drill"},
+      {"from": "Training Officer", "to": "Performance Evaluation", "description": "Training Officer creates the Performance Evaluation"},
+      {"from": "Performance Evaluation", "to": "Firefighter", "description": "Performance Evaluation assesses the Firefighter"}
+    ],
+  "subdomains": {
+      "Deployment": {
+          "objects" : ["Dispatcher","Emergency Call","Fire Unit","Firefighter","Field Messaging"]
+      },
+      "Supervision": {
+          "objects" : ["Fire Chief","Response Strategy","Station","Fire Unit","Firefighter","Incident Report"]
+      },
+      "Equipment": {
+          "objects" : ["Safety Check","Fire Truck","Gear"]
+      },
+      "Training": {
+          "objects" : ["Training Officer","Drill","Training Material","Firefighter","Performance Evaluation"]
+      },
+      "subdomain connections": ["Supervision--Deployment","Equipment--Deployment","Training--Deployment"]
+    },
+  "bounded contexts": {
+      "Deployment": {
+          "derived from": "Deployment Subdomain",
+          "objects" : ["Dispatcher","Emergency Call","Response Unit","Assigned Firefighter","Field Messaging"],
+          "name changes" : ["Fire Unit -> Response Unit","Firefighter -> Assigned Firefighter"]
+      },
+      "Supervision": {
+          "derived from": "Supervision Subdomain",
+          "objects" : ["Fire Chief","Response Strategy","Station","Fire Unit","Firefighter","Incident Report"],
+          "name changes" : []
+      },
+      "Equipment": {
+          "derived from": "Equipment Subdomain",
+          "objects" : ["Safety Check","Fire Truck","Gear"],
+          "name changes" : []
+      },
+      "Training": {
+          "derived from": "Training Subdomain",
+          "objects" : ["Training Officer","Drill","Training Material","Trainee","Performance Evaluation"],
+          "name changes" : ["Firefighter -> Trainee"]
+      }
+	}
+}
