@@ -1,5 +1,5 @@
-A Service Manager analyzes usage patterns and adjusts vehicle availability to meet peak demand
-A Service Manager sets pricing strategies and promotions to attract more users
+A Service Manager analyzes usage data and informs the fleet coordinator to meet peak demand
+A Service Manager sets pricing strategies that affect the price for bookings
 
 A Fleet Coordinator monitors vehicle locations and schedules cars for cleaning and refueling to maintain readiness
 A Fleet Coordinator plans fleet expansion and reallocates vehicles across city zones based on demand trends

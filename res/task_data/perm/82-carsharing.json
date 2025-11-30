@@ -1,0 +1,81 @@
+{
+  "domain-information":
+  [	"A Service Manager analyzes usage data and informs the fleet coordinator to meet peak demand",
+	"A Service Manager sets pricing strategies that affect the price for bookings",
+	"A Fleet Coordinator monitors vehicle locations and schedules cars for cleaning and refueling to maintain readiness",
+	"A Fleet Coordinator plans fleet expansion and reallocates vehicles across city zones based on demand trends",
+	"A Customer Support Agent assists users with booking issues and answers questions about vehicle policies",
+	"A Customer Support Agent processes damage reports and communicates with users to resolve disputes",
+	"A User searches for available cars nearby and books a vehicle for a short-term trip",
+	"A User reports vehicle issues or updates their profile to ensure smooth future rentals",
+	"A User leaves feedback on their ride experience and suggests improvements to the platform"
+],
+  "domain objects": [
+      {"name": "Service Manager", "description": "person who oversees service performance and demand"},
+      {"name": "Usage Data", "description": "data showing how users interact with the service"},
+      {"name": "Demand Report", "description": "summary of expected or current demand trends"},
+      {"name": "Fleet Coordinator", "description": "person who manages vehicle readiness and allocation"},
+      {"name": "Fleet", "description": "collection of vehicles organized across zones", "attributes": ["Vehicle","City Zone"]},
+      {"name": "City Zone", "description": "area of operation within the service region"},
+      {"name": "Vehicle", "description": "car available for booking", "attributes": ["Location"]},
+      {"name": "Location", "description": "current geographic position of a vehicle"},
+      {"name": "Cleaning Schedule", "description": "plan for when vehicles get cleaned"},
+      {"name": "Fueling Schedule", "description": "plan for refueling vehicles"},
+      {"name": "Customer Support Agent", "description": "person assisting users with issues and questions"},
+      {"name": "Booking", "description": "user reservation for a vehicle", "attributes": ["Vehicle","Price"]},
+      {"name": "Price", "description": "cost associated with a booking"},
+      {"name": "Pricing Strategy", "description": "rules that define how booking prices are set"},
+      {"name": "Technical Assistance", "description": "help provided to users for technical or usage problems"},
+      {"name": "Damage Report", "description": "record of issues or damage found on a vehicle", "attributes": ["Vehicle"]},
+      {"name": "User", "description": "person booking and using vehicles", "attributes": ["Profile"]},
+      {"name": "Profile", "description": "stored personal and account details of a user"},
+      {"name": "User Feedback", "description": "input from users about their ride experience"}
+    ],
+  "associations": [
+      {"from": "Service Manager", "to": "Usage Data", "description": "Service Manager reviews Usage Data"},
+      {"from": "Service Manager", "to": "Demand Report", "description": "Service Manager creates Demand Report"},
+      {"from": "Demand Report", "to": "Fleet Coordinator", "description": "Demand Report informs Fleet Coordinator"},
+      {"from": "Fleet Coordinator", "to": "Cleaning Schedule", "description": "Fleet Coordinator sets Cleaning Schedule"},
+      {"from": "Fleet Coordinator", "to": "Fueling Schedule", "description": "Fleet Coordinator arranges Fueling Schedule"},
+      {"from": "Fleet Coordinator", "to": "Fleet", "description": "Fleet Coordinator manages Fleet"},
+      {"from": "Service Manager", "to": "Pricing Strategy", "description": "Service Manager defines Pricing Strategy"},
+      {"from": "Pricing Strategy", "to": "Price", "description": "Pricing Strategy determines Price"},
+      {"from": "User", "to": "Booking", "description": "User creates Booking"},
+      {"from": "Customer Support Agent", "to": "Booking", "description": "Customer Support Agent assists with Booking"},
+      {"from": "User", "to": "User Feedback", "description": "User provides User Feedback"},
+      {"from": "User Feedback", "to": "Booking", "description": "User Feedback evaluates Booking"},
+      {"from": "User", "to": "Damage Report", "description": "User submits Damage Report"},
+      {"from": "Customer Support Agent", "to": "Damage Report", "description": "Customer Support Agent handles Damage Report"},
+      {"from": "Customer Support Agent", "to": "Technical Assistance", "description": "Customer Support Agent gives Technical Assistance"},
+      {"from": "User", "to": "Technical Assistance", "description": "User requests Technical Assistance"}
+    ],
+  "subdomains": {
+      "Fleet Monitoring": {
+          "objects" : ["Fleet Coordinator","Fleet","City Zone","Vehicle","Location","Cleaning Schedule","Fueling Schedule"]
+      },
+      "User Booking": {
+          "objects" : ["User","Profile","Booking","Vehicle","Price","User Feedback","Customer Support Agent","Technical Assistance","Damage Report"]
+      },
+      "Administration": {
+          "objects" : ["Service Manager","Usage Data","Demand Report","Pricing Strategy"]
+      },
+      "subdomain connections": ["Administration--Fleet Monitoring","User Booking--Fleet Monitoring","Administration--User Booking"]
+    },
+  "bounded contexts": {
+      "Fleet Monitoring": {
+          "derived from": "Fleet Monitoring Subdomain",
+          "objects" : ["Fleet Coordinator","Fleet","City Zone","Vehicle","Location","Cleaning Schedule","Fueling Schedule"],
+          "name changes" : []
+      },
+      "User Booking": {
+          "derived from": "User Booking Subdomain",
+          "objects" : ["User","Profile","Booking","Booked Vehicle","Price","User Feedback","Customer Support Agent","Technical Assistance","Damage Report"],
+          "name changes" : ["Vehicle -> Booked Vehicle"]
+      },
+      "Administration": {
+          "derived from": "Administration Subdomain",
+          "objects" : ["Service Manager","Usage Data","Demand Report","Pricing Strategy"],
+          "name changes" : []
+      }
+	}
+}
