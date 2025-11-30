@@ -1,0 +1,112 @@
+{
+  "domain-information":
+  [	"A Platform Manager monitors platform traffic and adjusts policies to improve user engagement",
+	"A Platform Manager analyzes sales trends to decide which categories to promote",
+	"A Listing Specialist reviews product submissions and approves items to ensure they meet quality standards",
+	"A Listing Specialist writes product descriptions and sets recommended prices to attract buyers",
+	"A Customer Support Agent resolves disputes between sellers and buyers and provides guidance on payment issues",
+	"A Customer Support Agent responds to inquiries about platform rules and account verification",
+	"A Seller creates a listing for a used item and uploads photos to showcase it effectively",
+	"A Seller updates an item’s availability and responds to buyer questions to facilitate a sale",
+	"A Buyer searches for items in their preferred category and adds favorites to a wishlist",
+	"A Buyer completes a purchase and leaves feedback to help future buyers make decisions"
+],
+  "domain objects": [
+      {"name": "Platform Manager", "description": "person who oversees platform activity and adjusts overall policies"},
+      {"name": "Platform Traffic", "description": "measure of user activity and engagement on the platform"},
+      {"name": "Policy", "description": "platform rule or configuration set to influence user behavior"},
+      {"name": "Sales Trends", "description": "data showing how items sell over time"},
+      {"name": "Listing Specialist", "description": "person responsible for reviewing and improving product listings"},
+      {"name": "Quality Review", "description": "evaluation process that checks whether a product listing meets standards"},
+      {"name": "Product Listing", "description": "posted item with details for sale", "attributes": ["Item","Photo","Product Description","Price Recommendation","Availability","Category"]},
+      {"name": "Item", "description": "physical good being sold"},
+      {"name": "Photo", "description": "image uploaded to represent an item"},
+      {"name": "Product Description", "description": "text describing an item and its features"},
+      {"name": "Price Recommendation", "description": "suggested price based on guidance or analysis"},
+      {"name": "Availability", "description": "current sale status of an item"},
+      {"name": "Category", "description": "classification that groups similar items"},
+      {"name": "Customer Support Agent", "description": "person who resolves issues and answers support inquiries"},
+      {"name": "Purchase Dispute", "description": "conflict between buyer and seller over a purchase"},
+      {"name": "Support Inquiry", "description": "question or issue submitted to customer support"},
+      {"name": "Seller", "description": "user who posts items for sale"},
+      {"name": "Messaging", "description": "communication channel between users"},
+      {"name": "Buyer", "description": "user who searches for and purchases items"},
+      {"name": "Item Search", "description": "process or action where a buyer looks for listings", "attributes": ["Category"]},
+      {"name": "Wishlist", "description": "collection of saved product listings a buyer likes", "attributes": ["Product Listing"]},
+      {"name": "Purchase", "description": "completed transaction between buyer and seller"},
+      {"name": "Feedback", "description": "buyer’s review after a purchase"}
+    ],
+  "associations": [
+      {"from": "Listing Specialist", "to": "Product Listing", "description": "Listing Specialist creates and improves a Product Listing"},
+      {"from": "Listing Specialist", "to": "Quality Review", "description": "Listing Specialist performs a Quality Review"},
+      {"from": "Quality Review", "to": "Product Listing", "description": "Quality Review evaluates a Product Listing"},
+      {"from": "Platform Manager", "to": "Platform Traffic", "description": "Platform Manager monitors Platform Traffic"},
+      {"from": "Platform Manager", "to": "Sales Trends", "description": "Platform Manager analyzes Sales Trends"},
+      {"from": "Platform Manager", "to": "Policy", "description": "Platform Manager adjusts Policy"},
+      {"from": "Buyer", "to": "Item Search", "description": "Buyer initiates an Item Search"},
+      {"from": "Item Search", "to": "Product Listing", "description": "Item Search retrieves matching Product Listings"},
+      {"from": "Buyer", "to": "Wishlist", "description": "Buyer maintains a Wishlist"},
+      {"from": "Buyer", "to": "Messaging", "description": "Buyer communicates through Messaging"},
+      {"from": "Seller", "to": "Messaging", "description": "Seller communicates through Messaging"},
+      {"from": "Wishlist", "to": "Platform Traffic", "description": "Wishlist contributes to Platform Traffic"},
+      {"from": "Item Search", "to": "Wishlist", "description": "Item Search allows adding listings to Wishlist"},
+      {"from": "Purchase", "to": "Sales Trends", "description": "Purchase influences Sales Trends"},
+      {"from": "Seller", "to": "Product Listing", "description": "Seller creates a Product Listing"},
+      {"from": "Buyer", "to": "Purchase", "description": "Buyer initiates a Purchase"},
+      {"from": "Purchase", "to": "Seller", "description": "Purchase involves a Seller"},
+      {"from": "Purchase", "to": "Product Listing", "description": "Purchase is tied to a Product Listing"},
+      {"from": "Buyer", "to": "Feedback", "description": "Buyer leaves Feedback"},
+      {"from": "Feedback", "to": "Purchase", "description": "Feedback evaluates a Purchase"},
+      {"from": "Customer Support Agent", "to": "Purchase Dispute", "description": "Customer Support Agent resolves a Purchase Dispute"},
+      {"from": "Buyer", "to": "Purchase Dispute", "description": "Buyer raises a Purchase Dispute"},
+      {"from": "Seller", "to": "Purchase Dispute", "description": "Seller is involved in a Purchase Dispute"},
+      {"from": "Buyer", "to": "Support Inquiry", "description": "Buyer submits a Support Inquiry"},
+      {"from": "Seller", "to": "Support Inquiry", "description": "Seller submits a Support Inquiry"},
+      {"from": "Customer Support Agent", "to": "Support Inquiry", "description": "Customer Support Agent responds to a Support Inquiry"}
+    ],
+  "subdomains": {
+      "Selling": {
+          "objects" : ["Seller","Product Listing","Item","Photo","Availability"]
+      },
+      "Product Review": {
+          "objects" : ["Listing Specialist","Product Listing","Quality Review","Product Description","Price Recommendation","Category"]
+      },
+      "Purchasing": {
+          "objects" : ["Buyer","Item Search","Category","Product Listing","Wishlist","Purchase","Feedback"]
+      },
+      "Platform Management": {
+          "objects" : ["Platform Manager","Platform Traffic","Policy","Sales Trends"]
+      },
+      "Exchange": {
+          "objects" : ["Customer Support Agent","Purchase Dispute","Support Inquiry","Messaging"]
+      },
+      "subdomain connections": ["Selling--Product Review","Purchasing--Product Review","Purchasing--Selling","Purchasing--Platform Management","Selling--Exchange","Purchasing--Exchange"]
+    },
+  "bounded contexts": {
+      "Selling": {
+          "derived from": "Selling Subdomain",
+          "objects" : ["Seller","Listing Submission","Item","Photo","Availability"],
+          "name changes" : ["Product Listing -> Listing Submission"]
+      },
+      "Product Review": {
+          "derived from": "Product Review Subdomain",
+          "objects" : ["Listing Specialist","Product Entry","Quality Review","Product Description","Price Recommendation","Category"],
+          "name changes" : ["Product Listing -> Product Entry"]
+      },
+      "Purchasing": {
+          "derived from": "Purchasing Subdomain",
+          "objects" : ["Buyer","Item Search","Search Category","Product Listing","Wishlist","Purchase","Feedback"],
+          "name changes" : ["Category -> Search Category"]
+      },
+      "Platform Management": {
+          "derived from": "Platform Management Subdomain",
+          "objects" : ["Platform Manager","Platform Traffic","Policy","Sales Trends"],
+          "name changes" : []
+      },
+      "Exchange": {
+          "derived from": "Exchange Subdomain",
+          "objects" : ["Customer Support Agent","Purchase Dispute","Support Inquiry","Messaging"],
+          "name changes" : []
+      }
+	}
+}
