@@ -1,0 +1,84 @@
+{
+  "domain-information":
+  [	"An Architect develops conceptual designs and sketches to capture the client’s vision for a building",
+	"An Architect reviews design drafts and incorporates feedback to refine the project plans",
+	"A Project Manager coordinates project timelines and ensures deadlines are met for design submissions",
+	"A Project Manager communicates with contractors and city officials to secure necessary permits",
+	"A Draftsperson translates conceptual sketches into technical drawings and detailed floor plans",
+	"A Draftsperson updates drawings to reflect changes requested by the architect or client",
+	"A Client Relations Specialist gathers requirements from clients and documents their preferences",
+	"A Client Relations Specialist forwards the documents to the architect",
+	"A Client reviews proposed designs and provides feedback on style, functionality, and budget considerations",
+	"A Client approves final plans and confirms design choices before construction begins"
+],
+  "domain objects": [
+      {"name": "Architect", "description": "Professional who creates conceptual designs and refines building plans"},
+      {"name": "Conceptual Design", "description": "Early design representation capturing the vision for a building"},
+      {"name": "Feedback", "description": "Input provided to improve or adjust a design"},
+      {"name": "Project Manager", "description": "Person responsible for coordinating timelines and project activities"},
+      {"name": "Project Timeline", "description": "Schedule outlining key design and submission deadlines"},
+      {"name": "Permit", "description": "Authorization required from authorities for project approval"},
+      {"name": "Draftsperson", "description": "Specialist who produces technical drawings and floor plans"},
+      {"name": "Technical Draft", "description": "Detailed technical drawing derived from conceptual designs"},
+      {"name": "Review", "description": "Evaluation process of design drafts for quality and accuracy"},
+      {"name": "Client Relations Specialist", "description": "Role responsible for gathering requirements and communicating with clients"},
+      {"name": "Requirement Documentation", "description": "Collection of a client’s needs and preferences for the project"},
+      {"name": "Client", "description": "Person who provides requirements and approves final project designs"}
+    ],
+  "associations": [
+      {"from": "Architect", "to": "Conceptual Design", "description": "Architect creates the Conceptual Design"},
+      {"from": "Architect", "to": "Review", "description": "Architect performs the Review of design drafts"},
+      {"from": "Feedback", "to": "Architect", "description": "Feedback informs the Architect about needed design adjustments"},
+      {"from": "Draftsperson", "to": "Conceptual Design", "description": "Draftsperson uses the Conceptual Design as a basis for technical work"},
+      {"from": "Draftsperson", "to": "Technical Draft", "description": "Draftsperson produces the Technical Draft"},
+      {"from": "Review", "to": "Draftsperson", "description": "Review guides the Draftsperson in updating drawings"},
+      {"from": "Client Relations Specialist", "to": "Requirement Documentation", "description": "Client Relations Specialist creates the Requirement Documentation"},
+      {"from": "Requirement Documentation", "to": "Architect", "description": "Requirement Documentation informs the Architect about client needs"},
+      {"from": "Client Relations Specialist", "to": "Client", "description": "Client Relations Specialist collects requirements from the Client"},
+      {"from": "Project Manager", "to": "Project Timeline", "description": "Project Manager maintains the Project Timeline"},
+      {"from": "Project Timeline", "to": "Conceptual Design", "description": "Project Timeline constrains when the Conceptual Design must be completed"},
+      {"from": "Project Timeline", "to": "Technical Draft", "description": "Project Timeline sets deadlines for the Technical Draft"},
+      {"from": "Project Manager", "to": "Permit", "description": "Project Manager secures the Permit"},
+      {"from": "Client", "to": "Feedback", "description": "Client provides Feedback on proposed designs"},
+      {"from": "Client", "to": "Review", "description": "Client participates in the Review of design proposals"},
+      {"from": "Feedback", "to": "Conceptual Design", "description": "Feedback influences changes to the Conceptual Design"},
+      {"from": "Review", "to": "Technical Draft", "description": "Review determines updates needed in the Technical Draft"}
+    ],
+  "subdomains": {
+      "Client Requests": {
+          "objects" : ["Client","Client Relations Specialist","Requirement Documentation"]
+      },
+      "Conceptualization": {
+          "objects" : ["Architect","Conceptual Design","Feedback"]
+      },
+      "Technical Drafting": {
+          "objects" : ["Draftsperson","Technical Draft","Review"]
+      },
+      "Project Management": {
+          "objects" : ["Project Manager","Project Timeline","Permit"]
+      },
+      "subdomain connections": ["Client Requests--Conceptualization","Conceptualization--Technical Drafting","Client Requests--Technical Drafting","Project Management--Conceptualization","Project Management--Technical Drafting"]
+    },
+  "bounded contexts": {
+      "Client Requests": {
+          "derived from": "Client Requests Subdomain",
+          "objects" : ["Client","Client Relations Specialist","Requirement Documentation"],
+          "name changes" : []
+      },
+      "Conceptualization": {
+          "derived from": "Conceptualization Subdomain",
+          "objects" : ["Architect","Conceptual Design","Concept Feedback"],
+          "name changes" : ["Feedback -> Concept Feedback"]
+      },
+      "Technical Drafting": {
+          "derived from": "Technical Drafting Subdomain",
+          "objects" : ["Draftsperson","Technical Draft","Draft Review"],
+          "name changes" : ["Review -> Draft Review"]
+      },
+      "Project Management": {
+          "derived from": "Project Management Subdomain",
+          "objects" : ["Project Manager","Project Timeline","Permit"],
+          "name changes" : []
+      }
+	}
+}
