@@ -1,0 +1,93 @@
+{
+  "domain-information":
+  [	"A Trader monitors real-time stock prices and executes buy or sell orders to take advantage of market movements",
+	"A Trader reviews past trades and adjusts strategies to improve future performance",
+	"A Broker receives trade requests from clients and executes them on the stock exchange to ensure timely fulfillment",
+	"A Broker communicates with clients to confirm trades and provide transaction details",
+	"A Portfolio Manager analyzes client investments and reallocates assets to optimize portfolio returns",
+	"A Portfolio Manager reviews market trends and economic reports to make strategic investment decisions",
+	"A Market Analyst researches company performance and publishes stock recommendations to guide traders and portfolio managers",
+	"A Market Analyst tracks industry news and regulatory changes to anticipate impacts on stock prices",
+	"A Client consults with a broker or portfolio manager to make informed investment decisions",
+	"A Client reviews account performance reports to evaluate the success of their investments"
+],
+  "domain objects": [
+      {"name": "Trader", "description": "Person who buys and sells stocks to react to market movements"},
+      {"name": "Stock", "description": "Tradable financial asset with a fluctuating price", "attributes": ["Price"]},
+      {"name": "Price", "description": "Current market value of a stock"},
+      {"name": "Sell", "description": "Action representing selling a stock"},
+      {"name": "Buy", "description": "Action representing buying a stock"},
+      {"name": "Trade Review", "description": "Evaluation of past buy and sell actions"},
+      {"name": "Broker", "description": "Professional who executes client trades on the exchange"},
+      {"name": "Trade Request", "description": "Instruction from a client to initiate a trade"},
+      {"name": "Client", "description": "Person investing money and requesting trades", "attributes": ["Stock"]},
+      {"name": "Trade Confirmation", "description": "Notification that a trade was executed"},
+      {"name": "Portfolio Manager", "description": "Person managing investments and asset allocation"},
+      {"name": "Market Trends", "description": "Insights about general stock market movements"},
+      {"name": "Economic Report", "description": "Publication describing economic indicators"},
+      {"name": "Market Analyst", "description": "Expert who studies companies and markets to provide insights"},
+      {"name": "Stock Recommendation", "description": "Guidance suggesting buying or selling a stock"},
+      {"name": "Industry News", "description": "Updates about company or sector developments"},
+      {"name": "Performance Review", "description": "Assessment of how a client’s investments performed"}
+    ],
+  "associations": [
+      {"from": "Trader", "to": "Sell", "description": "Trader initiates a Sell action"},
+      {"from": "Trader", "to": "Buy", "description": "Trader initiates a Buy action"},
+      {"from": "Sell", "to": "Stock", "description": "Sell refers to the Stock being sold"},
+      {"from": "Buy", "to": "Stock", "description": "Buy refers to the Stock being purchased"},
+      {"from": "Trader", "to": "Trade Review", "description": "Trade is evaluated in the Trade Review"},
+      {"from": "Trade Review", "to": "Sell", "description": "Trade Review examines Sell actions"},
+      {"from": "Trade Review", "to": "Buy", "description": "Trade Review examines Buy actions"},
+      {"from": "Broker", "to": "Stock", "description": "Broker interacts with the Stock when executing trades"},
+      {"from": "Client", "to": "Trade Request", "description": "Client issues the Trade Request"},
+      {"from": "Trade Request", "to": "Broker", "description": "Trade Request is handled by the Broker"},
+      {"from": "Client", "to": "Trade Confirmation", "description": "Client receives the Trade Confirmation"},
+      {"from": "Broker", "to": "Trade Confirmation", "description": "Broker sends the Trade Confirmation"},
+      {"from": "Market Analyst", "to": "Stock Recommendation", "description": "Market Analyst creates the Stock Recommendation"},
+      {"from": "Stock Recommendation", "to": "Trader", "description": "Stock Recommendation guides the Trader"},
+      {"from": "Stock Recommendation", "to": "Portfolio Manager", "description": "Stock Recommendation informs the Portfolio Manager"},
+      {"from": "Market Analyst", "to": "Industry News", "description": "Market Analyst produces insights based on Industry News"},
+      {"from": "Portfolio Manager", "to": "Stock", "description": "Portfolio Manager reallocates investments across Stocks"},
+      {"from": "Client", "to": "Performance Review", "description": "Client receives the Performance Review"},
+      {"from": "Performance Review", "to": "Stock", "description": "Performance Review reflects the performance of the Stock"},
+      {"from": "Portfolio Manager", "to": "Market Trends", "description": "Portfolio Manager uses Market Trends for decisions"},
+      {"from": "Portfolio Manager", "to": "Economic Report", "description": "Portfolio Manager analyzes the Economic Report"}
+    ],
+  "subdomains": {
+      "Trading": {
+          "objects" : ["Trader","Sell","Buy","Stock","Trade Review","Price"]
+      },
+      "Brokerage": {
+          "objects" : ["Broker","Trade Request","Trade Confirmation"]
+      },
+      "Market Analysis": {
+          "objects" : ["Market Analyst","Stock Recommendation","Industry News"]
+      },
+      "Client Portfolio": {
+          "objects" : ["Client","Portfolio Manager","Stock","Performance Review","Market Trends","Economic Report"]
+      },
+      "subdomain connections": ["Trading--Brokerage","Market Analysis--Trading","Market Analysis--Client Portfolio","Brokerage--Client Portfolio"]
+    },
+  "bounded contexts": {
+      "Trading": {
+          "derived from": "Trading Subdomain",
+          "objects" : ["Trader","Sell","Buy","Stock","Trade Review","Price"],
+          "name changes" : []
+      },
+      "Brokerage": {
+          "derived from": "Brokerage Subdomain",
+          "objects" : ["Broker","Trade Request","Trade Confirmation"],
+          "name changes" : []
+      },
+      "Market Analysis": {
+          "derived from": "Market Analysis Subdomain",
+          "objects" : ["Market Analyst","Stock Recommendation","Industry News"],
+          "name changes" : []
+      },
+      "Client Portfolio": {
+          "derived from": "Client Portfolio Subdomain",
+          "objects" : ["Client","Portfolio Manager","Investment","Performance Review","Market Trends","Economic Report"],
+          "name changes" : ["Stock -> Investment"]
+      }
+	}
+}

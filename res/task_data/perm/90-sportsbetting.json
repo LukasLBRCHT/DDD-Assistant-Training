@@ -1,0 +1,68 @@
+{
+  "domain-information":
+  [	"A Bettor reviews upcoming matches and places bets to try to win based on predicted outcomes",
+	"A Bettor tracks results and adjusts future bets to improve their chances of winning",
+	"An Oddsmaker analyzes team performance, player stats, and past match data to set fair and attractive odds",
+	"An Oddsmaker updates odds in real-time when new information affects the expected outcome of a match",
+	"A Bookmaker accepts bets from bettors and records wagers to ensure all transactions are tracked",
+	"A Bookmaker monitors active bets and settles winnings after matches conclude",
+	"A Risk Manager reviews the bookmaker’s exposure to large bets and advises adjustments to minimize potential losses",
+	"A Risk Manager monitors trends and unusual betting patterns to prevent fraud and ensure balanced risk"
+],
+  "domain objects": [
+      {"name": "Bettor", "description": "person who places bets on match outcomes"},
+      {"name": "Bet", "description": "record of a wager placed on a specific match outcome"},
+      {"name": "Match", "description": "sporting event with a predicted outcome and final result"},
+      {"name": "Predicted Outcome", "description": "expected result of a match used for betting decisions"},
+      {"name": "Result", "description": "final outcome of a match after it concludes"},
+      {"name": "Oddsmaker", "description": "specialist who analyzes data to set and adjust betting odds"},
+      {"name": "Performance Statistics", "description": "analytical data describing team or player performance"},
+      {"name": "Bookmaker", "description": "entity that accepts bets and manages wager records"},
+      {"name": "Winning", "description": "payout owed to a bettor when a bet succeeds"},
+      {"name": "Wager", "description": "amount staked by a bettor when placing a bet"},
+      {"name": "Risk Manager", "description": "analyst who evaluates betting exposure to control risk"},
+      {"name": "Data Trends", "description": "patterns in betting activity or performance data used for evaluation"}
+    ],
+  "associations": [
+      {"from": "Bettor", "to": "Bet", "description": "Bettor creates a Bet when placing a wager"},
+      {"from": "Bet", "to": "Match", "description": "Bet is tied to a specific Match"},
+      {"from": "Bettor", "to": "Match", "description": "Bettor considers the Match when deciding to bet"},
+      {"from": "Winning", "to": "Bettor", "description": "Winning is paid out to the Bettor"},
+      {"from": "Oddsmaker", "to": "Predicted Outcome", "description": "Oddsmaker defines the Predicted Outcome for a match"},
+      {"from": "Oddsmaker", "to": "Performance Statistics", "description": "Oddsmaker uses Performance Statistics to set odds"},
+      {"from": "Bookmaker", "to": "Bet", "description": "Bookmaker records each Bet"},
+      {"from": "Bookmaker", "to": "Winning", "description": "Bookmaker issues Winning payouts"},
+      {"from": "Winning", "to": "Bet", "description": "Winning is calculated based on the Bet"},
+      {"from": "Risk Manager", "to": "Bookmaker", "description": "Risk Manager evaluates the Bookmaker for exposure"},
+      {"from": "Risk Manager", "to": "Data Trends", "description": "Risk Manager monitors Data Trends to detect issues"}
+    ],
+  "subdomains": {
+      "Betting": {
+          "objects" : ["Bettor","Bet","Match","Result","Predicted Outcome"]
+      },
+      "Statistics": {
+          "objects" : ["Oddsmaker","Performance Statistics","Match","Predicted Outcome"]
+      },
+      "Bookmaking": {
+          "objects" : ["Bookmaker","Winning","Wager","Risk Manager","Data Trends"]
+      },
+      "subdomain connections": ["Betting--Statistics","Betting--Bookmaking"]
+    },
+  "bounded contexts": {
+      "Betting": {
+          "derived from": "Betting Subdomain",
+          "objects" : ["Bettor","Bet","Match","Result","Betting Odds"],
+          "name changes" : ["Predicted Outcome -> Betting Odds"]
+      },
+      "Statistics": {
+          "derived from": "Statistics Subdomain",
+          "objects" : ["Oddsmaker","Performance Statistics","Match Record","Outcome Prediction"],
+          "name changes" : ["Match -> Match Record","Predicted Outcome -> Outcome Prediction"]
+      },
+      "Bookmaking": {
+          "derived from": "Bookmaking Subdomain",
+          "objects" : ["Bookmaker","Winning","Wager","Risk Manager","Data Trends"],
+          "name changes" : []
+      }
+	}
+}
