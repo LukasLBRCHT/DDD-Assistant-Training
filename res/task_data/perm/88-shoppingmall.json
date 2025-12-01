@@ -1,0 +1,83 @@
+{
+  "domain-information":
+  [	"A Mall Manager plans the overall layout of the mall and assigns spaces to different shops to optimize foot traffic",
+	"A Mall Manager reviews tenant requests and approves changes to shop layouts to improve customer experience",
+	"A Shop Owner selects merchandise and arranges displays to attract visitors and increase sales",
+	"A Shop Owner updates inventory and sales records to coordinate with mall promotions",
+	"A Security Officer monitors the mall and conducts patrols to ensure visitor safety and prevent theft",
+	"A Security Officer coordinates with shop owners and mall management to respond to incidents or emergencies",
+	"A Customer visits multiple shops and provides feedback on store layouts and shopping experience"
+],
+  "domain objects": [
+      {"name": "Mall Manager", "description": "person responsible for planning layouts and managing mall operations"},
+      {"name": "Mall Layout", "description": "overall arrangement of mall areas and shop placements"},
+      {"name": "Mall Space", "description": "physical unit within the mall assigned to a shop"},
+      {"name": "Tenant Request", "description": "request submitted by a shop owner for changes or support"},
+      {"name": "Shop Owner", "description": "person managing a shop and its operations"},
+      {"name": "Display", "description": "visual arrangement of merchandise to attract customers"},
+      {"name": "Inventory", "description": "record of goods available in a shop"},
+      {"name": "Shop", "description": "retail location within the mall"},
+      {"name": "Sales Records", "description": "logs of transactions and revenue for a shop"},
+      {"name": "Security Officer", "description": "person responsible for maintaining safety in the mall"},
+      {"name": "Patrol", "description": "security check performed across mall spaces"},
+      {"name": "Emergency Response", "description": "action taken to handle incidents or emergencies"},
+      {"name": "Customer", "description": "visitor who shops and interacts with mall services"},
+      {"name": "Feedback", "description": "customer input on mall or shop experience"}
+    ],
+  "associations": [
+      {"from": "Mall Manager", "to": "Mall Layout", "description": "Mall Manager creates and updates Mall Layout"},
+      {"from": "Mall Layout", "to": "Mall Space", "description": "Mall Layout defines organization of each Mall Space"},
+      {"from": "Mall Manager", "to": "Mall Space", "description": "Mall Manager assigns and manages each Mall Space"},
+      {"from": "Mall Manager", "to": "Tenant Request", "description": "Mall Manager reviews and decides on each Tenant Request"},
+      {"from": "Mall Manager", "to": "Emergency Response", "description": "Mall Manager coordinates overall Emergency Response"},
+      {"from": "Feedback", "to": "Mall Manager", "description": "Feedback is provided to Mall Manager for improvements"},
+      {"from": "Shop Owner", "to": "Tenant Request", "description": "Shop Owner submits Tenant Request to management"},
+      {"from": "Shop Owner", "to": "Shop", "description": "Shop Owner operates and manages the Shop"},
+      {"from": "Shop Owner", "to": "Sales Records", "description": "Shop Owner updates and uses Sales Records"},
+      {"from": "Shop Owner", "to": "Inventory", "description": "Shop Owner maintains the shop’s Inventory"},
+      {"from": "Shop Owner", "to": "Display", "description": "Shop Owner arranges Display in the shop"},
+      {"from": "Shop Owner", "to": "Emergency Response", "description": "Shop Owner may initiate Emergency Response when needed"},
+      {"from": "Security Officer", "to": "Patrol", "description": "Security Officer performs each Patrol"},
+      {"from": "Security Officer", "to": "Emergency Response", "description": "Security Officer executes Emergency Response actions"},
+      {"from": "Patrol", "to": "Mall Space", "description": "Patrol covers and checks each Mall Space"},
+      {"from": "Customer", "to": "Shop", "description": "Customer visits and interacts with the Shop"},
+      {"from": "Customer", "to": "Feedback", "description": "Customer provides Feedback on mall or shop experience"}
+    ],
+  "subdomains": {
+      "Administration": {
+          "objects" : ["Mall Manager","Mall Layout","Mall Space","Shop","Tenant Request"]
+      },
+      "Shop Keeping": {
+          "objects" : ["Shop Owner","Shop","Sales Records","Inventory","Display"]
+      },
+      "Security": {
+          "objects" : ["Security Officer","Patrol","Emergency Response"]
+      },
+      "Customer Experience": {
+          "objects" : ["Customer","Feedback"]
+      },
+      "subdomain connections": ["Administration--Shop Keeping","Administration--Security","Security--Shop Keeping","Customer Experience--Shop Keeping","Customer Experience--Administration"]
+    },
+  "bounded contexts": {
+      "Administration": {
+          "derived from": "Administration Subdomain",
+          "objects" : ["Mall Manager","Mall Layout","Mall Space","Shop Assignment","Tenant Request"],
+          "name changes" : ["Shop -> Shop Assignment"]
+      },
+      "Shop Keeping": {
+          "derived from": "Shop Keeping Subdomain",
+          "objects" : ["Shop Owner","Shop","Sales Records","Inventory","Display"],
+          "name changes" : []
+      },
+      "Security": {
+          "derived from": "Security Subdomain",
+          "objects" : ["Security Officer","Patrol","Emergency Response"],
+          "name changes" : []
+      },
+      "Customer Experience": {
+          "derived from": "Customer Experience Subdomain",
+          "objects" : ["Customer","Feedback"],
+          "name changes" : []
+      }
+	}
+}
