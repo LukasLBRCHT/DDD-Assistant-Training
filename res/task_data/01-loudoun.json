@@ -175,7 +175,7 @@
 		},
 		"connections between subdomains": ["application--review", "application--project", "application--meetings", "review--project", "application--county","review--meetings","meetings--county","county--communication", "review-county"]
 	},
-    "bounded-contexts": {
+    "bounded contexts": {
 		"application" : {
 			"derived from": "application subdomain",
 			"objects": ["Application","Affected Parcel","Applicant", "Project", "Supporting Documentation", "Transaction Status", "Proffer", "Proffer State"],
