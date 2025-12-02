@@ -43,9 +43,9 @@ class Conversation:
         json_data = json.loads(input_data)
 
         self.user_stories = json.dumps({"domain-information": json_data["domain-information"]},indent=2, ensure_ascii=False).replace('"','\\"')
-        self.domain_objects = json.dumps(json_data["domain-objects"])
+        self.domain_objects = json.dumps(json_data["domain objects"])
         self.subdomains = json.dumps(json_data["subdomains"])
-        self.bounded_contexts = json.dumps(json_data["bounded-contexts"])
+        self.bounded_contexts = json.dumps(json_data["bounded contexts"])
         self.other_input_data = ""
 
         self.messages = []  # supposed to be a json-object

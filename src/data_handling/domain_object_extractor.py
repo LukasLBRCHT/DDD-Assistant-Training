@@ -7,7 +7,7 @@ from data_handling.domain import Domain_Object, Bounded_Context
 
 domain_objects_dir = "../../res/base_data/domain_objects"
 stories_dir = "../../res/base_data/stories"
-subtask_format_url = "../util/subtask_format_2"
+subtask_format_url = "../util/subtask_format"
 
 ws = " "
 
@@ -195,7 +195,7 @@ def load_stories(text):
 
 if __name__ == "__main__":
 
-    current_number = "49"
+    current_number = "90"
 
     file_name = ""
     stories = """"""
@@ -221,5 +221,5 @@ if __name__ == "__main__":
 
     json_data = create_json(stories, objects, associations, subdomains, bounded_contexts, connections)
 
-    with open(f"../../res/task_data/perm/{file_name}.json", "w") as json_file:
+    with open(f"../../res/task_data//{file_name}.json", "w") as json_file:
         json_file.write(json_data)
