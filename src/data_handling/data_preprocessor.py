@@ -24,7 +24,7 @@ class DataPreprocessor:
         })
 
         split = dataset.train_test_split(train_size=0.5)
-        return split["train"], split["sandbox"]
+        return split["train"], split["test"]
 
     def extract_from_json(self):
 
@@ -39,7 +39,7 @@ class DataPreprocessor:
 
                 # Step 1: build full chat text
                 text = self.tokenizer.apply_chat_template(
-                    json_data["messages"],
+                    json_data,
                     tokenize=False,
                     add_generation_prompt=False
                 )
@@ -52,7 +52,7 @@ class DataPreprocessor:
                 # Step 3: build labels (mask user/system with -100, keep assistant tokens)
                 labels = [-100] * len(ids)  # init all ignored
                 pos = 0
-                for msg in json_data["messages"]:
+                for msg in json_data:
                     msg_txt = self.tokenizer.apply_chat_template([msg], tokenize=False)
                     msg_ids = self.tokenizer(msg_txt, add_special_tokens=False)["input_ids"]
 
