@@ -120,27 +120,27 @@
 		"Archiving" : {
 			"derived from": "Archiving Subdomain",
 			"objects": ["Archivist","Archival File","Archival Collection","Finding Aid","Image Search Request","Photographer","Image Subject","Image Location","Image Rights","Reference Image","Archivist File Preview"],
-			"changes" : ["File -> Archival File", "Collection -> Archival Collection","File Preview -> Archivist File Preview"]
+			"name changes" : ["File -> Archival File", "Collection -> Archival Collection","File Preview -> Archivist File Preview"]
 		},
 		"File Management" : {
 			"derived from": "File Management Subdomain",
 			"objects": ["File", "Publication", "Share Data","Copyright Status", "Restriction End Date", "Metadata", "File Identifier","File Size","File Format", "Preservation Type","Collection", "Access Copy", "License", "Citation", "Reproduction", "Analog Copy"],
-			"changes" : []
+			"name changes" : []
 		},
 	  "Researching" : {
 			"derived from": "Researching Subdomain",
 			"objects": ["Researcher", "Research Request","Search Keyword","Search Tag","Structured Data","OCRed Text", "Publication Request", "Download", "Researcher File Preview","Thumbnail","Streaming Media","File Excerpt"],
-			"changes" : ["File Preview -> Researcher File Preview"]
+			"name changes" : ["File Preview -> Researcher File Preview"]
 		},
 	  "Donation" : {
 			"derived from": "Donation Subdomain",
 			"objects": ["Donor", "Donor Representative", "Incremental Accrual", "Donor Collection"],
-			"changes" : ["Collection -> Donor Collection"]
+			"name changes" : ["Collection -> Donor Collection"]
 		},
 	  "bounded context 5" : {
 			"derived from": "Administration",
 			"objects": ["Administrator", "User Group", "User Role", "Access Permission"],
-			"changes" : []
+			"name changes" : []
 		}
 	}
 }

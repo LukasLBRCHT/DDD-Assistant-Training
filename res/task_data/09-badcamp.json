@@ -91,32 +91,32 @@
       "Registration" : {
 	  	  "derived from": "Registration Subdomain",
 	  	  "objects": ["Applicant","Company", "Personalized Schedule","Registration","Cancellation"],
-	  	  "changes" : ["Attendee -> Applicant"]
+	  	  "name changes" : ["Attendee -> Applicant"]
 	  },
 	  "Event Administration" : {
 	  	  "derived from": "Event Administration Subdomain",
 	  	  "objects": ["Event Administrator","Schedule","General Event","Training Event","Summit Event","Seating Limit", "Venue", "Time", "Wait List","Attendee List","Session Submission","Session Submitter"],
-	  	  "changes" : ["Administrator -> Event Administrator", "Event -> General Event","Event -> Training Event","Event -> Summit Event"]
+	  	  "name changes" : ["Administrator -> Event Administrator", "Event -> General Event","Event -> Training Event","Event -> Summit Event"]
 	  },
 	  "Summit" : {
 	  	  "derived from": "Summit Subdomain",
 	  	  "objects": ["Summit Session","Summit Sponsor", "Agenda", "Speaker","Summit Coordinator","Summit Visitor"],
-	  	  "changes" : ["Summit -> Summit Session","Sponsor -> Summit Sponsor","Attendee -> Summit Visitor"]
+	  	  "name changes" : ["Summit -> Summit Session","Sponsor -> Summit Sponsor","Attendee -> Summit Visitor"]
 	  },
 	  "Training" : {
 	  	  "derived from": "Training Subdomain",
 	  	  "objects": ["Training Session","Trainer","Training Coordinator","Trainee"],
-	  	  "changes" : ["Training -> Training Session", "Attendee -> Trainee"]
+	  	  "name changes" : ["Training -> Training Session", "Attendee -> Trainee"]
 	  },
 	  "Content" : {
 	  	  "derived from": "Content Subdomain",
 	  	  "objects": ["Content Administrator","Event Content"],
-	  	  "changes" : []
+	  	  "name changes" : []
 	  },
 	  "Sponsoring" : {
 	  	  "derived from": "Sponsoring Subdomain",
 	  	  "objects": ["Sponsor","Sponsorship Level","Sponsor Company","Payment","Refund"],
-	  	  "changes" : []
+	  	  "name changes" : []
 	  }
 	}
 }

@@ -89,22 +89,22 @@
       "Camping" : {
 	  	"derived from": "Camping Subdomain",
 	  	"objects": ["Camp","Activity", "Staff", "Camp Rules", "Camp Facility", "Camp Schedule","Camper Group","Camp Worker"],
-	  	"changes" : ["Camp Worker -> Camp Worker"]
+	  	"name changes" : ["Camp Worker -> Camp Worker"]
 	  },
 	  "Enrollment" : {
 	  	"derived from": "Enrollment Subdomain",
 	  	"objects": ["Enrollment","Parent","Camper Records","Emergency Information", "Medical Information","Camper"],
-	  	"changes" : ["Camper Records -> Submission Camper Records", "Parent -> Parent"]
+	  	"name changes" : ["Camper Records -> Submission Camper Records", "Parent -> Parent"]
 	  },
 	  "Parenting" : {
 	  	"derived from": "Parenting Subdomain",
 	  	"objects": ["Parent","Child","Child Schedule","Counselor","Parent Feedback Post"],
-	  	"changes" : ["Parent -> Camper Parent", "Parent Feedback -> Parent Feedback Post", "Camper -> Child", "Schedule -> Child Schedule"]
+	  	"name changes" : ["Parent -> Camper Parent", "Parent Feedback -> Parent Feedback Post", "Camper -> Child", "Schedule -> Child Schedule"]
 	  },
 	  "Administration" : {
 	  	"derived from": "Administration Subdomain",
 	  	"objects": ["Camp Administrator","Parent Feedback Report", "Camper Records", "Emergency Information", "Medical Information", "Camp Worker", "Worker Report"],
-	  	"changes" : ["Camp Worker -> Reporting Camp Worker","Camper Records -> Camper Records", "Parent Feedback -> Parent Feedback Report","Report -> Worker Report"]
+	  	"name changes" : ["Camp Worker -> Reporting Camp Worker","Camper Records -> Camper Records", "Parent Feedback -> Parent Feedback Report","Report -> Worker Report"]
 	  }
 	}
 }

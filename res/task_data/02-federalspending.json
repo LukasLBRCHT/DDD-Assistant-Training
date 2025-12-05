@@ -95,32 +95,32 @@
         "general submission" : {
 			"derived from": "submission subdomain",
 			"objects": ["General Submission","General Submission Data","General Broker User", "Deadline", "Status"],
-			"changes" : ["Submission -> General Submission","Submission Data -> General Submission Data", "Broker User -> General Broker User"]
+			"name changes" : ["Submission -> General Submission","Submission Data -> General Submission Data", "Broker User -> General Broker User"]
 		},
 		"agency submission" : {
 			"derived from": "submission subdomain",
 			"objects": ["Agency Worker","Agency Submission","Financial Assistance Data","Deadline", "Status"],
-			"changes" : ["Agency User -> Agency Worker","Submission -> Agency Submission","Submission Data -> Financial Assistance Data"]
+			"name changes" : ["Agency User -> Agency Worker","Submission -> Agency Submission","Submission Data -> Financial Assistance Data"]
 		},
 	  	"broker access" : {
 			"derived from": "broker access subdomain",
 			"objects" : ["Accessing Data User", "Accessing Broker User", "Accessing Agency User", "Accessing Tester", "Broker Portal"],
-			"changes" : ["Data User -> Accessing Data User", "Broker User -> Accessing Broker User", "Agency User -> Accessing Agency User", "Tester -> Accessing Tester", "Broker -> Broker Portal"]
+			"name changes" : ["Data User -> Accessing Data User", "Broker User -> Accessing Broker User", "Agency User -> Accessing Agency User", "Tester -> Accessing Tester", "Broker -> Broker Portal"]
 		},
 	    "broker systems" : {
 			"derived from": "broker systems subdomain",
 			"objects" : ["Broker","FABS","DABS","FDPS", "Design", "System Rules", "Developer"],
-			"changes" : []
+			"name changes" : []
 		},
 	    "broker data" : {
 			"derived from": "broker data subdomain",
 			"objects" : ["Published Data","Historical Data","Field Derivation"],
-			"changes" : []
+			"name changes" : []
 		},
 	    "ui-testing" : {
 			"derived from": "ui-testing subdomain",
 			"objects" : ["Design Proposal", "UI Designer", "Design Test", "Test Result","Testing Broker User","Owner"],
-			"changes" : ["Design -> Design Proposal", "Test -> Design Test", "Result -> Test Result", "Broker User -> Testing Broker User"]
+			"name changes" : ["Design -> Design Proposal", "Test -> Design Test", "Result -> Test Result", "Broker User -> Testing Broker User"]
 		}
 	}
 }

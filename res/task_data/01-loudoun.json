@@ -179,42 +179,42 @@
 		"application" : {
 			"derived from": "application subdomain",
 			"objects": ["Application","Affected Parcel","Applicant", "Project", "Supporting Documentation", "Transaction Status", "Proffer", "Proffer State"],
-			"changes" : ["Parcel -> Affected Parcel", "County Resident -> Applicant"]
+			"name changes" : ["Parcel -> Affected Parcel", "County Resident -> Applicant"]
 		},
 		"application-review": {
 			"derived from": "review subdomain",
 			"objects": ["Application Under Review", "General Staff Member","Planning Staff Member","Zoning Staff Member","Plan Review Supervising Staff Member", "Completeness Review","Detailed Review","Zoning Permit","Staff Report","Internal Note", "Plan Review"],
-			"changes": ["Application -> Application Under Review","County Staff Member -> General Staff Member, Planning Staff Member, Zoning Staff Member","Supervising Staff Member -> Plan Review Supervising Staff Member"]
+			"name changes": ["Application -> Application Under Review","County Staff Member -> General Staff Member, Planning Staff Member, Zoning Staff Member","Supervising Staff Member -> Plan Review Supervising Staff Member"]
 		},
 		"building inspection": {
 			"derived from": "review subdomain",
 			"objects": ["Application of Project", "Project Under Review", "Inspection Staff Member", "Inspection Supervising Staff Member"],
-			"changes": ["Application -> Application of Project", "Project -> Project Under Review", "County Staff Member -> Inspection Staff Member", "Supervising Staff Member -> Inspection Supervising Staff Member"]
+			"name changes": ["Application -> Application of Project", "Project -> Project Under Review", "County Staff Member -> Inspection Staff Member", "Supervising Staff Member -> Inspection Supervising Staff Member"]
 		},
 		"building project": {
 			"derived from": "project subdomain",
 			"objects": ["Project", "County Service", "Bond", "Plan Set", "Building Development Status"],
-			"changes": []
+			"name changes": []
 		},
 		"communication": {
 			"derived from": "communication subdomain",
 			"objects": ["Inquiring Resident", "Assisting Staff Member","Request","Formal Response","Citation-Post","Violation Notice","Requested Zoning Information"],
-			"changes": ["County Resident -> Inquiring Resident", "County Staff Member -> Assisting Staff Member", "Zoning Information -> Requested Zoning Information"]
+			"name changes": ["County Resident -> Inquiring Resident", "County Staff Member -> Assisting Staff Member", "Zoning Information -> Requested Zoning Information"]
 		},
 		"general meetings": {
 			"derived from": "meetings subdomain",
 			"objects": ["Scheduling Staff Member","Hearing", "Stakeholder","Discussed County Issue", "Discussed Application", "General Scheduled Meeting", "Meeting Time","Hearing Date", "Governing Body", "Hearing Decision", "Affidavit"],
-			"changes": ["County Staff Member -> Scheduling Staff Member","County Issue -> Discussed County Issue","Application -> Discussed Application", "Scheduled Meeting -> General Scheduled Meeting"]
+			"name changes": ["County Staff Member -> Scheduling Staff Member","County Issue -> Discussed County Issue","Application -> Discussed Application", "Scheduled Meeting -> General Scheduled Meeting"]
 		},
 		"plan review meetings": {
 			"derived from": "meetings subdomain",
 			"objects" : ["Plan Applicant", "Plan Review Staff Member", "Plan Review Meeting", "Meeting Time"],
-			"changes": ["Applicant -> Plan Applicant", "County Staff Member -> Plan Review Staff Member", "Scheduled Meeting -> Application Review Meeting"]
+			"name changes": ["Applicant -> Plan Applicant", "County Staff Member -> Plan Review Staff Member", "Scheduled Meeting -> Application Review Meeting"]
 		},
 		"governance": {
 			"derived from": "county subdomain",
 			"objects": ["County","County Issue","Parcel", "ParcelPIN","Parcel History","General Information","GIS","Geospatial Data","County Rules","Comprehensive Plan", "Zoning Information", "Ordinance", "Staff Member"],
-			"changes": []
+			"name changes": []
 		}
 	}
 }

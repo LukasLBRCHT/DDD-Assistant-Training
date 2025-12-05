@@ -82,17 +82,17 @@
         "Recycling" : {
 			"derived from": "Recycling Subdomain",
 			"objects": ["Recycling Community Member","Personal Recycling Data","Drop-Off","Recycling Center","Drop-Off Site","Zip Code","Accepted Material Type","Opening Hours","User Visit Data","Center Staff","Center Equipment","Community Recycling Events"],
-			"changes" : ["Drop-Off -> Drop-Off"]
+			"name changes" : ["Drop-Off -> Drop-Off"]
 		},
 		"Organization" : {
 			"derived from": "Organization Subdomain",
 			"objects": ["Administrator","Recycling Facility Representative","Center Join Request","User Center Feedback","User Drop-Off Suggestion"],
-			"changes" : ["Center Feedback -> User Center Feedback","Drop-Off -> User Drop-Off Suggestion","Join Request -> Center Join Request"]
+			"name changes" : ["Center Feedback -> User Center Feedback","Drop-Off -> User Drop-Off Suggestion","Join Request -> Center Join Request"]
 		},
 	  "Statistics": {
 		  "derived from": "Statistics Subdomain",
 		  "objects": ["Company","Company Recycling Data","Researcher","Company Partner"],
-          "changes": ["Recycling Data -> Company Recycling Data"]
+          "name changes": ["Recycling Data -> Company Recycling Data"]
 	  }
 	}
 }

@@ -87,23 +87,25 @@
       "Older Person" : {
 	  	"derived from": "Older Person Subdomain",
 	  	"objects": ["Older Person","Personal Data","Health Data","Heart Rate", "Blood Pressure","Activity Level","Emergency Contact", "Medication","Social Contact"],
-	  	"changes" : []
+	  	"name changes" : []
 	  },
 	  "Health Scheduling" : {
 	  	"derived from": "Scheduling Subdomain",
 	  	"objects": ["Schedule","Health Activity","Exercise","Appointment","Medication Intake"],
-	  	"changes" : ["Activity -> Health Activity"]
+	  	"name changes" : ["Activity -> Health Activity"]
 	  },
 	  "Personal Scheduling" : {
 	  	"derived from": "Scheduling Subdomain",
 	  	"objects": ["Schedule","Personal Activity","Errand","Social Event","Community Event"],
-	  	"changes" : ["Activity -> Personal Activity"]
+	  	"name changes" : ["Activity -> Personal Activity"]
 	  },
 	  "Care taking": {
+          "derived from": "Care taking Subdomain",
 		  "objects": ["Medical Caregiver","Prescribed Routine","Health Incident","Alert"],
 		  "changes": []
 	  },
 	  "Guidance": {
+          "derived from": "Guidance Subdomain",
 		  "objects": ["Guidance","Health Guidance","Home Environment","Travel Routing"],
 		  "changes": []
 	  }

@@ -69,17 +69,17 @@
       "Research" : {
 	  	"derived from": "Research Subdomain",
 	  	"objects": ["Accessible Fiscal Data","File Format", "Visibility Status", "Geographic Information", "Contextual Information", "Dataset","Title", "Metadata", "Population", "Area", "GDP","Fiscal Data Insight","Data Consumer","Dataset Request"],
-	  	"changes" : ["Fiscal Data -> Accessible Fiscal Data"]
+	  	"name changes" : ["Fiscal Data -> Accessible Fiscal Data"]
 	  },
 	  "Publishing" : {
 	  	"derived from": "Publishing Subdomain",
 	  	"objects": ["Publisher","Published Fiscal Data","File Format", "Visibility Status", "Geographic Information", "Contextual Information", "Dataset","Title", "Metadata", "Population", "Area", "GDP"],
-	  	"changes" : ["Fiscal Data -> Published Fiscal Data"]
+	  	"name changes" : ["Fiscal Data -> Published Fiscal Data"]
 	  },
 	  "Administration" : {
 	  	"derived from": "Administration Subdomain",
 	  	"objects": ["Platform","Platform Policies","User Roles","Platform Administrator","Dataset Request Review"],
-	  	"changes" : ["Dataset Request -> Dataset Request Review"]
+	  	"name changes" : ["Dataset Request -> Dataset Request Review"]
 	  }
   }
 }

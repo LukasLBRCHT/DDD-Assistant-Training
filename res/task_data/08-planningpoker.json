@@ -78,17 +78,17 @@
       "Session Management" : {
 	  	"derived from": "Session Management Subdomain",
 	  	"objects": ["Session Administrator","Estimation Session","Timer", "Round","Estimation Backlog", "Item","Task List"],
-	  	"changes" : ["Moderator -> Session Administrator", "Item -> Open Item"]
+	  	"name changes" : ["Moderator -> Session Administrator", "Item -> Open Item"]
 	  },
 	  "Voting" : {
 	  	"derived from": "Voting Subdomain",
 	  	"objects": ["Team","Moderator","Team Member","Item","Estimate Vote","Voting Reveal","Agreed Estimate"],
-	  	"changes" : ["Moderator -> Session Moderator","Item -> Discussion Item"]
+	  	"name changes" : ["Moderator -> Session Moderator","Item -> Discussion Item"]
 	  },
 	  "Session Tracking": {
 		  "derived from": "Session Tracking Subdomain",
 		  "objects": ["Stakeholder","Estimation History","Session Log Data"],
-		  "changes": []
+		  "name changes": []
 	  }
 	}
 }
