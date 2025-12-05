@@ -66,28 +66,34 @@ class Conversation:
         # turn 1
         user_message_1 = self.build_message("user", stnd_msg.user_turn_1(), content=self.user_stories)
         self.messages.append(user_message_1)
-        assistant_message_1 = self.build_message("assistant", stnd_msg.assistant_stories_resp,
+        assistant_message_1 = self.build_message("assistant", stnd_msg.llm_turn_1(),
                                                  content=self.domain_objects)
         self.messages.append(assistant_message_1)
 
         # turn 2
         user_message_2 = self.build_message("user", stnd_msg.user_turn_2(), content="")
         self.messages.append(user_message_2)
-        assistant_message_2 = self.build_message("assistant", "here are the associations: {}",
+        assistant_message_2 = self.build_message("assistant", stnd_msg.llm_turn_2(),
                                                  content=self.associations)
         self.messages.append(assistant_message_2)
 
         # turn 3
-        user_message_3 = self.build_message("user", stnd_msg.user_turn_3(), content=self.domain_objects)
+
+        base_content = [self.domain_objects, self.associations]
+
+        user_message_3 = self.build_message("user", stnd_msg.user_turn_3(), content=base_content)
         self.messages.append(user_message_3)
-        assistant_message_3 = self.build_message("assistant", stnd_msg.assistant_subdomains_resp,
+        assistant_message_3 = self.build_message("assistant", stnd_msg.llm_turn_3(),
                                                  content=self.subdomains)
         self.messages.append(assistant_message_3)
 
         # turn 4
-        user_message_4 = self.build_message("user", stnd_msg.user_turn_4(), content=self.subdomains)
+
+        base_content = [self.subdomains, self.domain_objects]
+
+        user_message_4 = self.build_message("user", stnd_msg.user_turn_4(), content=base_content)
         self.messages.append(user_message_4)
-        assistant_message_4 = self.build_message("assistant", stnd_msg.assistant_bounded_context_resp,
+        assistant_message_4 = self.build_message("assistant", stnd_msg.llm_turn_4(),
                                                  content=self.bounded_contexts)
         self.messages.append(assistant_message_4)
 
@@ -96,7 +102,19 @@ class Conversation:
         if not do_format:
             prompt = blueprint
         else:
-            prompt = blueprint.format(content)
+
+            if isinstance(content, list):
+
+                merge = ""
+                for base_data in content:
+                    merge += base_data
+                    merge += "\n```\n```json\n"
+                merge = merge.removesuffix("\n```\n```json\n")
+
+                prompt = blueprint.format(merge)
+
+            else:
+                prompt = blueprint.format(content)
 
         return {"role": f"{role}", "content": f"{prompt}"}
 

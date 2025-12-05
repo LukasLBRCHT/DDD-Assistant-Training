@@ -1,7 +1,7 @@
 MODEL_3B_DIR = "../../models/qwen2.5-3b-awq/base"
 MODEL_7B_DIR = "../../models/qwen2.5-7b-awq/base"
 MODEL_7B_NAME = "Qwen/Qwen2.5-7B-Instruct-AWQ"
-Training_Data_Dir = "../../res/clean_data"
+Conversation_Data_Dir = "../../res/clean_data/conversations"
 Assistant_Chat_Token = "<|im_start|>assistant"
 Chat_End_Token = "<|im_end|>"
 test_dir = "../../models/qwen2.5-7b-awq"

@@ -28,7 +28,7 @@ class DataPreprocessor:
 
     def extract_from_json(self):
 
-        directory = Config.Training_Data_Dir
+        directory = Config.Conversation_Data_Dir
         all_input_ids = []
         all_labels = []
         all_attention_masks = []
