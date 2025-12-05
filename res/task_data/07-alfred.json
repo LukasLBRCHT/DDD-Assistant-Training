@@ -102,12 +102,12 @@
 	  "Care taking": {
           "derived from": "Care taking Subdomain",
 		  "objects": ["Medical Caregiver","Prescribed Routine","Health Incident","Alert"],
-		  "changes": []
+		  "name changes": []
 	  },
 	  "Guidance": {
           "derived from": "Guidance Subdomain",
 		  "objects": ["Guidance","Health Guidance","Home Environment","Travel Routing"],
-		  "changes": []
+		  "name changes": []
 	  }
 	}
 }
