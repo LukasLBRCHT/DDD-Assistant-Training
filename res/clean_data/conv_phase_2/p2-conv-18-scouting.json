@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Scouting\": {\n      \"objects\": [\n        \"Scout\",\n        \"Scouting Trip\",\n        \"Performance Report\",\n        \"Player\",\n        \"Scouting Report\"\n      ]\n    },\n    \"Evaluation\": {\n      \"objects\": [\n        \"Scouting Coordinator\",\n        \"Sports Director\",\n        \"Club\",\n        \"Watchlist\",\n        \"Scouting Report\"\n      ]\n    },\n    \"Negotiation\": {\n      \"objects\": [\n        \"Contract Proposal\",\n        \"Player Agent\",\n        \"Contract\",\n        \"Player\"\n      ]\n    },\n    \"subdomain connections\": [\n      \"Scouting--Evaluation\",\n      \"Evaluation--Negotiation\"\n    ]\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Evaluation\": {\n      \"objects\": [\n        \"Scouting Coordinator\",\n        \"Sports Director\",\n        \"Club\",\n        \"Watchlist\",\n        \"Scouting Report\"\n      ]\n    },\n    \"Negotiation\": {\n      \"objects\": [\n        \"Contract Proposal\",\n        \"Player Agent\",\n        \"Contract\",\n        \"Player\"\n      ]\n    },\n    \"Scouting\": {\n      \"objects\": [\n        \"Scout\",\n        \"Scouting Trip\",\n        \"Performance Report\",\n        \"Player\",\n        \"Scouting Report\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

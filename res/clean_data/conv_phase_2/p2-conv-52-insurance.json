@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Quotes\": {\n      \"objects\": [\n        \"Customer\",\n        \"Personal Information\",\n        \"Insurance Agent\",\n        \"Quote Request\",\n        \"Insurance Policy\",\n        \"Policy Terms\",\n        \"Policy Agreement\"\n      ]\n    },\n    \"Risk Assessment\": {\n      \"objects\": [\n        \"Underwriter\",\n        \"Risk Assessment\",\n        \"Risk Guidelines\"\n      ]\n    },\n    \"Claims\": {\n      \"objects\": [\n        \"Claims Adjuster\",\n        \"Damage Report\",\n        \"Claim\",\n        \"Claims Review\",\n        \"Payout\"\n      ]\n    },\n    \"subdomain connections\": [\n      \"Risk Assessment--Claims\",\n      \"Risk Assessment--Quotes\"\n    ]\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Quotes\": {\n      \"objects\": [\n        \"Customer\",\n        \"Personal Information\",\n        \"Insurance Agent\",\n        \"Quote Request\",\n        \"Insurance Policy\",\n        \"Policy Terms\",\n        \"Policy Agreement\"\n      ]\n    },\n    \"Risk Assessment\": {\n      \"objects\": [\n        \"Underwriter\",\n        \"Risk Assessment\",\n        \"Risk Guidelines\"\n      ]\n    },\n    \"Claims\": {\n      \"objects\": [\n        \"Claims Adjuster\",\n        \"Damage Report\",\n        \"Claim\",\n        \"Claims Review\",\n        \"Payout\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

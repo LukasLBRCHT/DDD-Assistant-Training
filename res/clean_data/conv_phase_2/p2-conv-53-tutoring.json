@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Tutoring Sessions\": {\n      \"objects\": [\n        \"Student\",\n        \"Tutor\",\n        \"Progress Record\",\n        \"Subject\",\n        \"Tutoring Session\",\n        \"Homework Question\"\n      ]\n    },\n    \"Organization\": {\n      \"objects\": [\n        \"Parent\",\n        \"Academic Coordinator\",\n        \"Student\",\n        \"Availability\",\n        \"Tutoring Package\",\n        \"Learning Plan\"\n      ]\n    },\n    \"subdomain connections\": [\n      \"Tutoring Sessions--Organization\"\n    ]\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Organization\": {\n      \"objects\": [\n        \"Parent\",\n        \"Academic Coordinator\",\n        \"Student\",\n        \"Availability\",\n        \"Tutoring Package\",\n        \"Learning Plan\"\n      ]\n    },\n    \"Tutoring Sessions\": {\n      \"objects\": [\n        \"Student\",\n        \"Tutor\",\n        \"Progress Record\",\n        \"Subject\",\n        \"Tutoring Session\",\n        \"Homework Question\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

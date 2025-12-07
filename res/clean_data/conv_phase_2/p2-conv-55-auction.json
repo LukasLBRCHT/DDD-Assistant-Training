@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Item Listing\": {\n      \"objects\": [\n        \"Seller\",\n        \"Listing\",\n        \"Item\",\n        \"Item Description\"\n      ]\n    },\n    \"Auctioning\": {\n      \"objects\": [\n        \"Bidder\",\n        \"Auction Manger\",\n        \"Bid\",\n        \"Auction\",\n        \"Item\",\n        \"Scheduled Time\",\n        \"Winner\"\n      ]\n    },\n    \"Item Delivery\": {\n      \"objects\": [\n        \"Shipping Officer\",\n        \"Delivery\",\n        \"Item\",\n        \"Winner\"\n      ]\n    },\n    \"subdomain connections\": [\n      \"Item Listing--Auctioning\",\n      \"Auctioning--Item Delivery\"\n    ]\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Item Listing\": {\n      \"objects\": [\n        \"Seller\",\n        \"Listing\",\n        \"Item\",\n        \"Item Description\"\n      ]\n    },\n    \"Auctioning\": {\n      \"objects\": [\n        \"Bidder\",\n        \"Auction Manger\",\n        \"Bid\",\n        \"Auction\",\n        \"Item\",\n        \"Scheduled Time\",\n        \"Winner\"\n      ]\n    },\n    \"Item Delivery\": {\n      \"objects\": [\n        \"Shipping Officer\",\n        \"Delivery\",\n        \"Item\",\n        \"Winner\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

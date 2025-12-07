@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Betting\": {\n      \"objects\": [\n        \"Bettor\",\n        \"Bet\",\n        \"Match\",\n        \"Result\",\n        \"Predicted Outcome\"\n      ]\n    },\n    \"Statistics\": {\n      \"objects\": [\n        \"Oddsmaker\",\n        \"Performance Statistics\",\n        \"Match\",\n        \"Predicted Outcome\"\n      ]\n    },\n    \"Bookmaking\": {\n      \"objects\": [\n        \"Bookmaker\",\n        \"Winning\",\n        \"Wager\",\n        \"Risk Manager\",\n        \"Data Trends\"\n      ]\n    },\n    \"subdomain connections\": [\n      \"Betting--Statistics\",\n      \"Betting--Bookmaking\"\n    ]\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Bookmaking\": {\n      \"objects\": [\n        \"Bookmaker\",\n        \"Winning\",\n        \"Wager\",\n        \"Risk Manager\",\n        \"Data Trends\"\n      ]\n    },\n    \"Statistics\": {\n      \"objects\": [\n        \"Oddsmaker\",\n        \"Performance Statistics\",\n        \"Match\",\n        \"Predicted Outcome\"\n      ]\n    },\n    \"Betting\": {\n      \"objects\": [\n        \"Bettor\",\n        \"Bet\",\n        \"Match\",\n        \"Result\",\n        \"Predicted Outcome\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

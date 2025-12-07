@@ -4,14 +4,9 @@ It extracts the task data and inputs it into example messages.
 """
 import json
 import os
-from Config import Config
-
-import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
-
+import random
 from util import stnd_msg
 from sample_splitter import split_conversations
-from metadata_extraction import Metadata
 
 task_data_dir = "../../res/task_data"
 clean_data_dir = "../../res/clean_data/conversations"
@@ -20,9 +15,7 @@ clean_data_dir = "../../res/clean_data/conversations"
 class SampleAssembler:
 
     def assemble_training_samples(self):
-
         for file in os.scandir(task_data_dir):
-
             with open(file, 'r') as f:
                 # build a conversation object here
                 input_data_for_conversation = f.read()
@@ -33,6 +26,57 @@ class SampleAssembler:
 
                 conv.save(file.name.removesuffix(".json"))
 
+
+def get_order(subdomains_json):
+    keys = list(subdomains_json.keys())
+    subdomain_names = keys[:len(subdomains_json) - 1]
+    random.shuffle(subdomain_names)
+    return subdomain_names
+
+
+def order_subdomains(subdomains_json, order):
+
+    ordered_subdomains = {}
+
+    for sd in order:
+        data = subdomains_json[sd]
+        ordered_subdomains[sd] = data
+
+    return ordered_subdomains
+
+
+def find_contexts(sd, bounded_context_json):
+
+    contexts = []
+
+    for key in list(bounded_context_json.keys()):
+
+        derived = bounded_context_json[key]["derived from"]
+
+        if not isinstance(derived, list):
+            derived = [derived]
+
+        for d in derived:
+            if sd in d:
+                contexts.append((key, bounded_context_json[key]))
+
+    return contexts
+
+
+def order_bounded_contexts(bounded_context_json, order):
+
+    ordered_bounded_contexts = {}
+
+    for sd in order:
+
+        bcs = find_contexts(sd, bounded_context_json)
+
+        for bc in bcs:
+            name = bc[0]
+            data = bc[1]
+            ordered_bounded_contexts[name] = data
+
+    return ordered_bounded_contexts
 
 
 """
@@ -47,19 +91,22 @@ class Conversation:
 
         json_data = json.loads(input_data)
 
-        self.user_stories = json.dumps({"domain-information": json_data["domain-information"]},indent=2, ensure_ascii=False)
-        self.domain_objects = json.dumps({"domain objects": json_data["domain objects"]},indent=2, ensure_ascii=False)
+        self.user_stories = json.dumps({"domain-information": json_data["domain-information"]}, indent=2,
+                                       ensure_ascii=False)
+        self.domain_objects = json.dumps({"domain objects": json_data["domain objects"]}, indent=2, ensure_ascii=False)
         self.associations = json.dumps({"associations": json_data["associations"]}, indent=2, ensure_ascii=False)
-        self.subdomains = json.dumps({"subdomains": json_data["subdomains"]},indent=2, ensure_ascii=False)
-        self.bounded_contexts = json.dumps({"bounded contexts": json_data["bounded contexts"]},indent=2, ensure_ascii=False)
+
+        order = get_order(json_data["subdomains"])
+        self.subdomains = json.dumps({"subdomains": order_subdomains(json_data["subdomains"], order)}, indent=2,
+                                     ensure_ascii=False)
+        self.bounded_contexts = json.dumps(
+            {"bounded contexts": order_bounded_contexts(json_data["bounded contexts"], order)}, indent=2,
+            ensure_ascii=False)
         self.other_input_data = ""
 
         self.messages = []  # supposed to be a json-object
 
     def build_conversation(self):
-
-        # todo vllt den task state anders repräsentieren, z.B. mit einer variable
-        task_state = ""  # und den dann pro turn erweitern
 
         # build all messages and add them to the list
         system_message = self.build_message("system", stnd_msg.sys_msg(), do_format=False)
@@ -144,7 +191,6 @@ class Conversation:
 
 
 if __name__ == "__main__":
-
     assembler = SampleAssembler()
     assembler.assemble_training_samples()
 
