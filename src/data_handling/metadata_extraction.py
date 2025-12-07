@@ -105,6 +105,11 @@ class Domain:
     def get_metadata(self):
         with open(self.file, "r") as domain_data:
             json_data = json.loads(domain_data.read())
+            
+            self.object_format_check(json_data["domain objects"])
+            self.association_format_check(json_data["associations"])
+            self.subdomain_format_check(json_data["subdomains"])
+            self.bounded_context_format_check(json_data["bounded contexts"])
 
             self.story_count = len(json_data["domain-information"])
             self.object_count = len(json_data["domain objects"])
@@ -116,6 +121,101 @@ class Domain:
 
             for bc in bounded_context_list:
                 self.name_change_count += len(bounded_context_list[bc]["name changes"])
+
+
+    def object_format_check(self, objects):
+
+        error = ""
+
+        for obj in objects:
+
+            keys = list(obj.keys())
+            if keys[0] != 'name':
+                print(keys[0])
+                error = True
+
+            if keys[1] != 'description':
+                error = True
+
+            if len(keys) > 2:
+                if keys[2] != 'attributes':
+                    error = True
+
+        if error:
+            print(f"Object format error in {self.file}")
+
+
+    def association_format_check(self, associations):
+
+        error = False
+
+        for asso in associations:
+
+            keys = list(asso.keys())
+
+            if keys[0] != 'from':
+                error = True
+
+            if keys[1] != 'to':
+                error = True
+
+            if keys[2] != 'description':
+                error = True
+
+        if error:
+            print(f"Association format error in {self.file}")
+
+    def subdomain_format_check(self, subdomains):
+        error = False
+
+        keys = list(subdomains.keys())
+        if keys[len(keys)-1] != 'subdomain connections':
+            error = True
+
+        for sd in keys[:len(keys)-1]:
+
+            if sd.islower():
+                error = True
+
+            inner_keys = list(subdomains[sd].keys())
+
+            if inner_keys[0] != 'objects':
+                error = True
+
+        if error:
+            print(f"Subdomain format error in {self.file}")
+
+    def bounded_context_format_check(self, bounded_contexts):
+        error = False
+
+        keys = list(bounded_contexts.keys())
+
+        for bc in keys:
+
+            if bc.islower():
+                error = True
+
+            inner_keys = list(bounded_contexts[bc].keys())
+
+            if inner_keys[0] != 'derived from':
+                error = True
+
+            derived_from = bounded_contexts[bc]['derived from']
+            if not isinstance(derived_from, list):
+                derived_from = [derived_from]
+
+            for str_name in derived_from:
+                if 'Subdomain' not in str_name:
+                    error = True
+
+            if inner_keys[1] != 'objects':
+                error = True
+
+            if inner_keys[2] != 'name changes':
+                error = True
+
+        if error:
+            print(f"Bounded Context format error in {self.file}")
 
 
 if __name__ == "__main__":

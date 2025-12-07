@@ -109,7 +109,7 @@
           "name changes" : []
       },
       "Traffic Operations": {
-          "derived from": ["Route Planning Subdomain", "Administration"],
+          "derived from": ["Route Planning Subdomain", "Administration Subdomain"],
           "objects" : ["Transport Planner","Route Plan","Route Alternative","Operations Management","Ridership Data"],
           "name changes" : []
       }

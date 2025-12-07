@@ -60,159 +60,159 @@
 	"#G03# As a Staff member, I want to Send or Post Citations and Fines, so that I can successfully send the Notice Of Violation document to the property owner and log information about the action."
 ],
 "domain objects" : [
-	{"name": "County", "desc": "An area with a governance", "attributes": "General Information"},
-	{"name":  "General Information", "desc":  "General Information about the county accessible to the public"},
-	{"name": "County Resident", "desc":  "resident of the county who can access information and the services provided by the county"},
-	{"name": "County Staff Member", "desc":  "staff member of a county, who processes applications and is in contact with applicants"},
-	{"name":  "Supervising Staff Member", "desc": "orchestrates activity of other staff members"},
-	{"name": "Resident Request", "desc":  "a request submitted by a resident to the county"},
-	{"name": "Ordinance", "desc":  "regulations and laws enforced by the county"},
-	{ "name": "Application", "desc": "submitted by an applicant to initiate transaction with the county", "attributes": "Supporting Documentation, Transaction Status, Proffer"},
-	{ "name": "Supporting Documentation", "desc": "the documentation required for a certain application to be provided by the applicant" },
-	{ "name": "County Service", "desc": "a service offered by the county" },
-	{ "name": "Transaction Status", "desc": "information about the state of the process" },
-	{ "name": "Internal Note", "desc": "information about a record that is shared between staff members" },
-	{ "name": "Completeness Review", "desc": "performed by a staff member to ensure an application is complete and eligible for technical review" },
-	{ "name": "Detailed Review", "desc": "application is reviewed for compliance and subsequently approved or denied" },
-	{ "name": "Plan Set", "desc": "concrete construction site plans" },
-	{ "name": "Plan Review", "desc": "conducted to ensure the plans align with the comprehensive plan" },
-	{ "name": "Proffer", "desc": "conditional offers by the applicant", "attributes": "Proffer State" },
-	{ "name": "Proffer State", "desc": "Proffers can be in draft or approved state" },
-	{ "name": "Staff Review", "desc": "conducted to ensure that the application is compliant with the zoning ordinance" },
-	{ "name": "Zoning Permit", "desc": "can be issued if the request is compliant with the zoning ordinance" },
-	{ "name": "Development Permit", "desc": "can be issued to grant the request to begin work" },
-	{ "name": "Staff Report", "desc": "an evaluation overview of the application" },
-	{ "name": "Bond", "desc": "sum provided by the applicant before starting work" },
-	{ "name": "Building Development Status", "desc": "displays whether work is finished" },
-	{ "name": "Inspection", "desc": "conducted by an Inspector to validate compliance with code and regulations" },
-	{ "name": "Formal Response", "desc": "sent to resident by a staff member to satisfy communication and records responsibilities" },
-	{ "name": "County Issue", "desc": "a matter relevant to the county which is to be resolved" },
-	{ "name": "Scheduled Meeting", "desc": "all stakeholders come together to address an issue", "attributes": "Meeting Time" },
-	{ "name": "Meeting Time", "desc": "the specific time/date that the meeting is held" },
-	{ "name": "Stakeholder", "desc": "a party that is relevant to an issue" },
-	{ "name": "Plan Review Meeting", "desc": "held between the applicant and the plan review staff" },
-	{ "name": "Hearing", "desc": "a meeting where a board decides on an application", "attributes": "Hearing Date, Governing Body, Hearing Decision, Affidavit" },
-	{ "name": "Hearing Date", "desc": "the date of the hearing" },
-	{ "name": "Governing Body", "desc": "the body responsible for the issue" },
-	{ "name": "Affidavit", "desc": "a sworn statement of fact, required as proof that certain requirements are met" },
-	{ "name": "Hearing Decision", "desc": "whether an application is to be approved or not" },
-	{ "name": "County Rules", "desc": "dictate the procedures and business laws of the county", "attributes": "Comprehensive Plan, Zoning Information, Ordinance" },
-	{ "name": "Comprehensive Plan", "desc": "policy document that contains the documentation of the development of the county" },
-	{ "name": "Plan Report", "desc": "a document containing all the relevant information of a plan" },
-	{ "name": "Zoning Information", "desc": "relevant data about zoning" },
-	{ "name": "Violation Notice", "desc": "issued when a violation against county policies is noticed by an enforcer" },
-	{ "name": "GIS (Geographic Information System)", "desc": "the County's computer system for capturing, storing, and displaying data related to geographic positions (for technical members)" },
-	{ "name": "Geospatial Data", "desc": "relevant to reviews" },
-	{ "name": "Parcel", "desc": "a unit of land or real estate", "attributes": "Parcel Pin, Property History"},
-	{ "name": "Property History", "desc": "contains all relevant past information to the property" },
-	{ "name": "ParcelPIN", "desc": "A unique number assigned to a parcel for tracking and record-keeping" },
-	{ "name": "Citation-Post", "desc": "Information in form of a notice of violation to be sent to the affected property owner" },
-	{"name": "Project", "desc": "an endeavor by a resident for construction or such", "attributes": "County Service, Bond, Plan Set, Building Development Status"}
+	{"name": "County", "description": "An area with a governance", "attributes": "General Information"},
+	{"name":  "General Information", "description":  "General Information about the county accessible to the public"},
+	{"name": "County Resident", "description":  "resident of the county who can access information and the services provided by the county"},
+	{"name": "County Staff Member", "description":  "staff member of a county, who processes applications and is in contact with applicants"},
+	{"name":  "Supervising Staff Member", "description": "orchestrates activity of other staff members"},
+	{"name": "Resident Request", "description":  "a request submitted by a resident to the county"},
+	{"name": "Ordinance", "description":  "regulations and laws enforced by the county"},
+	{ "name": "Application", "description": "submitted by an applicant to initiate transaction with the county", "attributes": "Supporting Documentation, Transaction Status, Proffer"},
+	{ "name": "Supporting Documentation", "description": "the documentation required for a certain application to be provided by the applicant" },
+	{ "name": "County Service", "description": "a service offered by the county" },
+	{ "name": "Transaction Status", "description": "information about the state of the process" },
+	{ "name": "Internal Note", "description": "information about a record that is shared between staff members" },
+	{ "name": "Completeness Review", "description": "performed by a staff member to ensure an application is complete and eligible for technical review" },
+	{ "name": "Detailed Review", "description": "application is reviewed for compliance and subsequently approved or denied" },
+	{ "name": "Plan Set", "description": "concrete construction site plans" },
+	{ "name": "Plan Review", "description": "conducted to ensure the plans align with the comprehensive plan" },
+	{ "name": "Proffer", "description": "conditional offers by the applicant", "attributes": "Proffer State" },
+	{ "name": "Proffer State", "description": "Proffers can be in draft or approved state" },
+	{ "name": "Staff Review", "description": "conducted to ensure that the application is compliant with the zoning ordinance" },
+	{ "name": "Zoning Permit", "description": "can be issued if the request is compliant with the zoning ordinance" },
+	{ "name": "Development Permit", "description": "can be issued to grant the request to begin work" },
+	{ "name": "Staff Report", "description": "an evaluation overview of the application" },
+	{ "name": "Bond", "description": "sum provided by the applicant before starting work" },
+	{ "name": "Building Development Status", "description": "displays whether work is finished" },
+	{ "name": "Inspection", "description": "conducted by an Inspector to validate compliance with code and regulations" },
+	{ "name": "Formal Response", "description": "sent to resident by a staff member to satisfy communication and records responsibilities" },
+	{ "name": "County Issue", "description": "a matter relevant to the county which is to be resolved" },
+	{ "name": "Scheduled Meeting", "description": "all stakeholders come together to address an issue", "attributes": "Meeting Time" },
+	{ "name": "Meeting Time", "description": "the specific time/date that the meeting is held" },
+	{ "name": "Stakeholder", "description": "a party that is relevant to an issue" },
+	{ "name": "Plan Review Meeting", "description": "held between the applicant and the plan review staff" },
+	{ "name": "Hearing", "description": "a meeting where a board decides on an application", "attributes": "Hearing Date, Governing Body, Hearing Decision, Affidavit" },
+	{ "name": "Hearing Date", "description": "the date of the hearing" },
+	{ "name": "Governing Body", "description": "the body responsible for the issue" },
+	{ "name": "Affidavit", "description": "a sworn statement of fact, required as proof that certain requirements are met" },
+	{ "name": "Hearing Decision", "description": "whether an application is to be approved or not" },
+	{ "name": "County Rules", "description": "dictate the procedures and business laws of the county", "attributes": "Comprehensive Plan, Zoning Information, Ordinance" },
+	{ "name": "Comprehensive Plan", "description": "policy document that contains the documentation of the development of the county" },
+	{ "name": "Plan Report", "description": "a document containing all the relevant information of a plan" },
+	{ "name": "Zoning Information", "description": "relevant data about zoning" },
+	{ "name": "Violation Notice", "description": "issued when a violation against county policies is noticed by an enforcer" },
+	{ "name": "GIS (Geographic Information System)", "description": "the County's computer system for capturing, storing, and displaying data related to geographic positions (for technical members)" },
+	{ "name": "Geospatial Data", "description": "relevant to reviews" },
+	{ "name": "Parcel", "description": "a unit of land or real estate", "attributes": "Parcel Pin, Property History"},
+	{ "name": "Property History", "description": "contains all relevant past information to the property" },
+	{ "name": "ParcelPIN", "description": "A unique number assigned to a parcel for tracking and record-keeping" },
+	{ "name": "Citation-Post", "description": "Information in form of a notice of violation to be sent to the affected property owner" },
+	{"name": "Project", "description": "an endeavor by a resident for construction or such", "attributes": "County Service, Bond, Plan Set, Building Development Status"}
 ],
 	"associations": [
-		{"from": "County", "to":  "County Issue", "desc": "a county is responsible for handling issues relevant to governance and zoning within the county"},
-		{"from": "County", "to":  "GIS", "desc": "the county has its own information system for geographic metrics"},
-		{"from": "County", "to":  "Parcel", "desc": "a county administrates the real estate units in its area"},
-		{"from": "County", "to":  "County Rules", "desc": "the county enforces certain rules relevant to zoning and construction"},
-		{"from": "GIS", "to":  "Geospatial Data", "desc": "in the GIS you can access the geospatial data"},
-		{"from": "County Staff Member", "to":  "County Rules", "desc": "the county staff member enforces county rules"},
-		{"from": "Comprehensive Plan", "to":  "Plan Report", "desc": "Comprehensive Plan is summarized in Plan Report"},
-		{"from": "Application", "to":  "County Issue", "desc": "Application becomes County Issue"},
-		{"from": "County Issue", "to":  "Stakeholders", "desc": "County Issue involves Stakeholders"},
-		{"from": "County Issue", "to":  "Scheduled Meeting", "desc": "County Issue is resolved in Scheduled Meeting"},
-		{"from": "Stakeholders", "to":  "Scheduled Meeting", "desc": "Stakeholders take part in Scheduled Meeting"},
-		{"from": "County Resident", "to":  "Application", "desc": "County Resident forms Application"},
-		{"from": "Application", "to":  "Project", "desc": "Application turns into a project"},
-		{"from": "County Resident", "to":  "Resident Request", "desc": "County Resident makes a Resident Request"},
-		{"from": "Resident Request", "to":  "County Staff Member", "desc": "Resident Request is handled by County Staff Member"},
-		{"from": "County Staff Member", "to":  "Formal Response", "desc": "County Staff Member writes Formal Response"},
-		{"from": "Formal Response", "to":  "County Resident", "desc": "Formal Response is received by County Resident"},
-		{"from": "Supervising Staff Member", "to":  "County Staff Member", "desc": "Supervising Staff Member orchestrates group of County Staff Member"},
-		{"from": "Staff Member", "to":  "County Rules", "desc": "Staff Member accesses County Rules and makes sure to enforce them"},
-		{"from": "County Issue", "to":  "Scheduled Meeting", "desc": "County Issue is resolved in Scheduled Meeting"},
-		{"from": "County Staff Member", "to":  "Scheduled Meeting", "desc": "County Staff Member schedules Scheduled Meeting"},
-		{"from": "County Staff Member", "to":  "Hearing", "desc": "County Staff Member schedules in Hearing"},
-		{"from": "County Resident", "to":  "Plan Review Meeting", "desc": "Resident takes part in Review Meeting"},
-		{"from": "County Staff Member", "to":  "Plan Review Meeting", "desc": "County Staff Member plans and takes part in Hearing"},
-		{"from": "County Staff Member", "to":  "Hearing", "desc": "County Staff Member takes part in Hearing"},
-		{"from": "Project", "to":  "Inspection", "desc": "Project needs Inspection"},
-		{"from": "Plan Review Meeting", "to":  "Project", "desc": "Plan Review Meeting is related to Project"},
-		{"from": "County Staff Member", "to":  "Violation Notice", "desc": "Staff issues Violation notice when county rules are infringed"},
-		{"from": "Citation-Post", "to":  "Violation Notice", "desc": "Citation-Post contains Violation Notice"},
-		{"from": "County Staff Member", "to":  "Citation-Post", "desc": "County Staff Member sends Citation-Post"},
-		{"from": "Citation-Post", "to":  "County Resident", "desc": "Citation-Post is received by Resident"},
-		{"from": "County Staff Member", "to":  "Completeness Review", "desc": "County Staff Member conducts Review"},
-		{"from": "Application", "to":  "Completeness Review", "desc": "Application requires Completeness Review"},
-		{"from": "County Staff Member", "to":  "Detailed Review", "desc": "County Staff Member conducts Detailed Review"},
-		{"from": "County Staff Member", "to":  "Plan Review", "desc": "County Staff Member conducts Plan Review"},
-		{"from": "Plan Set", "to":  "Plan Review", "desc": "Plan Set requires Plan Review"},
-		{"from": "County Staff Member", "to":  "Inspection", "desc": "County Staff Member conducts Inspection"},
-		{"from": "County Staff Member", "to":  "Zoning Permit", "desc": "Staff Member provides Zoning Permit"},
-		{"from": "Application", "to":  "Zoning Permit", "desc": "Application requires Zoning Permit"},
-		{"from": "Staff Report", "to":  "Application", "desc": "Report summarizes Application"},
-		{"from": "County Staff Member", "to":  "Staff Report", "desc": "Staff Member writes Staff Report"},
-		{"from": "Internal Note", "to":  "Application", "desc": "Internal Note contains information to be shared about the application"},
-		{"from": "County Staff Member", "to":  "Internal Note ", "desc": "Staff member writes and reads from internal note"}
+		{"from": "County", "to":  "County Issue", "description": "a county is responsible for handling issues relevant to governance and zoning within the county"},
+		{"from": "County", "to":  "GIS", "description": "the county has its own information system for geographic metrics"},
+		{"from": "County", "to":  "Parcel", "description": "a county administrates the real estate units in its area"},
+		{"from": "County", "to":  "County Rules", "description": "the county enforces certain rules relevant to zoning and construction"},
+		{"from": "GIS", "to":  "Geospatial Data", "description": "in the GIS you can access the geospatial data"},
+		{"from": "County Staff Member", "to":  "County Rules", "description": "the county staff member enforces county rules"},
+		{"from": "Comprehensive Plan", "to":  "Plan Report", "description": "Comprehensive Plan is summarized in Plan Report"},
+		{"from": "Application", "to":  "County Issue", "description": "Application becomes County Issue"},
+		{"from": "County Issue", "to":  "Stakeholders", "description": "County Issue involves Stakeholders"},
+		{"from": "County Issue", "to":  "Scheduled Meeting", "description": "County Issue is resolved in Scheduled Meeting"},
+		{"from": "Stakeholders", "to":  "Scheduled Meeting", "description": "Stakeholders take part in Scheduled Meeting"},
+		{"from": "County Resident", "to":  "Application", "description": "County Resident forms Application"},
+		{"from": "Application", "to":  "Project", "description": "Application turns into a project"},
+		{"from": "County Resident", "to":  "Resident Request", "description": "County Resident makes a Resident Request"},
+		{"from": "Resident Request", "to":  "County Staff Member", "description": "Resident Request is handled by County Staff Member"},
+		{"from": "County Staff Member", "to":  "Formal Response", "description": "County Staff Member writes Formal Response"},
+		{"from": "Formal Response", "to":  "County Resident", "description": "Formal Response is received by County Resident"},
+		{"from": "Supervising Staff Member", "to":  "County Staff Member", "description": "Supervising Staff Member orchestrates group of County Staff Member"},
+		{"from": "Staff Member", "to":  "County Rules", "description": "Staff Member accesses County Rules and makes sure to enforce them"},
+		{"from": "County Issue", "to":  "Scheduled Meeting", "description": "County Issue is resolved in Scheduled Meeting"},
+		{"from": "County Staff Member", "to":  "Scheduled Meeting", "description": "County Staff Member schedules Scheduled Meeting"},
+		{"from": "County Staff Member", "to":  "Hearing", "description": "County Staff Member schedules in Hearing"},
+		{"from": "County Resident", "to":  "Plan Review Meeting", "description": "Resident takes part in Review Meeting"},
+		{"from": "County Staff Member", "to":  "Plan Review Meeting", "description": "County Staff Member plans and takes part in Hearing"},
+		{"from": "County Staff Member", "to":  "Hearing", "description": "County Staff Member takes part in Hearing"},
+		{"from": "Project", "to":  "Inspection", "description": "Project needs Inspection"},
+		{"from": "Plan Review Meeting", "to":  "Project", "description": "Plan Review Meeting is related to Project"},
+		{"from": "County Staff Member", "to":  "Violation Notice", "description": "Staff issues Violation notice when county rules are infringed"},
+		{"from": "Citation-Post", "to":  "Violation Notice", "description": "Citation-Post contains Violation Notice"},
+		{"from": "County Staff Member", "to":  "Citation-Post", "description": "County Staff Member sends Citation-Post"},
+		{"from": "Citation-Post", "to":  "County Resident", "description": "Citation-Post is received by Resident"},
+		{"from": "County Staff Member", "to":  "Completeness Review", "description": "County Staff Member conducts Review"},
+		{"from": "Application", "to":  "Completeness Review", "description": "Application requires Completeness Review"},
+		{"from": "County Staff Member", "to":  "Detailed Review", "description": "County Staff Member conducts Detailed Review"},
+		{"from": "County Staff Member", "to":  "Plan Review", "description": "County Staff Member conducts Plan Review"},
+		{"from": "Plan Set", "to":  "Plan Review", "description": "Plan Set requires Plan Review"},
+		{"from": "County Staff Member", "to":  "Inspection", "description": "County Staff Member conducts Inspection"},
+		{"from": "County Staff Member", "to":  "Zoning Permit", "description": "Staff Member provides Zoning Permit"},
+		{"from": "Application", "to":  "Zoning Permit", "description": "Application requires Zoning Permit"},
+		{"from": "Staff Report", "to":  "Application", "description": "Report summarizes Application"},
+		{"from": "County Staff Member", "to":  "Staff Report", "description": "Staff Member writes Staff Report"},
+		{"from": "Internal Note", "to":  "Application", "description": "Internal Note contains information to be shared about the application"},
+		{"from": "County Staff Member", "to":  "Internal Note ", "description": "Staff member writes and reads from internal note"}
 	],
     "subdomains": {
-		"application":{
-			"entities": ["Application","Parcel","County Resident", "Project", "Supporting Documentation", "Transaction Status", "Proffer", "Proffer State"]
+		"Application":{
+			"objects": ["Application","Parcel","County Resident", "Project", "Supporting Documentation", "Transaction Status", "Proffer", "Proffer State"]
 		},
-		"review": {
-			"entities": ["Application", "County Staff Member","Supervising Staff Member", "Inspection", "Completeness Review","Detailed Review","Zoning Permit","Staff Report","Internal Note", "Plan Review"]
+		"Review": {
+			"objects": ["Application", "County Staff Member","Supervising Staff Member", "Inspection", "Completeness Review","Detailed Review","Zoning Permit","Staff Report","Internal Note", "Plan Review"]
 		},
-		"project": {
-			"entities": ["Project", "County Service", "Bond", "Plan Set", "Building Development Status"]
+		"Project": {
+			"objects": ["Project", "County Service", "Bond", "Plan Set", "Building Development Status"]
 		},
-		"communication": {
-			"entities": ["County Resident", "County Staff Member","Request","Formal Response","Citation-Post","Violation Notice","Zoning Information"]
+		"Communication": {
+			"objects": ["County Resident", "County Staff Member","Request","Formal Response","Citation-Post","Violation Notice","Zoning Information"]
 		},
-		"meetings": {
-			"entities": ["County Staff Member","County Resident","Hearing", "Stakeholder","County Issue", "Application","Plan Review Meeting", "Scheduled Meeting", "Meeting Time","Hearing Date", "Governing Body", "Hearing Decision", "Affidavit"]
+		"Meetings": {
+			"objects": ["County Staff Member","County Resident","Hearing", "Stakeholder","County Issue", "Application","Plan Review Meeting", "Scheduled Meeting", "Meeting Time","Hearing Date", "Governing Body", "Hearing Decision", "Affidavit"]
 		},
-		"county": {
-			"entities": ["County","County Issue","Parcel", "ParcelPIN","Parcel History","General Information","GIS","Geospatial Data","County Rules","Comprehensive Plan", "Zoning Information", "Ordinance", "Staff Member"]
+		"County": {
+			"objects": ["County","County Issue","Parcel", "ParcelPIN","Parcel History","General Information","GIS","Geospatial Data","County Rules","Comprehensive Plan", "Zoning Information", "Ordinance", "Staff Member"]
 		},
-		"connections between subdomains": ["application--review", "application--project", "application--meetings", "review--project", "application--county","review--meetings","meetings--county","county--communication", "review-county"]
+		"subdomain connections": ["Application--Review", "Application--Project", "Application--Meetings", "Review--Project", "Application--County","Review--Meetings","Meetings--County","County--Communication", "Review-County"]
 	},
     "bounded contexts": {
-		"application" : {
-			"derived from": "application subdomain",
+		"Application" : {
+			"derived from": "Application Subdomain",
 			"objects": ["Application","Affected Parcel","Applicant", "Project", "Supporting Documentation", "Transaction Status", "Proffer", "Proffer State"],
 			"name changes" : ["Parcel -> Affected Parcel", "County Resident -> Applicant"]
 		},
-		"application-review": {
-			"derived from": "review subdomain",
+		"Application-Review": {
+			"derived from": "Review Subdomain",
 			"objects": ["Application Under Review", "General Staff Member","Planning Staff Member","Zoning Staff Member","Plan Review Supervising Staff Member", "Completeness Review","Detailed Review","Zoning Permit","Staff Report","Internal Note", "Plan Review"],
 			"name changes": ["Application -> Application Under Review","County Staff Member -> General Staff Member, Planning Staff Member, Zoning Staff Member","Supervising Staff Member -> Plan Review Supervising Staff Member"]
 		},
-		"building inspection": {
-			"derived from": "review subdomain",
+		"Building Inspection": {
+			"derived from": "Review Subdomain",
 			"objects": ["Application of Project", "Project Under Review", "Inspection Staff Member", "Inspection Supervising Staff Member"],
 			"name changes": ["Application -> Application of Project", "Project -> Project Under Review", "County Staff Member -> Inspection Staff Member", "Supervising Staff Member -> Inspection Supervising Staff Member"]
 		},
-		"building project": {
-			"derived from": "project subdomain",
+		"Building Project": {
+			"derived from": "Project Subdomain",
 			"objects": ["Project", "County Service", "Bond", "Plan Set", "Building Development Status"],
 			"name changes": []
 		},
-		"communication": {
-			"derived from": "communication subdomain",
+		"Communication": {
+			"derived from": "Communication Subdomain",
 			"objects": ["Inquiring Resident", "Assisting Staff Member","Request","Formal Response","Citation-Post","Violation Notice","Requested Zoning Information"],
 			"name changes": ["County Resident -> Inquiring Resident", "County Staff Member -> Assisting Staff Member", "Zoning Information -> Requested Zoning Information"]
 		},
-		"general meetings": {
-			"derived from": "meetings subdomain",
+		"General Meetings": {
+			"derived from": "Meetings Subdomain",
 			"objects": ["Scheduling Staff Member","Hearing", "Stakeholder","Discussed County Issue", "Discussed Application", "General Scheduled Meeting", "Meeting Time","Hearing Date", "Governing Body", "Hearing Decision", "Affidavit"],
 			"name changes": ["County Staff Member -> Scheduling Staff Member","County Issue -> Discussed County Issue","Application -> Discussed Application", "Scheduled Meeting -> General Scheduled Meeting"]
 		},
-		"plan review meetings": {
-			"derived from": "meetings subdomain",
+		"Plan Review Meetings": {
+			"derived from": "Meetings Subdomain",
 			"objects" : ["Plan Applicant", "Plan Review Staff Member", "Plan Review Meeting", "Meeting Time"],
 			"name changes": ["Applicant -> Plan Applicant", "County Staff Member -> Plan Review Staff Member", "Scheduled Meeting -> Application Review Meeting"]
 		},
-		"governance": {
-			"derived from": "county subdomain",
+		"Governance": {
+			"derived from": "County Subdomain",
 			"objects": ["County","County Issue","Parcel", "ParcelPIN","Parcel History","General Information","GIS","Geospatial Data","County Rules","Comprehensive Plan", "Zoning Information", "Ordinance", "Staff Member"],
 			"name changes": []
 		}

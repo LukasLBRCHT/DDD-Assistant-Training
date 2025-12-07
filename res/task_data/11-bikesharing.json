@@ -128,7 +128,7 @@
 	  	  "name changes" : []
 	  },
 	  "Community Events" : {
-	  	  "derived from": "Community Events",
+	  	  "derived from": "Community Events Subdomain",
 	  	  "objects": ["Community Event Manager","Community Event","Event Station","Date"],
 	  	  "name changes" : ["Bike Station -> Event Station"]
 	  }
