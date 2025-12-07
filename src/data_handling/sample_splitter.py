@@ -7,9 +7,6 @@ import os
 from Config import Config
 
 
-# Todo Aufteilung nach Kategorien
-
-
 def phase_1_split(conv, name):
 
     phase_1_data = conv[0:5]
@@ -36,8 +33,6 @@ def phase_3_split(conv, name):
 
 
 def split_conversations():
-
-    # todo metadata checks for smarter splitting
 
     for conv in os.scandir(Config.Conversation_Data_Dir):
 

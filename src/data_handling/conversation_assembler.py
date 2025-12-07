@@ -10,6 +10,8 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from util import stnd_msg
+from sample_splitter import split_conversations
+from metadata_extraction import Metadata
 
 task_data_dir = "../../res/task_data"
 clean_data_dir = "../../res/clean_data/conversations"
@@ -145,3 +147,5 @@ if __name__ == "__main__":
 
     assembler = SampleAssembler()
     assembler.assemble_training_samples()
+
+    split_conversations()
