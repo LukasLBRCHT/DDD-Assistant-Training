@@ -49,34 +49,21 @@ class Metadata:
 
     def get_custom_order(self):
 
+        print("...preparing custom order...")
+
         self.collect()
 
-        print("the ten biggest:")
         ten_biggest = sorted(self.domains, key=lambda domain: domain.story_count)
         ten_biggest = ten_biggest[len(ten_biggest) - 10:len(ten_biggest)]
-        for entry in ten_biggest:
-            print(entry.file.name)
 
         merged_bcs = list(filter(lambda domain: domain.subdomain_count > domain.bounded_context_count, self.domains))
-        print("\nmerged bcs:")
-        for entry in merged_bcs:
-            print(entry.file.name)
 
         split_bcs = list(filter(lambda domain: domain.subdomain_count < domain.bounded_context_count, self.domains))
-        print("\nsplit bcs:")
-        for entry in split_bcs:
-            print(entry.file.name)
 
         little_name_changes = list(
             filter(lambda domain: domain.name_change_count == 0 or domain.name_change_count == 1, self.domains))
-        print("\nlittle change: (just one or zero)")
-        for entry in little_name_changes:
-            print(entry.file.name)
 
         generic_domains = self.domains[91:] + [self.domains[10]]
-        print("\ngeneric:")
-        for entry in generic_domains:
-            print(entry.file.name)
 
         all_domains = self.domains.copy()
         distinct_lists = [split_bcs, merged_bcs, little_name_changes, generic_domains, ten_biggest, all_domains]
@@ -98,6 +85,8 @@ class Metadata:
 
             if x == 2:
                 test.append(train.pop())  # a small correction to get a clean 80|20 split
+
+        print("custom order successful")
 
         return train + test
 
