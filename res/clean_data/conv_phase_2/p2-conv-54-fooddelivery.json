@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Ordering\": {\n      \"objects\": [\n        \"Customer\",\n        \"Restaurant Staff Member\",\n        \"Restaurant\",\n        \"Food Order\",\n        \"Meal\"\n      ]\n    },\n    \"Customer Issues\": {\n      \"objects\": [\n        \"Support Agent\",\n        \"Issue Report\",\n        \"Refund\"\n      ]\n    },\n    \"Delivery\": {\n      \"objects\": [\n        \"Delivery Driver\",\n        \"Pick Up\",\n        \"Meal Package\",\n        \"Food Order\",\n        \"Meal\",\n        \"Delivery\",\n        \"Delivery Status\"\n      ]\n    }\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Delivery\": {\n      \"objects\": [\n        \"Delivery Driver\",\n        \"Pick Up\",\n        \"Meal Package\",\n        \"Food Order\",\n        \"Meal\",\n        \"Delivery\",\n        \"Delivery Status\"\n      ]\n    },\n    \"Ordering\": {\n      \"objects\": [\n        \"Customer\",\n        \"Restaurant Staff Member\",\n        \"Restaurant\",\n        \"Food Order\",\n        \"Meal\"\n      ]\n    },\n    \"Customer Issues\": {\n      \"objects\": [\n        \"Support Agent\",\n        \"Issue Report\",\n        \"Refund\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

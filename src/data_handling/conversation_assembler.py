@@ -138,7 +138,7 @@ class Conversation:
 
         # turn 4
 
-        base_content = [self.subdomains, self.domain_objects]
+        base_content = [self.domain_objects, self.subdomains]
 
         user_message_4 = self.build_message("user", stnd_msg.user_turn_4(), content=base_content)
         self.messages.append(user_message_4)

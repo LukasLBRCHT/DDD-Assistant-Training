@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Governance\": {\n      \"objects\": [\n        \"City Officer\",\n        \"Inspection\",\n        \"Construction Permit\"\n      ]\n    },\n    \"Commission\": {\n      \"objects\": [\n        \"Owner\",\n        \"Design Request\",\n        \"Architect\",\n        \"Blueprint\",\n        \"Permit Application\"\n      ]\n    },\n    \"Construction\": {\n      \"objects\": [\n        \"Construction Overseer\",\n        \"Construction Project\",\n        \"Construction Worker\",\n        \"Project Schedule\",\n        \"Blueprint\",\n        \"Instruction\",\n        \"Safety Concern Report\"\n      ]\n    }\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Construction\": {\n      \"objects\": [\n        \"Construction Overseer\",\n        \"Construction Project\",\n        \"Construction Worker\",\n        \"Project Schedule\",\n        \"Blueprint\",\n        \"Instruction\",\n        \"Safety Concern Report\"\n      ]\n    },\n    \"Commission\": {\n      \"objects\": [\n        \"Owner\",\n        \"Design Request\",\n        \"Architect\",\n        \"Blueprint\",\n        \"Permit Application\"\n      ]\n    },\n    \"Governance\": {\n      \"objects\": [\n        \"City Officer\",\n        \"Inspection\",\n        \"Construction Permit\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Sale\": {\n      \"objects\": [\n        \"Customer\",\n        \"Sales Associate\",\n        \"Jewelry\",\n        \"Purchase\",\n        \"Delivery\",\n        \"Review\"\n      ]\n    },\n    \"Inventory Keeping\": {\n      \"objects\": [\n        \"Inventory Manager\",\n        \"Warehouse System\",\n        \"Stock Levels\",\n        \"Jewelry\",\n        \"Reorder\",\n        \"Shipment\"\n      ]\n    },\n    \"Cataloguing\": {\n      \"objects\": [\n        \"Product Specialist\",\n        \"Catalogue\",\n        \"Jewelry Model\",\n        \"Description\"\n      ]\n    }\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Cataloguing\": {\n      \"objects\": [\n        \"Product Specialist\",\n        \"Catalogue\",\n        \"Jewelry Model\",\n        \"Description\"\n      ]\n    },\n    \"Sale\": {\n      \"objects\": [\n        \"Customer\",\n        \"Sales Associate\",\n        \"Jewelry\",\n        \"Purchase\",\n        \"Delivery\",\n        \"Review\"\n      ]\n    },\n    \"Inventory Keeping\": {\n      \"objects\": [\n        \"Inventory Manager\",\n        \"Warehouse System\",\n        \"Stock Levels\",\n        \"Jewelry\",\n        \"Reorder\",\n        \"Shipment\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

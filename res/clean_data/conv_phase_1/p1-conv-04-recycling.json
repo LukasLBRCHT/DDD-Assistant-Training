@@ -13,7 +13,7 @@
   },
   {
     "role": "user",
-    "content": "Help me find the associations. Below I will provide the current state of the domain. \n\n#### Data:\nThese are the domain objects we extracted so far:\n```json\n\n```\n\n#### Task:\n- Draw connections between objects that have an association. \n- Name each object and add a description that captures the meaning of the association.\n- Return the associations in json format. Here is an example for structuring the data:\n```json\n{\n  \"associations\": [\n    {\n      \"from\": \"...\",\n      \"to\": \"...\",\n      \"description\": \"...\"\n    }\n  ]\n}\n```"
+    "content": "Help me find the associations.  \n\n#### Task:\n- Draw connections between objects that have an association. \n- Name each object and add a description that captures the meaning of the association.\n- Return the associations in json format. Here is an example for structuring the data:\n```json\n{\n  \"associations\": [\n    {\n      \"from\": \"...\",\n      \"to\": \"...\",\n      \"description\": \"...\"\n    }\n  ]\n}\n```"
   },
   {
     "role": "assistant",

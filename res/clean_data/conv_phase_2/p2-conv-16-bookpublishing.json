@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Submission\": {\n      \"objects\": [\n        \"Final Proof\",\n        \"Publishing Request\",\n        \"Publisher\",\n        \"Contract\",\n        \"Author\"\n      ]\n    },\n    \"Publishing\": {\n      \"objects\": [\n        \"Publisher\",\n        \"Budget\",\n        \"Print Job\",\n        \"Book\",\n        \"Author\",\n        \"Final Proof\"\n      ]\n    },\n    \"Editing\": {\n      \"objects\": [\n        \"Author\",\n        \"Manuscript Submission\",\n        \"Manuscript\",\n        \"Editor\",\n        \"Editorial Approval\",\n        \"Editorial Feedback\"\n      ]\n    }\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Editing\": {\n      \"objects\": [\n        \"Author\",\n        \"Manuscript Submission\",\n        \"Manuscript\",\n        \"Editor\",\n        \"Editorial Approval\",\n        \"Editorial Feedback\"\n      ]\n    },\n    \"Publishing\": {\n      \"objects\": [\n        \"Publisher\",\n        \"Budget\",\n        \"Print Job\",\n        \"Book\",\n        \"Author\",\n        \"Final Proof\"\n      ]\n    },\n    \"Submission\": {\n      \"objects\": [\n        \"Final Proof\",\n        \"Publishing Request\",\n        \"Publisher\",\n        \"Contract\",\n        \"Author\"\n      ]\n    }\n  }\n}\n```"
   }
 ]
