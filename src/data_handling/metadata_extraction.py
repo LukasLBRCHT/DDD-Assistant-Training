@@ -6,6 +6,14 @@ from Config import Config
 data = ["Stories", "Objects", "Associations", "Subdomains", "Bounded Contexts", "Name Changes"]
 
 
+def remove_remaining(current, other):
+    for d in current:
+        if d in other:
+            other.remove(d)
+
+    return other
+
+
 class Metadata:
     counts = {"Stories": [], "Objects": [], "Associations": [], "Subdomains": [], "Bounded Contexts": [],
               "Name Changes": []}
@@ -39,9 +47,13 @@ class Metadata:
             print(f"Greatest amount: {max(list_of_counts)}")
             print(f"Average amount: {sum(list_of_counts) / len(list_of_counts)}\n")
 
+    def get_custom_order(self):
+
+        self.collect()
+
         print("the ten biggest:")
         ten_biggest = sorted(self.domains, key=lambda domain: domain.story_count)
-        ten_biggest = ten_biggest[len(ten_biggest)-10:len(ten_biggest)]
+        ten_biggest = ten_biggest[len(ten_biggest) - 10:len(ten_biggest)]
         for entry in ten_biggest:
             print(entry.file.name)
 
@@ -50,10 +62,44 @@ class Metadata:
         for entry in merged_bcs:
             print(entry.file.name)
 
-        no_name_changes = list(filter(lambda domain: domain.name_change_count==0, self.domains))
-        print("\nno name change:")
-        for entry in no_name_changes:
+        split_bcs = list(filter(lambda domain: domain.subdomain_count < domain.bounded_context_count, self.domains))
+        print("\nsplit bcs:")
+        for entry in split_bcs:
             print(entry.file.name)
+
+        little_name_changes = list(
+            filter(lambda domain: domain.name_change_count == 0 or domain.name_change_count == 1, self.domains))
+        print("\nlittle change: (just one or zero)")
+        for entry in little_name_changes:
+            print(entry.file.name)
+
+        generic_domains = self.domains[91:] + [self.domains[10]]
+        print("\ngeneric:")
+        for entry in generic_domains:
+            print(entry.file.name)
+
+        all_domains = self.domains.copy()
+        distinct_lists = [split_bcs, merged_bcs, little_name_changes, generic_domains, ten_biggest, all_domains]
+        train = []
+        test = []
+
+        for x in range(0, len(distinct_lists)):
+
+            current_list = distinct_lists[x]
+            other_lists = distinct_lists[:x] + distinct_lists[x + 1:]
+
+            for o_l in other_lists:
+                o_l = remove_remaining(current_list, o_l)  # avoid duplicates
+
+            eighty_pct = round(len(current_list) * 0.8)
+
+            train += current_list[:eighty_pct]
+            test += current_list[eighty_pct:]
+
+            if x == 2:
+                test.append(train.pop())  # a small correction to get a clean 80|20 split
+
+        return train + test
 
 
 class Domain:
@@ -74,7 +120,7 @@ class Domain:
             self.story_count = len(json_data["domain-information"])
             self.object_count = len(json_data["domain objects"])
             self.association_count = len(json_data["associations"])
-            self.subdomain_count = len(json_data["subdomains"])-1
+            self.subdomain_count = len(json_data["subdomains"]) - 1
             self.bounded_context_count = len(json_data["bounded contexts"])
 
             bounded_context_list = json_data["bounded contexts"]
@@ -85,4 +131,4 @@ class Domain:
 
 if __name__ == "__main__":
     md = Metadata()
-    md.collect()
+    md.get_custom_order()

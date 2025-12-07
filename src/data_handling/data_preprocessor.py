@@ -3,6 +3,7 @@ import os
 from datasets import Dataset
 
 from Config import Config as Config
+from metadata_extraction import Metadata
 import json
 import torch
 
@@ -14,27 +15,27 @@ class DataPreprocessor:
     def __init__(self, tokenizer):
         self.tokenizer = tokenizer
 
-    def load_data(self):
+    def load_data(self, order):
 
-        sorted_data = Dataset.from_dict(self.extract_from_json())
+        sorted_data = Dataset.from_dict(self.extract_from_json(order))
         dataset = Dataset.from_dict({
             "input_ids": [torch.tensor(ids, dtype=torch.long) for ids in sorted_data["input_ids"]],
             "attention_mask": [torch.tensor(mask, dtype=torch.long) for mask in sorted_data["attention_mask"]],
             "labels": [torch.tensor(labels, dtype=torch.long) for labels in sorted_data["labels"]]
         })
 
-        split = dataset.train_test_split(train_size=0.5)
+        split = dataset.train_test_split(train_size=0.8)
         return split["train"], split["test"]
 
-    def extract_from_json(self):
+    def extract_from_json(self, order):
 
         directory = Config.Conversation_Data_Dir
         all_input_ids = []
         all_labels = []
         all_attention_masks = []
 
-        for file in os.scandir(directory):
-            with open(file) as f:
+        for domain in order:
+            with open(f"{directory}/{domain.file}") as f:
                 json_data = json.load(f)
 
                 # Step 1: build full chat text
