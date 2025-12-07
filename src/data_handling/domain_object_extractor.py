@@ -3,14 +3,48 @@ import os
 
 import regex
 
-from data_handling.domain import Domain_Object, Bounded_Context
-
 domain_objects_dir = "../../res/base_data/domain_objects"
 stories_dir = "../../res/base_data/stories"
 subtask_format_url = "../util/subtask_format"
 
 ws = " "
 
+
+class Domain_Object:
+    object_name = None
+    object_attributes = []
+
+    def __init__(self, name):
+        self.object_name = name
+        self.object_attributes = []
+
+    def add_attribute(self, attr):
+        self.object_attributes.append(attr)
+
+    def set_name(self, name):
+        self.object_name = name
+
+class Bounded_Context:
+
+    def __init__(self):
+        self.meanings = dict()
+
+    def add_renaming(self, former, current):
+        self.meanings[former] = current
+
+    def compress(self):
+
+        if not self.meanings:
+            return ""
+
+        name_changes = ""
+        for original in self.meanings.keys():
+            change = f"\"{original} -> {self.meanings[original]}\","
+            name_changes += change
+
+        name_changes = name_changes.removesuffix(",")
+
+        return name_changes
 
 def extract_lists(subdomain_objects):
     objects = subdomain_objects.split(",")
