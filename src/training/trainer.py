@@ -19,8 +19,12 @@ def load_lora_model():
     peft_config = LoraConfig(task_type=TaskType.CAUSAL_LM, inference_mode=False, r=32, lora_alpha=16, lora_dropout=0.1,
                              target_modules=[
                                  "q_proj", "k_proj", "v_proj", "o_proj",
-                                 "gate_proj", "up_proj", "down_proj"]
+                                 "gate_proj"]
                              )
+
+    # target_modules = [
+    #     "q_proj", "k_proj", "v_proj", "o_proj",
+    #     "gate_proj", "up_proj", "down_proj"]
 
     model.add_adapter(peft_config)
     # applied LoRA config to the model
@@ -39,18 +43,18 @@ def configure_training_arguments():
         output_dir=output_dir,
         warmup_steps=0,  # 2
         per_device_train_batch_size=1,
-        gradient_accumulation_steps=4,  # 50
-        # max_steps=1000,
+        gradient_accumulation_steps=1,  # 50
+        max_steps=5,
         learning_rate=2e-4,
         optim="paged_adamw_8bit",
         logging_steps=1,  # 25
         logging_dir="./logs",
         save_strategy="steps",
         save_steps=1,  # 25
-        eval_strategy="steps",
-        eval_steps=1,  # 25
-        do_eval=True,
-        gradient_checkpointing=True,
+        eval_strategy="no", # steps
+        #eval_steps=1,  # 25
+        do_eval=False,
+        gradient_checkpointing=False, # True
         report_to="none",
         overwrite_output_dir=False,
         group_by_length=True,
