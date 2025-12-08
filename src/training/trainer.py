@@ -5,12 +5,13 @@ from Config import Config as Config
 from peft import LoraConfig, TaskType
 import time
 from data_handling.data_preprocessor import DataPreprocessor
+from data_handling.metadata_extraction import Metadata
 
 
 def load_lora_model():
 
     model = AutoModelForCausalLM.from_pretrained(  # loading the model
-        Config.MODEL_7B_DIR,
+        Config.MODEL_3B_DIR,
         device_map="auto",
         torch_dtype=torch.float16,
     )
@@ -24,7 +25,7 @@ def load_lora_model():
     model.add_adapter(peft_config)
     # applied LoRA config to the model
     tokenizer = AutoTokenizer.from_pretrained(  # loading the tokenizer of the model
-        Config.MODEL_7B_DIR
+        Config.MODEL_3B_DIR
     )
 
     return model, tokenizer
@@ -38,7 +39,7 @@ def configure_training_arguments():
         output_dir=output_dir,
         warmup_steps=0,  # 2
         per_device_train_batch_size=1,
-        gradient_accumulation_steps=50,  # 4
+        gradient_accumulation_steps=4,  # 50
         # max_steps=1000,
         learning_rate=2e-4,
         optim="paged_adamw_8bit",
@@ -83,7 +84,10 @@ if __name__ == "__main__":
     model, tokenizer = load_lora_model()
 
     preprocessor = DataPreprocessor(tokenizer)
-    train_data, eval_data = preprocessor.load_data()
+
+    md = Metadata()
+    order = md.get_custom_order()
+    train_data, eval_data = preprocessor.load_data(order)
 
     train_args = configure_training_arguments()
     lora_trainer = initialize_trainer(model, tokenizer, train_args, train_data, eval_data)

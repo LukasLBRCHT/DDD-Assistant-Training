@@ -3,13 +3,8 @@ import os
 from datasets import Dataset
 
 from Config import Config as Config
-from metadata_extraction import Metadata
 import json
 import torch
-
-
-# TODO turn raw data into json format so it can be used for training
-# tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
 
 class DataPreprocessor:
     def __init__(self, tokenizer):
@@ -24,7 +19,7 @@ class DataPreprocessor:
             "labels": [torch.tensor(labels, dtype=torch.long) for labels in sorted_data["labels"]]
         })
 
-        split = dataset.train_test_split(train_size=0.8)
+        split = dataset.train_test_split(train_size=0.8, shuffle=False)
         return split["train"], split["test"]
 
     def extract_from_json(self, order):
@@ -35,7 +30,7 @@ class DataPreprocessor:
         all_attention_masks = []
 
         for domain in order:
-            with open(f"{directory}/{domain.file}") as f:
+            with open(f"{directory}/conv-{domain.file.name}") as f:
                 json_data = json.load(f)
 
                 # Step 1: build full chat text

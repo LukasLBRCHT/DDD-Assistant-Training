@@ -109,7 +109,7 @@ if __name__ == "__main__":
         """
 
         message = [{"role": "user", "content": prompt_with_history}]
-        print(f"whole prompt: {prompt_with_history}")
+        #print(f"whole prompt: {prompt_with_history}")
         print("... processing ...")
         response = generate_answer(model, tokenizer, message)
         printResponse(response)
