@@ -11,13 +11,18 @@ class DataPreprocessor:
         self.tokenizer = tokenizer
         self.max_length = max_length
 
-    def load_data(self, order):
-        data = self.extract_from_json(order)
-        dataset = Dataset.from_dict(data)
+    def load_data(self, train_order, test_order):
+        train_data = self.extract_from_json(train_order)
+        train_dataset = Dataset.from_dict(train_data)
 
-        # train/test with deterministic split
-        split = dataset.train_test_split(train_size=0.8, shuffle=False)
-        return split["train"], split["test"]
+        test_data = self.extract_from_json(test_order)
+        test_dataset = Dataset.from_dict(test_data)
+
+        # # train/test with deterministic split
+        # split = dataset.train_test_split(train_size=0.8, shuffle=False)
+        # return split["train"], split["test"]
+
+        return test_dataset, test_dataset
 
     def extract_from_json(self, order):
         directory = Config.Conversation_Phase_1_Data_Dir
@@ -25,6 +30,8 @@ class DataPreprocessor:
         all_input_ids = []
         all_labels = []
         all_attention_masks = []
+
+        token_lengths = []
 
         for domain in order:
             with open(f"{directory}/p1-conv-{domain.file.name}") as f:
@@ -36,6 +43,8 @@ class DataPreprocessor:
                     tokenize=False,
                     add_generation_prompt=False
                 )
+
+            token_lengths.append(len(full_text))
 
             # ----------------------------------------------
             # 2. Tokenize entire conversation (truncate here)
@@ -88,6 +97,8 @@ class DataPreprocessor:
             all_input_ids.append(ids)
             all_labels.append(labels)
             all_attention_masks.append(mask)
+
+        print(max(token_lengths), sum(token_lengths) / len(token_lengths))
 
         return {
             "input_ids": all_input_ids,

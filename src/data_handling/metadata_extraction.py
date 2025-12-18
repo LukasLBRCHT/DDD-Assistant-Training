@@ -19,7 +19,7 @@ class Metadata:
               "Name Changes": []}
     domains = []
 
-    def collect(self):
+    def collect(self, do_print=False):
         for file in os.scandir(Config.Task_Data_Dir):
             domain = Domain(file)
             self.domains.append(domain)
@@ -27,7 +27,9 @@ class Metadata:
 
             self.update_data(domain)
 
-        self.extract_global_metadata()
+        if do_print:
+
+            self.extract_global_metadata()
 
     def update_data(self, domain):
 
@@ -47,26 +49,29 @@ class Metadata:
             print(f"Greatest amount: {max(list_of_counts)}")
             print(f"Average amount: {sum(list_of_counts) / len(list_of_counts)}\n")
 
-    def get_custom_order(self):
+    def get_custom_split(self):
 
-        print("...preparing custom order...")
+        print("...preparing custom split...")
 
         self.collect()
 
-        ten_biggest = sorted(self.domains, key=lambda domain: domain.story_count)
-        ten_biggest = ten_biggest[len(ten_biggest) - 10:len(ten_biggest)]
-
         merged_bcs = list(filter(lambda domain: domain.subdomain_count > domain.bounded_context_count, self.domains))
+        merged_bcs = sorted(merged_bcs, key=lambda domain: domain.story_count, reverse=True)
 
         split_bcs = list(filter(lambda domain: domain.subdomain_count < domain.bounded_context_count, self.domains))
+        split_bcs = sorted(split_bcs, key=lambda domain: domain.story_count, reverse=True)
 
         little_name_changes = list(
             filter(lambda domain: domain.name_change_count == 0 or domain.name_change_count == 1, self.domains))
+        little_name_changes = sorted(little_name_changes, key=lambda domain: domain.story_count, reverse=True)
 
         generic_domains = self.domains[91:] + [self.domains[10]]
+        generic_domains = sorted(generic_domains, key=lambda domain: domain.story_count, reverse=True)
 
         all_domains = self.domains.copy()
-        distinct_lists = [split_bcs, merged_bcs, little_name_changes, generic_domains, ten_biggest, all_domains]
+        all_domains = sorted(all_domains, key=lambda domain: domain.story_count, reverse=True)
+
+        distinct_lists = [split_bcs, merged_bcs, little_name_changes, generic_domains, all_domains]
         train = []
         test = []
 
@@ -86,9 +91,9 @@ class Metadata:
             if x == 2:
                 test.append(train.pop())  # a small correction to get a clean 80|20 split
 
-        print("custom order successful")
+        print("custom split successful")
 
-        return train + test
+        return train, test
 
 
 class Domain:
@@ -220,4 +225,4 @@ class Domain:
 
 if __name__ == "__main__":
     md = Metadata()
-    md.get_custom_order()
+    md.get_custom_split()
