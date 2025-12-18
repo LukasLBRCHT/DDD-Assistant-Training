@@ -85,7 +85,7 @@ if __name__ == "__main__":
 
     md = Metadata()
     train_split, test_split = md.get_custom_split()
-    train_data, eval_data = preprocessor.load_data(train_split, test_split)
+    train_data, eval_data = preprocessor.load_data(train_split, test_split, 1)
 
     if False:
 
