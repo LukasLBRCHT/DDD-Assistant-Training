@@ -1,39 +1,38 @@
-from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments, Trainer, \
-    DataCollatorForLanguageModeling
-import torch
+from unsloth import FastLanguageModel
 from Config import Config as Config
-from peft import LoraConfig, TaskType, prepare_model_for_kbit_training, get_peft_model
 import time
+import torch
 from data_handling.data_preprocessor import DataPreprocessor
+import warnings
+from trl import SFTTrainer, SFTConfig
+
 from data_handling.metadata_extraction import Metadata
+import os
+
+os.environ["UNSLOTH_VLLM_STANDBY"] = "1"  # [NEW] Extra 30% context lengths!
 
 
 def load_lora_model():
+    max_seq_length = 2048
+    lora_rank = 8
 
-    model = AutoModelForCausalLM.from_pretrained(  # loading the model
+    model, tokenizer = FastLanguageModel.from_pretrained(  # loading the model
         Config.MODEL_3B_DIR,
-        device_map="auto",
-        torch_dtype=torch.float16,  #
+        max_seq_length=max_seq_length,
+        max_lora_rank=lora_rank,
+        gpu_memory_utilization=0.8
     )
 
-    model = prepare_model_for_kbit_training(model)
-
-    peft_config = LoraConfig(task_type=TaskType.CAUSAL_LM, inference_mode=False, r=8, lora_alpha=16, lora_dropout=0.1, #r=32
-                             target_modules=[
-                                 "q_proj", "k_proj", "v_proj", "o_proj",
-                                 "gate_proj"]
-                             )
-
-    # target_modules = [
-    #     "q_proj", "k_proj", "v_proj", "o_proj",
-    #     "gate_proj", "up_proj", "down_proj"]
-
-    #model.add_adapter(peft_config)
-    model = get_peft_model(model, peft_config)
-
-    # applied LoRA config to the model
-    tokenizer = AutoTokenizer.from_pretrained(  # loading the tokenizer of the model
-        Config.MODEL_3B_DIR
+    model = FastLanguageModel.get_peft_model(
+        model,
+        r=lora_rank,  # Choose any number > 0 ! Suggested 8, 16, 32, 64, 128
+        target_modules=[
+            "q_proj", "k_proj", "v_proj", "o_proj",
+            "gate_proj", "up_proj", "down_proj",
+        ],  # Remove QKVO if out of memory
+        lora_alpha=lora_rank,
+        use_gradient_checkpointing="unsloth",  # Enable long context finetuning
+        random_state=3407,
     )
 
     return model, tokenizer
@@ -42,71 +41,61 @@ def load_lora_model():
 def configure_training_arguments():
     output_dir = f'../../adapters/lora-ddd-agent-training-{str(int(time.time()))}'
 
-    # TODO: hyperparameter bestimmen
-    lora_training_args = TrainingArguments(
+    lora_training_args = SFTConfig(
         output_dir=output_dir,
-        warmup_steps=0,  # 2
         per_device_train_batch_size=1,
-        gradient_accumulation_steps=1,  # 50
-        max_steps=5,
+        gradient_accumulation_steps=1,
         learning_rate=2e-4,
-        optim="paged_adamw_8bit",
-        logging_steps=1,  # 25
-        logging_dir="./logs",
-        save_strategy="steps",
-        #save_steps=1,  # 25
-        eval_strategy="no", # steps
-        #eval_steps=1,  # 25
-        do_eval=False,
-        gradient_checkpointing=False, # True
+        max_steps=10,
+        warmup_steps=1,
+        logging_steps=1,
+        save_steps=5,
+        save_total_limit=2,
+        fp16=False,
+        bf16=True,
+        #gradient_checkpointing=False,  # important for Unsloth stability
+        optim="adamw_torch",
         report_to="none",
-        overwrite_output_dir=False,
-        group_by_length=False,  # True
-        label_names=["labels"],
-        fp16=True
+        packing=False,  # use packing only if data is short
     )
 
     return lora_training_args
 
 
-def initialize_trainer(lora_model, tokenizer, train_args, train_data, eval_data):
-    lora_model.config.use_cache = False
-
-    lora_trainer = Trainer(
+def initialize_trainer(lora_model, tokenizer, train_args, train_data):
+    lora_trainer = SFTTrainer(
         model=lora_model,
+        processing_class=tokenizer,
         train_dataset=train_data,
         eval_dataset=eval_data,
         args=train_args,
-        data_collator=DataCollatorForLanguageModeling(
-            tokenizer=tokenizer,
-            mlm=False,
-            pad_to_multiple_of=8
-        ),
     )
 
     return lora_trainer
 
 
 if __name__ == "__main__":
+    warnings.filterwarnings("ignore", message=".*active_adapter.*")
+    warnings.filterwarnings("ignore", message=".*UserWarning: Could not find a config file.*")
+
     # load model
     model, tokenizer = load_lora_model()
 
-    print("hf_device_map:", getattr(model, "hf_device_map", None))
-    print("cuda allocated:", torch.cuda.memory_allocated() / 1024 ** 3, "GB")
-    print(torch.cuda.memory_summary())
-
-    preprocessor = DataPreprocessor(tokenizer)
+    preprocessor = DataPreprocessor(tokenizer, max_length=2048)
 
     md = Metadata()
-    order = md.get_custom_order()
-    train_data, eval_data = preprocessor.load_data(order)
+    train_split, test_split = md.get_custom_split()
+    train_data, eval_data = preprocessor.load_data(train_split, test_split)
 
-    train_args = configure_training_arguments()
-    lora_trainer = initialize_trainer(model, tokenizer, train_args, train_data, eval_data)
+    if False:
 
-    print("Starting training...")
-    lora_trainer.train()
-    print("Training done!")
-    test_results = lora_trainer.evaluate(train_data)  # provisorisch, Test-Daten sollten eigentlich separat sein
-    # lora_trainer.save_model()
-    print(f"Results:\n{test_results}")
+        train_args = configure_training_arguments()
+        lora_trainer = initialize_trainer(model, tokenizer, train_args, train_data)
+
+        print("Starting training...")
+        lora_trainer.train()
+        print("Training done!")
+        test_results = lora_trainer.evaluate(
+            eval_dataset=eval_data)  # provisorisch, Test-Daten sollten eigentlich separat sein
+        # lora_trainer.save_model()
+        print(f"Results:\n{test_results}")
