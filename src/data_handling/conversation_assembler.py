@@ -111,8 +111,6 @@ class Conversation:
 
         json_data = json.loads(input_data)
 
-        print(len(json_data["domain objects"]))
-
         self.user_stories = json.dumps({"domain-information": json_data["domain-information"]}, indent=2,
                                        ensure_ascii=False)
         self.domain_objects = json.dumps({"domain objects": json_data["domain objects"]}, indent=2, ensure_ascii=False)
@@ -146,7 +144,7 @@ class Conversation:
         self.messages.append(assistant_message_1)
 
         # turn 2
-        user_message_2 = self.build_message("user", stnd_msg.user_turn_2(), content="")
+        user_message_2 = self.build_message("user", stnd_msg.user_turn_2(), content=self.domain_objects)
         self.messages.append(user_message_2)
         assistant_message_2 = self.build_message("assistant", stnd_msg.llm_turn_2(),
                                                  content=self.associations)

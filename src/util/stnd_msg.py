@@ -49,7 +49,13 @@ def llm_turn_1():
 
 def user_turn_2():
     return """Help me find the associations.  
+
+#### Data:
+These are the extracted domain objects and their associations:
+```json
 {}
+```
+
 #### Task:
 - Draw connections between objects that have an association. 
 - Name each object and add a description that captures the meaning of the association.

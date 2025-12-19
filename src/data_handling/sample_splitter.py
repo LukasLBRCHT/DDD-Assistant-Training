@@ -9,7 +9,7 @@ from conversation_assembler import SampleAssembler, Conversation, Message
 
 
 def phase_1_split(conv, name):
-    phase_1_data = conv[0:5]
+    phase_1_data = conv[0:3]
     dumped_phase_1 = json.dumps(phase_1_data, indent=2, ensure_ascii=False)
 
     with open(f"../../res/clean_data/conv_phase_1/p1-{name}", "w") as output_file:
@@ -17,7 +17,7 @@ def phase_1_split(conv, name):
 
 
 def phase_2_split(conv, name):
-    phase_2_data = [conv[0]] + conv[5:7]
+    phase_2_data = [conv[0]] + conv[3:5]
     dumped_phase_2 = json.dumps(phase_2_data, indent=2, ensure_ascii=False)
 
     with open(f"../../res/clean_data/conv_phase_2/p2-{name}", "w") as output_file:
@@ -25,11 +25,19 @@ def phase_2_split(conv, name):
 
 
 def phase_3_split(conv, name):
-    phase_3_data = [conv[0]] + conv[7:9]
+    phase_3_data = [conv[0]] + conv[5:7]
     dumped_phase_3 = json.dumps(phase_3_data, indent=2, ensure_ascii=False)
 
     with open(f"../../res/clean_data/conv_phase_3/p3-{name}", "w") as output_file:
         output_file.write(dumped_phase_3)
+
+
+def phase_4_split(conv, name):
+    phase_4_data = [conv[0]] + conv[7:9]
+    dumped_phase_4 = json.dumps(phase_4_data, indent=2, ensure_ascii=False)
+
+    with open(f"../../res/clean_data/conv_phase_4/p4-{name}", "w") as output_file:
+        output_file.write(dumped_phase_4)
 
 
 def split_conversations():
@@ -40,6 +48,7 @@ def split_conversations():
         phase_1_split(json_conv, conv.name)
         phase_2_split(json_conv, conv.name)
         phase_3_split(json_conv, conv.name)
+        phase_4_split(json_conv, conv.name)
 
 
 def chunk_json_data(json_entries, chunk_size):
@@ -105,7 +114,5 @@ def split_conversations_meta(conv_metas):
 if __name__ == "__main__":
     # get conversation data
     # split into steps, chunk data within each step
-    assembler = SampleAssembler()
-    conv_metas = assembler.get_conv_metadata()
 
-    split_conversations_meta(conv_metas)
+    split_conversations()

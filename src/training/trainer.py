@@ -11,13 +11,14 @@ import os
 
 os.environ["UNSLOTH_VLLM_STANDBY"] = "1"  # [NEW] Extra 30% context lengths!
 
-
-def load_lora_model():
-    max_seq_length = 2048
+def load_lora_model(model_dir=None):
+    max_seq_length = 4096
     lora_rank = 8
+    if not model_dir:
+        model_dir = Config.MODEL_3B_DIR
 
     model, tokenizer = FastLanguageModel.from_pretrained(  # loading the model
-        Config.MODEL_3B_DIR,
+        model_dir,
         max_seq_length=max_seq_length,
         max_lora_rank=lora_rank,
         gpu_memory_utilization=0.8
@@ -44,7 +45,8 @@ def configure_training_arguments():
     lora_training_args = SFTConfig(
         output_dir=output_dir,
         per_device_train_batch_size=1,
-        gradient_accumulation_steps=1,
+        gradient_accumulation_steps=5,
+        #num_train_epochs=2,
         learning_rate=2e-4,
         max_steps=10,
         warmup_steps=1,
@@ -81,21 +83,19 @@ if __name__ == "__main__":
     # load model
     model, tokenizer = load_lora_model()
 
-    preprocessor = DataPreprocessor(tokenizer, max_length=2048)
+    preprocessor = DataPreprocessor(tokenizer, max_length=4096)
 
     md = Metadata()
     train_split, test_split = md.get_custom_split()
-    train_data, eval_data = preprocessor.load_data(train_split, test_split, 1)
+    train_data, eval_data = preprocessor.load_data(train_split, test_split, 4)
 
-    if False:
+    train_args = configure_training_arguments()
+    lora_trainer = initialize_trainer(model, tokenizer, train_args, train_data)
 
-        train_args = configure_training_arguments()
-        lora_trainer = initialize_trainer(model, tokenizer, train_args, train_data)
-
-        print("Starting training...")
-        lora_trainer.train()
-        print("Training done!")
-        test_results = lora_trainer.evaluate(
-            eval_dataset=eval_data)  # provisorisch, Test-Daten sollten eigentlich separat sein
-        # lora_trainer.save_model()
-        print(f"Results:\n{test_results}")
+    print("Starting training...")
+    lora_trainer.train()
+    print("Training done!")
+    test_results = lora_trainer.evaluate(
+        eval_dataset=eval_data)  # provisorisch, Test-Daten sollten eigentlich separat sein
+    # lora_trainer.save_model()
+    print(f"Results:\n{test_results}")

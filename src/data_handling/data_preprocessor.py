@@ -12,31 +12,46 @@ class DataPreprocessor:
         self.tokenizer = tokenizer
         self.max_length = max_length
 
-    def load_data(self, train_order, test_order, phase):
+    def load_data(self, train_order, test_order, phase, chunked=False):
 
         match phase:
             case 1:
-                directory = Config.Conversation_Phase_1_Data_Dir
+                directory = Config.Phase_1_Data_Dir
+                if not chunked:
+                    directory = Config.Phase_1_Whole
                 domain_attribute = "object_count"
                 factor = 5
             case 2:
-                directory = Config.Conversation_Phase_2_Data_Dir
+                directory = Config.Phase_2_Data_Dir
+                if not chunked:
+                    directory = Config.Phase_2_Whole
                 domain_attribute = "association_count"
                 factor = 5
             case 3:
-                directory = Config.Conversation_Phase_3_Data_Dir
+                directory = Config.Phase_3_Data_Dir
+                if not chunked:
+                    directory = Config.Phase_3_Whole
                 domain_attribute = "subdomain_count"
                 factor = 1
             case 4:
-                directory = Config.Conversation_Phase_4_Data_Dir
+                directory = Config.Phase_4_Data_Dir
+                if not chunked:
+                    directory = Config.Phase_4_Whole
                 domain_attribute = "bounded_context_count"
                 factor = 1
 
-        train_data = self.extract_from_json_chunked(train_order, directory, domain_attribute, factor)
-        train_dataset = Dataset.from_dict(train_data)
+        if not chunked:
+            train_data = self.extract_from_json(train_order, directory, phase, max_length=self.max_length)
+            train_dataset = Dataset.from_dict(train_data)
 
-        test_data = self.extract_from_json_chunked(test_order, directory, domain_attribute, factor)
-        test_dataset = Dataset.from_dict(test_data)
+            test_data = self.extract_from_json(test_order, directory, phase, max_length=2048)
+            test_dataset = Dataset.from_dict(test_data)
+        else:
+            train_data = self.extract_from_json_chunked(train_order, directory, domain_attribute, factor)
+            train_dataset = Dataset.from_dict(train_data)
+
+            test_data = self.extract_from_json_chunked(test_order, directory, domain_attribute, factor)
+            test_dataset = Dataset.from_dict(test_data)
 
         # # train/test with deterministic split
         # split = dataset.train_test_split(train_size=0.8, shuffle=False)
@@ -44,8 +59,8 @@ class DataPreprocessor:
 
         return train_dataset, test_dataset
 
-    def extract_from_json(self, order):
-        directory = Config.Conversation_Phase_1_Data_Dir
+    def extract_from_json(self, order, sample_dir, phase, max_length):
+        directory = sample_dir
 
         all_input_ids = []
         all_labels = []
@@ -54,7 +69,7 @@ class DataPreprocessor:
         token_lengths = []
 
         for domain in order:
-            with open(f"{directory}/p3-conv-{domain.file.name}") as f:
+            with open(f"{directory}/p{phase}-conv-{domain.file.name}") as f:
                 json_data = json.load(f)
 
                 # Step 1: build full chat text
@@ -64,7 +79,10 @@ class DataPreprocessor:
                     add_generation_prompt=False
                 )
 
-            token_lengths.append(len(full_text))
+            token_length = len(
+                self.tokenizer(full_text, add_special_tokens=False)["input_ids"]
+            )
+            token_lengths.append(token_length)
 
             # ----------------------------------------------
             # 2. Tokenize entire conversation (truncate here)
@@ -74,7 +92,7 @@ class DataPreprocessor:
                 full_text,
                 padding="max_length",
                 truncation=True,
-                max_length=self.max_length,
+                max_length=max_length,
                 return_tensors=None
             )
 
@@ -118,7 +136,7 @@ class DataPreprocessor:
             all_labels.append(labels)
             all_attention_masks.append(mask)
 
-        print(max(token_lengths), sum(token_lengths) / len(token_lengths))
+        print(f"\nmax token length: {max(token_lengths)}\navg token length: {sum(token_lengths) / len(token_lengths)}\nnum samples: {len(token_lengths)}")
 
         return {
             "input_ids": all_input_ids,
@@ -152,7 +170,10 @@ class DataPreprocessor:
                         add_generation_prompt=False
                     )
 
-                token_lengths.append(len(full_text))
+                token_length = len(
+                    self.tokenizer(full_text, add_special_tokens=False)["input_ids"]
+                )
+                token_lengths.append(token_length)
 
                 # ----------------------------------------------
                 # 2. Tokenize entire conversation (truncate here)
@@ -160,7 +181,7 @@ class DataPreprocessor:
                 # Step 2: tokenize into dict with input_ids + mask
                 tokenized = self.tokenizer(
                     full_text,
-                    padding="max_length",
+                    padding=False,
                     truncation=True,
                     max_length=self.max_length,
                     return_tensors=None
@@ -206,7 +227,8 @@ class DataPreprocessor:
                 all_labels.append(labels)
                 all_attention_masks.append(mask)
 
-        print(max(token_lengths), sum(token_lengths) / len(token_lengths))
+        print(f"\nmax token length: {max(token_lengths)}\navg token length: {sum(token_lengths) / len(token_lengths)}\nnum samples: {len(token_lengths)}")
+
 
         return {
             "input_ids": all_input_ids,
