@@ -6,23 +6,10 @@ from Config import Config as Config
 import textwrap
 from Agent.conversation_history import Conversation_History
 from Agent.task_history import Task_History
+from util.llm_loading import load_model_basic
 
 local_dir = "../../models/qwen2.5-3b-awq/base"
 model_name = "Qwen/Qwen2.5-7B-Instruct-AWQ"
-
-
-def loadModel():
-    model = AutoModelForCausalLM.from_pretrained(  # loading the model
-        Config.MODEL_7B_DIR,
-        device_map="auto",
-        torch_dtype=torch.float16,
-    )
-    model = model.to("cuda")
-    tokenizer = AutoTokenizer.from_pretrained(  # loading the tokenizer of the model
-        Config.MODEL_7B_DIR
-    )
-
-    return model, tokenizer
 
 
 def generate_answer(model, tokenizer, prompt):
@@ -72,7 +59,7 @@ if __name__ == "__main__":
     warnings.filterwarnings("ignore")
 
     # load model
-    model, tokenizer = loadModel()
+    model, tokenizer = load_model_basic()
 
     history = Conversation_History()
     task_state = Task_History()

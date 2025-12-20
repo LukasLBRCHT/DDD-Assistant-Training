@@ -3,6 +3,7 @@ from Config import Config as Config
 import time
 import torch
 from data_handling.data_preprocessor import DataPreprocessor
+from util.llm_loading import load_model_lora
 import warnings
 from trl import SFTTrainer, SFTConfig
 
@@ -11,18 +12,11 @@ import os
 
 os.environ["UNSLOTH_VLLM_STANDBY"] = "1"  # [NEW] Extra 30% context lengths!
 
-def load_lora_model(model_dir=None):
+def get_training_model(model_dir=Config.MODEL_3B_DIR):
     max_seq_length = 4096
     lora_rank = 8
-    if not model_dir:
-        model_dir = Config.MODEL_3B_DIR
 
-    model, tokenizer = FastLanguageModel.from_pretrained(  # loading the model
-        model_dir,
-        max_seq_length=max_seq_length,
-        max_lora_rank=lora_rank,
-        gpu_memory_utilization=0.8
-    )
+    model, tokenizer = load_model_lora(model_dir, max_seq_length, lora_rank)
 
     model = FastLanguageModel.get_peft_model(
         model,
@@ -81,7 +75,7 @@ if __name__ == "__main__":
     warnings.filterwarnings("ignore", message=".*UserWarning: Could not find a config file.*")
 
     # load model
-    model, tokenizer = load_lora_model()
+    model, tokenizer = get_training_model()
 
     preprocessor = DataPreprocessor(tokenizer, max_length=4096)
 
