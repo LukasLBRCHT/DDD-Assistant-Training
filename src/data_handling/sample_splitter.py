@@ -39,7 +39,6 @@ def phase_4_split(conv, name):
     with open(f"../../res/clean_data/conv_phase_4/p4-{name}", "w") as output_file:
         output_file.write(dumped_phase_4)
 
-
 def split_conversations():
     for conv in os.scandir(Config.Conversation_Data_Dir):
         with open(conv) as conv_file:

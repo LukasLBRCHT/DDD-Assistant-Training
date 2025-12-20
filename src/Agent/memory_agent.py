@@ -6,7 +6,7 @@ from Config import Config as Config
 import textwrap
 from Agent.conversation_history import Conversation_History
 from Agent.task_history import Task_History
-from util.llm_loading import load_model_basic
+from util.llm_util import load_model_basic
 
 local_dir = "../../models/qwen2.5-3b-awq/base"
 model_name = "Qwen/Qwen2.5-7B-Instruct-AWQ"

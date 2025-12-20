@@ -27,3 +27,26 @@ def load_model_lora(model_dir, max_seq_length, lora_rank):
     )
 
     return model, tokenizer
+
+
+def generate_answer(model, tokenizer, prompt, max_tokens):
+
+    text = tokenizer.apply_chat_template(  # tokenizer is configured
+        prompt,
+        tokenize=False,
+        add_generation_prompt=True,
+    )
+    model_inputs = tokenizer([text], return_tensors="pt").to(model.device)  # input is processed into tokens
+
+    generated_ids = model.generate(  # response generation
+        **model_inputs,
+        max_new_tokens=max_tokens,
+    )
+    generated_ids = [
+        output_ids[len(input_ids):] for input_ids, output_ids
+        in zip(model_inputs.input_ids, generated_ids)
+    ]  # this makes sure that only  the newly generated tokens remain
+
+    response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]  # turns tokens into text string
+
+    return response

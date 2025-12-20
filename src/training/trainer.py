@@ -3,7 +3,7 @@ from Config import Config as Config
 import time
 import torch
 from data_handling.data_preprocessor import DataPreprocessor
-from util.llm_loading import load_model_lora
+from util.llm_util import load_model_lora
 import warnings
 from trl import SFTTrainer, SFTConfig
 
