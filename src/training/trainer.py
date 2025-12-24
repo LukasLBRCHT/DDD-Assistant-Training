@@ -14,7 +14,7 @@ os.environ["UNSLOTH_VLLM_STANDBY"] = "1"  # [NEW] Extra 30% context lengths!
 
 def get_training_model(model_dir=Config.MODEL_3B_DIR):
     max_seq_length = 4096
-    lora_rank = 8
+    lora_rank = 16
 
     model, tokenizer = load_model_lora(model_dir, max_seq_length, lora_rank)
 
@@ -25,7 +25,8 @@ def get_training_model(model_dir=Config.MODEL_3B_DIR):
             "q_proj", "k_proj", "v_proj", "o_proj",
             "gate_proj", "up_proj", "down_proj",
         ],  # Remove QKVO if out of memory
-        lora_alpha=lora_rank,
+        lora_alpha=lora_rank*2,
+        bias="none",
         use_gradient_checkpointing="unsloth",  # Enable long context finetuning
         random_state=3407,
     )
@@ -33,25 +34,48 @@ def get_training_model(model_dir=Config.MODEL_3B_DIR):
     return model, tokenizer
 
 
-def configure_training_arguments():
-    output_dir = f'../../adapters/lora-ddd-agent-training-{str(int(time.time()))}'
+def configure_training_arguments(phase):
+
+    run_name = input("Enter run-name:")
+
+    output_dir = f'../../adapters/finetuned_phase{phase}-{run_name}'
+    # todo output dir anpassen
 
     lora_training_args = SFTConfig(
         output_dir=output_dir,
         per_device_train_batch_size=1,
-        gradient_accumulation_steps=5,
-        #num_train_epochs=2,
+        gradient_accumulation_steps=1,
+        num_train_epochs=1,
+
+        #max_steps=100,
         learning_rate=2e-4,
-        max_steps=10,
-        warmup_steps=1,
+        warmup_ratio=0.05,
+        #warmup_steps=1, # sollte 5-10% der gesamten steps sein
+
+        logging_strategy="steps",
         logging_steps=1,
-        save_steps=5,
+        logging_first_step=True,
+        logging_dir="../../res/training_logs",
+
+        save_steps=10,
         save_total_limit=2,
+        weight_decay=0.01,
+
+        #eval_strategy="steps",
+        #eval_steps=25,
+
         fp16=False,
         bf16=True,
+
+        lr_scheduler_type="cosine",
         #gradient_checkpointing=False,  # important for Unsloth stability
         optim="adamw_torch",
+
+        log_level="info",
         report_to="none",
+
+        max_grad_norm=1.0, # todo hierüber informieren
+
         packing=False,  # use packing only if data is short
     )
 
@@ -79,11 +103,13 @@ if __name__ == "__main__":
 
     preprocessor = DataPreprocessor(tokenizer, max_length=4096)
 
+    phase = 1
+
     md = Metadata()
     train_split, test_split = md.get_custom_split()
-    train_data, eval_data = preprocessor.load_data(train_split, test_split, 4)
+    train_data, eval_data = preprocessor.load_data(train_split, test_split, phase)
 
-    train_args = configure_training_arguments()
+    train_args = configure_training_arguments(phase)
     lora_trainer = initialize_trainer(model, tokenizer, train_args, train_data)
 
     print("Starting training...")
