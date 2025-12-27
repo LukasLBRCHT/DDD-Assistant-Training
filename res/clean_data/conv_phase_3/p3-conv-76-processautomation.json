@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Client Requests\": {\n      \"objects\": [\n        \"Client\",\n        \"Review Request\",\n        \"Task\",\n        \"Process Documentation\",\n        \"Automation Feedback\"\n      ]\n    },\n    \"Automation Design\": {\n      \"objects\": [\n        \"Automation Consultant\",\n        \"Workflow Analysis\",\n        \"Workflow Automation Plan\",\n        \"Automation Script\",\n        \"Performance Report\"\n      ]\n    },\n    \"Administration\": {\n      \"objects\": [\n        \"System Administrator\",\n        \"Software Permission\",\n        \"Workflow Supervision\"\n      ]\n    },\n    \"subdomain connections\": [\n      \"Client Requests--Automation Design\",\n      \"Automation Design--Administration\"\n    ]\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Administration\": {\n      \"objects\": [\n        \"System Administrator\",\n        \"Software Permission\",\n        \"Workflow Supervision\"\n      ]\n    },\n    \"Client Requests\": {\n      \"objects\": [\n        \"Client\",\n        \"Review Request\",\n        \"Task\",\n        \"Process Documentation\",\n        \"Automation Feedback\"\n      ]\n    },\n    \"Automation Design\": {\n      \"objects\": [\n        \"Automation Consultant\",\n        \"Workflow Analysis\",\n        \"Workflow Automation Plan\",\n        \"Automation Script\",\n        \"Performance Report\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

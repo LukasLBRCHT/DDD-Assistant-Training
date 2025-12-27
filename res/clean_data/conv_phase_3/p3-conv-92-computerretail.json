@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Sale\": {\n      \"objects\": [\n        \"Customer\",\n        \"Sales Associate\",\n        \"Computer\",\n        \"Purchase\",\n        \"Delivery\",\n        \"Review\"\n      ]\n    },\n    \"Cataloguing\": {\n      \"objects\": [\n        \"Product Specialist\",\n        \"Catalogue\",\n        \"Computer Model\",\n        \"Description\"\n      ]\n    },\n    \"Inventory Keeping\": {\n      \"objects\": [\n        \"Inventory Manager\",\n        \"Warehouse System\",\n        \"Stock Levels\",\n        \"Computer\",\n        \"Reorder\",\n        \"Shipment\"\n      ]\n    },\n    \"subdomain connections\": [\n      \"Sale-Cataloguing\",\n      \"Inventory Keeping-Cataloguing\"\n    ]\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Cataloguing\": {\n      \"objects\": [\n        \"Product Specialist\",\n        \"Catalogue\",\n        \"Computer Model\",\n        \"Description\"\n      ]\n    },\n    \"Inventory Keeping\": {\n      \"objects\": [\n        \"Inventory Manager\",\n        \"Warehouse System\",\n        \"Stock Levels\",\n        \"Computer\",\n        \"Reorder\",\n        \"Shipment\"\n      ]\n    },\n    \"Sale\": {\n      \"objects\": [\n        \"Customer\",\n        \"Sales Associate\",\n        \"Computer\",\n        \"Purchase\",\n        \"Delivery\",\n        \"Review\"\n      ]\n    }\n  }\n}\n```"
   }
 ]
