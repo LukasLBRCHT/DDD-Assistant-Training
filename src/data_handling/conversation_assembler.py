@@ -117,10 +117,10 @@ class Conversation:
         self.associations = json.dumps({"associations": json_data["associations"]}, indent=2, ensure_ascii=False)
 
         order = get_order(json_data["subdomains"])
-        self.subdomains = json.dumps({"subdomains": json_data["subdomains"]}, indent=2,
+        self.subdomains = json.dumps({"subdomains": order_subdomains(json_data["subdomains"], order)}, indent=2,
                                      ensure_ascii=False)
         self.bounded_contexts = json.dumps(
-            {"bounded contexts": json_data["bounded contexts"]}, indent=2,
+            {"bounded contexts": order_bounded_contexts(json_data["bounded contexts"], order)}, indent=2,
             ensure_ascii=False)
         self.other_input_data = ""
 
