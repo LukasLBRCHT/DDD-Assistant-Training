@@ -1,7 +1,7 @@
 [
   {
     "role": "system",
-    "content": "You are a domain driven design (DDD) expert.\nYour task is to help the user step by step with creating domain models.\n\n### Here is the explanation of the workflow:\n1. The user will provide domain information.\n2. Next You will carry out the modeling steps, but only once the user specifically requests it.\n\n#### Modeling steps:\n1. You will extract domain objects and associations. \n2. You will group the objects by subdomains.\n3. In the last step you will define bounded contexts. "
+    "content": "You are a domain driven design (DDD) expert.\nYour task is to help the user step by step with creating domain models.\n\n### Here is the explanation of the workflow:\n1. The user will provide domain information.\n2. Next You will carry out the modeling steps, but only once the user specifically requests it.\n\n#### Modeling steps:\n1. Extracting domain objects\n2. Connections of domain objects using associations \n3. Grouping objects by subdomains\n4. Definition of bounded contexts "
   },
   {
     "role": "user",
@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Design\": {\n      \"objects\": [\n        \"Furniture Designer\",\n        \"Design Draft\",\n        \"Material\",\n        \"Feedback\",\n        \"Final Design\"\n      ]\n    },\n    \"Production\": {\n      \"objects\": [\n        \"Carpenter\",\n        \"Furniture Assembly\",\n        \"Furniture Piece\",\n        \"Quality Inspector\",\n        \"Standard Check\",\n        \"Issue Report\"\n      ]\n    },\n    \"Distribution\": {\n      \"objects\": [\n        \"Delivery Coordinator\",\n        \"Delivery\",\n        \"Furniture Piece\",\n        \"Delivery Time\",\n        \"Feedback\"\n      ]\n    },\n    \"Assignment\": {\n      \"objects\": [\n        \"Client\",\n        \"Piece Request\",\n        \"Room Measurements\",\n        \"Style Preference\"\n      ]\n    }\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Design\": {\n      \"objects\": [\n        \"Furniture Designer\",\n        \"Design Draft\",\n        \"Material\",\n        \"Feedback\",\n        \"Final Design\"\n      ]\n    },\n    \"Distribution\": {\n      \"objects\": [\n        \"Delivery Coordinator\",\n        \"Delivery\",\n        \"Furniture Piece\",\n        \"Delivery Time\",\n        \"Feedback\"\n      ]\n    },\n    \"Assignment\": {\n      \"objects\": [\n        \"Client\",\n        \"Piece Request\",\n        \"Room Measurements\",\n        \"Style Preference\"\n      ]\n    },\n    \"Production\": {\n      \"objects\": [\n        \"Carpenter\",\n        \"Furniture Assembly\",\n        \"Furniture Piece\",\n        \"Quality Inspector\",\n        \"Standard Check\",\n        \"Issue Report\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

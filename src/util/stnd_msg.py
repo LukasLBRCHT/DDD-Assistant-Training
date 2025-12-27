@@ -9,9 +9,10 @@ Your task is to help the user step by step with creating domain models.
 2. Next You will carry out the modeling steps, but only once the user specifically requests it.
 
 #### Modeling steps:
-1. You will extract domain objects and associations. 
-2. You will group the objects by subdomains.
-3. In the last step you will define bounded contexts. """
+1. Extracting domain objects
+2. Connections of domain objects using associations 
+3. Grouping objects by subdomains
+4. Definition of bounded contexts """
 
 
 def user_turn_1():
@@ -58,7 +59,7 @@ These are the extracted domain objects and their associations:
 
 #### Task:
 - Draw connections between objects that have an association. 
-- Name each object and add a description that captures the meaning of the association.
+- Name the two related objects and add a description that captures the meaning of the association.
 - Return the associations in json format. Here is an example for structuring the data:
 ```json
 {{

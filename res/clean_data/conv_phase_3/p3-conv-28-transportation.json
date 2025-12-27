@@ -1,7 +1,7 @@
 [
   {
     "role": "system",
-    "content": "You are a domain driven design (DDD) expert.\nYour task is to help the user step by step with creating domain models.\n\n### Here is the explanation of the workflow:\n1. The user will provide domain information.\n2. Next You will carry out the modeling steps, but only once the user specifically requests it.\n\n#### Modeling steps:\n1. You will extract domain objects and associations. \n2. You will group the objects by subdomains.\n3. In the last step you will define bounded contexts. "
+    "content": "You are a domain driven design (DDD) expert.\nYour task is to help the user step by step with creating domain models.\n\n### Here is the explanation of the workflow:\n1. The user will provide domain information.\n2. Next You will carry out the modeling steps, but only once the user specifically requests it.\n\n#### Modeling steps:\n1. Extracting domain objects\n2. Connections of domain objects using associations \n3. Grouping objects by subdomains\n4. Definition of bounded contexts "
   },
   {
     "role": "user",
@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Security\": {\n      \"objects\": [\n        \"Security Officer\",\n        \"Cargo Escort\",\n        \"Vehicle\",\n        \"Cargo Inspection\",\n        \"Security Incident\"\n      ]\n    },\n    \"Operations Management\": {\n      \"objects\": [\n        \"Transportation Manager\",\n        \"Transport Schedule\",\n        \"Delivery Route\",\n        \"Performance Report\",\n        \"Vehicle\"\n      ]\n    },\n    \"Client Request\": {\n      \"objects\": [\n        \"Transport Request\",\n        \"Client\"\n      ]\n    },\n    \"Dispatch\": {\n      \"objects\": [\n        \"Dispatcher\",\n        \"Driver\",\n        \"Delivery Route\",\n        \"Vehicle\",\n        \"Capacity\",\n        \"Delivery Log\"\n      ]\n    },\n    \"Maintenance\": {\n      \"objects\": [\n        \"Maintenance Technician\",\n        \"Maintenance\",\n        \"Driver\",\n        \"Maintenance Issue\",\n        \"Vehicle\",\n        \"Maintenance Records\"\n      ]\n    }\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Dispatch\": {\n      \"objects\": [\n        \"Dispatcher\",\n        \"Driver\",\n        \"Delivery Route\",\n        \"Vehicle\",\n        \"Capacity\",\n        \"Delivery Log\"\n      ]\n    },\n    \"Maintenance\": {\n      \"objects\": [\n        \"Maintenance Technician\",\n        \"Maintenance\",\n        \"Driver\",\n        \"Maintenance Issue\",\n        \"Vehicle\",\n        \"Maintenance Records\"\n      ]\n    },\n    \"Operations Management\": {\n      \"objects\": [\n        \"Transportation Manager\",\n        \"Transport Schedule\",\n        \"Delivery Route\",\n        \"Performance Report\",\n        \"Vehicle\"\n      ]\n    },\n    \"Client Request\": {\n      \"objects\": [\n        \"Transport Request\",\n        \"Client\"\n      ]\n    },\n    \"Security\": {\n      \"objects\": [\n        \"Security Officer\",\n        \"Cargo Escort\",\n        \"Vehicle\",\n        \"Cargo Inspection\",\n        \"Security Incident\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

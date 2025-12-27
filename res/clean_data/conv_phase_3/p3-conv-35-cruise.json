@@ -1,7 +1,7 @@
 [
   {
     "role": "system",
-    "content": "You are a domain driven design (DDD) expert.\nYour task is to help the user step by step with creating domain models.\n\n### Here is the explanation of the workflow:\n1. The user will provide domain information.\n2. Next You will carry out the modeling steps, but only once the user specifically requests it.\n\n#### Modeling steps:\n1. You will extract domain objects and associations. \n2. You will group the objects by subdomains.\n3. In the last step you will define bounded contexts. "
+    "content": "You are a domain driven design (DDD) expert.\nYour task is to help the user step by step with creating domain models.\n\n### Here is the explanation of the workflow:\n1. The user will provide domain information.\n2. Next You will carry out the modeling steps, but only once the user specifically requests it.\n\n#### Modeling steps:\n1. Extracting domain objects\n2. Connections of domain objects using associations \n3. Grouping objects by subdomains\n4. Definition of bounded contexts "
   },
   {
     "role": "user",
@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Activity Planning\": {\n      \"objects\": [\n        \"Activity Coordinator\",\n        \"Cruise Schedule\",\n        \"Onboard Activity\",\n        \"Activity Booking\"\n      ]\n    },\n    \"Cruise Management\": {\n      \"objects\": [\n        \"Cruise Manager\",\n        \"Passenger Record\",\n        \"Port Check In\",\n        \"Cruise Schedule\"\n      ]\n    },\n    \"Registration\": {\n      \"objects\": [\n        \"Passenger\",\n        \"Passenger Record\",\n        \"Cruise Booking\",\n        \"Booking Agent\",\n        \"Payment\",\n        \"Booking Confirmation\"\n      ]\n    },\n    \"Medical\": {\n      \"objects\": [\n        \"Medical Officer\",\n        \"Illness Report\",\n        \"Health Case Report\"\n      ]\n    }\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Medical\": {\n      \"objects\": [\n        \"Medical Officer\",\n        \"Illness Report\",\n        \"Health Case Report\"\n      ]\n    },\n    \"Cruise Management\": {\n      \"objects\": [\n        \"Cruise Manager\",\n        \"Passenger Record\",\n        \"Port Check In\",\n        \"Cruise Schedule\"\n      ]\n    },\n    \"Registration\": {\n      \"objects\": [\n        \"Passenger\",\n        \"Passenger Record\",\n        \"Cruise Booking\",\n        \"Booking Agent\",\n        \"Payment\",\n        \"Booking Confirmation\"\n      ]\n    },\n    \"Activity Planning\": {\n      \"objects\": [\n        \"Activity Coordinator\",\n        \"Cruise Schedule\",\n        \"Onboard Activity\",\n        \"Activity Booking\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

@@ -1,7 +1,7 @@
 [
   {
     "role": "system",
-    "content": "You are a domain driven design (DDD) expert.\nYour task is to help the user step by step with creating domain models.\n\n### Here is the explanation of the workflow:\n1. The user will provide domain information.\n2. Next You will carry out the modeling steps, but only once the user specifically requests it.\n\n#### Modeling steps:\n1. You will extract domain objects and associations. \n2. You will group the objects by subdomains.\n3. In the last step you will define bounded contexts. "
+    "content": "You are a domain driven design (DDD) expert.\nYour task is to help the user step by step with creating domain models.\n\n### Here is the explanation of the workflow:\n1. The user will provide domain information.\n2. Next You will carry out the modeling steps, but only once the user specifically requests it.\n\n#### Modeling steps:\n1. Extracting domain objects\n2. Connections of domain objects using associations \n3. Grouping objects by subdomains\n4. Definition of bounded contexts "
   },
   {
     "role": "user",
@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Delivery\": {\n      \"objects\": [\n        \"Delivery Driver\",\n        \"Pick Up\",\n        \"Meal Package\",\n        \"Food Order\",\n        \"Meal\",\n        \"Delivery\",\n        \"Delivery Status\"\n      ]\n    },\n    \"Customer Issues\": {\n      \"objects\": [\n        \"Support Agent\",\n        \"Issue Report\",\n        \"Refund\"\n      ]\n    },\n    \"Ordering\": {\n      \"objects\": [\n        \"Customer\",\n        \"Restaurant Staff Member\",\n        \"Restaurant\",\n        \"Food Order\",\n        \"Meal\"\n      ]\n    }\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Customer Issues\": {\n      \"objects\": [\n        \"Support Agent\",\n        \"Issue Report\",\n        \"Refund\"\n      ]\n    },\n    \"Ordering\": {\n      \"objects\": [\n        \"Customer\",\n        \"Restaurant Staff Member\",\n        \"Restaurant\",\n        \"Food Order\",\n        \"Meal\"\n      ]\n    },\n    \"Delivery\": {\n      \"objects\": [\n        \"Delivery Driver\",\n        \"Pick Up\",\n        \"Meal Package\",\n        \"Food Order\",\n        \"Meal\",\n        \"Delivery\",\n        \"Delivery Status\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

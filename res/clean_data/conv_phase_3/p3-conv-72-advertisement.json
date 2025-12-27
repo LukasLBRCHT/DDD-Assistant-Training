@@ -1,7 +1,7 @@
 [
   {
     "role": "system",
-    "content": "You are a domain driven design (DDD) expert.\nYour task is to help the user step by step with creating domain models.\n\n### Here is the explanation of the workflow:\n1. The user will provide domain information.\n2. Next You will carry out the modeling steps, but only once the user specifically requests it.\n\n#### Modeling steps:\n1. You will extract domain objects and associations. \n2. You will group the objects by subdomains.\n3. In the last step you will define bounded contexts. "
+    "content": "You are a domain driven design (DDD) expert.\nYour task is to help the user step by step with creating domain models.\n\n### Here is the explanation of the workflow:\n1. The user will provide domain information.\n2. Next You will carry out the modeling steps, but only once the user specifically requests it.\n\n#### Modeling steps:\n1. Extracting domain objects\n2. Connections of domain objects using associations \n3. Grouping objects by subdomains\n4. Definition of bounded contexts "
   },
   {
     "role": "user",
@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Analysis\": {\n      \"objects\": [\n        \"Campaign Analyst\",\n        \"Performance Report\",\n        \"Target Audience\"\n      ]\n    },\n    \"Outlet Contracting\": {\n      \"objects\": [\n        \"Account Manager\",\n        \"Outlet\",\n        \"Contract Negotiation\",\n        \"Media Channel\",\n        \"Placement Schedule\"\n      ]\n    },\n    \"Ad Creation\": {\n      \"objects\": [\n        \"Content Creation\",\n        \"Advertisement Variation\"\n      ]\n    },\n    \"Social Media\": {\n      \"objects\": [\n        \"Social Media Coordinator\",\n        \"User\",\n        \"Posting\",\n        \"User Interaction\"\n      ]\n    },\n    \"Supervision\": {\n      \"objects\": [\n        \"Media Planner\",\n        \"Advertiser\",\n        \"Advertising Campaign\",\n        \"Media Channel\"\n      ]\n    }\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Outlet Contracting\": {\n      \"objects\": [\n        \"Account Manager\",\n        \"Outlet\",\n        \"Contract Negotiation\",\n        \"Media Channel\",\n        \"Placement Schedule\"\n      ]\n    },\n    \"Analysis\": {\n      \"objects\": [\n        \"Campaign Analyst\",\n        \"Performance Report\",\n        \"Target Audience\"\n      ]\n    },\n    \"Social Media\": {\n      \"objects\": [\n        \"Social Media Coordinator\",\n        \"User\",\n        \"Posting\",\n        \"User Interaction\"\n      ]\n    },\n    \"Supervision\": {\n      \"objects\": [\n        \"Media Planner\",\n        \"Advertiser\",\n        \"Advertising Campaign\",\n        \"Media Channel\"\n      ]\n    },\n    \"Ad Creation\": {\n      \"objects\": [\n        \"Content Creation\",\n        \"Advertisement Variation\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

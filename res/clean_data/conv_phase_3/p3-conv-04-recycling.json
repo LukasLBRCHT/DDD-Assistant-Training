@@ -1,7 +1,7 @@
 [
   {
     "role": "system",
-    "content": "You are a domain driven design (DDD) expert.\nYour task is to help the user step by step with creating domain models.\n\n### Here is the explanation of the workflow:\n1. The user will provide domain information.\n2. Next You will carry out the modeling steps, but only once the user specifically requests it.\n\n#### Modeling steps:\n1. You will extract domain objects and associations. \n2. You will group the objects by subdomains.\n3. In the last step you will define bounded contexts. "
+    "content": "You are a domain driven design (DDD) expert.\nYour task is to help the user step by step with creating domain models.\n\n### Here is the explanation of the workflow:\n1. The user will provide domain information.\n2. Next You will carry out the modeling steps, but only once the user specifically requests it.\n\n#### Modeling steps:\n1. Extracting domain objects\n2. Connections of domain objects using associations \n3. Grouping objects by subdomains\n4. Definition of bounded contexts "
   },
   {
     "role": "user",
@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Recycling\": {\n      \"objects\": [\n        \"Recycling Community Member\",\n        \"Personal Recycling Data\",\n        \"Drop-Off\",\n        \"Recycling Center\",\n        \"Drop-Off Site\",\n        \"Zip Code\",\n        \"Accepted Material Type\",\n        \"Opening Hours\",\n        \"User Visit Data\",\n        \"Center Staff\",\n        \"Center Equipment\",\n        \"Community Recycling Events\"\n      ]\n    },\n    \"Statistics\": {\n      \"objects\": [\n        \"Company\",\n        \"Recycling Data\",\n        \"Researcher\",\n        \"Company Partner\"\n      ]\n    },\n    \"Organization\": {\n      \"objects\": [\n        \"Recycling Facility Representative\",\n        \"Administrator\",\n        \"Join Request\",\n        \"Center Feedback\",\n        \"Drop-Off Suggestion\"\n      ]\n    }\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Organization\": {\n      \"objects\": [\n        \"Recycling Facility Representative\",\n        \"Administrator\",\n        \"Join Request\",\n        \"Center Feedback\",\n        \"Drop-Off Suggestion\"\n      ]\n    },\n    \"Statistics\": {\n      \"objects\": [\n        \"Company\",\n        \"Recycling Data\",\n        \"Researcher\",\n        \"Company Partner\"\n      ]\n    },\n    \"Recycling\": {\n      \"objects\": [\n        \"Recycling Community Member\",\n        \"Personal Recycling Data\",\n        \"Drop-Off\",\n        \"Recycling Center\",\n        \"Drop-Off Site\",\n        \"Zip Code\",\n        \"Accepted Material Type\",\n        \"Opening Hours\",\n        \"User Visit Data\",\n        \"Center Staff\",\n        \"Center Equipment\",\n        \"Community Recycling Events\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

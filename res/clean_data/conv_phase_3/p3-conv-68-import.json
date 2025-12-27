@@ -1,7 +1,7 @@
 [
   {
     "role": "system",
-    "content": "You are a domain driven design (DDD) expert.\nYour task is to help the user step by step with creating domain models.\n\n### Here is the explanation of the workflow:\n1. The user will provide domain information.\n2. Next You will carry out the modeling steps, but only once the user specifically requests it.\n\n#### Modeling steps:\n1. You will extract domain objects and associations. \n2. You will group the objects by subdomains.\n3. In the last step you will define bounded contexts. "
+    "content": "You are a domain driven design (DDD) expert.\nYour task is to help the user step by step with creating domain models.\n\n### Here is the explanation of the workflow:\n1. The user will provide domain information.\n2. Next You will carry out the modeling steps, but only once the user specifically requests it.\n\n#### Modeling steps:\n1. Extracting domain objects\n2. Connections of domain objects using associations \n3. Grouping objects by subdomains\n4. Definition of bounded contexts "
   },
   {
     "role": "user",
@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Freight Logistics\": {\n      \"objects\": [\n        \"Logistics Coordinator\",\n        \"International Freight Booking\",\n        \"Carrier\",\n        \"Shipment\",\n        \"Arrival Update\"\n      ]\n    },\n    \"Reception\": {\n      \"objects\": [\n        \"Warehouse Receiver\",\n        \"Inventory\",\n        \"Shipment\"\n      ]\n    },\n    \"Compliance Evaluation\": {\n      \"objects\": [\n        \"Procurement Manager\",\n        \"Local Import Rules\",\n        \"Price Quote Request\",\n        \"Compliance Document\"\n      ]\n    },\n    \"Contracting\": {\n      \"objects\": [\n        \"Supplier\",\n        \"Buyer\",\n        \"Proforma Invoice\",\n        \"Product Cost\",\n        \"Shipping Terms\",\n        \"Delivery Expectation\",\n        \"Shipment Schedule\"\n      ]\n    },\n    \"Customs\": {\n      \"objects\": [\n        \"Customs Specialist\",\n        \"Customs Declaration\",\n        \"Code Check\",\n        \"Shipment\"\n      ]\n    }\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Freight Logistics\": {\n      \"objects\": [\n        \"Logistics Coordinator\",\n        \"International Freight Booking\",\n        \"Carrier\",\n        \"Shipment\",\n        \"Arrival Update\"\n      ]\n    },\n    \"Customs\": {\n      \"objects\": [\n        \"Customs Specialist\",\n        \"Customs Declaration\",\n        \"Code Check\",\n        \"Shipment\"\n      ]\n    },\n    \"Contracting\": {\n      \"objects\": [\n        \"Supplier\",\n        \"Buyer\",\n        \"Proforma Invoice\",\n        \"Product Cost\",\n        \"Shipping Terms\",\n        \"Delivery Expectation\",\n        \"Shipment Schedule\"\n      ]\n    },\n    \"Reception\": {\n      \"objects\": [\n        \"Warehouse Receiver\",\n        \"Inventory\",\n        \"Shipment\"\n      ]\n    },\n    \"Compliance Evaluation\": {\n      \"objects\": [\n        \"Procurement Manager\",\n        \"Local Import Rules\",\n        \"Price Quote Request\",\n        \"Compliance Document\"\n      ]\n    }\n  }\n}\n```"
   }
 ]
