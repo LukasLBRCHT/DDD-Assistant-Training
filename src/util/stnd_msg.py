@@ -15,15 +15,17 @@ Your task is to help the user step by step with creating domain models.
 4. Definition of bounded contexts """
 
 
-def user_turn_1():
-    return """Help me extract domain objects. Below I will provide domain information. 
+def user_turn_1(turn):
+    text = """Help me extract domain objects. Below I will provide domain information. 
 
 #### Data:
 This domain information covers the important domain events:
 ```json
 {}
 ```
-
+"""
+    if turn == 1:
+        text += """
 #### Task:
 - Identify the objects within this information. 
 - Summarize it's meaning in a short description. 
@@ -39,6 +41,7 @@ This domain information covers the important domain events:
   ]
 }}
 ```"""
+    return text
 
 
 def llm_turn_1():
@@ -48,15 +51,17 @@ def llm_turn_1():
 ```"""
 
 
-def user_turn_2():
-    return """Help me find the associations.  
+def user_turn_2(turn):
+    text = """Help me find the associations.  
 
 #### Data:
 These are the extracted domain objects and their associations:
 ```json
 {}
 ```
-
+"""
+    if turn == 1:
+        text += """
 #### Task:
 - Draw connections between objects that have an association. 
 - Name the two related objects and add a description that captures the meaning of the association.
@@ -72,6 +77,7 @@ These are the extracted domain objects and their associations:
   ]
 }}
 ```"""
+    return text
 
 
 def llm_turn_2():
@@ -81,15 +87,17 @@ def llm_turn_2():
 ```"""
 
 
-def user_turn_3():
-    return """Help me define subdomains. Below I will provide the current state of the domain. 
+def user_turn_3(turn):
+    text = """Help me define subdomains. Below I will provide the current state of the domain. 
 
 #### Data:
 These are the extracted domain objects and their associations:
 ```json
 {}
 ```
-
+"""
+    if turn == 1:
+        text += """
 #### Task:
 - Group these objects by domain concerns. 
 - Find a name for the subdomain then list the objects that belong to it. 
@@ -107,6 +115,7 @@ These are the extracted domain objects and their associations:
   }}
 }}
 ```"""
+    return text
 
 
 def llm_turn_3():
@@ -115,15 +124,18 @@ def llm_turn_3():
 {}
 ```"""
 
-def user_turn_4():
-    return """Help me define bounded contexts. Below I will provide domain information. 
+
+def user_turn_4(turn):
+    text = """Help me define bounded contexts. Below I will provide domain information. 
 
 #### Data:
 These are the extracted objects and the subdomain grouping:
 ```json
 {}
 ```
-
+"""
+    if turn == 1:
+        text += """
 #### Task:
 - Assign the subdomains to bounded contexts. 
 - Name the subdomain the bounded context might be derived from, it might also be multiple.
@@ -154,6 +166,7 @@ These are the extracted objects and the subdomain grouping:
   }}
 }}
 ```"""
+    return text
 
 
 def llm_turn_4():

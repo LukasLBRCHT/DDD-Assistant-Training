@@ -1,5 +1,7 @@
-from unsloth import FastLanguageModel
+from unsloth import FastLanguageModel, get_chat_template
+from unsloth.chat_templates import train_on_responses_only
 from Config import Config as Config
+from multiprocessing import freeze_support
 import time
 import torch
 from data_handling.data_preprocessor import DataPreprocessor
@@ -14,9 +16,14 @@ os.environ["UNSLOTH_VLLM_STANDBY"] = "1"  # [NEW] Extra 30% context lengths!
 
 def get_training_model(model_dir=Config.MODEL_3B_DIR):
     max_seq_length = 4096
-    lora_rank = 16
+    lora_rank = 32
 
     model, tokenizer = load_model_lora(model_dir, max_seq_length, lora_rank)
+
+    tokenizer = get_chat_template(
+        tokenizer,
+        chat_template="qwen-2.5",
+    )
 
     model = FastLanguageModel.get_peft_model(
         model,
@@ -34,18 +41,19 @@ def get_training_model(model_dir=Config.MODEL_3B_DIR):
     return model, tokenizer
 
 
-def configure_training_arguments(phase):
+def configure_training_arguments():
 
     run_name = input("Enter run-name:")
 
-    output_dir = f'../../adapters/finetuned_phase{phase}-{run_name}'
+    output_dir = f'../../adapters/{run_name}'
     # todo output dir anpassen
 
     lora_training_args = SFTConfig(
         output_dir=output_dir,
         per_device_train_batch_size=1,
         gradient_accumulation_steps=1,
-        num_train_epochs=1,
+        #num_train_epochs=4,
+        max_steps=2,
 
         #max_steps=100,
         learning_rate=2e-4,
@@ -56,39 +64,49 @@ def configure_training_arguments(phase):
         logging_steps=1,
         logging_first_step=True,
         logging_dir="../../res/training_logs",
+        report_to="tensorboard",
+        log_level="info",
 
-        save_steps=10,
-        save_total_limit=2,
+        save_strategy="epoch",
+        save_total_limit=3,
+
         weight_decay=0.01,
 
-        #eval_strategy="steps",
-        #eval_steps=25,
+        dataset_num_proc=1,
+
+        eval_strategy="steps",
+        eval_steps=20,
 
         fp16=False,
         bf16=True,
 
         lr_scheduler_type="cosine",
-        #gradient_checkpointing=False,  # important for Unsloth stability
+        # gradient_checkpointing=False,  # important for Unsloth stability
         optim="adamw_torch",
 
-        log_level="info",
-        report_to="none",
-
-        max_grad_norm=1.0, # todo hierüber informieren
+        max_grad_norm=1.0,  # todo hierüber informieren
 
         packing=False,  # use packing only if data is short
+        dataset_text_field="messages"
     )
 
     return lora_training_args
 
 
-def initialize_trainer(lora_model, tokenizer, train_args, train_data):
+def initialize_trainer(lora_model, tokenizer, train_args, train_data, eval_data):
     lora_trainer = SFTTrainer(
         model=lora_model,
         processing_class=tokenizer,
         train_dataset=train_data,
         eval_dataset=eval_data,
-        args=train_args,
+        args=train_args
+    )
+
+    lora_trainer = train_on_responses_only(
+        lora_trainer,
+        instruction_part="<|im_start|>user\n",
+        response_part="<|im_start|>assistant\n",
+        num_proc=1
     )
 
     return lora_trainer
@@ -99,23 +117,24 @@ if __name__ == "__main__":
     warnings.filterwarnings("ignore", message=".*UserWarning: Could not find a config file.*")
 
     # load model
-    model, tokenizer = get_training_model()
+    model, tokenizer = load_model_lora(Config.MODEL_3B_DIR, 4096, 32)
 
     preprocessor = DataPreprocessor(tokenizer, max_length=4096)
 
-    phase = 1
-
     md = Metadata()
     train_split, test_split = md.get_custom_split()
-    train_data, eval_data = preprocessor.load_data(train_split, test_split, phase)
+    train_data, eval_data, eval_data_list = preprocessor.load_data(train_split, test_split)
 
-    train_args = configure_training_arguments(phase)
-    lora_trainer = initialize_trainer(model, tokenizer, train_args, train_data)
+    train_args = configure_training_arguments()
+    lora_trainer = initialize_trainer(model, tokenizer, train_args, train_data, eval_data)
 
     print("Starting training...")
     lora_trainer.train()
     print("Training done!")
-    test_results = lora_trainer.evaluate(
-        eval_dataset=eval_data)  # provisorisch, Test-Daten sollten eigentlich separat sein
-    # lora_trainer.save_model()
-    print(f"Results:\n{test_results}")
+
+    #lora_trainer.save_model()
+    for data in eval_data_list:
+        test_results = lora_trainer.evaluate(
+            eval_dataset=data
+        )
+        print(f"Results:\n{test_results}")

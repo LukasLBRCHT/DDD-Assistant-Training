@@ -5,17 +5,26 @@ from Config import Config
 
 def load_model_basic(model_dir=Config.MODEL_3B_DIR):
 
-    model = AutoModelForCausalLM.from_pretrained(  # loading the model
+    model, tokenizer = FastLanguageModel.from_pretrained(  # loading the model
         model_dir,
         device_map="auto",
-        torch_dtype=torch.float16,
-    )
-    tokenizer = AutoTokenizer.from_pretrained(  # loading the tokenizer of the model
-        Config.MODEL_7B_awq_DIR
+        torch_dtype=torch.float16
     )
 
     return model, tokenizer
 
+def load_model_finetuned(model_dir=Config.MODEL_3B_DIR):
+
+    model, tokenizer = FastLanguageModel.from_pretrained(  # loading the model
+        model_dir,
+        device_map="auto",
+        dtype=torch.float16
+    )
+
+    FastLanguageModel.for_inference(model)
+    model.load_adapter(Config.Adapter)
+
+    return model, tokenizer
 
 def load_model_lora(model_dir, max_seq_length, lora_rank):
 
@@ -25,6 +34,20 @@ def load_model_lora(model_dir, max_seq_length, lora_rank):
         max_lora_rank=lora_rank,
         gpu_memory_utilization=0.8
     )
+
+    model = FastLanguageModel.get_peft_model(
+        model,
+        r=lora_rank,  # Choose any number > 0 ! Suggested 8, 16, 32, 64, 128
+        target_modules=[
+            "q_proj", "k_proj", "v_proj", "o_proj",
+            "gate_proj", "up_proj", "down_proj",
+        ],  # Remove QKVO if out of memory
+        lora_alpha=lora_rank * 2,
+        bias="none",
+        use_gradient_checkpointing="unsloth",  # Enable long context finetuning
+        random_state=3407,
+    )
+    #FastLanguageModel.for_training(model)
 
     return model, tokenizer
 

@@ -6,7 +6,7 @@ from Config import Config as Config
 import textwrap
 from Agent.conversation_history import Conversation_History
 from Agent.task_history import Task_History
-from util.llm_util import load_model_basic
+from util.llm_util import load_model_basic, load_model_finetuned
 
 local_dir = "../../models/qwen2.5-3b-awq/base"
 model_name = "Qwen/Qwen2.5-7B-Instruct-AWQ"
@@ -47,10 +47,13 @@ def get_prompt():
 
     while True:  # input ends with two returns
         line = input()
-        if line:
-            prompt += line
-        else:
+
+        if line == ".":
             break
+
+        prompt += line
+
+
 
     return prompt
 
@@ -59,7 +62,7 @@ if __name__ == "__main__":
     warnings.filterwarnings("ignore")
 
     # load model
-    model, tokenizer = load_model_basic()
+    model, tokenizer = load_model_finetuned()
 
     history = Conversation_History()
     task_state = Task_History()
