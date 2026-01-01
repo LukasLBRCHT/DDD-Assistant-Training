@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Consulting\": {\n      \"objects\": [\n        \"Consultant\",\n        \"Proposal\",\n        \"Engagement Plan\",\n        \"Feedback\",\n        \"Progress Report\"\n      ]\n    },\n    \"Analysis\": {\n      \"objects\": [\n        \"Reporter\",\n        \"Data Report\",\n        \"Analysis Session\",\n        \"Consultant\"\n      ]\n    },\n    \"Client Business\": {\n      \"objects\": [\n        \"Client\",\n        \"Organization\",\n        \"Follow Up Meeting\"\n      ]\n    },\n    \"Supervision\": {\n      \"objects\": [\n        \"Manager\",\n        \"Consulting Project\"\n      ]\n    }\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Consulting\": {\n      \"objects\": [\n        \"Consultant\",\n        \"Proposal\",\n        \"Engagement Plan\",\n        \"Feedback\",\n        \"Progress Report\"\n      ]\n    },\n    \"Client Business\": {\n      \"objects\": [\n        \"Client\",\n        \"Organization\",\n        \"Follow Up Meeting\"\n      ]\n    },\n    \"Analysis\": {\n      \"objects\": [\n        \"Reporter\",\n        \"Data Report\",\n        \"Analysis Session\",\n        \"Consultant\"\n      ]\n    },\n    \"Supervision\": {\n      \"objects\": [\n        \"Manager\",\n        \"Consulting Project\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

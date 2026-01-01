@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Distribution\": {\n      \"objects\": [\n        \"Delivery Carrier\",\n        \"Customer\",\n        \"Route\",\n        \"Receipt Confirmation\"\n      ]\n    },\n    \"Mail Organisation\": {\n      \"objects\": [\n        \"Sorting Officer\",\n        \"Delivery Batch\",\n        \"Mail\",\n        \"Location\"\n      ]\n    },\n    \"Shipping\": {\n      \"objects\": [\n        \"Customer\",\n        \"Postal Clerk\",\n        \"Package\",\n        \"Receipt\",\n        \"Weight\",\n        \"Postage\",\n        \"Shipping Form\"\n      ]\n    }\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Distribution\": {\n      \"objects\": [\n        \"Delivery Carrier\",\n        \"Customer\",\n        \"Route\",\n        \"Receipt Confirmation\"\n      ]\n    },\n    \"Shipping\": {\n      \"objects\": [\n        \"Customer\",\n        \"Postal Clerk\",\n        \"Package\",\n        \"Receipt\",\n        \"Weight\",\n        \"Postage\",\n        \"Shipping Form\"\n      ]\n    },\n    \"Mail Organisation\": {\n      \"objects\": [\n        \"Sorting Officer\",\n        \"Delivery Batch\",\n        \"Mail\",\n        \"Location\"\n      ]\n    }\n  }\n}\n```"
   }
 ]
