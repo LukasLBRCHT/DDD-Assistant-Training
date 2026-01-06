@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Consulting\": {\n      \"objects\": [\n        \"Sales Consultant\",\n        \"Customer\",\n        \"Vehicle\",\n        \"Test Drive\",\n        \"Feedback\"\n      ]\n    },\n    \"Inventory Keeping\": {\n      \"objects\": [\n        \"Inventory Manager\",\n        \"Vehicle\",\n        \"Manufacturing Order\",\n        \"Manufacturer\"\n      ]\n    },\n    \"Finances\": {\n      \"objects\": [\n        \"Customer\",\n        \"Finance Officer\",\n        \"Car Purchase\",\n        \"Financing Option\",\n        \"Lease Agreement\",\n        \"Credit Application\"\n      ]\n    }\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Inventory Keeping\": {\n      \"objects\": [\n        \"Inventory Manager\",\n        \"Vehicle\",\n        \"Manufacturing Order\",\n        \"Manufacturer\"\n      ]\n    },\n    \"Consulting\": {\n      \"objects\": [\n        \"Sales Consultant\",\n        \"Customer\",\n        \"Vehicle\",\n        \"Test Drive\",\n        \"Feedback\"\n      ]\n    },\n    \"Finances\": {\n      \"objects\": [\n        \"Customer\",\n        \"Finance Officer\",\n        \"Car Purchase\",\n        \"Financing Option\",\n        \"Lease Agreement\",\n        \"Credit Application\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

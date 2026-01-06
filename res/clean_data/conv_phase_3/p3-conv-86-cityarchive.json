@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Archiving\": {\n      \"objects\": [\n        \"Archivist\",\n        \"Document\",\n        \"Metadata\",\n        \"Collection\",\n        \"Records Manager\",\n        \"Municipal Record\",\n        \"Digital Archive\"\n      ]\n    },\n    \"Researching\": {\n      \"objects\": [\n        \"Citizen\",\n        \"Research Assistant\",\n        \"Public Services Officer\",\n        \"Copy\",\n        \"Access Request\",\n        \"Document Request\",\n        \"Citizen Inquiry\"\n      ]\n    }\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Researching\": {\n      \"objects\": [\n        \"Citizen\",\n        \"Research Assistant\",\n        \"Public Services Officer\",\n        \"Copy\",\n        \"Access Request\",\n        \"Document Request\",\n        \"Citizen Inquiry\"\n      ]\n    },\n    \"Archiving\": {\n      \"objects\": [\n        \"Archivist\",\n        \"Document\",\n        \"Metadata\",\n        \"Collection\",\n        \"Records Manager\",\n        \"Municipal Record\",\n        \"Digital Archive\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

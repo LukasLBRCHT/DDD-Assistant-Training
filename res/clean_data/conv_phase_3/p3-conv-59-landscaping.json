@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Client Request\": {\n      \"objects\": [\n        \"Client\",\n        \"Landscaping Request\",\n        \"Property Details\"\n      ]\n    },\n    \"Supplies\": {\n      \"objects\": [\n        \"Supply Manager\",\n        \"Supply Shortage Report\",\n        \"Inventory\",\n        \"Material\",\n        \"Supply Order\",\n        \"Supplier\",\n        \"Supply Delivery\"\n      ]\n    },\n    \"Service\": {\n      \"objects\": [\n        \"Landscape Designer\",\n        \"Crew Member\",\n        \"Design Concept\",\n        \"Project Plan\",\n        \"Material\",\n        \"Task\",\n        \"Landscaping Review\"\n      ]\n    }\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Service\": {\n      \"objects\": [\n        \"Landscape Designer\",\n        \"Crew Member\",\n        \"Design Concept\",\n        \"Project Plan\",\n        \"Material\",\n        \"Task\",\n        \"Landscaping Review\"\n      ]\n    },\n    \"Client Request\": {\n      \"objects\": [\n        \"Client\",\n        \"Landscaping Request\",\n        \"Property Details\"\n      ]\n    },\n    \"Supplies\": {\n      \"objects\": [\n        \"Supply Manager\",\n        \"Supply Shortage Report\",\n        \"Inventory\",\n        \"Material\",\n        \"Supply Order\",\n        \"Supplier\",\n        \"Supply Delivery\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

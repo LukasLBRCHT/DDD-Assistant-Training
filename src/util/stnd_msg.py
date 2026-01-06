@@ -129,6 +129,7 @@ These are the extracted objects and the subdomain grouping:
 - Assign the subdomains to bounded contexts. 
 - Name the subdomain the bounded context might be derived from, it might also be multiple.
 - In case an object appears in multiple bounded contexts, suggest a name change.
+- Also suggest a name change if the meaning of the object is too similar to an object from another bounded context
 - Return the bounded contexts in json format. Here is an example for structuring the data:
 ```json
 {{

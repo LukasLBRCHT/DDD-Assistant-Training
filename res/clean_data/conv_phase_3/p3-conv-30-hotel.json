@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Reception\": {\n      \"objects\": [\n        \"Receptionist\",\n        \"Booking\",\n        \"Room\",\n        \"Check In\",\n        \"Check Out\"\n      ]\n    },\n    \"Housekeeping\": {\n      \"objects\": [\n        \"Housekeeping Supervisor\",\n        \"Cleaning Schedule\",\n        \"Cleaner\",\n        \"Room\",\n        \"Completion Status\",\n        \"Issue Report\"\n      ]\n    },\n    \"Booking\": {\n      \"objects\": [\n        \"Guest\",\n        \"Booking\",\n        \"Room\",\n        \"Duration\",\n        \"Service Request\",\n        \"Feedback\"\n      ]\n    }\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Reception\": {\n      \"objects\": [\n        \"Receptionist\",\n        \"Booking\",\n        \"Room\",\n        \"Check In\",\n        \"Check Out\"\n      ]\n    },\n    \"Booking\": {\n      \"objects\": [\n        \"Guest\",\n        \"Booking\",\n        \"Room\",\n        \"Duration\",\n        \"Service Request\",\n        \"Feedback\"\n      ]\n    },\n    \"Housekeeping\": {\n      \"objects\": [\n        \"Housekeeping Supervisor\",\n        \"Cleaning Schedule\",\n        \"Cleaner\",\n        \"Room\",\n        \"Completion Status\",\n        \"Issue Report\"\n      ]\n    }\n  }\n}\n```"
   }
 ]

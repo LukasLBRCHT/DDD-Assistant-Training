@@ -9,6 +9,6 @@
   },
   {
     "role": "assistant",
-    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Customer Requests\": {\n      \"objects\": [\n        \"Pet Owner\",\n        \"Pet Care Request\",\n        \"Pet\",\n        \"Time Period\",\n        \"Care Instructions\",\n        \"Payment\"\n      ]\n    },\n    \"Pet Care\": {\n      \"objects\": [\n        \"Pet Sitter\",\n        \"Care Report\",\n        \"Update Log\",\n        \"Pet Care Request\"\n      ]\n    },\n    \"Organisation\": {\n      \"objects\": [\n        \"Coordinator\",\n        \"Pet Sitter\",\n        \"Schedule Coordination\",\n        \"Booking\",\n        \"Pet Care Request\"\n      ]\n    }\n  }\n}\n```"
+    "content": "Here are the subdomains:\n```json\n{\n  \"subdomains\": {\n    \"Organisation\": {\n      \"objects\": [\n        \"Coordinator\",\n        \"Pet Sitter\",\n        \"Schedule Coordination\",\n        \"Booking\",\n        \"Pet Care Request\"\n      ]\n    },\n    \"Customer Requests\": {\n      \"objects\": [\n        \"Pet Owner\",\n        \"Pet Care Request\",\n        \"Pet\",\n        \"Time Period\",\n        \"Care Instructions\",\n        \"Payment\"\n      ]\n    },\n    \"Pet Care\": {\n      \"objects\": [\n        \"Pet Sitter\",\n        \"Care Report\",\n        \"Update Log\",\n        \"Pet Care Request\"\n      ]\n    }\n  }\n}\n```"
   }
 ]
