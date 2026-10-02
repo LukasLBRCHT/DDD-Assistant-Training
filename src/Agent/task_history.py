@@ -10,9 +10,12 @@ class Task_History():
     def __init__(self):
         self.tasks = dict()
 
+    """
+    The task history is updated by analyzing an input-string 'entry', which is supposed to be an llm-answer
+    """
     def update(self, entry):
 
-        json_matches = parse_json(entry)
+        json_matches = parse_json(entry)  # retrieve information about subtask contained in llm answer
         if len(json_matches) == 0:
             return
 

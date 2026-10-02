@@ -7,8 +7,6 @@ import os
 import random
 from util import stnd_msg
 
-# from sample_splitter import split_conversations
-
 task_data_dir = "../../res/task_data"
 clean_data_dir = "../../res/clean_data/conversations"
 
@@ -17,7 +15,6 @@ class SampleAssembler:
 
     def assemble_training_samples(self):
 
-        step = 0
 
         for file in os.scandir(task_data_dir):
             with open(file, 'r') as f:
@@ -25,15 +22,13 @@ class SampleAssembler:
                 input_data_for_conversation = f.read()
                 conv = Conversation(input_data_for_conversation)
 
-                turn = step % 2
 
-                conv.build_conversation(turn)
+                conv.build_conversation()
 
                 # save training data sample
 
                 conv.save(file.name.removesuffix(".json"))
 
-                step += 1
 
     def get_conv_metadata(self):
 
@@ -138,21 +133,21 @@ class Conversation:
         self.user_msgs = []
         self.llm_msgs = []
 
-    def build_conversation(self, turn):
+    def build_conversation(self):
 
         # build all messages and add them to the list
         system_message = self.build_message("system", stnd_msg.sys_msg(), do_format=False)
         self.messages.append(system_message)
 
         # turn 1
-        user_message_1 = self.build_message("user", stnd_msg.user_turn_1(turn), content=self.user_stories)
+        user_message_1 = self.build_message("user", stnd_msg.user_turn_1(), content=self.user_stories)
         self.messages.append(user_message_1)
         assistant_message_1 = self.build_message("assistant", stnd_msg.llm_turn_1(),
                                                  content=self.domain_objects)
         self.messages.append(assistant_message_1)
 
         # turn 2
-        user_message_2 = self.build_message("user", stnd_msg.user_turn_2(turn), content=self.domain_objects)
+        user_message_2 = self.build_message("user", stnd_msg.user_turn_2(), content=self.domain_objects)
         self.messages.append(user_message_2)
         assistant_message_2 = self.build_message("assistant", stnd_msg.llm_turn_2(),
                                                  content=self.associations)
@@ -162,7 +157,7 @@ class Conversation:
 
         base_content = [self.domain_objects, self.associations]
 
-        user_message_3 = self.build_message("user", stnd_msg.user_turn_3(turn), content=base_content)
+        user_message_3 = self.build_message("user", stnd_msg.user_turn_3(), content=base_content)
         self.messages.append(user_message_3)
         assistant_message_3 = self.build_message("assistant", stnd_msg.llm_turn_3(),
                                                  content=self.subdomains)
@@ -172,7 +167,7 @@ class Conversation:
 
         base_content = [self.domain_objects, self.subdomains]
 
-        user_message_4 = self.build_message("user", stnd_msg.user_turn_4(turn), content=base_content)
+        user_message_4 = self.build_message("user", stnd_msg.user_turn_4(), content=base_content)
         self.messages.append(user_message_4)
         assistant_message_4 = self.build_message("assistant", stnd_msg.llm_turn_4(),
                                                  content=self.bounded_contexts)
@@ -255,6 +250,9 @@ class Conversation:
 
         return msg
 
+    """
+    Conversations are saved to given directory.
+    """
     def save(self, name):
 
         conversation = self.messages
@@ -266,14 +264,10 @@ class Conversation:
     def json_format(self):
 
         messages_in_json = ""
-        # for message in self.messages:
-        #     messages_in_json += '\n    ' + message + ","
 
         messages_in_json = messages_in_json.removesuffix(",")
 
-        conv_in_json = f"""{{
-  "messages": {json.dumps(self.messages, indent=2)}
-  }}"""
+        conv_in_json = f"""{{"messages": {json.dumps(self.messages, indent=2)}}}"""
 
         return conv_in_json
 
@@ -282,4 +276,3 @@ if __name__ == "__main__":
     assembler = SampleAssembler()
     assembler.assemble_training_samples()
 
-    # split_conversations()

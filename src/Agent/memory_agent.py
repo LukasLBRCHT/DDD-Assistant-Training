@@ -1,12 +1,10 @@
 import warnings
 
-from transformers import AutoModelForCausalLM, AutoTokenizer
-import torch
 from Config import Config as Config
 import textwrap
 from Agent.conversation_history import Conversation_History
 from Agent.task_history import Task_History
-from util.llm_util import load_model_basic, load_model_finetuned
+from util.llm_util import load_model_finetuned
 
 local_dir = "../../models/qwen2.5-3b-awq/base"
 model_name = "Qwen/Qwen2.5-7B-Instruct-AWQ"
@@ -69,13 +67,6 @@ if __name__ == "__main__":
 
     messages = []
 
-    # first_message = {"role": "system", "content": "You are DDD-Agent. Your main task is to be an assistant that helps "
-    #                                               "with domain modeling according to Domain Driven Design. (Your workflow is "
-    #                                               "1. Identify domain objects (Entities, Value Ojects, Associations)"
-    #                                               "2. Define Subdomains by assigning each object to a specific Subdomain"
-    #                                               "3. Assign the subdomains to Bounded Context and then define their associations"
-    #                                               "via Context Mapping.)"
-    #                                              "Introduce yourself to the user first."}
     first_message = [{"role": "system", "content": Config.SYS_TEST_PROMPT}]
 
     response = generate_answer(model, tokenizer, first_message)
@@ -99,7 +90,6 @@ if __name__ == "__main__":
         """
 
         message = [{"role": "user", "content": prompt_with_history}]
-        #print(f"whole prompt: {prompt_with_history}")
         print("... processing ...")
         response = generate_answer(model, tokenizer, message)
         printResponse(response)
@@ -108,6 +98,5 @@ if __name__ == "__main__":
         history.add_conversation_prompt(response, "assistant")
         task_state.update(prompt)
         task_state.update(response)
-        # print(f"\n\ntask-state:{task_state.compress()}\n\n")
 
     print("Assistant: Bye.")

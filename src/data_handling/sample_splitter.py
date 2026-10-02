@@ -5,7 +5,6 @@ It extracts the task data and inputs it into example messages.
 import json
 import os
 from Config import Config
-from conversation_assembler import SampleAssembler, Conversation, Message
 
 
 def phase_1_split(conv, name):

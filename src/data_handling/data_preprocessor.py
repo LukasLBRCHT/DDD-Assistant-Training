@@ -52,6 +52,6 @@ class DataPreprocessor:
 
                 data.append({"messages": full_text})
 
-        print(f"\nmax token length: {max(token_lengths)}\navg token length: {sum(token_lengths) / len(token_lengths)}\nnum samples: {len(token_lengths)}")
+        #print(f"\nmax token length: {max(token_lengths)}\navg token length: {sum(token_lengths) / len(token_lengths)}\nnum samples: {len(token_lengths)}")
 
         return data

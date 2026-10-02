@@ -2,10 +2,8 @@ MODEL_3B_awq_DIR = "../../models/qwen2.5-3b-awq/base"
 MODEL_7B_awq_DIR = "../../models/qwen2.5-7b-awq/base"
 MODEL_3B_DIR = "../../models/qwen2.5-3b"
 MODEL_7B_NAME = "Qwen/Qwen2.5-7B-Instruct-AWQ"
-Phase_1_Data_Dir = "../../res/chunked_data/phase_1"
-Phase_2_Data_Dir = "../../res/chunked_data/phase_2"
-Phase_3_Data_Dir = "../../res/chunked_data/phase_3"
-Phase_4_Data_Dir = "../../res/chunked_data/phase_4"
+
+Phase_Data_Dir_temp = "../../res/clean_data/conv_phase_"
 
 Phase_1_Whole = "../../res/clean_data/conv_phase_1"
 Phase_2_Whole = "../../res/clean_data/conv_phase_2"
@@ -19,3 +17,5 @@ Chat_End_Token = "<|im_end|>"
 test_dir = "../../models/qwen2.5-7b-awq"
 SYS_TEST_PROMPT = ("Your name is 'Abooga'. Your task is to be a helpful LLM-Agent who follows the users instructions. "
                    "Introduce yourself to the user.")
+
+Adapter = "../../adapters/ddd_adapter_0601/checkpoint-320"
