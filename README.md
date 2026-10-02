@@ -10,23 +10,65 @@ to ensure compliance with domain structures. **Bounded Contexts** are used to su
 ensure each object is modeled correctly.
 
 To make DDD more accessible and provide a possibility to facilitate the domain modeling process, I have 
-devised to assess the use of a **Large Language Model** via **Fine-Tuning** for this purpose. The task of the LLM is to create
+devised to assess the use of a **Large Language Model** via **local Fine-Tuning** for this purpose. The task of the LLM is to create
 domain models and divide them into subdomains. One central requirement is the identification of duplicate 
 objects across subdomains that therefore need to be addressed in Bounded Contexts.
 
 ___
--
-## Set-Up
-hier vll. tech-stack... Installation
 
+## Setup 
+
+### Prerequisites
+- Conda/Miniconda installed
+- CUDA-capable GPU (tested on RTX 3060, 12GB VRAM)
+  - CUDA UMD Version: 13.3
+- Python 3.11.14 (as specified in `unsloth-env.yml`)
+
+
+### 1. Clone and set up environment
+```console
+conda env create -f unsloth-env.yml
+conda activate unsloth_env
+```
+
+### 2. Download the base model
+Download [Qwen2.5-3B-Instruct](https://huggingface.co/Qwen/Qwen2.5-3B-Instruct), set target directory to `<project-directory-root>/models/qwen2.5-3b`
+
+### 3. Run training
+```console
+cd src/training
+python trainer.py
+```
+Training takes approximately 1.5 h on the tested hardware. Checkpoints are saved to `/adapters`.
 ___
--
+
 
 ## Fine-Tuning Specification
-... Hyperparameter, Trainins-Ansatz, Ablauf, was für Daten
+To account for limited hardware, a parameter-efficient fine-tuninng was conducted.
+By utilizing Low-Rank Adaptation the number of trainable parameters was reduced.
+Additionally, the application of the **unsloth**-framework lowered VRAM requirements.
+
+### Hyperparameters
+
+| Hyperparameter       | Value              |
+|----------------------|--------------------|
+| trainable parameters | 59,867,136 (1.90%) |
+| number of samples    | 400                |
+| precision            | bf16               |
+| total steps          | 480                |
+| Learning-Rate        | 2e-4               |
+| LoRA-Rank            | 32                 |
+| LoRA-Alpha           | 64                 |
+
+
+### Training data acquisition
+Most of the domain information the training data was based on was generated with the help of generative AI.
+The domain objects as well as the other concepts were modeled manually. `/res/task_data` contains the data 
+for each modeling step. `/res/clean_data` contains ready-for-training
+samples in the form of example conversations, which contain the task data.
 
 ___
--
+
 
 ## Evaluation
 
