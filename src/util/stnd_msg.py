@@ -9,9 +9,10 @@ Your task is to help the user step by step with creating domain models.
 2. Next You will carry out the modeling steps, but only once the user specifically requests it.
 
 #### Modeling steps:
-1. You will extract domain objects and associations. 
-2. You will group the objects by subdomains.
-3. In the last step you will define bounded contexts. """
+1. Extracting domain objects
+2. Connections of domain objects using associations 
+3. Grouping objects by subdomains
+4. Definition of bounded contexts """
 
 
 def user_turn_1():
@@ -49,10 +50,16 @@ def llm_turn_1():
 
 def user_turn_2():
     return """Help me find the associations.  
+
+#### Data:
+These are the extracted domain objects and their associations:
+```json
 {}
+```
+
 #### Task:
 - Draw connections between objects that have an association. 
-- Name each object and add a description that captures the meaning of the association.
+- Name the two related objects and add a description that captures the meaning of the association.
 - Return the associations in json format. Here is an example for structuring the data:
 ```json
 {{
@@ -108,6 +115,7 @@ def llm_turn_3():
 {}
 ```"""
 
+
 def user_turn_4():
     return """Help me define bounded contexts. Below I will provide domain information. 
 
@@ -120,7 +128,8 @@ These are the extracted objects and the subdomain grouping:
 #### Task:
 - Assign the subdomains to bounded contexts. 
 - Name the subdomain the bounded context might be derived from, it might also be multiple.
-- Identify cases, where an object does not have a unified meaning across all bounded contexts and suggest a name change.
+- In case an object appears in multiple bounded contexts, suggest a name change.
+- Also suggest a name change if the meaning of the object is too similar to an object from another bounded context
 - Return the bounded contexts in json format. Here is an example for structuring the data:
 ```json
 {{

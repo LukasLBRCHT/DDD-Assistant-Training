@@ -1,67 +1,57 @@
-import os
-
 from datasets import Dataset
 
 from Config import Config as Config
 import json
-import torch
+
 
 class DataPreprocessor:
-    def __init__(self, tokenizer):
+    def __init__(self, tokenizer, max_length=512):
         self.tokenizer = tokenizer
+        self.max_length = max_length
 
-    def load_data(self, order):
+    def load_data(self, train_order, test_order):
 
-        sorted_data = Dataset.from_dict(self.extract_from_json(order))
-        dataset = Dataset.from_dict({
-            "input_ids": [torch.tensor(ids, dtype=torch.long) for ids in sorted_data["input_ids"]],
-            "attention_mask": [torch.tensor(mask, dtype=torch.long) for mask in sorted_data["attention_mask"]],
-            "labels": [torch.tensor(labels, dtype=torch.long) for labels in sorted_data["labels"]]
-        })
+        train_data = self.extract_conversations(train_order)
+        train_dataset = Dataset.from_list(train_data)
 
-        split = dataset.train_test_split(train_size=0.8, shuffle=False)
-        return split["train"], split["test"]
+        test_data = self.extract_conversations(test_order)
+        test_dataset = Dataset.from_list(test_data)
 
-    def extract_from_json(self, order):
+        test_dataset_list = []
 
-        directory = Config.Conversation_Data_Dir
-        all_input_ids = []
-        all_labels = []
-        all_attention_masks = []
+        for phase_idx in range(4):
+            part = test_dataset.select(range(phase_idx, len(test_dataset), 4))
+            test_dataset_list.append(part)
+
+        return train_dataset, test_dataset, test_dataset_list
+
+    def extract_conversations(self, order):
+
+        directory = Config.Phase_Data_Dir_temp
+
+        data = []
+
+        token_lengths = []
 
         for domain in order:
-            with open(f"{directory}/conv-{domain.file.name}") as f:
-                json_data = json.load(f)
 
-                # Step 1: build full chat text
-                text = self.tokenizer.apply_chat_template(
+            for phase in range(1, 5):
+                with open(f"{directory}{phase}/p{phase}-conv-{domain.file.name}") as f:
+                    json_data = json.load(f)
+
+                full_text = self.tokenizer.apply_chat_template(
                     json_data,
                     tokenize=False,
                     add_generation_prompt=False
                 )
 
-                # Step 2: tokenize into dict with input_ids + mask
-                tokens = self.tokenizer(text, return_tensors=None)
-                ids = tokens["input_ids"]
-                mask = tokens["attention_mask"]
+                token_length = len(
+                    self.tokenizer(full_text, add_special_tokens=False)["input_ids"]
+                )
+                token_lengths.append(token_length)
 
-                # Step 3: build labels (mask user/system with -100, keep assistant tokens)
-                labels = [-100] * len(ids)  # init all ignored
-                pos = 0
-                for msg in json_data:
-                    msg_txt = self.tokenizer.apply_chat_template([msg], tokenize=False)
-                    msg_ids = self.tokenizer(msg_txt, add_special_tokens=False)["input_ids"]
+                data.append({"messages": full_text})
 
-                    if msg["role"] == "assistant":
-                        labels[pos:pos + len(msg_ids)] = msg_ids  # replace only assistant spans
-                    pos += len(msg_ids)
+        #print(f"\nmax token length: {max(token_lengths)}\navg token length: {sum(token_lengths) / len(token_lengths)}\nnum samples: {len(token_lengths)}")
 
-                all_input_ids.append(ids)
-                all_labels.append(labels)
-                all_attention_masks.append(mask)
-
-        return {
-            "input_ids": all_input_ids,
-            "attention_mask": all_attention_masks,
-            "labels": all_labels
-        }
+        return data

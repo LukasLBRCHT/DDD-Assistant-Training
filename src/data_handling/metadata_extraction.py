@@ -1,12 +1,14 @@
 import json
-import math
 import os
+import random
+
 from Config import Config
 
 data = ["Stories", "Objects", "Associations", "Subdomains", "Bounded Contexts", "Name Changes"]
 
 
 def remove_remaining(current, other):
+
     for d in current:
         if d in other:
             other.remove(d)
@@ -16,19 +18,27 @@ def remove_remaining(current, other):
 
 class Metadata:
     counts = {"Stories": [], "Objects": [], "Associations": [], "Subdomains": [], "Bounded Contexts": [],
-              "Name Changes": []}
+              "Name Changes": []}  # collects the counts of building blocks from all domains
     domains = []
 
-    def collect(self):
+    """
+    The domain-files are iterated, creating domain instances whose data are accumulated.
+    """
+    def collect(self, do_print=False):
+
         for file in os.scandir(Config.Task_Data_Dir):
-            domain = Domain(file)
+            domain = Domain(file)  # creating domain instance
             self.domains.append(domain)
-            domain.get_metadata()
+            domain.get_metadata()  # retrieving data from json
 
-            self.update_data(domain)
+            self.update_data(domain)  # adding data of the current domain to global data (counts dict)
 
-        self.extract_global_metadata()
+        if do_print:
+            self.extract_global_metadata()  # print final result of all domain data
 
+    """
+    The counts of one domain are added to global data list.
+    """
     def update_data(self, domain):
 
         self.counts["Stories"].append(domain.story_count)
@@ -38,6 +48,9 @@ class Metadata:
         self.counts["Bounded Contexts"].append(domain.bounded_context_count)
         self.counts["Name Changes"].append(domain.name_change_count)
 
+    """
+    Display key statistics of the given domains.
+    """
     def extract_global_metadata(self):
 
         for key in self.counts.keys():
@@ -47,28 +60,39 @@ class Metadata:
             print(f"Greatest amount: {max(list_of_counts)}")
             print(f"Average amount: {sum(list_of_counts) / len(list_of_counts)}\n")
 
-    def get_custom_order(self):
+    """
+    To take into account certain edge cases in example domains (e.g. merged bounded contexts) a custom order is prepared
+    so that each edge case is represented in the training data and evaluation data relatively to the split
+    """
+    def get_custom_split(self):
 
-        print("...preparing custom order...")
+        print("...preparing custom split...")
+
+        train = []
+        test = []
 
         self.collect()
 
-        ten_biggest = sorted(self.domains, key=lambda domain: domain.story_count)
-        ten_biggest = ten_biggest[len(ten_biggest) - 10:len(ten_biggest)]
+        all_domains = self.domains.copy()
+        first_domain = all_domains.pop(0)
+        train.append(first_domain)
+        random.seed(2016)
+        random.shuffle(all_domains)
 
-        merged_bcs = list(filter(lambda domain: domain.subdomain_count > domain.bounded_context_count, self.domains))
+        # first edge case: merged bounded contexts
+        merged_bcs = list(filter(lambda domain: domain.subdomain_count > domain.bounded_context_count, all_domains))
 
-        split_bcs = list(filter(lambda domain: domain.subdomain_count < domain.bounded_context_count, self.domains))
+        # second edge case: split bounded contexts
+        split_bcs = list(filter(lambda domain: domain.subdomain_count < domain.bounded_context_count, all_domains))
 
+        # third edge case: bounded contexts with only few name changes
         little_name_changes = list(
-            filter(lambda domain: domain.name_change_count == 0 or domain.name_change_count == 1, self.domains))
+            filter(lambda domain: domain.name_change_count == 0 or domain.name_change_count == 1, all_domains))
 
+        # fourth edge case: generic domains (that are relatively similar to each other)
         generic_domains = self.domains[91:] + [self.domains[10]]
 
-        all_domains = self.domains.copy()
-        distinct_lists = [split_bcs, merged_bcs, little_name_changes, generic_domains, ten_biggest, all_domains]
-        train = []
-        test = []
+        distinct_lists = [split_bcs, merged_bcs, little_name_changes, generic_domains, all_domains]
 
         for x in range(0, len(distinct_lists)):
 
@@ -86,10 +110,17 @@ class Metadata:
             if x == 2:
                 test.append(train.pop())  # a small correction to get a clean 80|20 split
 
-        print("custom order successful")
+        print("custom split successful")
 
-        return train + test
+        return train, test
 
+
+"""
+The Domain class is an abstraction of an example domain discussed in an example conversation.
+It counts the amount of each ddd building block.
+This is done in order to be able to create a custom order that also features examples with 
+edge cases (such as bounded-context merges).
+"""
 
 class Domain:
     story_count = 0
@@ -102,27 +133,34 @@ class Domain:
     def __init__(self, file):
         self.file = file
 
+    """
+    The given file is examined to determine the amount for each building block by parsing the json data.
+    """
     def get_metadata(self):
         with open(self.file, "r") as domain_data:
             json_data = json.loads(domain_data.read())
-            
+
             self.object_format_check(json_data["domain objects"])
             self.association_format_check(json_data["associations"])
             self.subdomain_format_check(json_data["subdomains"])
             self.bounded_context_format_check(json_data["bounded contexts"])
 
+            # for flat structures the count is equal to the amount of json entries
             self.story_count = len(json_data["domain-information"])
             self.object_count = len(json_data["domain objects"])
             self.association_count = len(json_data["associations"])
             self.subdomain_count = len(json_data["subdomains"]) - 1
             self.bounded_context_count = len(json_data["bounded contexts"])
 
+            # bounded contexts are nested structures, hence they have to be examined individually to retrieve the data
             bounded_context_list = json_data["bounded contexts"]
-
             for bc in bounded_context_list:
                 self.name_change_count += len(bounded_context_list[bc]["name changes"])
 
-
+    """
+    Since each building block is represented in a different way, they need a separate method to ensure the correct 
+    format. 
+    """
     def object_format_check(self, objects):
 
         error = ""
@@ -143,7 +181,6 @@ class Domain:
 
         if error:
             print(f"Object format error in {self.file}")
-
 
     def association_format_check(self, associations):
 
@@ -169,10 +206,10 @@ class Domain:
         error = False
 
         keys = list(subdomains.keys())
-        if keys[len(keys)-1] != 'subdomain connections':
+        if keys[len(keys) - 1] != 'subdomain connections':
             error = True
 
-        for sd in keys[:len(keys)-1]:
+        for sd in keys[:len(keys) - 1]:
 
             if sd.islower():
                 error = True
@@ -217,7 +254,24 @@ class Domain:
         if error:
             print(f"Bounded Context format error in {self.file}")
 
+    """
+    Helper method to sort the domains by their given number.
+    """
+    def __lt__(self, other):
+        if not isinstance(other, Domain):
+            return NotImplemented
 
+        own_number = int(self.file.name.split("-")[0])
+        other_number = int(other.file.name.split("-")[0])
+
+        return own_number < other_number
+
+
+"""
+This script can return some key statistics across all domains (see extract_global_metadata)
+"""
 if __name__ == "__main__":
     md = Metadata()
-    md.get_custom_order()
+    train_order, test_order = md.get_custom_split()
+
+    md.collect(do_print=True)
