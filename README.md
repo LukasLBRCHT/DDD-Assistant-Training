@@ -1,7 +1,10 @@
 # Research: Adaptation of a Large Language Model for domain modeling with Bounded Contexts
-___
 
-Setup
+## Contents
+- [Introduction](#introduction)
+- [Setup](#setup)
+- [Fine-Tuning Specification](#fine-tuning-specification)
+- [Evaluation](#evaluation)
 
 ## Introduction
 A thorough requirements analysis forms the basis for a precise application of technical solutions. 
@@ -42,7 +45,7 @@ conda activate unsloth_env
 ### 2. Download the base model
 Download [Qwen2.5-3B-Instruct](https://huggingface.co/Qwen/Qwen2.5-3B-Instruct), and place in following directory: `<project-directory-root>/models/qwen2.5-3b`
 
-Expected contents: `config.json`, `tokenizer.json`, model weights (`.safetensors`), etc..
+Expected contents: `config.json`, `tokenizer.json`, model weights (`.safetensors`), etc.
 
 > Note: automated download wasn't working reliably during development, so this step is manual for now.
 
@@ -70,8 +73,8 @@ Additionally, using the **unsloth** framework lowered VRAM requirements.
 | Precision            | bf16               |
 | Total Steps          | 480                |
 | Learning Rate        | 2e-4               |
-| LoRA-Rank            | 32                 |
-| LoRA-Alpha           | 64                 |
+| LoRA Rank            | 32                 |
+| LoRA Alpha           | 64                 |
 
 
 ### Training data acquisition
