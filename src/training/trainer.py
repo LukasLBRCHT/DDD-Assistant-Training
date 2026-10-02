@@ -1,9 +1,6 @@
 from unsloth import FastLanguageModel, get_chat_template
 from unsloth.chat_templates import train_on_responses_only
 from Config import Config as Config
-from multiprocessing import freeze_support
-import time
-import torch
 from data_handling.data_preprocessor import DataPreprocessor
 from util.llm_util import load_model_lora
 import warnings
@@ -12,8 +9,11 @@ from trl import SFTTrainer, SFTConfig
 from data_handling.metadata_extraction import Metadata
 import os
 
-os.environ["UNSLOTH_VLLM_STANDBY"] = "1"  # [NEW] Extra 30% context lengths!
+os.environ["UNSLOTH_VLLM_STANDBY"] = "1"  # increase context length
 
+"""
+Loads model and tokenizer from directorey location.
+"""
 def get_training_model(model_dir=Config.MODEL_3B_DIR):
     max_seq_length = 4096
     lora_rank = 32
@@ -27,7 +27,7 @@ def get_training_model(model_dir=Config.MODEL_3B_DIR):
 
     model = FastLanguageModel.get_peft_model(
         model,
-        r=lora_rank,  # Choose any number > 0 ! Suggested 8, 16, 32, 64, 128
+        r=lora_rank,
         target_modules=[
             "q_proj", "k_proj", "v_proj", "o_proj",
             "gate_proj", "up_proj", "down_proj",
@@ -40,25 +40,23 @@ def get_training_model(model_dir=Config.MODEL_3B_DIR):
 
     return model, tokenizer
 
-
+"""
+Set configuration parameters for lora trainer.
+"""
 def configure_training_arguments():
 
     run_name = input("Enter run-name:")
 
     output_dir = f'../../adapters/{run_name}'
-    # todo output dir anpassen
 
     lora_training_args = SFTConfig(
         output_dir=output_dir,
-        per_device_train_batch_size=1,
+        per_device_train_batch_size=2,
         gradient_accumulation_steps=1,
-        #num_train_epochs=4,
-        max_steps=2,
+        num_train_epochs=3,
 
-        #max_steps=100,
         learning_rate=2e-4,
         warmup_ratio=0.05,
-        #warmup_steps=1, # sollte 5-10% der gesamten steps sein
 
         logging_strategy="steps",
         logging_steps=1,
@@ -81,12 +79,11 @@ def configure_training_arguments():
         bf16=True,
 
         lr_scheduler_type="cosine",
-        # gradient_checkpointing=False,  # important for Unsloth stability
         optim="adamw_torch",
 
-        max_grad_norm=1.0,  # todo hierüber informieren
+        max_grad_norm=1.0,
 
-        packing=False,  # use packing only if data is short
+        packing=False,
         dataset_text_field="messages"
     )
 
@@ -111,7 +108,9 @@ def initialize_trainer(lora_model, tokenizer, train_args, train_data, eval_data)
 
     return lora_trainer
 
-
+"""
+Central training script
+"""
 if __name__ == "__main__":
     warnings.filterwarnings("ignore", message=".*active_adapter.*")
     warnings.filterwarnings("ignore", message=".*UserWarning: Could not find a config file.*")
@@ -129,12 +128,10 @@ if __name__ == "__main__":
     lora_trainer = initialize_trainer(model, tokenizer, train_args, train_data, eval_data)
 
     print("Starting training...")
+    metrics_before = lora_trainer.evaluate()  # get metrics at step 0 (before training)
+    print(f"first eval: {metrics_before}")
     lora_trainer.train()
     print("Training done!")
 
-    #lora_trainer.save_model()
-    for data in eval_data_list:
-        test_results = lora_trainer.evaluate(
-            eval_dataset=data
-        )
-        print(f"Results:\n{test_results}")
+    lora_trainer.save_model()
+
