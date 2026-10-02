@@ -95,19 +95,12 @@ class Metadata:
         distinct_lists = [split_bcs, merged_bcs, little_name_changes, generic_domains, all_domains]
 
         for x in range(0, len(distinct_lists)):
-            test = 0
-            if x < 2:
-                test=2
-            elif x > 2:
-                test=3
-            else:
-                test=0
 
             current_list = distinct_lists[x]
             other_lists = distinct_lists[:x] + distinct_lists[x + 1:]
 
             for o_l in other_lists:
-                o_l = remove_remaining(current_list, o_l, test)  # avoid duplicates
+                o_l = remove_remaining(current_list, o_l)  # avoid duplicates
 
             eighty_pct = round(len(current_list) * 0.8)
 

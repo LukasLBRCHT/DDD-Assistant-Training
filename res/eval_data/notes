@@ -1,0 +1,21 @@
+subdomains:
+-base macht manchmal unterteilungen, die eher in richtung technisches/implementierung gehen
+
+-base macht subdomänen-namen, die mehrere Zuständigkeiten beinhalten
+-base macht längere Namen, die von finetuned sind präziser
+
+-antworten von base fallen allgemein viel länger aus, finetuned gibt weniger aus
+
+bcs:
+-darauf achten: macht er splits/merges?
+
+-base hat duplikat einfach gelöscht, ohne namensänderung: II
+-base hat objekte der subdomäne korrekt übertragen, mit falschem namen: II
+-base hat neuen context erfunden: I
+-weder base noch finetuned haben den ersten split gemacht
+-weder base noch finetuned haben ersten merge (businesscertification) gemacht
+-weder base noch finetuned haben zweiten merge (movingcompany) gemacht
+-base hat gemerged, aber nicht vollständig (object-coverage)
+
+objects:
+-base denkt sich viel mehr objekte aus, die nicht im Text erwähnt sind oder auf die hingedeutet wird
